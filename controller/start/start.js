@@ -1,3 +1,25 @@
+var loader = document.querySelector('.loader')
+var logo = document.querySelector('.nav img')
+var li = document.querySelectorAll('.nav ul li')
+var textHero = document.querySelector('.textHero')
+var ham = document.querySelector('.hero img')
+var down = document.querySelector('#down')
+
+window.addEventListener('load', function() {
+    setTimeout(function() {
+
+        loader.classList.add('active')
+        logo.classList.add('active')
+        li.forEach((option) => {
+            option.classList.add('active')
+        })
+        textHero.classList.add('active')
+        ham.classList.add('active')
+        down.classList.add('active')
+
+    }, 2000);
+});
+
 var openMenu = document.getElementById('openMenu')
 var closeMenu = document.getElementById('closeMenu')
 var menu = document.querySelector('.nav ul')
