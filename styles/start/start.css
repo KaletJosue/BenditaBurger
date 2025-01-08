@@ -162,8 +162,7 @@ html::-webkit-scrollbar {
     justify-content: center;
     padding: 0 10rem;
     gap: 3rem;
-    position: relative;
-    overflow: hidden;
+    margin-bottom: 2rem;
 }
 
 .header .hero .textHero {
@@ -225,7 +224,7 @@ html::-webkit-scrollbar {
 }
 
 .header .hero img.active {
-    animation: revealRight 1s forwards;
+    animation: revealTop 1s forwards;
 }
 
 .bendita {
@@ -867,16 +866,6 @@ footer .container .contact .info li a {
     animation: colorComida 2s infinite ease;
 }
 
-@keyframes revealRight {
-    0% {
-        transform: translateX(200vw);
-    }
-
-    100% {
-        transform: translateX(0);
-    }
-}
-
 @keyframes revealLeft {
     0% {
         transform: translateX(-200vw);
@@ -1053,6 +1042,17 @@ footer .container .contact .info li a {
 
     100% {
         transform: translateY(0) translateX(-50%);
+    }
+}
+
+@media (height < 800px) {
+    .header {
+        height: 100%;
+    }
+
+    .header .hero {
+        padding-top: 5rem;
+        padding-bottom: 5rem;
     }
 }
 
