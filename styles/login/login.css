@@ -288,6 +288,103 @@ html::-webkit-scrollbar {
     margin-top: 0;
 }
 
+.modal {
+    position: fixed;
+    left: -500vw;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #00000000;
+    transition: all .5s ease;
+}
+
+.modal.active {
+    left: 0;
+    background-color: #00000086;
+}
+
+.modal .modalContent {
+    width: 550px;
+    height: 300px;
+    background-color: #1c1c1c;
+    border-radius: 30px;
+    position: relative;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.modal .modalContent::after {
+    content: '';
+    display: block;
+    width: 300px;
+    height: 150px;
+    background-color: #ff7777;
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(180px);
+    bottom: -50px;
+    right: -100px;
+    z-index: 0;
+}
+
+.modal .modalContent .centerModal {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    padding: 0 4rem;
+    gap: 1.5rem;
+}
+
+.modal .modalContent .centerModal i {
+    font-size: 60px;
+    color: #ff7777;
+}
+
+.modal .modalContent .centerModal .textModal h1 {
+    font-size: 25px;
+    font-weight: 900;
+}
+
+.modal .modalContent .centerModal .textModal p {
+    font-size: 14px;
+}
+
+.modal .modalContent i#closeModal {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.modal .modalContent button {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    padding: .7rem 1rem;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+    border: solid 2px #ff7777;
+    background-color: transparent;
+    background-color: #ff7777;
+    color: white;
+    cursor: pointer;
+    transition: all .2s ease;
+    z-index: 1;
+}
+
+.modal .modalContent button:hover {
+    transform: translateX(-10px);
+    background-color: transparent;
+}
+
 @media (width < 1400px) {
     .container .infoLogin,
     .container .inputsLogin {

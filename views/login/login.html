@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/styles/login/login.css" />
     <!-- Loader -->
-     <link rel="stylesheet" href="/styles/loader/loader.css">
+    <link rel="stylesheet" href="/styles/loader/loader.css">
     <link rel="shortcut icon" href="/assets/logo.png" type="image/x-icon">
     <title class="title">Iniciar Sesión | Bendita Burger</title>
     <!-- Iconos -->
@@ -24,11 +24,11 @@
             <img src="/assets/logoAmarillo.png" alt="">
             <h1>Bienvenido de nuevo</h1>
             <p class="new">¿Eres nuevo en Bendita Burger? <span class="btnMoveContainers">Registrate</span></p>
-            <div class="google">
+            <div class="google" id="btnGoogle">
                 <img src="/assets/google.png" alt="">
                 <p>Inicia Sesión con Google</p>
             </div>
-            <div class="facebook">
+            <div class="facebook" id="btnFacebook">
                 <img src="/assets/facebook.png" alt="">
                 <p>Inicia Sesión con Facebook</p>
             </div>
@@ -116,7 +116,21 @@
         </div>
     </div>
 
-    <script src="/controller/login/login.js"></script>
+    <div class="modal">
+        <div class="modalContent">
+            <i class="fa-solid fa-x" id="closeModal"></i>
+            <div class="centerModal">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+                <div class="textModal">
+                    <h1>Ooops!</h1>
+                    <p class="textErrorModal">No hemos podido conectar con Google</p>
+                </div>
+            </div>
+            <button>Intentar de Nuevo</button>
+        </div>
+    </div>
+
+    <script src="/controller/login/login.js" type="module"></script>
 </body>
 
 </html>

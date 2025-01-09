@@ -1,4 +1,42 @@
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-analytics.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, FacebookAuthProvider  } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyDo7CLdjeXnrFmGeCTb5kgVbtzmxK2i22g",
+    authDomain: "bendita-burger.firebaseapp.com",
+    projectId: "bendita-burger",
+    storageBucket: "bendita-burger.firebasestorage.app",
+    messagingSenderId: "205041913819",
+    appId: "1:205041913819:web:ee1ecfd383d77ffa98a1fe",
+    measurementId: "G-J68Z8T6DGV"
+};
+
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+const auth = getAuth(app)
+
+auth.languageCode = 'es'
+const provider = new GoogleAuthProvider()
+const providerFacebook = new FacebookAuthProvider()
+
 var loader = document.querySelector('.loader')
+var btnGoogle = document.getElementById('btnGoogle')
+var btnFacebook = document.getElementById('btnFacebook')
+
+btnGoogle.addEventListener('click', () => {
+    signInWithPopup(auth, provider)
+        .then((result) => {
+            const credential = GoogleAuthProvider.credentialFromResult(result);
+            const token = credential.accessToken;
+            const user = result.user;
+
+            location.href = "/views/admin/home/home.html"
+        }).catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+        });
+})
 
 window.onload = function () {
     loader.classList.add('active')
