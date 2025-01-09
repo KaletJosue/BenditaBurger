@@ -1,0 +1,333 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    list-style: none;
+    font-family: 'Montserrat';
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+html::-webkit-scrollbar {
+    width: 0;
+}
+
+.container {
+    height: 100vh;
+    width: 100vw;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative;
+    transition: all .5s;
+    position: fixed;
+    overflow-y: auto;
+}
+
+.container#containerLogin {
+    top: 0;
+    left: 0;
+}
+
+.container#containerLogin.active {
+    top: -100vh;
+}
+
+.container#containerRegister {
+    top: 100vh;
+    left: 0;
+}
+
+.container#containerRegister.active {
+    top: 0;
+}
+
+.container .inputsLogin {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2rem 7rem;
+}
+
+.container .inputsLogin img {
+    width: 50px;
+    border-radius: 10px;
+}
+
+.container .inputsLogin h1 {
+    margin-top: .5rem;
+    font-size: 30px;
+    font-weight: 900;
+}
+
+.container .inputsLogin .new {
+    font-size: 15px;
+    font-weight: 400;
+}
+
+.container .inputsLogin .new span {
+    margin-left: .5rem;
+    font-weight: 600;
+    color: #ebb417;
+    cursor: pointer;
+}
+
+.container .inputsLogin .google {
+    margin-top: 2rem;
+    display: flex;
+    align-items: center;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+    font-size: 14px;
+    font-weight: 450;
+    border: solid 2px #e2e2e2;
+    padding: 1rem 2rem;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all .2s ease;
+}
+
+.container .inputsLogin .facebook {
+    display: flex;
+    align-items: center;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+    font-size: 14px;
+    font-weight: 450;
+    border: solid 2px #e2e2e2;
+    padding: 1rem 2rem;
+    border-radius: 10px;
+    margin-top: .5rem;
+    cursor: pointer;
+    transition: all .2s ease;
+}
+
+.container .inputsLogin .google:hover,
+.container .inputsLogin .facebook:hover {
+    background-color: #e2e2e2;
+}
+
+.container .inputsLogin .google img,
+.container .inputsLogin .facebook img {
+    width: 20px;
+}
+
+.container .inputsLogin .or {
+    display: flex;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+    color: #ccc;
+}
+
+.container .inputsLogin .or hr {
+    width: 100%;
+    border: none;
+    background-color: #ccc;
+    height: 1px;
+}
+
+.container .inputsLogin .inputsName {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+}
+
+.container .inputsLogin .inputsNameRegis {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    margin-top: 1rem;
+}
+
+.container .inputsLogin .inputsName p,
+.container .inputsLogin .inputsNameRegis p {
+    font-size: 13px;
+    font-weight: 450;
+    color: #000;
+}
+
+.container .inputsLogin .inputsName input,
+.container .inputsLogin .inputsNameRegis input {
+    padding: 1rem;
+    border-radius: 10px;
+    border: solid 2px #e2e2e2;
+    outline: none;
+    font-size: 14px;
+}
+
+.container .inputsLogin .inputsPassword {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    margin-top: 1rem;
+}
+
+.container .inputsLogin .inputsPassword p {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 13px;
+    font-weight: 450;
+    color: #000;
+}
+
+.container .inputsLogin .inputsPassword p span {
+    font-weight: 600;
+    color: #ebb417;
+    cursor: pointer;
+}
+
+.container .inputsLogin .inputsPassword .eyeInput {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 0 1rem 0 0;
+    border: solid 2px #e2e2e2;
+    border-radius: 10px;
+}
+
+.container .inputsLogin .inputsPassword .eyeInput input {
+    padding: 1rem;
+    width: 100%;
+    border: none;
+    outline: none;
+    border-radius: 10px;
+}
+
+.container .inputsLogin .inputsPassword .eyeInput i {
+    color: #6e6e6e;
+    cursor: pointer;
+    position: relative;
+}
+
+.container .inputsLogin .inputsPassword .eyeInput i::after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 2px;
+    background-color: #6e6e6e;
+    position: absolute;
+    top: 7px;
+    left: 0;
+    transform: rotate(45deg);
+    transition: all .2s ease;
+}
+
+.container .inputsLogin .inputsPassword .eyeInput i.active::after {
+    width: 0;
+}
+
+.container .inputsLogin .btnLogin {
+    margin-top: 2rem;
+    padding: 1rem 2rem;
+    font-size: 13px;
+    font-weight: 700;
+    border-radius: 10px;
+    border: none;
+    background-color: #ebc417;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+.container .infoLogin {
+    background: radial-gradient(#ffeb00, #ebc417, #ebb417);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 3rem 7rem;
+}
+
+.container .infoLogin img {
+    aspect-ratio: 16/9;
+    object-fit: contain;
+    object-position: center center;
+    width: 100%;
+    filter: drop-shadow(1rem 1rem 1rem #5e4809);
+}
+
+.container .infoLogin .textInfoLogin {
+    bottom: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.container .infoLogin .textInfoLogin h1 {
+    font-size: 25px;
+    font-weight: 900;
+    margin-top: 2rem;
+}
+
+.container .infoLogin .textInfoLogin p {
+    font-size: 14px;
+    margin-top: .5rem;
+}
+
+.container .infoLogin .textInfoLogin img {
+    aspect-ratio: 1/1;
+    width: 150px;
+    filter: drop-shadow(1rem 1rem 1rem #00000000);
+    margin-top: 0;
+}
+
+@media (width < 1400px) {
+    .container .infoLogin,
+    .container .inputsLogin {
+        padding: 3rem 4rem;
+    }
+}
+
+@media (width < 1200px) {
+    .container .infoLogin,
+    .container .inputsLogin {
+        padding: 3rem 2rem;
+    }
+}
+
+@media (width < 1000px) {
+    .container {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+
+    .container .infoLogin {
+        display: none;
+    }
+
+    .loader {
+        display: flex;
+        flex-direction: column-reverse;
+        gap: 4rem;
+    }
+
+    .loader .icon {
+        transform: scale(.4);
+        margin-left: 3rem;
+    }
+}
+
+@media (width < 600px) {
+    .container .inputsLogin {
+        padding: 3rem 1rem;
+    }
+}
+
+@media (width < 450px) {
+    .container .inputsLogin {
+        padding: 3rem 1rem;
+    }
+}

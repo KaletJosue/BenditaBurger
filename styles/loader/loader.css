@@ -1,0 +1,261 @@
+.loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(#ffeb00, #ebb417);
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+
+.loader.active {
+    animation: outLoader .2s forwards ease-out;
+}
+
+.loader .textLoader {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.loader .textLoader h1 {
+    font-size: 40px;
+    text-align: center;
+    font-weight: 900;
+    color: black;
+}
+
+.loader .textLoader p {
+    font-size: 13px;
+    text-align: center;
+    font-weight: 500;
+    color: black;
+}
+
+.loader .textLoader img {
+    aspect-ratio: 1/1;
+    object-fit: contain;
+    object-position: center center;
+    width: 100px;
+}
+
+.loader .icon {
+    display: flex;
+    position: relative;
+    transform: scale(.7);
+}
+
+.loader .icon .sartenCompleto {
+    animation: sarten 2s infinite;
+    display: flex;
+    align-items: start;
+    gap: .5rem;
+}
+
+.loader .icon .sarten {
+    display: block;
+    width: 200px;
+    height: 40px;
+    background-color: black;
+    border-radius: 10px 10px 80px 80px;
+    position: relative;
+}
+
+.loader .icon .mangoSarten {
+    display: block;
+    width: 100px;
+    height: 20px;
+    background-color: black;
+    border-radius: 50px;
+    animation: mangoSarten 2s infinite;
+}
+
+.loader .icon .placaSarten {
+    display: block;
+    width: 150px;
+    height: 15px;
+    background-color: rgb(134, 134, 134);
+    border-radius: 50px;
+    position: absolute;
+    bottom: -50px;
+    left: 25px;
+    animation: placaSarten 2s infinite;
+}
+
+.loader .icon .comidaSarten {
+    display: block;
+    position: absolute;
+    top: -175px;
+    left: -20px;
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    display: flex;
+    align-items: end;
+    animation: comidaSarten 2s infinite;
+    transform: rotate(0deg) scale(1);
+}
+
+.loader .icon .comidaSarten::after {
+    content: '';
+    display: block;
+    width: 50px;
+    height: 20px;
+    margin-left: 5rem;
+    background-color: #ffeb00;
+    border-radius: 50px;
+    animation: colorComida 2s infinite ease;
+}
+
+@keyframes colorComida {
+    0% {
+        background-color: #ffeb00;
+    }
+
+    10% {
+        background-color: #ebb417;
+    }
+
+    70% {
+        background-color: #eb7a17;
+    }
+
+    100% {
+        background-color: #eb1717;
+    }
+}
+
+@keyframes outLoader {
+    0% {
+        margin-left: 0;
+        transform: scale(1);
+    }
+
+    90% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 0;
+        display: none;
+    }
+}
+
+@keyframes placaSarten {
+    0% {
+        transform: translateX(0) scale(1);
+        width: 150px;
+    }
+
+    50% {
+        transform: translateX(3rem) scale(1);
+        width: 50px;
+    }
+
+    70% {
+        transform: translateX(0rem) scale(1);
+        width: 150px;
+    }
+
+    90% {
+        transform: scale(1);
+    }
+
+    95% {
+        transform: scale(.7);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes comidaSarten {
+    0% {
+        transform: rotate(0deg) scale(1);
+        opacity: 0;
+    }
+
+    50% {
+        transform: rotate(0deg) scale(1);
+        opacity: 1;
+    }
+
+    70% {
+        transform: rotate(190deg) scale(1);
+        opacity: 1;
+    }
+
+    80% {
+        transform: rotate(195deg) scale(1);
+        opacity: 1;
+    }
+
+    94% {
+        transform: rotate(330deg) scale(1.2);
+        opacity: 1;
+    }
+
+    94% {
+        opacity: 0;
+    }
+
+    100% {
+        transform: rotate(320deg) scale(1);
+        opacity: 0;
+    }
+}
+
+@keyframes sarten {
+    0% {
+        transform: rotate(0) scale(1);
+    }
+
+    50% {
+        transform: rotate(-15deg) scale(1);
+    }
+
+    60% {
+        transform: rotate(10deg) scale(1);
+    }
+
+    70% {
+        transform: rotate(0) scale(1);
+    }
+
+    90% {
+        transform: rotate(0) scale(1);
+    }
+
+    95% {
+        transform: rotate(0) scale(.7);
+    }
+
+    100% {
+        transform: rotate(0) scale(1);
+    }
+}
+
+@media (width < 1000px) {
+    .loader {
+        display: flex;
+        flex-direction: column-reverse;
+        gap: 4rem;
+    }
+
+    .loader .icon {
+        transform: scale(.4);
+        margin-left: 3rem;
+    }
+}
+
+@media (width < 600px) {
+    .loader {
+        padding: 1rem;
+    }
+}

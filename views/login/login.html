@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script src="https://unpkg.com/scrollreveal"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/styles/login/login.css" />
+    <!-- Loader -->
+     <link rel="stylesheet" href="/styles/loader/loader.css">
+    <link rel="shortcut icon" href="/assets/logo.png" type="image/x-icon">
+    <title class="title">Iniciar Sesión | Bendita Burger</title>
+    <!-- Iconos -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css"
+        integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+    <div class="container" id="containerLogin">
+        <div class="inputsLogin">
+            <img src="/assets/logoAmarillo.png" alt="">
+            <h1>Bienvenido de nuevo</h1>
+            <p class="new">¿Eres nuevo en Bendita Burger? <span class="btnMoveContainers">Registrate</span></p>
+            <div class="google">
+                <img src="/assets/google.png" alt="">
+                <p>Inicia Sesión con Google</p>
+            </div>
+            <div class="facebook">
+                <img src="/assets/facebook.png" alt="">
+                <p>Inicia Sesión con Facebook</p>
+            </div>
+            <div class="or">
+                <hr>
+                <p>o</p>
+                <hr>
+            </div>
+            <div class="inputsName">
+                <p>Correo Electrónico</p>
+                <input type="text" placeholder="bendita.burger@ejemplo.com">
+            </div>
+            <div class="inputsPassword">
+                <p>Contraseña <span>¿La olvidaste?</span></p>
+                <div class="eyeInput">
+                    <input type="password" placeholder="xxxxxxxxxxx" id="inputContra">
+                    <i class="fa-solid fa-eye" id="eyePass"></i>
+                </div>
+            </div>
+            <button class="btnLogin">
+                Iniciar Sesión
+            </button>
+        </div>
+        <div class="infoLogin">
+            <img src="/assets/ham2.png" alt="">
+            <div class="textInfoLogin">
+                <h1>¿Ya te comiste una Zunga?</h1>
+                <p>¡¡Si aún no lo has hecho, este es el momento! No esperes más y
+                    disfruta de todo el sabor que te ofrecemos en Bendita Burger. ¡Ven y cómetela ahora!!</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" id="containerRegister">
+        <div class="infoLogin">
+            <img src="/assets/ham3.png" alt="">
+            <div class="textInfoLogin">
+                <h1>¡Esta es mas Exotica que tu ex!</h1>
+                <p>¡Haz tu pedido ahora y disfruta del verdadero sabor con Bendita Burger o ven y cómetela ahora!</p>
+            </div>
+        </div>
+        <div class="inputsLogin">
+            <img src="/assets/logoAmarillo.png" alt="">
+            <h1>Unete a la familia</h1>
+            <p class="new">¿Ya eres BenditaLover? <span class="btnMoveContainers">Inicia Sesión</span></p>
+            <div class="or">
+                <hr>
+                <p>o</p>
+                <hr>
+            </div>
+            <div class="inputsName">
+                <p>Correo Electrónico</p>
+                <input type="text" placeholder="bendita.burger@ejemplo.com">
+            </div>
+            <div class="inputsNameRegis">
+                <p>Nombre Completo</p>
+                <input type="text" placeholder="Bendita Burger">
+            </div>
+            <div class="inputsPassword">
+                <p>Contraseña</p>
+                <div class="eyeInput">
+                    <input type="password" placeholder="xxxxxxxxxxx" id="inputContraRegis">
+                    <i class="fa-solid fa-eye" id="eyePassRegister"></i>
+                </div>
+            </div>
+            <button class="btnLogin">
+                Registrate
+            </button>
+        </div>
+    </div>
+
+    <div class="loader">
+        <div class="icon">
+            <div class="comidaSarten"></div>
+            <div class="sartenCompleto">
+                <div class="sarten"></div>
+                <div class="mangoSarten"></div>
+            </div>
+            <div class="placaSarten"></div>
+        </div>
+        <div class="textLoader">
+            <img src="/assets/logo.png" alt="">
+            <h1>¡BENDITA BURGER!</h1>
+            <p>¡Aguanta el hambre! Ya casi está todo listo...</p>
+        </div>
+    </div>
+
+    <script src="/controller/login/login.js"></script>
+</body>
+
+</html>
