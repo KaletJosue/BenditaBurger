@@ -28,6 +28,10 @@ html::-webkit-scrollbar {
     overflow-y: auto;
 }
 
+.container::-webkit-scrollbar {
+    width: 0;
+}
+
 .container#containerLogin {
     top: 0;
     left: 0;
