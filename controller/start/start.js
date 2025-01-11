@@ -5,7 +5,7 @@ var textHero = document.querySelector('.textHero')
 var ham = document.querySelector('.hero img')
 var down = document.querySelector('#down')
 
-window.addEventListener('load', function () {
+window.onload = function () {
     loader.classList.add('active')
     logo.classList.add('active')
     li.forEach((option) => {
@@ -14,7 +14,7 @@ window.addEventListener('load', function () {
     textHero.classList.add('active')
     ham.classList.add('active')
     down.classList.add('active')
-});
+}
 
 var openMenu = document.getElementById('openMenu')
 var closeMenu = document.getElementById('closeMenu')

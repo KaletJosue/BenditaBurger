@@ -39,16 +39,16 @@
             </div>
             <div class="inputsName">
                 <p>Correo Electrónico</p>
-                <input type="text" placeholder="bendita.burger@ejemplo.com">
+                <input type="text" placeholder="bendita.burger@ejemplo.com" class="emailLogin">
             </div>
             <div class="inputsPassword">
-                <p>Contraseña <span>¿La olvidaste?</span></p>
+                <p>Contraseña <span class="btnRemember">¿La olvidaste?</span></p>
                 <div class="eyeInput">
-                    <input type="password" placeholder="xxxxxxxxxxx" id="inputContra">
+                    <input type="password" placeholder="xxxxxxxxxxx" id="inputContra" class="passwordEmail">
                     <i class="fa-solid fa-eye" id="eyePass"></i>
                 </div>
             </div>
-            <button class="btnLogin">
+            <button class="btnLogin" id="btnLogin">
                 Iniciar Sesión
             </button>
         </div>
@@ -81,22 +81,34 @@
             </div>
             <div class="inputsName">
                 <p>Correo Electrónico</p>
-                <input type="text" placeholder="bendita.burger@ejemplo.com">
+                <input type="text" placeholder="bendita.burger@ejemplo.com" class="emailRegister">
             </div>
             <div class="inputsNameRegis">
                 <p>Nombre Completo</p>
-                <input type="text" placeholder="Bendita Burger">
+                <input type="text" placeholder="Bendita Burger" class="nameRegister">
             </div>
             <div class="inputsPassword">
                 <p>Contraseña</p>
                 <div class="eyeInput">
-                    <input type="password" placeholder="xxxxxxxxxxx" id="inputContraRegis">
+                    <input type="password" placeholder="xxxxxxxxxxx" id="inputContraRegis" class="passwordRegister">
                     <i class="fa-solid fa-eye" id="eyePassRegister"></i>
                 </div>
             </div>
-            <button class="btnLogin">
+            <button class="btnLogin" id="btnRegister">
                 Registrate
             </button>
+        </div>
+    </div>
+
+    <div class="rememberPassword">
+        <div class="conRememberPassword">
+            <i class="fa-solid fa-x" id="closeRemember"></i>
+            <img src="/assets/logoAmarillo.png" alt="">
+            <div class="inputRemember">
+                <p>Correo Electronico</p>
+                <input type="email" placeholder="bendita.burger@ejemplo.com" class="inputSendRemember">
+            </div>
+            <button class="btnSendRemember">Enviar Mensaje</button>
         </div>
     </div>
 
@@ -126,7 +138,21 @@
                     <p class="textErrorModal">No hemos podido conectar con Google</p>
                 </div>
             </div>
-            <button>Intentar de Nuevo</button>
+            <button class="tryAgain">Intentar de Nuevo</button>
+        </div>
+    </div>
+
+    <div class="modal2">
+        <div class="modalContent2">
+            <i class="fa-solid fa-x" id="closeModal2"></i>
+            <div class="centerModal2">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+                <div class="textModal2">
+                    <h1>Bienvenido!</h1>
+                    <p class="textErrorModal2"></p>
+                </div>
+            </div>
+            <button class="tryAgain2">Ir a Gmail</button>
         </div>
     </div>
 
