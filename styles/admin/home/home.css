@@ -1,0 +1,521 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+:root {
+    --color-negro: #000;
+    --color-blanco: #ffffff;
+
+    --color-fondo: #f0f0f0;
+    --color-linea: #ccc;
+
+    --box-shadow-suave: 1px 1px 1rem #00000017;
+}
+
+.darkMode {
+    --color-negro: #ffffff;
+    --color-blanco: #000000;
+
+    --color-fondo: #3e3e3e;
+    --color-linea: #202020;
+    
+    --box-shadow-suave: 1px 1px 1rem #ededed17;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    list-style: none;
+    font-family: 'Montserrat';
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+html::-webkit-scrollbar {
+    width: 0;
+}
+
+body {
+    background-color: var(--color-fondo);
+}
+
+.sidebar {
+    background-color: var(--color-blanco);
+    box-shadow: var(--box-shadow-suave);
+    position: fixed;
+    height: 100dvh;
+    width: 256px;
+    border-radius: 0 20px 20px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 2rem 2rem;
+    transition: all .2s ease;
+    z-index: 10;
+}
+
+.sidebar .optionsMenu2,
+.sidebar .optionsFinanzas2 {
+    display: none;
+}
+
+.sidebar.active .optionsMenu2 {
+    display: flex;
+    position: fixed;
+    flex-direction: column;
+    background-color: var(--color-blanco);
+    padding: 1rem;
+    border-radius: 10px;
+    gap: .5rem;
+    top: 200px;
+    left: -500vw;
+    transition: all .5s ease;
+    z-index: -10;
+}
+
+.sidebar.active .optionsFinanzas2 {
+    display: flex;
+    position: fixed;
+    flex-direction: column;
+    background-color: var(--color-blanco);
+    padding: 1rem;
+    border-radius: 10px;
+    gap: .5rem;
+    top: 250px;
+    left: -500vw;
+    transition: all .5s ease;
+    z-index: -1;
+}
+
+.sidebar.active .optionsMenu2.active,
+.sidebar.active .optionsFinanzas2.active {
+    left: 100px;
+}
+
+.sidebar.active .optionsMenu2 p,
+.sidebar.active .optionsFinanzas2 p {
+    font-size: 10px;
+    text-align: center;
+    width: 100%;
+    padding: .7rem;
+    border-radius: 10px;
+    transition: all .2s ease;
+    cursor: pointer;
+    color: var(--color-negro);
+}
+
+.sidebar.active .optionsMenu2 p:hover,
+.sidebar.active .optionsFinanzas2 p:hover {
+    background-color: var(--color-fondo);
+}
+
+.sidebar.active {
+    width: 90px;
+    padding: 2rem 1rem;
+}
+
+.sidebar.active .topSidebar .user .textUser,
+.sidebar.active .centerSidebar ul li p,
+.sidebar.active .centerSidebar ul li i:last-child ,
+.sidebar.active .bottomSidebar p{
+    display: none;
+}
+
+.sidebar.active .topSidebar .user {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+
+
+.sidebar.active .centerSidebar ul li i,
+.sidebar.active .bottomSidebar ul li i {
+    padding-left: .4rem;
+}
+
+.sidebar.active .bottomSidebar ul li:first-child {
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sidebar .topSidebar {
+    border-bottom: solid 2px var(--color-fondo);
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+}
+
+.sidebar .topSidebar .user {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+}
+
+.sidebar .topSidebar .user img {
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    object-position: center center;
+    width: 50px;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+.sidebar .topSidebar .user .textUser p {
+    font-size: 10px;
+    color: var(--color-negro);
+}
+
+.sidebar .topSidebar .user .textUser h1 {
+    font-size: 11px;
+    color: var(--color-negro);
+}
+
+.sidebar .centerSidebar {
+    flex-grow: 1;
+    overflow-y: auto;
+    margin-bottom: 1rem;
+}
+
+.sidebar .centerSidebar::-webkit-scrollbar {
+    width: 3px;
+    background-color: var(--color-fondo);
+    border-radius: 20px;
+}
+
+.sidebar .centerSidebar::-webkit-scrollbar-thumb {
+    background-color: var(--color-linea);
+}
+
+.sidebar .centerSidebar ul {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+}
+
+.sidebar .centerSidebar ul li:not(:nth-child(3), :nth-child(4)) {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    padding: .7rem 1rem;
+    gap: 1rem;
+    font-size: 12px;
+    border-radius: 10px;
+    color: var(--color-negro);
+    transition: all .2s ease;
+    cursor: pointer;
+    position: relative;
+}
+
+.sidebar .centerSidebar ul li:not(:nth-child(3), :nth-child(4)):hover,
+.sidebar .centerSidebar ul li:nth-child(3) .btnOptions:hover,
+.sidebar .centerSidebar ul li:nth-child(4) .btnOptions2:hover {
+    background-color: var(--color-fondo);
+}
+
+.sidebar .centerSidebar ul li:nth-child(3),
+.sidebar .centerSidebar ul li:nth-child(4) {
+    display: flex;
+    flex-direction: column;
+    font-size: 12px;
+    border-radius: 10px;
+    color: var(--color-negro);
+    transition: all .2s ease;
+    justify-content: center;
+    position: relative;
+}
+
+.sidebar .centerSidebar ul li:nth-child(3) .btnOptions,
+.sidebar .centerSidebar ul li:nth-child(4) .btnOptions2 {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    position: relative;
+    width: 100%;
+    cursor: pointer;
+    padding: .7rem 1rem;
+    border-radius: 10px;
+    transition: all .2s ease;
+}
+
+.sidebar .centerSidebar ul li:nth-child(3) .btnOptions i:last-child,
+.sidebar .centerSidebar ul li:nth-child(4) .btnOptions2 i:last-child {
+    position: absolute;
+    right: 10px;
+    transition: all .2s ease;
+}
+
+.sidebar .centerSidebar ul li:nth-child(3).active .btnOptions i:last-child,
+.sidebar .centerSidebar ul li:nth-child(4).active .btnOptions2 i:last-child {
+    transform: rotate(180deg);
+}
+
+.sidebar .centerSidebar ul li:nth-child(3) .optionsMenu,
+.sidebar .centerSidebar ul li:nth-child(4) .optionsFinanzas {
+    display: flex;
+    flex-direction: column;
+    padding-left: 1.8rem;
+    gap: .2rem;
+    overflow: hidden;
+    max-height: 0;
+    transition: all .5s;
+}
+
+.sidebar .centerSidebar ul li:nth-child(3).active .optionsMenu,
+.sidebar .centerSidebar ul li:nth-child(4).active .optionsFinanzas {
+    max-height: 500px;
+    padding-right: 2rem;
+}
+
+.sidebar .centerSidebar ul li:nth-child(3) .optionsMenu p,
+.sidebar .centerSidebar ul li:nth-child(4) .optionsFinanzas p {
+    padding: .7rem;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 11px;
+    transition: all .2s ease;
+}
+
+.sidebar .centerSidebar ul li:nth-child(3) .optionsMenu p:hover,
+.sidebar .centerSidebar ul li:nth-child(4) .optionsFinanzas p:hover {
+    background-color: var(--color-fondo);
+}
+
+.sidebar .bottomSidebar {
+    border-top: solid 2px var(--color-fondo);
+    padding-top: 1rem;
+}
+
+.sidebar .bottomSidebar ul {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+}
+
+.sidebar .bottomSidebar ul li {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    padding: .7rem 1rem;
+    gap: 1rem;
+    font-size: 12px;
+    border-radius: 10px;
+    color: var(--color-negro);
+    transition: all .2s ease;
+}
+
+.sidebar .bottomSidebar ul li:not(:first-child) {
+    cursor: pointer;
+}
+
+.sidebar .bottomSidebar ul li:not(:first-child):hover {
+    background-color: var(--color-fondo);
+}
+
+.sidebar .bottomSidebar ul li i {
+    font-size: 12px;
+}
+
+.switch {
+    display: block;
+    width: 40px;
+    height: 25px;
+    background-color: #6397bc;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all .2s ease;
+    outline: solid 2px var(--color-fondo);
+}
+
+.switch.active {
+    background-color: #1c1f2c;
+}
+
+.switch.active .circle {
+    transform: translateX(17px) rotate(90deg);
+    background-color: #c4c8d1;
+}
+
+.switch.active::after {
+    background-color: white;
+    right: 70%;
+    width: 5px;
+    height: 5px;
+    bottom: 10px;
+}
+
+.switch.active::before {
+    background-color: white;
+    right: 60%;
+    width: 2px;
+    height: 2px;
+    bottom: 7px;
+}
+
+.switch::after {
+    content: '';
+    display: block;
+    width: 20px;
+    height: 20px;
+    background-color: white;
+    border-radius: 50%;
+    position: absolute;
+    bottom: -10px;
+    right: -6px;
+}
+
+.switch::before {
+    content: '';
+    display: block;
+    width: 20px;
+    height: 20px;
+    background-color: white;
+    border-radius: 50%;
+    position: absolute;
+    bottom: -2px;
+    right: -13px;
+}
+
+.switch .circle {
+    display: block;
+    width: 17px;
+    height: 17px;
+    border-radius: 7px;
+    background-color: #edca2e;
+    margin-left: .2rem;
+    transition: all .2s ease;
+}
+
+/* Modal */
+
+.modal {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all .2s ease;
+    transform: scale(0);
+    z-index: 2;
+}
+
+.modal.active {
+    left: 0;
+    background-color: #767676;
+    transform: scale(1);
+}
+
+.modal .modalContent {
+    width: 550px;
+    height: 300px;
+    background-color: #1c1c1c;
+    border-radius: 30px;
+    position: relative;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.modal .modalContent::after {
+    content: '';
+    display: block;
+    width: 300px;
+    height: 150px;
+    background-color: #ff7777;
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(180px);
+    bottom: -50px;
+    right: -100px;
+    z-index: 0;
+}
+
+.modal .modalContent .centerModal {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    padding: 0 4rem;
+    gap: 1.5rem;
+}
+
+.modal .modalContent .centerModal i {
+    font-size: 60px;
+    color: #ff7777;
+}
+
+.modal .modalContent .centerModal .textModal h1 {
+    font-size: 25px;
+    font-weight: 900;
+}
+
+.modal .modalContent .centerModal .textModal p {
+    font-size: 14px;
+}
+
+.modal .modalContent i#closeModal {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.modal .modalContent button {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    padding: .7rem 1rem;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+    border: solid 2px #ff7777;
+    background-color: transparent;
+    background-color: #ff7777;
+    color: white;
+    cursor: pointer;
+    transition: all .2s ease;
+    z-index: 1;
+}
+
+.modal .modalContent button:hover {
+    transform: translateX(-10px);
+    background-color: transparent;
+}
+
+@media (width < 1000px) {
+    .modal {
+        padding: 1rem;
+    }
+}
+
+@media (width < 450px) {
+    .modal .modalContent {
+        flex-direction: column;
+    }
+
+    .modal .modalContent .centerModal {
+        padding: 0;
+        flex-direction: column;
+        text-align: center;
+        padding: 0 1rem;
+    }
+
+    .modal .modalContent button {
+        position: relative;
+        top: 0;
+        left: 0;
+        margin-top: 1rem;
+    }
+}
