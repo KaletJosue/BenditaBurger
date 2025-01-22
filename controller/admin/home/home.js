@@ -23,6 +23,19 @@ var loader = document.querySelector('.loader')
 onAuthStateChanged(auth, (user) => {
     if (user) {
 
+        var menu = document.querySelector('.menu')
+
+        menu.classList.add('active')
+
+        menu.addEventListener('click', () => {
+            menu.classList.toggle('active')
+            sidebar.classList.toggle('ocult')
+            if (menu.classList == "menu") {
+                optionsFinanzas2.classList.remove('active')
+                optionsMenu2.classList.remove('active')
+            }
+        })
+
         var sidebar = document.querySelector('.sidebar')
         var btnSidebar = document.querySelector('.sidebar .topSidebar .user img')
 
