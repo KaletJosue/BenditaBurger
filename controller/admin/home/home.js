@@ -23,133 +23,155 @@ var loader = document.querySelector('.loader')
 onAuthStateChanged(auth, (user) => {
     if (user) {
 
-        var menu = document.querySelector('.menu')
-
-        menu.classList.add('active')
-
-        menu.addEventListener('click', () => {
-            menu.classList.toggle('active')
-            sidebar.classList.toggle('ocult')
-            if (menu.classList == "menu") {
-                optionsFinanzas2.classList.remove('active')
-                optionsMenu2.classList.remove('active')
-            }
-        })
-
-        var sidebar = document.querySelector('.sidebar')
-        var btnSidebar = document.querySelector('.sidebar .topSidebar .user img')
-
-        sidebar.classList.add('active')
-
-        btnSidebar.addEventListener('click', () => {
-            sidebar.classList.toggle('active')
-        })
-
-        var btnOptions2 = document.querySelector('.btnOptions2')
-        var btnOptions = document.querySelector('.btnOptions')
-
-        var optionsFinanzas = document.querySelector('.sidebar .centerSidebar ul li:nth-child(4)')
-        var optionsMenu = document.querySelector('.sidebar .centerSidebar ul li:nth-child(3)')
-
-        var optionsMenu2 = document.querySelector('.optionsMenu2')
-        var optionsFinanzas2 = document.querySelector('.optionsFinanzas2')
-
-        btnOptions2.addEventListener('click', () => {
-            optionsFinanzas.classList.toggle('active')
-            optionsMenu.classList.remove('active')
-            if (optionsFinanzas.classList == "active") {
-                optionsFinanzas2.classList.add('active')
-                optionsMenu2.classList.remove('active')
-            } else {
-                optionsFinanzas2.classList.remove('active')
-            }
-        })
-
-        btnOptions.addEventListener('click', () => {
-            optionsMenu.classList.toggle('active')
-            optionsFinanzas.classList.remove('active')
-            if (optionsMenu.classList == "active") {
-                optionsMenu2.classList.add('active')
-                optionsFinanzas2.classList.remove('active')
-            } else {
-                optionsMenu2.classList.remove('active')
-            }
-        })
-
-        var palanca = document.querySelector('.switch');
-        var body = document.querySelector('body');
-
-        var leerDarkMode = localStorage.getItem('darkMode');
-
-        if (leerDarkMode === 'active') {
-            body.classList.add('darkMode');
-            palanca.classList.add('active');
-        }
-
-        palanca.addEventListener('click', () => {
-            palanca.classList.toggle('active');
-            body.classList.toggle('darkMode');
-
-            if (body.classList.contains('darkMode')) {
-                localStorage.setItem('darkMode', 'active');
-            } else {
-                localStorage.setItem('darkMode', 'desactive');
-            }
-        });
-
-        var name = document.querySelector('.name')
-        var correo = document.querySelector('.correo')
-        var profile = document.querySelector('.profile')
-
-        var close = document.querySelector('.close')
-
-        getDocs(query(collection(db, "Users", "IdUser", "Private_Data"), where("Id", "==", user.uid)))
-            .then((querySnapshot) => {
+        getDocs(query(collection(db, "Users", "IdUser", "Private_Data"), where("Id", "==", user.uid))).
+            then((querySnapshot) => {
                 querySnapshot.forEach((doc) => {
-                    name.textContent = doc.data().Nombre
-                    correo.textContent = doc.data().Rol
 
-                    if (doc.data().URL == "") {
-                        profile.src = "/assets/profile-5.jpg"
+                    if (doc.data().Rol == "Administrador") {
+                        var menu = document.querySelector('.menu')
+
+                        menu.classList.add('active')
+
+                        menu.addEventListener('click', () => {
+                            menu.classList.toggle('active')
+                            sidebar.classList.toggle('ocult')
+                            if (menu.classList == "menu") {
+                                optionsFinanzas2.classList.remove('active')
+                                optionsMenu2.classList.remove('active')
+                            }
+                        })
+
+                        var sidebar = document.querySelector('.sidebar')
+                        var btnSidebar = document.querySelector('.sidebar .topSidebar .user img')
+
+                        sidebar.classList.add('active')
+
+                        btnSidebar.addEventListener('click', () => {
+                            sidebar.classList.toggle('active')
+                        })
+
+                        var btnOptions2 = document.querySelector('.btnOptions2')
+                        var btnOptions = document.querySelector('.btnOptions')
+
+                        var optionsFinanzas = document.querySelector('.sidebar .centerSidebar ul li:nth-child(4)')
+                        var optionsMenu = document.querySelector('.sidebar .centerSidebar ul li:nth-child(3)')
+
+                        var optionsMenu2 = document.querySelector('.optionsMenu2')
+                        var optionsFinanzas2 = document.querySelector('.optionsFinanzas2')
+
+                        btnOptions2.addEventListener('click', () => {
+                            optionsFinanzas.classList.toggle('active')
+                            optionsMenu.classList.remove('active')
+                            if (optionsFinanzas.classList == "active") {
+                                optionsFinanzas2.classList.add('active')
+                                optionsMenu2.classList.remove('active')
+                            } else {
+                                optionsFinanzas2.classList.remove('active')
+                            }
+                        })
+
+                        btnOptions.addEventListener('click', () => {
+                            optionsMenu.classList.toggle('active')
+                            optionsFinanzas.classList.remove('active')
+                            if (optionsMenu.classList == "active") {
+                                optionsMenu2.classList.add('active')
+                                optionsFinanzas2.classList.remove('active')
+                            } else {
+                                optionsMenu2.classList.remove('active')
+                            }
+                        })
+
+                        var palanca = document.querySelector('.switch');
+                        var body = document.querySelector('body');
+
+                        var leerDarkMode = localStorage.getItem('darkMode');
+
+                        if (leerDarkMode === 'active') {
+                            body.classList.add('darkMode');
+                            palanca.classList.add('active');
+                        }
+
+                        palanca.addEventListener('click', () => {
+                            palanca.classList.toggle('active');
+                            body.classList.toggle('darkMode');
+
+                            if (body.classList.contains('darkMode')) {
+                                localStorage.setItem('darkMode', 'active');
+                            } else {
+                                localStorage.setItem('darkMode', 'desactive');
+                            }
+                        });
+
+                        var name = document.querySelector('.name')
+                        var correo = document.querySelector('.correo')
+                        var profile = document.querySelector('.profile')
+
+                        var close = document.querySelector('.close')
+
+                        getDocs(query(collection(db, "Users", "IdUser", "Private_Data"), where("Id", "==", user.uid)))
+                            .then((querySnapshot) => {
+                                querySnapshot.forEach((doc) => {
+                                    name.textContent = (doc.data().Nombre).split(" ").slice(0, 2).join(" ")
+                                    correo.textContent = doc.data().Rol
+
+                                    if (doc.data().URL == "") {
+                                        profile.src = "/assets/profile-5.jpg"
+                                    } else {
+                                        profile.src = doc.data().URL
+                                    }
+                                })
+                            })
+                            .then(() => {
+                                loader.classList.add('active')
+                            })
+                            .catch((error) => {
+                                console.error("Error al obtener los datos del usuario:", error);
+                                loader.classList.add('active')
+                            });
+
+                        close.addEventListener('click', () => {
+                            var modal2 = document.querySelector('.modal2')
+                            var tryAgain2 = document.querySelector('.tryAgain2')
+                            var closeModal2 = document.querySelector('#closeModal2')
+                            var logOut2 = document.querySelector('.logOut2')
+
+                            modal2.classList.add('active')
+                            logOut2.addEventListener('click', () => {
+                                signOut(auth).then(() => {
+                                    location.href = "/index.html"
+                                }).catch((error) => {
+                                    // An error happened.
+                                });
+                            })
+                            closeModal2.addEventListener('click', () => {
+                                modal2.classList.remove('active')
+                            })
+                            tryAgain2.addEventListener('click', () => {
+                                modal2.classList.remove('active')
+                            })
+                            window.addEventListener('click', event => {
+                                if (event.target == modal2) {
+                                    modal2.classList.remove('active')
+                                }
+                            })
+                        });
                     } else {
-                        profile.src = doc.data().URL
+
+                        var modal = document.querySelector('.modal')
+                        var textErrorModal = document.querySelector('.textErrorModal')
+                        var tryAgain = document.querySelector('.tryAgain')
+                
+                        loader.classList.add('active')
+                        modal.classList.add('active')
+                        textErrorModal.textContent = "No tienes acceso a este apartado, inicia sesión"
+                        tryAgain.addEventListener('click', () => {
+                            location.href = "/views/login/login.html"
+                        })
+
                     }
+
                 })
             })
-            .then(() => {
-                loader.classList.add('active')
-            })
-            .catch((error) => {
-                console.error("Error al obtener los datos del usuario:", error);
-                loader.classList.add('active')
-            });
-
-        close.addEventListener('click', () => {
-            var modal2 = document.querySelector('.modal2')
-            var tryAgain2 = document.querySelector('.tryAgain2')
-            var closeModal2 = document.querySelector('#closeModal2')
-            var logOut2 = document.querySelector('.logOut2')
-
-            modal2.classList.add('active')
-            logOut2.addEventListener('click', () => {
-                signOut(auth).then(() => {
-                    location.href = "/index.html"
-                }).catch((error) => {
-                    // An error happened.
-                });
-            })
-            closeModal2.addEventListener('click', () => {
-                modal2.classList.remove('active')
-            })
-            tryAgain2.addEventListener('click', () => {
-                modal2.classList.remove('active')
-            })
-            window.addEventListener('click', event => {
-                if (event.target == modal2) {
-                    modal2.classList.remove('active')
-                }
-            })
-        });
 
     } else {
         loader.classList.add('active')
