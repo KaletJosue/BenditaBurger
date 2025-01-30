@@ -130,11 +130,13 @@ body {
     justify-content: space-between;
     padding: 2rem 2rem;
     transition: all .2s ease;
+    z-index: 2;
 }
 
 .sidebar .optionsMenu2,
 .sidebar .optionsFinanzas2 {
     display: none;
+    box-shadow: var(--box-shadow-suave);
 }
 
 .sidebar.active .optionsMenu2 {
@@ -414,6 +416,28 @@ body {
 
 .main {
     padding: 0 2rem 1rem 7rem;
+}
+
+.conTable {
+    overflow: hidden;
+    overflow-x: auto;
+}
+
+.conTable::-webkit-scrollbar {
+    height: 7px;
+    background-color: var(--color-linea);
+    border-radius: 50px;
+}
+
+.conTable::-webkit-scrollbar-thumb {
+    background-color: var(--color-gris);
+    border-radius: 50px;
+    cursor: pointer;
+}
+
+.conTable .espacio {
+    display: block;
+    height: 20px;
 }
 
 .main .table {
@@ -1011,28 +1035,6 @@ body {
     .modal,
     .modal2 {
         padding: 1rem;
-    }
-
-    .conTable {
-        overflow: hidden;
-        overflow-x: auto;
-    }
-
-    .conTable::-webkit-scrollbar {
-        height: 7px;
-        background-color: var(--color-linea);
-        border-radius: 50px;
-    }
-
-    .conTable::-webkit-scrollbar-thumb {
-        background-color: var(--color-gris);
-        border-radius: 50px;
-        cursor: pointer;
-    }
-
-    .conTable .espacio {
-        display: block;
-        height: 20px;
     }
 }
 
