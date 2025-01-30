@@ -28,11 +28,56 @@ onAuthStateChanged(auth, (user) => {
                 querySnapshot.forEach((doc) => {
 
                     if (doc.data().Rol == "Administrador") {
+
+                        const openModalDetails = document.querySelector('.openModal');
+                        const modalDetails = document.querySelector('.modalDetalis');
+                        const modalContentDetails = document.querySelector('.conModalDetails');
+                        const closeModalDetails = document.getElementById('closeModalDetails')
+
+                        openModalDetails.addEventListener('click', () => {
+                            modalDetails.style.display = 'flex'
+
+                            gsap.fromTo(modalContentDetails,
+                                { scale: 0, opacity: 0, filter: 'blur(10px)', backdropFilter: 'blur(0px)', x: 0 },
+                                {
+                                    scale: 1,
+                                    opacity: 1,
+                                    backdropFilter: 'blur(100px)',
+                                    filter: 'blur(0px)',
+                                    duration: .3,
+                                    ease: 'power1.in',
+                                }
+                            )
+                        })
+                        closeModalDetails.addEventListener('click', () => {
+                            gsap.to(modalContentDetails, {
+                                filter: 'blur(10px)',
+                                opacity: 0,
+                                x: 1000,
+                                ease: 'power1.in',
+                                onComplete: () => {
+                                    modalDetails.style.display = 'none';
+                                }
+                            });
+                        })
+                        window.addEventListener('click', event => {
+                            if (event.target == modalDetails) {
+                                gsap.to(modalContentDetails, {
+                                    filter: 'blur(10px)',
+                                    opacity: 0,
+                                    x: 1000,
+                                    ease: 'power1.in',
+                                    onComplete: () => {
+                                        modalDetails.style.display = 'none';
+                                    }
+                                });
+                            }
+                        })
+
                         var menu = document.querySelector('.menu')
+                        var conMenu = document.querySelector('.conMenu')
 
-                        menu.classList.add('active')
-
-                        menu.addEventListener('click', () => {
+                        conMenu.addEventListener('click', () => {
                             menu.classList.toggle('active')
                             sidebar.classList.toggle('ocult')
                             if (menu.classList == "menu") {
@@ -123,6 +168,53 @@ onAuthStateChanged(auth, (user) => {
                             })
                             .then(() => {
                                 loader.classList.add('active')
+                                let circularProgress = document.querySelector('.circular-progress'),
+                                    progressValue = document.querySelector('.progress-value'),
+                                    circularProgress2 = document.querySelector('.circular-progress2'),
+                                    progressValue2 = document.querySelector('.progress-value2'),
+                                    circularProgress3 = document.querySelector('.circular-progress3'),
+                                    progressValue3 = document.querySelector('.progress-value3')
+
+                                let progressStartValue = 0,
+                                    progressEndValue = 90,
+                                    speed = 10,
+                                    progressStartValue2 = 0,
+                                    progressEndValue2 = 20,
+                                    progressStartValue3 = 0,
+                                    progressEndValue3 = 80
+
+                                let progress3 = setInterval(() => {
+                                    progressStartValue3++
+
+                                    progressValue3.textContent = `${progressStartValue3}%`
+                                    circularProgress3.style.background = `conic-gradient(#00be59 ${progressStartValue * 3.6}deg, var(--color-fondo) 0deg)`
+
+                                    if (progressStartValue3 == progressEndValue3) {
+                                        clearInterval(progress3)
+                                    }
+                                }, speed)
+
+                                let progress2 = setInterval(() => {
+                                    progressStartValue2++
+
+                                    progressValue2.textContent = `${progressStartValue2}%`
+                                    circularProgress2.style.background = `conic-gradient(#ff7777 ${progressStartValue * 3.6}deg, var(--color-fondo) 0deg)`
+
+                                    if (progressStartValue2 == progressEndValue2) {
+                                        clearInterval(progress2)
+                                    }
+                                }, speed)
+
+                                let progress = setInterval(() => {
+                                    progressStartValue++
+
+                                    progressValue.textContent = `${progressStartValue}%`
+                                    circularProgress.style.background = `conic-gradient(#7d2ae8 ${progressStartValue * 3.6}deg, var(--color-fondo) 0deg)`
+
+                                    if (progressStartValue == progressEndValue) {
+                                        clearInterval(progress)
+                                    }
+                                }, speed)
                             })
                             .catch((error) => {
                                 console.error("Error al obtener los datos del usuario:", error);
@@ -160,7 +252,7 @@ onAuthStateChanged(auth, (user) => {
                         var modal = document.querySelector('.modal')
                         var textErrorModal = document.querySelector('.textErrorModal')
                         var tryAgain = document.querySelector('.tryAgain')
-                
+
                         loader.classList.add('active')
                         modal.classList.add('active')
                         textErrorModal.textContent = "No tienes acceso a este apartado, inicia sesión"

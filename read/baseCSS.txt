@@ -354,6 +354,10 @@ body {
     font-size: 12px;
 }
 
+.main {
+    padding: 1rem 2rem 1rem 7rem;
+}
+
 .switch {
     display: block;
     width: 40px;

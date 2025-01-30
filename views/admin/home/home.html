@@ -20,10 +20,12 @@
 
 <body>
 
-    <div class="menu">
-        <span class="lineBars1"></span>
-        <span class="lineBars2"></span>
-        <span class="lineBars3"></span>
+    <div class="conMenu">
+        <div class="menu">
+            <span class="lineBars1"></span>
+            <span class="lineBars2"></span>
+            <span class="lineBars3"></span>
+        </div>
     </div>
 
     <div class="sidebar">
@@ -104,6 +106,211 @@
         </div>
     </div>
 
+    <div class="main">
+        <div class="charts">
+            <div class="ingresos">
+                <div class="textIngresos">
+                    <i class="ph ph-chart-line"></i>
+                    <p>Ingresos</p>
+                    <h1>$9.000.000</h1>
+                </div>
+                <div class="circular-progress">
+                    <span class="progress-value">0%</span>
+                </div>
+            </div>
+            <div class="gastos">
+                <div class="textGastos">
+                    <i class="ph ph-trend-down"></i>
+                    <p>Gastos</p>
+                    <h1>$2.000.000</h1>
+                </div>
+                <div class="circular-progress2">
+                    <span class="progress-value2">0%</span>
+                </div>
+            </div>
+            <div class="ganancias">
+                <div class="textGanancias">
+                    <i class="ph ph-chart-bar"></i>
+                    <p>Ganancias</p>
+                    <h1>$7.000.000</h1>
+                </div>
+                <div class="circular-progress3">
+                    <span class="progress-value3">0%</span>
+                </div>
+            </div>
+        </div>
+        <div class="deliveries">
+            <h1>Entregas Pendientes</h1>
+            <table class="tableDeli">
+                <thead>
+                    <th>Cliente</th>
+                    <th>Metodo de Pago</th>
+                    <th>Estado</th>
+                    <th>Hora</th>
+                    <th>Monto</th>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>
+                            <div class="thClient">
+                                <img src="/assets/profile-0.jpg" alt=""> Kalet Josue
+                            </div>
+                        </th>
+                        <th>Nequi</th>
+                        <th>
+                            <p class="preparacion">Preparación</p>
+                        </th>
+                        <th>12:54</th>
+                        <th>$27.000</th>
+                        <th><button>Detalles</button></th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <div class="thClient">
+                                <img src="/assets/profile-1.jpg" alt=""> Kalet Josue
+                            </div>
+                        </th>
+                        <th>Efectivo</th>
+                        <th>
+                            <p class="enviado">Enviado</p>
+                        </th>
+                        <th>12:54</th>
+                        <th>$27.000</th>
+                        <th><button>Detalles</button></th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <div class="thClient">
+                                <img src="/assets/profile-2.jpg" alt=""> Kalet Josue
+                            </div>
+                        </th>
+                        <th>Targeta de Credito</th>
+                        <th>
+                            <p class="cancelado">Cancelado</p>
+                        </th>
+                        <th>12:54</th>
+                        <th>$27.000</th>
+                        <th><button>Detalles</button></th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <div class="thClient">
+                                <img src="/assets/profile-4.jpg" alt=""> Kalet Josue
+                            </div>
+                        </th>
+                        <th>Targeta de Credito</th>
+                        <th>
+                            <p class="enviado">Enviado</p>
+                        </th>
+                        <th>12:54</th>
+                        <th>$27.000</th>
+                        <th><button class="openModal">Detalles</button></th>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="espacio"></div>
+        </div>
+        <div class="sales">
+            <h1>Top 3 Mas Vendidos</h1>
+            <div class="salesContent">
+                <div class="top1">
+                    <div class="textTop1">
+                        <h1>01</h1>
+                        <p>Whopper</p>
+                        <h3>Hamburguesas</h3>
+                    </div>
+                    <img src="/assets/ham3.png" alt="">
+                </div>
+                <div class="top2">
+                    <div class="textTop2">
+                        <h1>02</h1>
+                        <p>Hawaiana</p>
+                        <h3>Hamburguesas</h3>
+                    </div>
+                    <img src="/assets/ham4.png" alt="">
+                </div>
+                <div class="top3">
+                    <div class="textTop3">
+                        <h1>03</h1>
+                        <p>Dulce Pecado</p>
+                        <h3>Hamburguesas</h3>
+                    </div>
+                    <img src="/assets/ham5.png" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modalDetalis">
+        <div class="conModalDetails">
+            <i class="ph-bold ph-x" id="closeModalDetails"></i>
+            <div class="infoUser">
+                <div class="campo">
+                    <p>Cliente:</p>
+                    <div class="imgCampo">
+                        <img src="/assets/profile-4.jpg" alt="">
+                        <p>Kalet Josue</p>
+                    </div>
+                </div>
+                <div class="campo">
+                    <p>Teléfono:</p>
+                    <p>3125704048</p>
+                </div>
+                <div class="campo">
+                    <p>Metodo de Pago:</p>
+                    <p>Efectivo</p>
+                </div>
+                <div class="campo">
+                    <p>Correo Electronico:</p>
+                    <p>kalet.jo28@gmail.com</p>
+                </div>
+                <div class="campo">
+                    <p>Dirección:</p>
+                    <p>Cra 22 # 2 - 13</p>
+                </div>
+                <div class="campo">
+                    <p>Hora:</p>
+                    <p>12:54</p>
+                </div>
+                <div class="campo">
+                    <p>Estado:</p>
+                    <p>Enviado</p>
+                </div>
+            </div>
+            <h3>Pedido:</h3>
+            <div class="infoPedido">
+                <div class="campoPedido">
+                    <div class="imgCampoPedido">
+                        <img src="/assets/ham2.png" alt="">
+                        <p>Whopper</p>
+                    </div>
+                    <p>$20.000</p>
+                </div>
+                <div class="campoPedido">
+                    <div class="imgCampoPedido">
+                        <img src="/assets/ham2.png" alt="">
+                        <p>Whopper</p>
+                    </div>
+                    <p>$20.000</p>
+                </div>
+                <div class="campoPedido">
+                    <div class="imgCampoPedido">
+                        <img src="/assets/ham2.png" alt="">
+                        <p>Whopper</p>
+                    </div>
+                    <p>$20.000</p>
+                </div>
+                <div class="campoPedido">
+                    <div class="imgCampoPedido">
+                        <img src="/assets/ham2.png" alt="">
+                        <p>Whopper</p>
+                    </div>
+                    <p>$20.000</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="modal">
         <div class="modalContent">
             <div class="centerModal">
@@ -148,6 +355,7 @@
         </div>
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.4/gsap.min.js"></script>
     <script src="/controller/admin/home/home.js" type="module"></script>
 </body>
 

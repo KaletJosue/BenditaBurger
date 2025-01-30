@@ -104,6 +104,10 @@
         </div>
     </div>
 
+    <div class="main"> 
+
+    </div>
+
     <div class="modal">
         <div class="modalContent">
             <div class="centerModal">
