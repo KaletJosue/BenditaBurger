@@ -5,7 +5,7 @@
     <script src="https://unpkg.com/scrollreveal"></script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/styles/admin/home/home.css" />
+    <link rel="stylesheet" href="/styles/admin/delivery/delivery.css" />
     <!-- Loader -->
     <link rel="stylesheet" href="/styles/loader/loader.css">
     <link rel="shortcut icon" href="/assets/logo.png" type="image/x-icon">
@@ -20,10 +20,12 @@
 
 <body>
 
-    <div class="menu">
-        <span class="lineBars1"></span>
-        <span class="lineBars2"></span>
-        <span class="lineBars3"></span>
+    <div class="conMenu">
+        <div class="menu">
+            <span class="lineBars1"></span>
+            <span class="lineBars2"></span>
+            <span class="lineBars3"></span>
+        </div>
     </div>
 
     <div class="sidebar">
@@ -38,14 +40,18 @@
         </div>
         <div class="centerSidebar">
             <ul>
-                <li class="active">
-                    <i class="ph ph-house-simple"></i>
-                    <p>Inicio</p>
-                </li>
-                <li>
-                    <i class="ph ph-truck"></i>
-                    <p>Entregas</p>
-                </li>
+                <a href="/views/admin/home/home.html">
+                    <li>
+                        <i class="ph ph-house-simple"></i>
+                        <p>Inicio</p>
+                    </li>
+                </a>
+                <a href="/views/admin/delivery/delivery.html">
+                    <li class="active">
+                        <i class="ph ph-truck"></i>
+                        <p>Entregas</p>
+                    </li>
+                </a>
                 <li>
                     <div class="btnOptions">
                         <i class="ph ph-hamburger"></i>
@@ -69,10 +75,12 @@
                         <p>Gastos</p>
                     </div>
                 </li>
-                <li>
-                    <i class="ph ph-bank"></i>
-                    <p>Inventario</p>
-                </li>
+                <a href="/views/admin/inventory/inventory.html">
+                    <li>
+                        <i class="ph ph-bank"></i>
+                        <p>Inventario</p>
+                    </li>
+                </a>
             </ul>
         </div>
         <div class="bottomSidebar">
@@ -104,7 +112,11 @@
         </div>
     </div>
 
-    <div class="main"> 
+    <div class="search">
+        <input type="text" placeholder="Busca por Cliente, Monto, Estado...">
+    </div>
+
+    <div class="main">
 
     </div>
 
@@ -152,8 +164,7 @@
         </div>
     </div>
 
-    <script src="/controller/admin/home/home.js" type="module"></script>
+    <script src="/controller/admin/delivery/delivery.js" type="module"></script>
 </body>
 
 </html>
-

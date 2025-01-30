@@ -28,11 +28,11 @@ onAuthStateChanged(auth, (user) => {
                 querySnapshot.forEach((doc) => {
 
                     if (doc.data().Rol == "Administrador") {
+
                         var menu = document.querySelector('.menu')
+                        var conMenu = document.querySelector('.conMenu')
 
-                        menu.classList.add('active')
-
-                        menu.addEventListener('click', () => {
+                        conMenu.addEventListener('click', () => {
                             menu.classList.toggle('active')
                             sidebar.classList.toggle('ocult')
                             if (menu.classList == "menu") {
@@ -160,7 +160,7 @@ onAuthStateChanged(auth, (user) => {
                         var modal = document.querySelector('.modal')
                         var textErrorModal = document.querySelector('.textErrorModal')
                         var tryAgain = document.querySelector('.tryAgain')
-                
+
                         loader.classList.add('active')
                         modal.classList.add('active')
                         textErrorModal.textContent = "No tienes acceso a este apartado, inicia sesión"

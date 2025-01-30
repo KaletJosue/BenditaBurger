@@ -3,9 +3,22 @@
 :root {
     --color-negro: #000;
     --color-blanco: #ffffff;
+    --color-gris: #828282;
 
     --color-fondo: #f0f0f0;
     --color-linea: #ccc;
+    
+    --color-naranja: #FFF2E9;
+    --color-texto-naranja: #FF8B43;
+
+    --color-azul: #E7F4F5;
+    --color-texto-azul: #069C9C;
+
+    --color-rojo: #FFE9E9;
+    --color-texto-rojo: #FF4A43;
+
+    --color-verde: #EDF8DA;
+    --color-texto-verde: #9ABA62;
 
     --box-shadow-suave: 1px 1px 1rem #00000017;
 }
@@ -13,9 +26,22 @@
 .darkMode {
     --color-negro: #ffffff;
     --color-blanco: #000000;
+    --color-gris: #b2b2b2;
 
-    --color-fondo: #3e3e3e;
+    --color-fondo: #161616;
     --color-linea: #202020;
+
+    --color-naranja: #cd7742b0;
+    --color-texto-naranja: #FFF2E9;
+
+    --color-azul: #043e3e9d;
+    --color-texto-azul: #E7F4F5;
+
+    --color-rojo: #9b2d2998;
+    --color-texto-rojo: #FFE9E9;
+
+    --color-verde: #5c713795;
+    --color-texto-verde: #EDF8DA;
 
     --box-shadow-suave: 1px 1px 1rem #ededed17;
 }
@@ -373,17 +399,167 @@ body {
 }
 
 .search input {
-    padding: 2rem 2rem 2rem 8rem;
+    padding: 2rem 2rem 2rem 7rem;
     width: 100%;
-    background-color: transparent;
+    font-size: 12px;
     border: none;
     outline: none;
-    font-size: 12px;
+    background-color: transparent;
     color: var(--color-negro);
 }
 
+.search input::placeholder {
+    color: var(--color-gris);
+}
+
 .main {
-    padding: 1rem 2rem 1rem 7rem;
+    padding: 0 2rem 1rem 7rem;
+}
+
+.main .table {
+    border-collapse: collapse;
+    width: 100%;
+    background-color: var(--color-blanco);
+    border-radius: 20px;
+}
+
+.main .table tr th {
+    text-align: start;
+}
+
+.main .table thead tr th {
+    font-size: 14px;
+    font-weight: 800;
+    color: var(--color-gris);
+    padding: 2rem 1rem;
+}
+
+.main .table tbody tr th {
+    padding: 1rem;
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--color-negro);
+    white-space: nowrap;
+}
+
+.main .table tbody tr:not(:last-child) {
+    border-bottom: solid 1px var(--color-linea);
+}
+
+.main .table tbody tr th .divClient {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    gap: .5rem;
+}
+
+.main .table tbody tr th .divClient img {
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    object-position: center center;
+    width: 40px;
+    border-radius: 10px;
+}
+
+.main .table tbody tr th:nth-child(6) {
+    position: relative;
+}
+
+.main .table tbody tr th:nth-child(6) .selectEstado {
+    position: absolute;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 0;
+    right: 100px;
+    top: 0;
+    z-index: 1;
+    background-color: var(--color-blanco);
+    box-shadow: var(--box-shadow-suave);
+    border-radius: 20px;
+    gap: .5rem;
+    width: 0px;
+    height: 0px;
+    overflow: hidden;
+}
+
+.main .table tbody tr th:nth-child(6) .selectEstado h3 {
+    padding: 1rem;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 700;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.main .table tbody tr th:nth-child(6) .selectEstado h3:first-child {
+    background-color: var(--color-azul);
+    color: var(--color-texto-azul);
+}
+
+.main .table tbody tr th:nth-child(6) .selectEstado h3:nth-child(2) {
+    background-color: var(--color-rojo);
+    color: var(--color-texto-rojo);
+}
+
+.main .table tbody tr th:nth-child(6) .selectEstado h3:nth-child(3) {
+    background-color: var(--color-naranja);
+    color: var(--color-texto-naranja);
+}
+
+.main .table tbody tr th:nth-child(6) .selectEstado h3:last-child {
+    background-color: var(--color-verde);
+    color: var(--color-texto-verde);
+}
+
+.main .table tbody tr th:nth-child(6) p {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: .8rem 1rem;
+    font-size: 12px;
+    font-weight: 800;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.main .table tbody tr th:nth-child(6) p.enviado {
+    background-color: var(--color-azul);
+    color: var(--color-texto-azul);
+}
+
+.main .table tbody tr th:nth-child(6) p.preparacion {
+    background-color: var(--color-naranja);
+    color: var(--color-texto-naranja);
+}
+
+.main .table tbody tr th:nth-child(6) p.cancelado {
+    background-color: var(--color-rojo);
+    color: var(--color-texto-rojo);
+}
+
+.main .table tbody tr th:nth-child(6) p.entregado {
+    background-color: var(--color-verde);
+    color: var(--color-texto-verde);
+}
+
+.main .table tbody tr th button {
+    padding: .8rem 1rem;
+    font-size: 12px;
+    border: solid 1px var(--color-gris);
+    border-radius: 10px;
+    background-color: transparent;
+    color: var(--color-gris);
+    font-weight: 500;
+    transition: all .2s ease;
+}
+
+.main .table tbody tr th button:hover {
+    background-color: var(--color-gris);
+    color: var(--color-blanco);
+    cursor: pointer;
 }
 
 .switch {
@@ -459,6 +635,156 @@ body {
     background-color: #edca2e;
     margin-left: .2rem;
     transition: all .2s ease;
+}
+
+.modalDetalis {
+    position: fixed;
+    width: 100vw;
+    height: 100dvh;
+    right: 0;
+    top: 0;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    display: none;
+}
+
+.modalDetalis .conModalDetails {
+    height: 100vh;
+    width: 400px;
+    backdrop-filter: blur(100px);
+    box-shadow: 1px 1px 1rem black;
+    padding: 2rem;
+    border-radius: 30px 0 0 30px;
+    overflow: hidden;
+    overflow-y: auto;
+    transform: scale(0);
+}
+
+.modalDetalis .conModalDetails::-webkit-scrollbar {
+    width: 7px;
+    background-color: var(--color-linea);
+}
+
+.modalDetalis .conModalDetails::-webkit-scrollbar-thumb {
+    background-color: var(--color-gris);
+    border-radius: 50px;
+    cursor: pointer;
+}
+
+.modalDetalis .conModalDetails i {
+    height: 30px;
+    width: 30px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: var(--color-negro);
+    cursor: pointer;
+    transition: all .2s ease;
+}
+
+.modalDetalis .conModalDetails i:hover {
+    background-color: var(--color-gris);
+    color: var(--color-blanco);
+}
+
+.modalDetalis .conModalDetails .infoUser {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.modalDetalis .conModalDetails .infoUser .campo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.modalDetalis .conModalDetails .infoUser .campo p:first-child {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--color-gris);
+}
+
+.modalDetalis .conModalDetails .infoUser .campo p:not(:first-child) {
+    font-size: 12px;
+    color: var(--color-negro);
+}
+
+.modalDetalis .conModalDetails .infoUser .campo .imgCampo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+}
+
+.modalDetalis .conModalDetails .infoUser .campo .imgCampo img {
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    object-position: center center;
+    width: 50px;
+    border-radius: 15px;
+}
+
+.modalDetalis .conModalDetails h3 {
+    margin-top: 2rem;
+    margin-left: 1rem;
+    font-size: 15px;
+    font-weight: 900;
+    color: var(--color-negro);
+}
+
+.modalDetalis .conModalDetails .infoPedido {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.modalDetalis .conModalDetails .infoPedido .campoPedido {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    background-color: var(--color-blanco);
+    padding: 1rem;
+    box-shadow: 1px 1px 1rem var(--color-fondo);
+    border-radius: 10px;
+}
+
+.modalDetalis .conModalDetails .infoPedido .campoPedido:not(:first-child) {
+    margin-top: .5rem;
+}
+
+.modalDetalis .conModalDetails .infoPedido .campoPedido p {
+    font-size: 14px;
+    font-weight: 900;
+    color: var(--color-negro);
+}
+
+.modalDetalis .conModalDetails .infoPedido .campoPedido .imgCampoPedido {
+    display: flex;
+    align-items: center;
+    gap: .2rem;
+}
+
+.modalDetalis .conModalDetails .infoPedido .campoPedido .imgCampoPedido p {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--color-gris);
+}
+
+.modalDetalis .conModalDetails .infoPedido .campoPedido .imgCampoPedido img {
+    aspect-ratio: 14/9;
+    object-fit: contain;
+    object-position: center center;
+    width: 40px;
 }
 
 /* Modal */
@@ -682,10 +1008,31 @@ body {
 }
 
 @media (width < 1000px) {
-
     .modal,
     .modal2 {
         padding: 1rem;
+    }
+
+    .conTable {
+        overflow: hidden;
+        overflow-x: auto;
+    }
+
+    .conTable::-webkit-scrollbar {
+        height: 7px;
+        background-color: var(--color-linea);
+        border-radius: 50px;
+    }
+
+    .conTable::-webkit-scrollbar-thumb {
+        background-color: var(--color-gris);
+        border-radius: 50px;
+        cursor: pointer;
+    }
+
+    .conTable .espacio {
+        display: block;
+        height: 20px;
     }
 }
 
@@ -707,11 +1054,14 @@ body {
     }
 
     .main {
-        padding: 1rem;
+        padding: 0 1rem 1rem;
     }
 }
 
 @media (width < 450px) {
+    .modalDetalis .conModalDetails {
+        border-radius: 0;
+    }
 
     .modal .modalContent,
     .modal2 .modalContent2 {
