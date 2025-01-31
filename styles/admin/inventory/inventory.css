@@ -533,7 +533,8 @@ body {
     color: white;
 }
 
-.modalAdd {
+.modalAdd,
+.modalUpdate {
     position: fixed;
     width: 100vw;
     height: 100vh;
@@ -555,13 +556,37 @@ body {
     border-radius: 20px;
 }
 
-.modalAdd .conModalAdd .topModalAdd {
+.modalUpdate .conModalUpdate {
+    background-color: var(--color-blanco);
+    box-shadow: var(--box-shadow-suave);
+    width: 350px;
+    height: 100%;
+    padding: 1rem;
+    border-radius: 20px;
+}
+
+.modalUpdate .conModalUpdate button {
+    margin-top: 1rem;
+    width: 100%;
+    font-size: 12px;
+    font-weight: 800;
+    padding: 1rem;
+    border-radius: 10px;
+    border: none;
+    background-color: var(--color-naranja);
+    color: var(--color-texto-naranja);
+    cursor: pointer;
+}
+
+.modalAdd .conModalAdd .topModalAdd,
+.modalUpdate .conModalUpdate .topModal {
     display: flex;
     flex-direction: row-reverse;
     justify-content: space-between;
 }
 
-.modalAdd .conModalAdd .topModalAdd i {
+.modalAdd .conModalAdd .topModalAdd i,
+.modalUpdate .conModalUpdate .topModal i {
     height: 30px;
     width: 30px;
     display: flex;
@@ -574,9 +599,32 @@ body {
     color: var(--color-negro);
 }
 
-.modalAdd .conModalAdd .topModalAdd i:hover {
+.modalAdd .conModalAdd .topModalAdd i:hover,
+.modalUpdate .conModalUpdate .topModal i:hover {
     background-color: var(--color-gris);
     color: var(--color-blanco);
+}
+
+.modalUpdate .conModalUpdate .inputUpdate {
+    margin-top: 1rem;
+}
+
+.modalUpdate .conModalUpdate .inputUpdate p {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--color-gris);
+}
+
+.modalUpdate .conModalUpdate .inputUpdate input {
+    width: 100%;
+    margin-top: .2rem;
+    padding: .8rem .7rem;
+    border-radius: 10px;
+    border: solid 1px var(--color-gris);
+    font-size: 12px;
+    outline: none;
+    background-color: transparent;
+    color: var(--color-negro);
 }
 
 .modalAdd .conModalAdd .topModalAdd .progress {
@@ -607,11 +655,16 @@ body {
 
 .modalAdd .conModalAdd .topModalAdd .progress p span {
     transition: all .2s ease;
+    color: var(--color-blanco);
 }
 
 .modalAdd .conModalAdd .topModalAdd .progress p span:last-child {
     position: absolute;
     top: -40vw;
+}
+
+.modalAdd .conModalAdd .topModalAdd .progress p span:last-child i {
+    color: var(--color-blanco);
 }
 
 .modalAdd .conModalAdd .topModalAdd .progress p.active {
@@ -644,6 +697,17 @@ body {
     overflow-x: hidden;
 }
 
+.modalAdd .conModalAdd .carrusel::-webkit-scrollbar {
+    width: 7px;
+    background-color: var(--color-linea);
+}
+
+.modalAdd .conModalAdd .carrusel::-webkit-scrollbar-thumb {
+    background-color: var(--color-gris);
+    border-radius: 50px;
+    cursor: pointer;
+}
+
 .modalAdd .conModalAdd .carrusel .addImg {
     height: 100%;
     display: flex;
@@ -655,6 +719,7 @@ body {
 .modalAdd .conModalAdd .carrusel .addName,
 .modalAdd .conModalAdd .carrusel .addStock {
     transition: all .2s ease;
+    padding-right: .5rem;
 }
 
 .modalAdd .conModalAdd .carrusel .addImg.active,

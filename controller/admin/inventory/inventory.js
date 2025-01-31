@@ -29,6 +29,50 @@ onAuthStateChanged(auth, (user) => {
 
                     if (doc.data().Rol == "Administrador") {
 
+                        const openModalUpdate = document.querySelector('.editar');
+                        const modalUpdate = document.querySelector('.modalUpdate');
+                        const modalContentUpdate = document.querySelector('.conModalUpdate');
+                        const closeModalUpdate = document.querySelector('#closeModalUpdate')
+
+                        openModalUpdate.addEventListener('click', () => {
+                            modalUpdate.style.display = 'flex'
+
+                            gsap.fromTo(modalContentUpdate,
+                                { scale: 0, opacity: 0, filter: 'blur(10px)', x: 0 },
+                                {
+                                    scale: 1,
+                                    opacity: 1,
+                                    filter: 'blur(0px)',
+                                    duration: .5,
+                                    ease: 'power1.out',
+                                }
+                            )
+                        })
+                        closeModalUpdate.addEventListener('click', () => {
+                            gsap.to(modalContentUpdate, {
+                                filter: 'blur(10px)',
+                                opacity: 0,
+                                x: 1000,
+                                ease: 'power1.in',
+                                onComplete: () => {
+                                    modalUpdate.style.display = 'none';
+                                }
+                            });
+                        })
+                        window.addEventListener('click', event => {
+                            if (event.target == modalUpdate) {
+                                gsap.to(modalContentUpdate, {
+                                    filter: 'blur(10px)',
+                                    opacity: 0,
+                                    x: 1000,
+                                    ease: 'power1.in',
+                                    onComplete: () => {
+                                        modalUpdate.style.display = 'none';
+                                    }
+                                });
+                            }
+                        })
+
                         const openModalDetails = document.querySelector('.openModal');
                         const modalDetails = document.querySelector('.modalAdd');
                         const modalContentDetails = document.querySelector('.conModalAdd');
