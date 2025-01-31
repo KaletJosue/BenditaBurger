@@ -7,7 +7,7 @@
 
     --color-fondo: #f0f0f0;
     --color-linea: #ccc;
-    
+
     --color-naranja: #FFF2E9;
     --color-texto-naranja: #FF8B43;
 
@@ -504,7 +504,7 @@ body {
 .main .table tbody tr th .actions button {
     padding: .7rem;
     font-size: 12px;
-    font-weight: 800;
+    font-weight: 500;
     border-radius: 10px;
     background-color: transparent;
 }
@@ -533,76 +533,98 @@ body {
     color: white;
 }
 
-.modalAdd,
-.modalUpdate {
+.modalDetele {
     position: fixed;
     width: 100vw;
-    height: 100vh;
+    height: 100dvh;
     top: 0;
     left: 0;
     display: none;
-    align-items: start;
-    justify-content: end;
-    padding: 1rem;
+    align-items: end;
+    justify-content: center;
     z-index: 1;
 }
 
-.modalAdd .conModalAdd {
-    background-color: var(--color-blanco);
-    box-shadow: var(--box-shadow-suave);
+.modalDetele .conModalDelete {
+    backdrop-filter: blur(90px);
+    padding: 2rem;
     width: 500px;
-    height: 100%;
-    padding: 1rem;
-    border-radius: 20px;
-}
-
-.modalUpdate .conModalUpdate {
-    background-color: var(--color-blanco);
-    box-shadow: var(--box-shadow-suave);
-    width: 350px;
-    height: 100%;
-    padding: 1rem;
-    border-radius: 20px;
-}
-
-.modalUpdate .conModalUpdate button {
-    margin-top: 1rem;
-    width: 100%;
-    font-size: 12px;
-    font-weight: 800;
-    padding: 1rem;
-    border-radius: 10px;
-    border: none;
-    background-color: var(--color-naranja);
-    color: var(--color-texto-naranja);
-    cursor: pointer;
-}
-
-.modalAdd .conModalAdd .topModalAdd,
-.modalUpdate .conModalUpdate .topModal {
+    box-shadow: 1px 1px 1rem #0000008a;
+    border-radius: 20px 20px 0 0;
     display: flex;
-    flex-direction: row-reverse;
-    justify-content: space-between;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
-.modalAdd .conModalAdd .topModalAdd i,
-.modalUpdate .conModalUpdate .topModal i {
-    height: 30px;
-    width: 30px;
+.modalDetele .conModalDelete .inModalDelete {
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 50%;
-    font-size: 12px;
-    cursor: pointer;
-    transition: all .2s ease;
-    color: var(--color-negro);
+    gap: 1rem;
 }
 
-.modalAdd .conModalAdd .topModalAdd i:hover,
-.modalUpdate .conModalUpdate .topModal i:hover {
-    background-color: var(--color-gris);
-    color: var(--color-blanco);
+.modalDetele .conModalDelete .inModalDelete img {
+    aspect-ratio: 4/5;
+    object-fit: contain;
+    object-position: center center;
+    width: 200px;
+}
+
+.modalDetele .conModalDelete .inModalDelete .textModalDelete {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem 0;
+}
+
+.modalDetele .conModalDelete .inModalDelete .textModalDelete p {
+    font-size: 12px;
+}
+
+.modalDetele .conModalDelete .inModalDelete .textModalDelete p:first-child,
+.modalDetele .conModalDelete .inModalDelete .textModalDelete p:nth-child(3),
+.modalDetele .conModalDelete .inModalDelete .textModalDelete p:nth-child(5),
+.modalDetele .conModalDelete .inModalDelete .textModalDelete p:nth-child(7) {
+    color: var(--color-gris);
+    font-weight: 700;
+}
+
+.modalDetele .conModalDelete button {
+    width: 300px;
+    background-color: #FF4A43;
+    padding: .7rem;
+    border-radius: 7px;
+    border: none;
+    font-size: 12px;
+    font-weight: 500;
+    color: white;
+    cursor: pointer;
+}
+
+.modalUpdate {
+    position: fixed;
+    width: 100vw;
+    height: 100dvh;
+    top: 0;
+    left: 0;
+    display: none;
+    align-items: end;
+    justify-content: center;
+    z-index: 1;
+}
+
+.modalUpdate .conModalUpdate {
+    backdrop-filter: blur(90px);
+    padding: 1rem 2rem;
+    width: 500px;
+    box-shadow: 1px 1px 1rem #0000008a;
+    border-radius: 20px 20px 0 0;
+}
+
+.modalUpdate .conModalUpdate .conInputs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 .5rem;
 }
 
 .modalUpdate .conModalUpdate .inputUpdate {
@@ -611,15 +633,14 @@ body {
 
 .modalUpdate .conModalUpdate .inputUpdate p {
     font-size: 12px;
-    font-weight: 700;
-    color: var(--color-gris);
+    margin-bottom: .2rem;
+    color: var(--color-negro);
 }
 
 .modalUpdate .conModalUpdate .inputUpdate input {
+    padding: .7rem;
     width: 100%;
-    margin-top: .2rem;
-    padding: .8rem .7rem;
-    border-radius: 10px;
+    border-radius: 7px;
     border: solid 1px var(--color-gris);
     font-size: 12px;
     outline: none;
@@ -627,180 +648,299 @@ body {
     color: var(--color-negro);
 }
 
-.modalAdd .conModalAdd .topModalAdd .progress {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.modalAdd .conModalAdd .topModalAdd .progress p {
-    background-color: var(--color-negro);
-    height: 40px;
-    width: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    font-size: 12px;
-    font-weight: 500;
-    color: var(--color-blanco);
-    position: relative;
-    transition: all .2s ease;
-}
-
-.modalAdd .conModalAdd .topModalAdd .progress p i:hover {
-    background-color: transparent;
-    cursor: auto;
-}
-
-.modalAdd .conModalAdd .topModalAdd .progress p span {
-    transition: all .2s ease;
-    color: var(--color-blanco);
-}
-
-.modalAdd .conModalAdd .topModalAdd .progress p span:last-child {
-    position: absolute;
-    top: -40vw;
-}
-
-.modalAdd .conModalAdd .topModalAdd .progress p span:last-child i {
-    color: var(--color-blanco);
-}
-
-.modalAdd .conModalAdd .topModalAdd .progress p.active {
-    background-color: var(--color-texto-azul);
-}
-
-.modalAdd .conModalAdd .topModalAdd .progress p.active span:last-child {
-    top: 5px;
-}
-
-.modalAdd .conModalAdd .topModalAdd .progress p.active span:first-child {
-    position: absolute;
-    top: 50px;
-}
-
-.modalAdd .conModalAdd .topModalAdd .progress div {
-    display: block;
-    width: 15px;
-    height: 3px;
-    background-color: var(--color-negro);
-}
-
-.modalAdd .conModalAdd .carrusel {
-    display: grid;
-    grid-template-columns: 100% 100% 100%;
+.modalUpdate .conModalUpdate .buttons {
     margin-top: 1rem;
-    height: calc(100% - 55px);
-    overflow: hidden;
-    overflow-y: auto;
-    overflow-x: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+    font-size: 12px;
 }
 
-.modalAdd .conModalAdd .carrusel::-webkit-scrollbar {
+.modalUpdate .conModalUpdate .buttons button {
+    padding: .7rem;
+    width: 100%;
+    border-radius: 7px;
+    border: none;
+    cursor: pointer;
+    transition: all .2s ease;
+    font-size: 12px;
+}
+
+.modalUpdate .conModalUpdate .buttons button:first-child {
+    background-color: var(--color-gris);
+    color: var(--color-blanco);
+    opacity: .2;
+    cursor: no-drop;
+}
+
+.modalUpdate .conModalUpdate .buttons button:last-child {
+    background-color: #FF4A43;
+    color: var(--color-blanco);
+}
+
+.modalUpdate .conModalUpdate .buttons button:last-child:hover {
+    transform: translateY(-5px);
+}
+
+.modalUpdate .conModalUpdate .buttons button:first-child.active {
+    opacity: 1;
+    background-color: #6397bc;
+    cursor: pointer;
+}
+
+.modalUpdate .conModalUpdate .buttons button:first-child.active:hover {
+    transform: translateY(-5px);
+}
+
+.modalAdd {
+    position: fixed;
+    width: 100vw;
+    height: 100dvh;
+    top: 0;
+    left: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    z-index: 1;
+}
+
+.modalAdd .conModalAdd {
+    backdrop-filter: blur(90px);
+    box-shadow: 1px 1px 1rem #0000008a;
+    width: 500px;
+    border-radius: 20px;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+    opacity: 0;
+}
+
+.modalAdd .conModalAdd i#closeModalAdd {
+    font-size: 12px;
+    height: 30px;
+    width: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-negro);
+    border-radius: 50%;
+    aspect-ratio: 1/1;
+    flex: 0 0 auto;
+    cursor: pointer;
+    transition: all .2s ease;
+}
+
+.modalAdd .conModalAdd i#closeModalAdd:hover {
+    background-color: var(--color-gris);
+    color: var(--color-blanco);
+}
+
+.modalAdd .conModalAdd .inModalAdd {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.modalAdd .conModalAdd .inModalAdd .progress {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.modalAdd .conModalAdd .inModalAdd .progress .one,
+.modalAdd .conModalAdd .inModalAdd .progress .two,
+.modalAdd .conModalAdd .inModalAdd .progress .three {
+    height: 50px;
+    width: 50px;
+    background-color: var(--color-gris);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    border-radius: 50%;
+    transition: all .2s ease;
+}
+
+.modalAdd .conModalAdd .inModalAdd .progress .one.active,
+.modalAdd .conModalAdd .inModalAdd .progress .two.active,
+.modalAdd .conModalAdd .inModalAdd .progress .three.active {
+    background-color: #6397bc;
+}
+
+.modalAdd .conModalAdd .inModalAdd .progress .one i,
+.modalAdd .conModalAdd .inModalAdd .progress .two i,
+.modalAdd .conModalAdd .inModalAdd .progress .three i {
+    position: absolute;
+    top: -60px;
+    color: #FFF;
+    font-size: 15px;
+    transition: all .5s;
+}
+
+.modalAdd .conModalAdd .inModalAdd .progress .one.active i,
+.modalAdd .conModalAdd .inModalAdd .progress .two.active i,
+.modalAdd .conModalAdd .inModalAdd .progress .three.active i {
+    top: 18px;
+}
+
+.modalAdd .conModalAdd .inModalAdd .progress .one h3,
+.modalAdd .conModalAdd .inModalAdd .progress .two h3,
+.modalAdd .conModalAdd .inModalAdd .progress .three h3 {
+    position: absolute;
+    color: var(--color-blanco);
+    font-size: 14px;
+    font-weight: 500;
+    transition: all .2s ease;
+    top: 15px;
+}
+
+.modalAdd .conModalAdd .inModalAdd .progress .one.active h3,
+.modalAdd .conModalAdd .inModalAdd .progress .two.active h3,
+.modalAdd .conModalAdd .inModalAdd .progress .three.active h3 {
+    position: absolute;
+    top: 60px;
+}
+
+.modalAdd .conModalAdd .inModalAdd .progress .line1,
+.modalAdd .conModalAdd .inModalAdd .progress .line2 {
+    display: block;
+    width: 3px;
+    height: 15px;
+    background-color: var(--color-gris);
+}
+
+.modalAdd .conModalAdd .inModalAdd .progress .line1.active,
+.modalAdd .conModalAdd .inModalAdd .progress .line2.active {
+    background-color: #6397bc;
+}
+
+.modalAdd .conModalAdd .inModalAdd .inputs {
+    flex-grow: 1;
+    height: calc(100% - 20px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: -1rem;
+    padding-right: 1rem;
+}
+
+.modalAdd .conModalAdd .inModalAdd .inputs::-webkit-scrollbar {
     width: 7px;
     background-color: var(--color-linea);
 }
 
-.modalAdd .conModalAdd .carrusel::-webkit-scrollbar-thumb {
+.modalAdd .conModalAdd .inModalAdd .inputs::-webkit-scrollbar-thumb {
     background-color: var(--color-gris);
     border-radius: 50px;
     cursor: pointer;
 }
 
-.modalAdd .conModalAdd .carrusel .addImg {
-    height: 100%;
+.modalAdd .conModalAdd .inModalAdd .inputs label {
+    display: flex;
+    padding: 1rem;
     display: flex;
     align-items: center;
     justify-content: center;
-}
-
-.modalAdd .conModalAdd .carrusel .addImg,
-.modalAdd .conModalAdd .carrusel .addName,
-.modalAdd .conModalAdd .carrusel .addStock {
-    transition: all .2s ease;
-    padding-right: .5rem;
-}
-
-.modalAdd .conModalAdd .carrusel .addImg.active,
-.modalAdd .conModalAdd .carrusel .addName.active {
-    transform: translateX(-100%);
-}
-
-.modalAdd .conModalAdd .carrusel .addName.move,
-.modalAdd .conModalAdd .carrusel .addStock.move {
-    transform: translateX(-200%);
-}
-
-.modalAdd .conModalAdd .carrusel .addImg label {
-    width: 250px;
-    height: 250px;
-    aspect-ratio: 1/1;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    border: dashed 2px var(--color-texto-naranja);
-    font-size: 14px;
-    font-weight: 800;
-    color: var(--color-texto-naranja);
-    transition: all .2s ease;
-}
-
-.modalAdd .conModalAdd .carrusel .addImg label:hover {
-    background-color: var(--color-texto-naranja);
-    color: var(--color-blanco);
-}
-
-.modalAdd .conModalAdd .carrusel .addName,
-.modalAdd .conModalAdd .carrusel .addStock {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin-top: -2rem;
-}
-
-.modalAdd .conModalAdd .carrusel .addName .inputName,
-.modalAdd .conModalAdd .carrusel .addStock .inputStock {
-    margin-top: 1rem;
-    width: 100%;
-}
-
-.modalAdd .conModalAdd .carrusel .addName .inputName p,
-.modalAdd .conModalAdd .carrusel .addStock .inputStock p {
-    font-size: 12px;
-    font-weight: 500;
-    color: var(--color-gris);
-}
-
-.modalAdd .conModalAdd .carrusel .addName .inputName input,
-.modalAdd .conModalAdd .carrusel .addStock .inputStock input {
-    width: 100%;
-    padding: .7rem;
     font-size: 12px;
     border-radius: 10px;
+    border: dashed 2px #6397bc;
+    font-weight: 700;
+    color: #6397bc;
+    cursor: pointer;
+    transition: all .2s ease;
+}
+
+.modalAdd .conModalAdd .inModalAdd .inputs label:hover {
+    background-color: #6397bc;
+    color: #fff;
+}
+
+.modalAdd .conModalAdd .inModalAdd .inputs h3 {
+    font-size: 12px;
+    margin-top: .3rem;
+    font-weight: 800;
+    color: var(--color-negro);
+}
+
+.modalAdd .conModalAdd .inModalAdd .inputs h3 span {
+    font-weight: 400;
+}
+
+.modalAdd .conModalAdd .inModalAdd .inputs .inputAdd {
+    margin-top: 1rem;
+}
+
+.modalAdd .conModalAdd .inModalAdd .inputs .inputAdd p {
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--color-negro);
+    margin-bottom: .2rem;
+}
+
+.modalAdd .conModalAdd .inModalAdd .inputs .inputAdd input {
     border: solid 1px var(--color-gris);
     outline: none;
-    margin-top: .5rem;
-    color: var(--color-negro);
+    border-radius: 6px;
+    font-size: 12px;
+    padding: .7rem;
+    width: 100%;
     background-color: transparent;
+    color: var(--color-negro);
 }
 
-.modalAdd .conModalAdd .carrusel .addName button,
-.modalAdd .conModalAdd .carrusel .addStock button {
+.modalAdd .conModalAdd .inModalAdd .inputs .buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+    width: 100%;
     margin-top: 1rem;
-    width: 70%;
-    padding: .7rem 2rem;
-    font-size: 12px;
-    font-weight: 800;
-    background-color: var(--color-texto-naranja);
+}
+
+.modalAdd .conModalAdd .inModalAdd .inputs .buttons button {
+    width: 100%;
+    padding: .7rem 1rem;
+    border-radius: 7px;
     border: none;
-    border-radius: 10px;
+    font-size: 12px;
+    font-weight: 500;
+    transition: all .2s ease;
     cursor: pointer;
+}
+
+.modalAdd .conModalAdd .inModalAdd .inputs .buttons button:first-child {
+    background-color: var(--color-gris);
     color: var(--color-blanco);
+    opacity: .2;
+    cursor: no-drop;
+}
+
+.modalAdd .conModalAdd .inModalAdd .inputs .buttons button:last-child {
+    background-color: #FF4A43;
+    color: var(--color-blanco);
+}
+
+.modalAdd .conModalAdd .inModalAdd .inputs .buttons button:last-child:hover {
+    transform: translateY(-5px);
+}
+
+.modalAdd .conModalAdd .inModalAdd .inputs .buttons button:first-child.active {
+    opacity: 1;
+    background-color: #6397bc;
+    cursor: pointer;
+}
+
+.modalAdd .conModalAdd .inModalAdd .inputs .buttons button:first-child.active:hover {
+    transform: translateY(-5px);
 }
 
 .toast {
@@ -1116,6 +1256,19 @@ body {
     color: white;
 }
 
+@media (height < 550px) {
+    .modalAdd .conModalAdd .inModalAdd .inputs {
+        justify-content: start;
+        margin-bottom: 2rem;
+        overflow: hidden;
+        overflow-y: auto;
+    }
+
+    .modalDetele .conModalDelete {
+        height: 700px;
+    }
+}
+
 @media (width < 1000px) {
 
     .modal,
@@ -1146,13 +1299,30 @@ body {
     }
 }
 
-@media (width < 550px) {
-    .modalAdd .conModalAdd {
-        width: 100%;
-    }
-}
-
 @media (width < 450px) {
+    .modalUpdate .conModalUpdate .conInputs {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+
+    .modalDetele .conModalDelete {
+        padding: 1rem;
+    }
+
+    .modalDetele .conModalDelete .inModalDelete {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        text-align: center;
+    }
+
+    .modalDetele .conModalDelete .inModalDelete img {
+        aspect-ratio: 1/1;
+    }
+
+    .modalDetele .conModalDelete button {
+        margin-top: 1rem;
+    }
 
     .modal .modalContent,
     .modal2 .modalContent2 {

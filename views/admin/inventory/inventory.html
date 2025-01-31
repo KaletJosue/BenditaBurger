@@ -116,7 +116,7 @@
         <div class="conTable">
             <div class="conButton">
                 <h1>Productos Agregados:</h1>
-                <button class="openModal">
+                <button class="openModalAdd">
                     <i class="ph-bold ph-plus"></i>
                     <p>Agregar</p>
                 </button>
@@ -150,7 +150,7 @@
                     </tr>
                     <tr>
                         <th><img src="/assets/carne.png" alt=""></th>
-                        <th>Pan de Hamburguesa</th>
+                        <th>Carne de Hamburguesa</th>
                         <th>Carnicos</th>
                         <th>100 Kg</th>
                         <th>$29.000</th>
@@ -164,7 +164,7 @@
                     </tr>
                     <tr>
                         <th><img src="/assets/lechuga.png" alt=""></th>
-                        <th>Pan de Hamburguesa</th>
+                        <th>Lechuga</th>
                         <th>Carnicos</th>
                         <th>100 Kg</th>
                         <th>$29.000</th>
@@ -178,15 +178,15 @@
                     </tr>
                     <tr>
                         <th><img src="/assets/aguacate.png" alt=""></th>
-                        <th>Pan de Hamburguesa</th>
+                        <th>Aguacate</th>
                         <th>Carnicos</th>
                         <th>100 Kg</th>
                         <th>$29.000</th>
                         <th>29 / 07 / 24</th>
                         <th>
                             <div class="actions">
-                                <button>Editar</button>
-                                <button>Eliminar</button>
+                                <button class="openModalUpdate">Editar</button>
+                                <button class="openModalDelete">Eliminar</button>
                             </div>
                         </th>
                     </tr>
@@ -196,91 +196,103 @@
         </div>
     </div>
 
+    <div class="toast">
+        <p>Debes ingresar el nombre del producto</p>
+    </div>
+
+    <div class="modalDetele">
+        <div class="conModalDelete">
+            <div class="inModalDelete">
+                <img src="/assets/carne.png" alt="">
+                <div class="textModalDelete">
+                    <p>Nombre:</p>
+                    <p>Pan de Hamburguesa</p>
+                    <p>Categoria:</p>
+                    <p>Panaderia</p>
+                    <p>Cantidad en Stock:</p>
+                    <p>100 Kg</p>
+                    <p>Precio Unitario:</p>
+                    <p>$29.000</p>
+                </div>
+            </div>
+            <button>Eliminar</button>
+        </div>
+    </div>
+
     <div class="modalUpdate">
         <div class="conModalUpdate">
-            <div class="topModal">
-                <i class="ph-bold ph-x" id="closeModalUpdate"></i>
+            <div class="conInputs">
+                <div class="inputUpdate">
+                    <p>Nombre</p>
+                    <input type="text" class="inputNameUpdate">
+                </div>
+                <div class="inputUpdate">
+                    <p>Categoria</p>
+                    <input type="text" class="inputCategoryUpdate">
+                </div>
+                <div class="inputUpdate">
+                    <p>Cantidad en Stock</p>
+                    <input type="text" class="inputStockUpdate">
+                </div>
+                <div class="inputUpdate">
+                    <p>Precio Unitario</p>
+                    <input type="number" class="inputPriceUpdate">
+                </div>
             </div>
-            <div class="inputUpdate">
-                <p>Nombre</p>
-                <input type="text">
+            <div class="buttons">
+                <button class="btnUpdate" disabled>Guardar</button>
+                <button id="closeModalUpdate">Cancelar</button>
             </div>
-            <div class="inputUpdate">
-                <p>Categoria</p>
-                <input type="text">
-            </div>
-            <div class="inputUpdate">
-                <p>Cantidad de Stock</p>
-                <input type="text">
-            </div>
-            <div class="inputUpdate">
-                <p>Precio Unitario</p>
-                <input type="text">
-            </div>
-            <button>Actualizar</button>
         </div>
     </div>
 
     <div class="modalAdd">
         <div class="conModalAdd">
-            <div class="topModalAdd">
-                <i class="ph-bold ph-x" id="closeModalDetails"></i>
+            <i class="ph-bold ph-x" id="closeModalAdd"></i>
+            <div class="inModalAdd">
                 <div class="progress">
-                    <p class="one">
-                        <span>1</span>
-                        <span>
-                            <i class="ph-fill ph-check-fat"></i>
-                        </span>
-                    </p>
-                    <div class="line1"></div>
-                    <p class="two">
-                        <span>2</span>
-                        <span>
-                            <i class="ph-fill ph-check-fat"></i>
-                        </span>
-                    </p>
-                    <div class="line2"></div>
-                    <p class="three">
-                        <span>3</span>
-                        <span>
-                            <i class="ph-fill ph-check-fat"></i>
-                        </span>
-                    </p>
-                </div> 
-            </div>
-            <div class="carrusel">
-                <div class="addImg">
-                    <label for="inputPhoto">Agrega una Imagen</label>
-                    <input type="file" id="inputPhoto" hidden accept="image/*">
-                </div>
-                <div class="addName">
-                    <div class="inputName">
-                        <p>Nombre del Producto</p>
-                        <input type="text" class="inputName2">
+                    <div class="one">
+                        <h3>1</h3>
+                        <i class="ph-bold ph-check"></i>
                     </div>
-                    <div class="inputName">
-                        <p>Categoría</p>
+                    <div class="line1"></div>
+                    <div class="two">
+                        <h3>2</h3>
+                        <i class="ph-bold ph-check"></i>
+                    </div>
+                    <div class="line2"></div>
+                    <div class="three">
+                        <h3>3</h3>
+                        <i class="ph-bold ph-check"></i>
+                    </div>
+                </div>
+                <div class="inputs">
+                    <input type="file" hidden id="inputPhoto">
+                    <label for="inputPhoto">Ingresa una Imagen</label>
+                    <h3>Imagen: <span class="nameImagen"></span></h3>
+                    <div class="inputAdd">
+                        <p>Nombre</p>
+                        <input type="text" class="inputName">
+                    </div>
+                    <div class="inputAdd">
+                        <p>Categoria</p>
                         <input type="text" class="inputCategory">
                     </div>
-                    <button class="btnContinueThree">Continuar</button>
-                </div>
-                <div class="addStock">
-                    <div class="inputStock">
+                    <div class="inputAdd">
                         <p>Cantidad en Stock</p>
-                        <input type="text" class="inputCant">
+                        <input type="text" class="inputStock">
                     </div>
-                    <div class="inputStock">
-                        <p>Precio</p>
+                    <div class="inputAdd">
+                        <p>Precio Unitario</p>
                         <input type="number" class="inputPrice">
                     </div>
-                    <button class="btnContinueEnd">Continuar</button>
+                    <div class="buttons">
+                        <button disabled class="saveAdd">Guardar</button>
+                        <button class="cancelAdd">Cancelar</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-
-    <div class="toast">
-        <p>Debes ingresar el nombre del producto</p>
     </div>
 
     <div class="modal">

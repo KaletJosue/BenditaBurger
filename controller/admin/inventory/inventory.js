@@ -29,194 +29,314 @@ onAuthStateChanged(auth, (user) => {
 
                     if (doc.data().Rol == "Administrador") {
 
-                        const openModalUpdate = document.querySelector('.editar');
+                        const openModalDelete = document.querySelector('.openModalDelete');
+                        const modalDelete = document.querySelector('.modalDetele');
+                        const modalContentDelete = document.querySelector('.conModalDelete');
+
+                        const isSmallScreen = window.matchMedia("(height: 550)").matches;
+
+                        var heightModal = 0
+
+                        if (isSmallScreen) {
+                            heightModal = "100%"
+                        } else {
+                            heightModal = "auto"
+                        }
+
+                        openModalDelete.addEventListener('click', () => {
+                            modalDelete.style.display = 'flex'
+
+                            gsap.fromTo(modalContentDelete,
+                                { backdropFilter: 'blur(0px)', height: 0, opacity: 0 },
+                                {
+                                    height: heightModal,
+                                    opacity: 1,
+                                    backdropFilter: 'blur(90px)',
+                                    duration: .7,
+                                    ease: 'expo.out',
+                                }
+                            )
+                        })
+                        window.addEventListener('click', event => {
+                            if (event.target == modalDelete) {
+                                gsap.to(modalContentDelete, {
+                                    height: '0px',
+                                    duration: .2,
+                                    ease: 'power1.in',
+                                    onComplete: () => {
+                                        modalDelete.style.display = 'none';
+                                    }
+                                });
+                            }
+                        })
+
+                        const openModalUpdate = document.querySelector('.openModalUpdate');
                         const modalUpdate = document.querySelector('.modalUpdate');
                         const modalContentUpdate = document.querySelector('.conModalUpdate');
-                        const closeModalUpdate = document.querySelector('#closeModalUpdate')
+                        const closeModalUpdate = document.getElementById('closeModalUpdate')
+
+                        var inputNameUpdate = document.querySelector('.inputNameUpdate')
+                        var inputCategoryUpdate = document.querySelector('.inputCategoryUpdate')
+                        var inputStockUpdate = document.querySelector('.inputStockUpdate')
+                        var inputPriceUpdate = document.querySelector('.inputPriceUpdate')
+
+                        var btnUpdate = document.querySelector('.btnUpdate')
+
+                        inputNameUpdate.addEventListener('input', () => {
+                            if (inputNameUpdate.value.length != 0 && inputCategoryUpdate.value.length != 0 && inputStockUpdate.value.length != 0 && inputPriceUpdate.value.length != 0) {
+                                btnUpdate.classList.add('active')
+                                btnUpdate.disabled = false
+                            } else {
+                                btnUpdate.classList.remove('active')
+                                btnUpdate.disabled = true
+                            }
+                        })
+
+                        inputCategoryUpdate.addEventListener('input', () => {
+                            if (inputNameUpdate.value.length != 0 && inputCategoryUpdate.value.length != 0 && inputStockUpdate.value.length != 0 && inputPriceUpdate.value.length != 0) {
+                                btnUpdate.classList.add('active')
+                                btnUpdate.disabled = false
+                            } else {
+                                btnUpdate.classList.remove('active')
+                                btnUpdate.disabled = true
+                            }
+                        })
+
+                        inputStockUpdate.addEventListener('input', () => {
+                            if (inputNameUpdate.value.length != 0 && inputCategoryUpdate.value.length != 0 && inputStockUpdate.value.length != 0 && inputPriceUpdate.value.length != 0) {
+                                btnUpdate.classList.add('active')
+                                btnUpdate.disabled = false
+                            } else {
+                                btnUpdate.classList.remove('active')
+                                btnUpdate.disabled = true
+                            }
+                        })
+
+                        inputPriceUpdate.addEventListener('input', () => {
+                            if (inputNameUpdate.value.length != 0 && inputCategoryUpdate.value.length != 0 && inputStockUpdate.value.length != 0 && inputPriceUpdate.value.length != 0) {
+                                btnUpdate.classList.add('active')
+                                btnUpdate.disabled = false
+                            } else {
+                                btnUpdate.classList.remove('active')
+                                btnUpdate.disabled = true
+                            }
+                        })
 
                         openModalUpdate.addEventListener('click', () => {
                             modalUpdate.style.display = 'flex'
 
                             gsap.fromTo(modalContentUpdate,
-                                { scale: 0, opacity: 0, filter: 'blur(10px)', x: 0 },
+                                { backdropFilter: 'blur(0px)', height: 0, opacity: 0 },
                                 {
-                                    scale: 1,
+                                    height: 'auto',
                                     opacity: 1,
-                                    filter: 'blur(0px)',
-                                    duration: .5,
-                                    ease: 'power1.out',
+                                    backdropFilter: 'blur(90px)',
+                                    duration: .7,
+                                    ease: 'expo.out',
                                 }
                             )
-                        })
-                        closeModalUpdate.addEventListener('click', () => {
-                            gsap.to(modalContentUpdate, {
-                                filter: 'blur(10px)',
-                                opacity: 0,
-                                x: 1000,
-                                ease: 'power1.in',
-                                onComplete: () => {
-                                    modalUpdate.style.display = 'none';
+                            window.addEventListener('click', event => {
+                                if (event.target == modalUpdate) {
+                                    gsap.to(modalContentUpdate, {
+                                        height: '0px',
+                                        duration: .2,
+                                        ease: 'power1.in',
+                                        onComplete: () => {
+                                            modalUpdate.style.display = 'none';
+                                        }
+                                    });
                                 }
-                            });
-                        })
-                        window.addEventListener('click', event => {
-                            if (event.target == modalUpdate) {
+                            })
+                            closeModalUpdate.addEventListener('click', () => {
                                 gsap.to(modalContentUpdate, {
-                                    filter: 'blur(10px)',
-                                    opacity: 0,
-                                    x: 1000,
+                                    height: '0px',
+                                    duration: .2,
                                     ease: 'power1.in',
                                     onComplete: () => {
                                         modalUpdate.style.display = 'none';
                                     }
                                 });
-                            }
+                            })
                         })
 
-                        const openModalDetails = document.querySelector('.openModal');
-                        const modalDetails = document.querySelector('.modalAdd');
-                        const modalContentDetails = document.querySelector('.conModalAdd');
-                        const closeModalDetails = document.getElementById('closeModalDetails')
+                        var inputName = document.querySelector('.inputName')
+                        var inputCategory = document.querySelector('.inputCategory')
+                        var inputStock = document.querySelector('.inputStock')
+                        var inputPrice = document.querySelector('.inputPrice')
+                        var inputPhoto = document.querySelector('#inputPhoto')
 
-                        openModalDetails.addEventListener('click', () => {
-                            modalDetails.style.display = 'flex'
-
-                            gsap.fromTo(modalContentDetails,
-                                { scale: 0, opacity: 0, filter: 'blur(10px)', x: 0 },
-                                {
-                                    scale: 1,
-                                    opacity: 1,
-                                    filter: 'blur(0px)',
-                                    duration: .5,
-                                    ease: 'power1.out',
-                                }
-                            )
-                        })
-                        closeModalDetails.addEventListener('click', () => {
-                            gsap.to(modalContentDetails, {
-                                filter: 'blur(10px)',
-                                opacity: 0,
-                                x: 1000,
-                                ease: 'power1.in',
-                                onComplete: () => {
-                                    modalDetails.style.display = 'none';
-                                }
-                            });
-
-                            setTimeout(() => {
-                                inputPhoto.value = ''
-                                inputName.value = ''
-                                inputCategory.value = ''
-                                inputCant.value = ''
-                                inputPrice.value = ''
-    
-                                one.classList.remove('active')
-                                two.classList.remove('active')
-                                three.classList.remove('active')
-    
-                                addImg.classList.remove('active')
-                                addName.classList.remove('active')
-                                addName.classList.remove('move')
-                                addStock.classList.remove('move')
-                            }, 1000)
-                        })
-                        window.addEventListener('click', event => {
-                            if (event.target == modalDetails) {
-                                gsap.to(modalContentDetails, {
-                                    filter: 'blur(10px)',
-                                    opacity: 0,
-                                    x: 1000,
-                                    ease: 'power1.in',
-                                    onComplete: () => {
-                                        modalDetails.style.display = 'none';
-                                    }
-                                });
-
-                                setTimeout(() => {
-                                    inputPhoto.value = ''
-                                    inputName.value = ''
-                                    inputCategory.value = ''
-                                    inputCant.value = ''
-                                    inputPrice.value = ''
-        
-                                    one.classList.remove('active')
-                                    two.classList.remove('active')
-                                    three.classList.remove('active')
-        
-                                    addImg.classList.remove('active')
-                                    addName.classList.remove('active')
-                                    addName.classList.remove('move')
-                                    addStock.classList.remove('move')
-                                }, 1000)
-                            }
-                        })
+                        var nameImagen = document.querySelector('.nameImagen')
 
                         var one = document.querySelector('.one')
                         var two = document.querySelector('.two')
                         var three = document.querySelector('.three')
 
-                        var addImg = document.querySelector('.addImg')
-                        var addName = document.querySelector('.addName')
-                        var addStock = document.querySelector('.addStock')
+                        var line1 = document.querySelector('.line1')
+                        var line2 = document.querySelector('.line2')
 
-                        var btnContinueThree = document.querySelector('.btnContinueThree')
-                        var inputName = document.querySelector('.inputName2')
-                        var inputCategory = document.querySelector('.inputCategory')
+                        var cancelAdd = document.querySelector('.cancelAdd')
+                        var saveAdd = document.querySelector('.saveAdd')
 
-                        var btnContinueEnd = document.querySelector('.btnContinueEnd')
-                        var inputCant = document.querySelector('.inputCant')
-                        var inputPrice = document.querySelector('.inputPrice')
+                        cancelAdd.addEventListener('click', () => {
+                            gsap.to(modalContentAdd, {
+                                height: '0px',
+                                padding: '0rem',
+                                overflow: 'hidden',
+                                duration: .2,
+                                ease: 'power1.in',
+                                onComplete: () => {
+                                    modalAdd.style.display = 'none';
 
-                        var toast = document.querySelector('.toast')
-                        var pToast = document.querySelector('.toast p')
+                                    inputName.value = ''
+                                    inputCategory.value = ''
+                                    inputStock.value = ''
+                                    inputPrice.value = ''
+                                    inputPhoto.value = ''
 
-                        btnContinueEnd.addEventListener('click', () => {
-                            if (inputCant.value.length != 0) {
-                                if (inputPrice.value.length != 0) {
-                                    three.classList.add('active')
-                                } else {
-                                    pToast.textContent = "Debes ingresar el precio"
-                                    toast.classList.add('active')
-                                    setTimeout(() => {
-                                        toast.classList.remove('active')
-                                    }, 2000)
+                                    nameImagen.textContent = ''
+
+                                    one.classList.remove('active')
+                                    two.classList.remove('active')
+                                    three.classList.remove('active')
+
+                                    line1.classList.remove('active')
+                                    line2.classList.remove('active')
+
+                                    saveAdd.classList.remove('active')
                                 }
+                            });
+                        })
+
+                        inputPhoto.addEventListener('change', function () {
+                            if (inputPhoto.files.length > 0) {
+                                nameImagen.textContent = inputPhoto.files[0].name
+                                one.classList.add('active')
+                                line1.classList.add('active')
+                            }
+
+                            if (inputPrice.value.length != 0 && inputStock.value.length != 0 && inputCategory.value.length != 0 && inputName.value.length != 0 && inputPhoto.value.length != 0) {
+                                saveAdd.classList.add('active')
+                                saveAdd.disabled = false
                             } else {
-                                pToast.textContent = "Debes ingresar la cantidad del producto"
-                                toast.classList.add('active')
-                                setTimeout(() => {
-                                    toast.classList.remove('active')
-                                }, 2000)
+                                saveAdd.classList.remove('active')
+                                saveAdd.disabled = true
                             }
                         })
 
-                        btnContinueThree.addEventListener('click', () => {
-                            if (inputName.value.length != 0) {
-                                if (inputCategory.value.length != 0) {
-                                    two.classList.add('active')
-                                    addName.classList.add('move')
-                                    addStock.classList.add('move')
-                                } else {
-                                    pToast.textContent = "Debes ingresar el nombre de la categoria"
-                                    toast.classList.add('active')
-                                    setTimeout(() => {
-                                        toast.classList.remove('active')
-                                    }, 2000)
-                                }
+                        inputName.addEventListener("input", function () {
+                            if (inputName.value.length == 0 || inputCategory.value.length == 0) {
+                                two.classList.remove('active')
+                                line2.classList.remove('active')
                             } else {
-                                toast.classList.add('active')
-                                setTimeout(() => {
-                                    toast.classList.remove('active')
-                                }, 2000)
+                                two.classList.add('active')
+                                line2.classList.add('active')
                             }
+
+                            if (inputPrice.value.length != 0 && inputStock.value.length != 0 && inputCategory.value.length != 0 && inputName.value.length != 0 && inputPhoto.value.length != 0) {
+                                saveAdd.classList.add('active')
+                                saveAdd.disabled = false
+                            } else {
+                                saveAdd.classList.remove('active')
+                                saveAdd.disabled = true
+                            }
+                        });
+
+                        inputCategory.addEventListener("input", function () {
+                            if (inputName.value.length == 0 || inputCategory.value.length == 0) {
+                                two.classList.remove('active')
+                                line2.classList.remove('active')
+                            } else {
+                                two.classList.add('active')
+                                line2.classList.add('active')
+                            }
+
+                            if (inputPrice.value.length != 0 && inputStock.value.length != 0 && inputCategory.value.length != 0 && inputName.value.length != 0 && inputPhoto.value.length != 0) {
+                                saveAdd.classList.add('active')
+                                saveAdd.disabled = false
+                            } else {
+                                saveAdd.classList.remove('active')
+                                saveAdd.disabled = true
+                            }
+                        });
+
+                        inputStock.addEventListener("input", function () {
+                            if (inputStock.value.length == 0 || inputPrice.value.length == 0) {
+                                three.classList.remove('active')
+                            } else {
+                                three.classList.add('active')
+                            }
+
+                            if (inputPrice.value.length != 0 && inputStock.value.length != 0 && inputCategory.value.length != 0 && inputName.value.length != 0 && inputPhoto.value.length != 0) {
+                                saveAdd.classList.add('active')
+                                saveAdd.disabled = false
+                            } else {
+                                saveAdd.classList.remove('active')
+                                saveAdd.disabled = true
+                            }
+                        });
+
+                        inputPrice.addEventListener("input", function () {
+                            if (inputStock.value.length == 0 || inputPrice.value.length == 0) {
+                                three.classList.remove('active')
+                            } else {
+                                three.classList.add('active')
+                            }
+
+                            if (inputPrice.value.length != 0 && inputStock.value.length != 0 && inputCategory.value.length != 0 && inputName.value.length != 0 && inputPhoto.value.length != 0) {
+                                saveAdd.classList.add('active')
+                                saveAdd.disabled = false
+                            } else {
+                                saveAdd.classList.remove('active')
+                                saveAdd.disabled = true
+                            }
+                        });
+
+                        const openModalAdd = document.querySelector('.openModalAdd');
+                        const modalAdd = document.querySelector('.modalAdd');
+                        const modalContentAdd = document.querySelector('.conModalAdd');
+                        const closeModalAdd = document.getElementById('closeModalAdd')
+
+                        openModalAdd.addEventListener('click', () => {
+                            modalAdd.style.display = 'flex'
+
+                            gsap.fromTo(modalContentAdd,
+                                { backdropFilter: 'blur(0px)', height: 0, opacity: 0 },
+                                {
+                                    height: '100%',
+                                    padding: '1rem',
+                                    overflow: 'hidden',
+                                    opacity: 1,
+                                    backdropFilter: 'blur(90px)',
+                                    duration: .7,
+                                    ease: 'expo.out',
+                                }
+                            )
                         })
-
-                        var inputPhoto = document.getElementById('inputPhoto')
-
-                        inputPhoto.addEventListener('change', () => {
-                            one.classList.add('active')
-                            addImg.classList.add('active')
-                            addName.classList.add('active')
+                        closeModalAdd.addEventListener('click', () => {
+                            gsap.to(modalContentAdd, {
+                                height: '0px',
+                                padding: '0rem',
+                                overflow: 'hidden',
+                                duration: .2,
+                                ease: 'power1.in',
+                                onComplete: () => {
+                                    modalAdd.style.display = 'none';
+                                }
+                            });
+                        })
+                        window.addEventListener('click', event => {
+                            if (event.target == modalAdd) {
+                                gsap.to(modalContentAdd, {
+                                    height: '0px',
+                                    padding: '0rem',
+                                    overflow: 'hidden',
+                                    duration: .2,
+                                    ease: 'power1.in',
+                                    onComplete: () => {
+                                        modalAdd.style.display = 'none';
+                                    }
+                                });
+                            }
                         })
 
                         var menu = document.querySelector('.menu')
