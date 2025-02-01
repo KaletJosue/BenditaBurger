@@ -61,12 +61,8 @@ body {
     background-color: var(--color-fondo);
 }
 
-.btnProducts {
+.btnSections.active {
     background-color: var(--color-fondo);
-}
-
-.optionsMenu .btnProducts {
-    margin-top: .5rem;
 }
 
 .conMenu {
@@ -495,50 +491,8 @@ body {
     padding: 1rem;
 }
 
-.main .table tbody tr th .btnEstatus {
-    width: 100px;
-    height: 40px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    background-color: #6397bc;
-    font-size: 12px;
-    font-weight: 700;
-    color: white;
-    overflow: hidden;
-    cursor: pointer;
-    transition: all .2s ease;
-}
-
-.main .table tbody tr th:nth-child(6) {
-    width: 140px;
-}
-
-.main .table tbody tr th .btnEstatus.active {
-    background-color: #828282;
-}
-
-.main .table tbody tr th .btnEstatus p {
-    position: absolute;
-    transition: all .2s ease;
-}
-
-.main .table tbody tr th .btnEstatus p:last-child {
-    top: 60px;
-}
-
-.main .table tbody tr th .btnEstatus.active p:last-child {
-    top: 12px;
-}
-
-.main .table tbody tr th .btnEstatus p:first-child {
-    top: 12px;
-}
-
-.main .table tbody tr th .btnEstatus.active p:first-child {
-    top: -60px;
+.main .table tbody tr th:nth-child(4) {
+    width: 200px;
 }
 
 .main .table tbody tr th img {
@@ -546,10 +500,6 @@ body {
     object-fit: contain;
     object-position: center center;
     width: 50px;
-}
-
-.main .table tbody tr th:nth-child(5) {
-    white-space: nowrap;
 }
 
 .main .table tbody tr th .actions {
@@ -605,8 +555,8 @@ body {
 
 .modalDetele .conModalDelete {
     backdrop-filter: blur(90px);
-    padding: 2rem;
-    width: 500px;
+    padding: 2rem 2rem 1rem;
+    width: 400px;
     box-shadow: 1px 1px 1rem #0000008a;
     border-radius: 20px 20px 0 0;
     display: flex;
@@ -649,7 +599,7 @@ body {
 }
 
 .modalDetele .conModalDelete button {
-    width: 300px;
+    width: 100%;
     background-color: #FF4A43;
     padding: .7rem;
     border-radius: 7px;
@@ -658,6 +608,7 @@ body {
     font-weight: 500;
     color: white;
     cursor: pointer;
+    margin-top: 1rem;
 }
 
 .modalUpdate {
@@ -667,64 +618,23 @@ body {
     top: 0;
     left: 0;
     display: none;
-    align-items: center;
+    align-items: end;
     justify-content: center;
     z-index: 1;
-    padding: 1rem;
 }
 
 .modalUpdate .conModalUpdate {
     backdrop-filter: blur(90px);
-    padding: 2rem;
+    padding: 1rem 2rem;
     width: 500px;
     box-shadow: 1px 1px 1rem #0000008a;
-    border-radius: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-}
-
-.modalUpdate .conModalUpdate i#closeModalUpdate {
-    top: 10px;
-    left: 10px;
-    height: 35px;
-    width: 35px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    position: absolute;
-    transition: all .2s ease;
-    cursor: pointer;
-    color: var(--color-negro);
-}
-
-.modalUpdate .conModalUpdate i#closeModalUpdate:hover {
-    background-color: var(--color-gris);
-    color: var(--color-blanco);
+    border-radius: 20px 20px 0 0;
 }
 
 .modalUpdate .conModalUpdate .conInputs {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 0 .5rem;
-    width: 100%;
-    overflow: hidden;
-    overflow-y: auto;
-    padding-right: 1rem;
-}
-
-.modalUpdate .conModalUpdate .conInputs::-webkit-scrollbar {
-    width: 7px;
-    background-color: var(--color-linea);
-}
-
-.modalUpdate .conModalUpdate .conInputs::-webkit-scrollbar-thumb {
-    background-color: var(--color-gris);
-    border-radius: 50px;
-    cursor: pointer;
 }
 
 .modalUpdate .conModalUpdate .inputUpdate {
@@ -737,8 +647,7 @@ body {
     color: var(--color-negro);
 }
 
-.modalUpdate .conModalUpdate .inputUpdate input,
-.modalUpdate .conModalUpdate .inputUpdate textarea {
+.modalUpdate .conModalUpdate .inputUpdate input {
     padding: .7rem;
     width: 100%;
     border-radius: 7px;
@@ -756,7 +665,6 @@ body {
     justify-content: center;
     gap: .5rem;
     font-size: 12px;
-    width: 100%;
 }
 
 .modalUpdate .conModalUpdate .buttons button {
@@ -930,12 +838,9 @@ body {
     height: calc(100% - 20px);
     display: flex;
     flex-direction: column;
-    justify-content: start;
+    justify-content: center;
     margin-top: -1rem;
     padding-right: 1rem;
-    overflow: hidden;
-    overflow-y: auto;
-    margin-bottom: 2rem;
 }
 
 .modalAdd .conModalAdd .inModalAdd .inputs::-webkit-scrollbar {
@@ -991,8 +896,7 @@ body {
     margin-bottom: .2rem;
 }
 
-.modalAdd .conModalAdd .inModalAdd .inputs .inputAdd input,
-.modalAdd .conModalAdd .inModalAdd .inputs .inputAdd textarea {
+.modalAdd .conModalAdd .inModalAdd .inputs .inputAdd input {
     border: solid 1px var(--color-gris);
     outline: none;
     border-radius: 6px;
@@ -1362,17 +1266,18 @@ body {
     color: white;
 }
 
+@media (height < 350px) {
+    .modalAdd .conModalAdd .inModalAdd .inputs {
+        justify-content: start;
+        margin-bottom: 2rem;
+        overflow: hidden;
+        overflow-y: auto;
+    }
+}
+
 @media (height < 550px) {
     .modalDetele .conModalDelete {
         height: 700px;
-    }
-
-    .modalUpdate .conModalUpdate {
-        justify-content: start;
-    }
-
-    .modalUpdate .conModalUpdate .conInputs {
-        margin-top: 3rem;
     }
 }
 

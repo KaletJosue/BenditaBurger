@@ -29,12 +29,6 @@ onAuthStateChanged(auth, (user) => {
 
                     if (doc.data().Rol == "Administrador") {
 
-                        var btnEstatus = document.querySelector('.btnEstatus')
-
-                        btnEstatus.addEventListener('click', () => {
-                            btnEstatus.classList.toggle('active')
-                        })
-
                         var btnProducts = document.querySelectorAll('.btnProducts')
                         var btnSections = document.querySelectorAll('.btnSections')
 
@@ -94,38 +88,15 @@ onAuthStateChanged(auth, (user) => {
                         const openModalUpdate = document.querySelector('.openModalUpdate');
                         const modalUpdate = document.querySelector('.modalUpdate');
                         const modalContentUpdate = document.querySelector('.conModalUpdate');
-                        const closeModalUpdate = document.querySelectorAll('#closeModalUpdate')
+                        const closeModalUpdate = document.getElementById('closeModalUpdate')
 
                         var inputNameUpdate = document.querySelector('.inputNameUpdate')
                         var inputCategoryUpdate = document.querySelector('.inputCategoryUpdate')
-                        var inputPriceUpdate = document.querySelector('.inputPriceUpdate')
-                        var inputDescriptionUpdate = document.querySelector('.inputDescriptionUpdate')
-                        var inputDiscountUpdate = document.querySelector('.inputDiscountUpdate')
 
                         var btnUpdate = document.querySelector('.btnUpdate')
 
-                        inputDiscountUpdate.addEventListener('input', () => {
-                            if (inputNameUpdate.value.length != 0 && inputCategoryUpdate.value.length != 0 && inputPriceUpdate.value.length != 0 && inputDescriptionUpdate.value.length != 0 && inputDiscountUpdate.value.length != 0) {
-                                btnUpdate.classList.add('active')
-                                btnUpdate.disabled = false
-                            } else {
-                                btnUpdate.classList.remove('active')
-                                btnUpdate.disabled = true
-                            }
-                        })
-
-                        inputDescriptionUpdate.addEventListener('input', () => {
-                            if (inputNameUpdate.value.length != 0 && inputCategoryUpdate.value.length != 0 && inputPriceUpdate.value.length != 0 && inputDescriptionUpdate.value.length != 0 && inputDiscountUpdate.value.length != 0) {
-                                btnUpdate.classList.add('active')
-                                btnUpdate.disabled = false
-                            } else {
-                                btnUpdate.classList.remove('active')
-                                btnUpdate.disabled = true
-                            }
-                        })
-
                         inputNameUpdate.addEventListener('input', () => {
-                            if (inputNameUpdate.value.length != 0 && inputCategoryUpdate.value.length != 0 && inputPriceUpdate.value.length != 0 && inputDescriptionUpdate.value.length != 0 && inputDiscountUpdate.value.length != 0) {
+                            if (inputNameUpdate.value.length != 0 && inputCategoryUpdate.value.length != 0) {
                                 btnUpdate.classList.add('active')
                                 btnUpdate.disabled = false
                             } else {
@@ -135,17 +106,7 @@ onAuthStateChanged(auth, (user) => {
                         })
 
                         inputCategoryUpdate.addEventListener('input', () => {
-                            if (inputNameUpdate.value.length != 0 && inputCategoryUpdate.value.length != 0 && inputPriceUpdate.value.length != 0  && inputDescriptionUpdate.value.length != 0 && inputDiscountUpdate.value.length != 0) {
-                                btnUpdate.classList.add('active')
-                                btnUpdate.disabled = false
-                            } else {
-                                btnUpdate.classList.remove('active')
-                                btnUpdate.disabled = true
-                            }
-                        })
-
-                        inputPriceUpdate.addEventListener('input', () => {
-                            if (inputNameUpdate.value.length != 0 && inputCategoryUpdate.value.length != 0 && inputPriceUpdate.value.length != 0  && inputDescriptionUpdate.value.length != 0 && inputDiscountUpdate.value.length != 0) {
+                            if (inputNameUpdate.value.length != 0 && inputCategoryUpdate.value.length != 0) {
                                 btnUpdate.classList.add('active')
                                 btnUpdate.disabled = false
                             } else {
@@ -160,7 +121,7 @@ onAuthStateChanged(auth, (user) => {
                             gsap.fromTo(modalContentUpdate,
                                 { backdropFilter: 'blur(0px)', height: 0, opacity: 0 },
                                 {
-                                    height: '100%',
+                                    height: 'auto',
                                     opacity: 1,
                                     backdropFilter: 'blur(90px)',
                                     duration: .7,
@@ -179,35 +140,22 @@ onAuthStateChanged(auth, (user) => {
                                     });
                                 }
                             })
-                            closeModalUpdate.forEach((closeModalUpdateBtn) => {
-                                closeModalUpdateBtn.addEventListener('click', () => {
-                                    gsap.to(modalContentUpdate, {
-                                        height: '0px',
-                                        duration: .2,
-                                        ease: 'power1.in',
-                                        onComplete: () => {
-                                            modalUpdate.style.display = 'none';
-                                        }
-                                    });
-                                })
+                            closeModalUpdate.addEventListener('click', () => {
+                                gsap.to(modalContentUpdate, {
+                                    height: '0px',
+                                    duration: .2,
+                                    ease: 'power1.in',
+                                    onComplete: () => {
+                                        modalUpdate.style.display = 'none';
+                                    }
+                                });
                             })
                         })
 
                         var inputName = document.querySelector('.inputName')
-                        var inputCategory = document.querySelector('.inputCategory')
-                        var inputPrice = document.querySelector('.inputPrice')
-                        var inputPhoto = document.querySelector('#inputPhoto')
-                        var inputDescription = document.querySelector('.inputDescription')
-                        var inputDiscount = document.querySelector('.inputDiscount')
-
-                        var nameImagen = document.querySelector('.nameImagen')
+                        var inputPriority = document.querySelector('.inputPriority')
 
                         var one = document.querySelector('.one')
-                        var two = document.querySelector('.two')
-                        var three = document.querySelector('.three')
-
-                        var line1 = document.querySelector('.line1')
-                        var line2 = document.querySelector('.line2')
 
                         var cancelAdd = document.querySelector('.cancelAdd')
                         var saveAdd = document.querySelector('.saveAdd')
@@ -223,52 +171,24 @@ onAuthStateChanged(auth, (user) => {
                                     modalAdd.style.display = 'none';
 
                                     inputName.value = ''
-                                    inputCategory.value = ''
-                                    inputPrice.value = ''
-                                    inputPhoto.value = ''
-                                    inputDescription.value = ''
-                                    inputDiscount.value = ''
-
-                                    nameImagen.textContent = ''
+                                    inputPriority.value = ''
 
                                     one.classList.remove('active')
-                                    two.classList.remove('active')
-                                    three.classList.remove('active')
-
-                                    line1.classList.remove('active')
-                                    line2.classList.remove('active')
 
                                     saveAdd.classList.remove('active')
+                                    saveAdd.disabled = true
                                 }
                             });
                         })
 
-                        inputPhoto.addEventListener('change', function () {
-                            if (inputPhoto.files.length > 0) {
-                                nameImagen.textContent = inputPhoto.files[0].name
-                                one.classList.add('active')
-                                line1.classList.add('active')
-                            }
-
-                            if (inputPrice.value.length != 0 && inputCategory.value.length != 0 && inputName.value.length != 0 && inputPhoto.value.length != 0 && inputDescription.value.length != 0) {
-                                saveAdd.classList.add('active')
-                                saveAdd.disabled = false
-                            } else {
-                                saveAdd.classList.remove('active')
-                                saveAdd.disabled = true
-                            }
-                        })
-
                         inputName.addEventListener("input", function () {
-                            if (inputName.value.length == 0 || inputCategory.value.length == 0) {
-                                two.classList.remove('active')
-                                line2.classList.remove('active')
+                            if (inputName.value.length == 0 || inputPriority.value.length == 0) {
+                                one.classList.remove('active')
                             } else {
-                                two.classList.add('active')
-                                line2.classList.add('active')
+                                one.classList.add('active')
                             }
 
-                            if (inputPrice.value.length != 0 && inputCategory.value.length != 0 && inputName.value.length != 0 && inputPhoto.value.length != 0 && inputDescription.value.length != 0) {
+                            if (inputName.value.length != 0 && inputPriority.value.length != 0) {
                                 saveAdd.classList.add('active')
                                 saveAdd.disabled = false
                             } else {
@@ -277,48 +197,14 @@ onAuthStateChanged(auth, (user) => {
                             }
                         });
 
-                        inputCategory.addEventListener("input", function () {
-                            if (inputName.value.length == 0 || inputCategory.value.length == 0) {
-                                two.classList.remove('active')
-                                line2.classList.remove('active')
+                        inputPriority.addEventListener("input", function () {
+                            if (inputName.value.length == 0 || inputPriority.value.length == 0) {
+                                one.classList.remove('active')
                             } else {
-                                two.classList.add('active')
-                                line2.classList.add('active')
+                                one.classList.add('active')
                             }
 
-                            if (inputPrice.value.length != 0 && inputCategory.value.length != 0 && inputName.value.length != 0 && inputPhoto.value.length != 0 && inputDescription.value.length != 0) {
-                                saveAdd.classList.add('active')
-                                saveAdd.disabled = false
-                            } else {
-                                saveAdd.classList.remove('active')
-                                saveAdd.disabled = true
-                            }
-                        });
-
-                        inputPrice.addEventListener("input", function () {
-                            if (inputPrice.value.length == 0 || inputDescription.value.length == 0) {
-                                three.classList.remove('active')
-                            } else {
-                                three.classList.add('active')
-                            }
-
-                            if (inputPrice.value.length != 0 && inputCategory.value.length != 0 && inputName.value.length != 0 && inputPhoto.value.length != 0 && inputDescription.value.length != 0) {
-                                saveAdd.classList.add('active')
-                                saveAdd.disabled = false
-                            } else {
-                                saveAdd.classList.remove('active')
-                                saveAdd.disabled = true
-                            }
-                        });
-
-                        inputDescription.addEventListener("input", function () {
-                            if (inputPrice.value.length == 0 || inputDescription.value.length == 0) {
-                                three.classList.remove('active')
-                            } else {
-                                three.classList.add('active')
-                            }
-
-                            if (inputPrice.value.length != 0 && inputCategory.value.length != 0 && inputName.value.length != 0 && inputPhoto.value.length != 0 && inputDescription.value.length != 0) {
+                            if (inputName.value.length != 0 && inputPriority.value.length != 0) {
                                 saveAdd.classList.add('active')
                                 saveAdd.disabled = false
                             } else {

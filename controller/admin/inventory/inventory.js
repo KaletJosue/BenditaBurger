@@ -315,7 +315,7 @@ onAuthStateChanged(auth, (user) => {
                             modalAdd.style.display = 'flex'
 
                             gsap.fromTo(modalContentAdd,
-                                { backdropFilter: 'blur(0px)', height: 0, opacity: 0 },
+                                { backdropFilter: 'blur(0px)', height: '0px', opacity: 0 },
                                 {
                                     height: '100%',
                                     padding: '1rem',
