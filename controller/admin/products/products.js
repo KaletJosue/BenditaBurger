@@ -29,6 +29,12 @@ onAuthStateChanged(auth, (user) => {
 
                     if (doc.data().Rol == "Administrador") {
 
+                        var btnEstatus = document.querySelector('.btnEstatus')
+
+                        btnEstatus.addEventListener('click', () => {
+                            btnEstatus.classList.toggle('active')
+                        })
+
                         var btnProducts = document.querySelectorAll('.btnProducts')
                         var btnSections = document.querySelectorAll('.btnSections')
 
@@ -92,13 +98,12 @@ onAuthStateChanged(auth, (user) => {
 
                         var inputNameUpdate = document.querySelector('.inputNameUpdate')
                         var inputCategoryUpdate = document.querySelector('.inputCategoryUpdate')
-                        var inputStockUpdate = document.querySelector('.inputStockUpdate')
                         var inputPriceUpdate = document.querySelector('.inputPriceUpdate')
 
                         var btnUpdate = document.querySelector('.btnUpdate')
 
                         inputNameUpdate.addEventListener('input', () => {
-                            if (inputNameUpdate.value.length != 0 && inputCategoryUpdate.value.length != 0 && inputStockUpdate.value.length != 0 && inputPriceUpdate.value.length != 0) {
+                            if (inputNameUpdate.value.length != 0 && inputCategoryUpdate.value.length != 0 && inputPriceUpdate.value.length != 0) {
                                 btnUpdate.classList.add('active')
                                 btnUpdate.disabled = false
                             } else {
@@ -108,17 +113,7 @@ onAuthStateChanged(auth, (user) => {
                         })
 
                         inputCategoryUpdate.addEventListener('input', () => {
-                            if (inputNameUpdate.value.length != 0 && inputCategoryUpdate.value.length != 0 && inputStockUpdate.value.length != 0 && inputPriceUpdate.value.length != 0) {
-                                btnUpdate.classList.add('active')
-                                btnUpdate.disabled = false
-                            } else {
-                                btnUpdate.classList.remove('active')
-                                btnUpdate.disabled = true
-                            }
-                        })
-
-                        inputStockUpdate.addEventListener('input', () => {
-                            if (inputNameUpdate.value.length != 0 && inputCategoryUpdate.value.length != 0 && inputStockUpdate.value.length != 0 && inputPriceUpdate.value.length != 0) {
+                            if (inputNameUpdate.value.length != 0 && inputCategoryUpdate.value.length != 0 && inputPriceUpdate.value.length != 0) {
                                 btnUpdate.classList.add('active')
                                 btnUpdate.disabled = false
                             } else {
@@ -128,7 +123,7 @@ onAuthStateChanged(auth, (user) => {
                         })
 
                         inputPriceUpdate.addEventListener('input', () => {
-                            if (inputNameUpdate.value.length != 0 && inputCategoryUpdate.value.length != 0 && inputStockUpdate.value.length != 0 && inputPriceUpdate.value.length != 0) {
+                            if (inputNameUpdate.value.length != 0 && inputCategoryUpdate.value.length != 0 && inputPriceUpdate.value.length != 0) {
                                 btnUpdate.classList.add('active')
                                 btnUpdate.disabled = false
                             } else {
@@ -176,7 +171,6 @@ onAuthStateChanged(auth, (user) => {
 
                         var inputName = document.querySelector('.inputName')
                         var inputCategory = document.querySelector('.inputCategory')
-                        var inputStock = document.querySelector('.inputStock')
                         var inputPrice = document.querySelector('.inputPrice')
                         var inputPhoto = document.querySelector('#inputPhoto')
 
@@ -204,7 +198,6 @@ onAuthStateChanged(auth, (user) => {
 
                                     inputName.value = ''
                                     inputCategory.value = ''
-                                    inputStock.value = ''
                                     inputPrice.value = ''
                                     inputPhoto.value = ''
 
@@ -229,7 +222,7 @@ onAuthStateChanged(auth, (user) => {
                                 line1.classList.add('active')
                             }
 
-                            if (inputPrice.value.length != 0 && inputStock.value.length != 0 && inputCategory.value.length != 0 && inputName.value.length != 0 && inputPhoto.value.length != 0) {
+                            if (inputPrice.value.length != 0 && inputCategory.value.length != 0 && inputName.value.length != 0 && inputPhoto.value.length != 0) {
                                 saveAdd.classList.add('active')
                                 saveAdd.disabled = false
                             } else {
@@ -247,7 +240,7 @@ onAuthStateChanged(auth, (user) => {
                                 line2.classList.add('active')
                             }
 
-                            if (inputPrice.value.length != 0 && inputStock.value.length != 0 && inputCategory.value.length != 0 && inputName.value.length != 0 && inputPhoto.value.length != 0) {
+                            if (inputPrice.value.length != 0 && inputCategory.value.length != 0 && inputName.value.length != 0 && inputPhoto.value.length != 0) {
                                 saveAdd.classList.add('active')
                                 saveAdd.disabled = false
                             } else {
@@ -265,23 +258,7 @@ onAuthStateChanged(auth, (user) => {
                                 line2.classList.add('active')
                             }
 
-                            if (inputPrice.value.length != 0 && inputStock.value.length != 0 && inputCategory.value.length != 0 && inputName.value.length != 0 && inputPhoto.value.length != 0) {
-                                saveAdd.classList.add('active')
-                                saveAdd.disabled = false
-                            } else {
-                                saveAdd.classList.remove('active')
-                                saveAdd.disabled = true
-                            }
-                        });
-
-                        inputStock.addEventListener("input", function () {
-                            if (inputStock.value.length == 0 || inputPrice.value.length == 0) {
-                                three.classList.remove('active')
-                            } else {
-                                three.classList.add('active')
-                            }
-
-                            if (inputPrice.value.length != 0 && inputStock.value.length != 0 && inputCategory.value.length != 0 && inputName.value.length != 0 && inputPhoto.value.length != 0) {
+                            if (inputPrice.value.length != 0 && inputCategory.value.length != 0 && inputName.value.length != 0 && inputPhoto.value.length != 0) {
                                 saveAdd.classList.add('active')
                                 saveAdd.disabled = false
                             } else {
@@ -291,13 +268,13 @@ onAuthStateChanged(auth, (user) => {
                         });
 
                         inputPrice.addEventListener("input", function () {
-                            if (inputStock.value.length == 0 || inputPrice.value.length == 0) {
+                            if (inputPrice.value.length == 0) {
                                 three.classList.remove('active')
                             } else {
                                 three.classList.add('active')
                             }
 
-                            if (inputPrice.value.length != 0 && inputStock.value.length != 0 && inputCategory.value.length != 0 && inputName.value.length != 0 && inputPhoto.value.length != 0) {
+                            if (inputPrice.value.length != 0 && inputCategory.value.length != 0 && inputName.value.length != 0 && inputPhoto.value.length != 0) {
                                 saveAdd.classList.add('active')
                                 saveAdd.disabled = false
                             } else {

@@ -5,7 +5,7 @@
     <script src="https://unpkg.com/scrollreveal"></script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/styles/admin/inventory/inventory.css" />
+    <link rel="stylesheet" href="/styles/admin/products/products.css" />
     <!-- Loader -->
     <link rel="stylesheet" href="/styles/loader/loader.css">
     <link rel="shortcut icon" href="/assets/logo.png" type="image/x-icon">
@@ -76,7 +76,7 @@
                     </div>
                 </li>
                 <a href="/views/admin/inventory/inventory.html">
-                    <li class="active">
+                    <li>
                         <i class="ph ph-bank"></i>
                         <p>Inventario</p>
                     </li>
@@ -128,61 +128,24 @@
                         <th>Imagen</th>
                         <th>Producto</th>
                         <th>Categoría</th>
-                        <th>Cant. Stock</th>
-                        <th>Precio Unitario</th>
+                        <th>Precio</th>
                         <th>Actualización</th>
+                        <th>Estado</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <th><img src="/assets/pan.png" alt=""></th>
-                        <th>Pan de Hamburguesa</th>
-                        <th>Panaderia</th>
-                        <th>100 Kg</th>
+                        <th><img src="/assets/ham2.png" alt=""></th>
+                        <th>Whopper</th>
+                        <th>Hamburguesas</th>
                         <th>$29.000</th>
                         <th>29 / 07 / 24</th>
                         <th>
-                            <div class="actions">
-                                <button class="editar">Editar</button>
-                                <button>Eliminar</button>
+                            <div class="btnEstatus">
+                                <p>Activo</p>
+                                <p>Inactivo</p>
                             </div>
                         </th>
-                    </tr>
-                    <tr>
-                        <th><img src="/assets/carne.png" alt=""></th>
-                        <th>Carne de Hamburguesa</th>
-                        <th>Carnicos</th>
-                        <th>100 Kg</th>
-                        <th>$29.000</th>
-                        <th>29 / 07 / 24</th>
-                        <th>
-                            <div class="actions">
-                                <button>Editar</button>
-                                <button>Eliminar</button>
-                            </div>
-                        </th>
-                    </tr>
-                    <tr>
-                        <th><img src="/assets/lechuga.png" alt=""></th>
-                        <th>Lechuga</th>
-                        <th>Carnicos</th>
-                        <th>100 Kg</th>
-                        <th>$29.000</th>
-                        <th>29 / 07 / 24</th>
-                        <th>
-                            <div class="actions">
-                                <button>Editar</button>
-                                <button>Eliminar</button>
-                            </div>
-                        </th>
-                    </tr>
-                    <tr>
-                        <th><img src="/assets/aguacate.png" alt=""></th>
-                        <th>Aguacate</th>
-                        <th>Carnicos</th>
-                        <th>100 Kg</th>
-                        <th>$29.000</th>
-                        <th>29 / 07 / 24</th>
                         <th>
                             <div class="actions">
                                 <button class="openModalUpdate">Editar</button>
@@ -203,15 +166,13 @@
     <div class="modalDetele">
         <div class="conModalDelete">
             <div class="inModalDelete">
-                <img src="/assets/carne.png" alt="">
+                <img src="/assets/ham2.png" alt="">
                 <div class="textModalDelete">
                     <p>Nombre:</p>
                     <p>Pan de Hamburguesa</p>
                     <p>Categoria:</p>
                     <p>Panaderia</p>
-                    <p>Cantidad en Stock:</p>
-                    <p>100 Kg</p>
-                    <p>Precio Unitario:</p>
+                    <p>Precio:</p>
                     <p>$29.000</p>
                 </div>
             </div>
@@ -231,11 +192,7 @@
                     <input type="text" class="inputCategoryUpdate">
                 </div>
                 <div class="inputUpdate">
-                    <p>Cantidad en Stock</p>
-                    <input type="text" class="inputStockUpdate">
-                </div>
-                <div class="inputUpdate">
-                    <p>Precio Unitario</p>
+                    <p>Precio</p>
                     <input type="number" class="inputPriceUpdate">
                 </div>
             </div>
@@ -279,11 +236,7 @@
                         <input type="text" class="inputCategory">
                     </div>
                     <div class="inputAdd">
-                        <p>Cantidad en Stock</p>
-                        <input type="text" class="inputStock">
-                    </div>
-                    <div class="inputAdd">
-                        <p>Precio Unitario</p>
+                        <p>Precio</p>
                         <input type="number" class="inputPrice">
                     </div>
                     <div class="buttons">
@@ -340,7 +293,7 @@
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/gsap.min.js"></script>
-    <script src="/controller/admin/inventory/inventory.js" type="module"></script>
+    <script src="/controller/admin/products/products.js" type="module"></script>
 </body>
 
 </html>

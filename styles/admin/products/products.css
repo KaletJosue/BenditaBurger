@@ -61,6 +61,14 @@ body {
     background-color: var(--color-fondo);
 }
 
+.btnProducts {
+    background-color: var(--color-fondo);
+}
+
+.optionsMenu .btnProducts {
+    margin-top: .5rem;
+}
+
 .conMenu {
     position: fixed;
     right: 15px;
@@ -485,6 +493,48 @@ body {
     color: var(--color-negro);
     font-weight: 400;
     padding: 1rem;
+}
+
+.main .table tbody tr th .btnEstatus {
+    width: 100px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background-color: #6397bc;
+    font-size: 12px;
+    font-weight: 700;
+    color: white;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all .2s ease;
+}
+
+.main .table tbody tr th .btnEstatus.active {
+    background-color: #828282;
+}
+
+.main .table tbody tr th .btnEstatus p {
+    position: absolute;
+    transition: all .2s ease;
+}
+
+.main .table tbody tr th .btnEstatus p:last-child {
+    top: 60px;
+}
+
+.main .table tbody tr th .btnEstatus.active p:last-child {
+    top: 12px;
+}
+
+.main .table tbody tr th .btnEstatus p:first-child {
+    top: 12px;
+}
+
+.main .table tbody tr th .btnEstatus.active p:first-child {
+    top: -60px;
 }
 
 .main .table tbody tr th img {

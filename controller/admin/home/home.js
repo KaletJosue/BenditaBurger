@@ -29,6 +29,21 @@ onAuthStateChanged(auth, (user) => {
 
                     if (doc.data().Rol == "Administrador") {
 
+                        var btnProducts = document.querySelectorAll('.btnProducts')
+                        var btnSections = document.querySelectorAll('.btnSections')
+
+                        btnSections.forEach(btnSection => {
+                            btnSection.addEventListener('click', () => {
+                                location.href = "/views/admin/sections/sections.html"
+                            })
+                        })
+
+                        btnProducts.forEach(btnProduct => {
+                            btnProduct.addEventListener('click', () => {
+                                location.href = "/views/admin/products/products.html"
+                            })
+                        })
+
                         const openModalDetails = document.querySelector('.openModal');
                         const modalDetails = document.querySelector('.modalDetalis');
                         const modalContentDetails = document.querySelector('.conModalDetails');
