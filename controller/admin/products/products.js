@@ -35,6 +35,28 @@ onAuthStateChanged(auth, (user) => {
                             btnEstatus.classList.toggle('active')
                         })
 
+                        var btnSales = document.querySelectorAll('.btnSales')
+                        var btnStatistics = document.querySelectorAll('.btnStatistics')
+                        var btnBills = document.querySelectorAll('.btnBills')
+
+                        btnBills.forEach((btnBill) => {
+                            btnBill.addEventListener('click', () => {
+                                location.href = "/views/admin/bills/bills.html"
+                            })
+                        })
+
+                        btnStatistics.forEach((btnStatistic) => {
+                            btnStatistic.addEventListener('click', () => {
+                                location.href = "/views/admin/statics/statics.html"
+                            })
+                        })
+
+                        btnSales.forEach((btnSale) => {
+                            btnSale.addEventListener('click', () => {
+                                location.href = "/views/admin/sales/sales.html"
+                            })
+                        })
+
                         var btnProducts = document.querySelectorAll('.btnProducts')
                         var btnSections = document.querySelectorAll('.btnSections')
 
@@ -135,7 +157,7 @@ onAuthStateChanged(auth, (user) => {
                         })
 
                         inputCategoryUpdate.addEventListener('input', () => {
-                            if (inputNameUpdate.value.length != 0 && inputCategoryUpdate.value.length != 0 && inputPriceUpdate.value.length != 0  && inputDescriptionUpdate.value.length != 0 && inputDiscountUpdate.value.length != 0) {
+                            if (inputNameUpdate.value.length != 0 && inputCategoryUpdate.value.length != 0 && inputPriceUpdate.value.length != 0 && inputDescriptionUpdate.value.length != 0 && inputDiscountUpdate.value.length != 0) {
                                 btnUpdate.classList.add('active')
                                 btnUpdate.disabled = false
                             } else {
@@ -145,7 +167,7 @@ onAuthStateChanged(auth, (user) => {
                         })
 
                         inputPriceUpdate.addEventListener('input', () => {
-                            if (inputNameUpdate.value.length != 0 && inputCategoryUpdate.value.length != 0 && inputPriceUpdate.value.length != 0  && inputDescriptionUpdate.value.length != 0 && inputDiscountUpdate.value.length != 0) {
+                            if (inputNameUpdate.value.length != 0 && inputCategoryUpdate.value.length != 0 && inputPriceUpdate.value.length != 0 && inputDescriptionUpdate.value.length != 0 && inputDiscountUpdate.value.length != 0) {
                                 btnUpdate.classList.add('active')
                                 btnUpdate.disabled = false
                             } else {

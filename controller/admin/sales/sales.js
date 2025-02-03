@@ -1,7 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-analytics.js";
 import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js";
-import { getFirestore, collection, addDoc, getDocs, where, query } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-firestore.js";
+import { getFirestore, collection, addDoc, getDocs, where, query, onSnapshot } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-firestore.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyDo7CLdjeXnrFmGeCTb5kgVbtzmxK2i22g",
@@ -66,218 +66,45 @@ onAuthStateChanged(auth, (user) => {
                             })
                         })
 
-                        const openModalDelete = document.querySelector('.openModalDelete');
-                        const modalDelete = document.querySelector('.modalDetele');
-                        const modalContentDelete = document.querySelector('.conModalDelete');
+                        const openModalDetails = document.querySelector('.openModal');
+                        const modalDetails = document.querySelector('.modalDetalis');
+                        const modalContentDetails = document.querySelector('.conModalDetails');
+                        const closeModalDetails = document.getElementById('closeModalDetails')
 
-                        const isSmallScreen = window.matchMedia("(height: 550)").matches;
+                        openModalDetails.addEventListener('click', () => {
+                            modalDetails.style.display = 'flex'
 
-                        var heightModal = 0
-
-                        if (isSmallScreen) {
-                            heightModal = "100%"
-                        } else {
-                            heightModal = "auto"
-                        }
-
-                        openModalDelete.addEventListener('click', () => {
-                            modalDelete.style.display = 'flex'
-
-                            gsap.fromTo(modalContentDelete,
-                                { backdropFilter: 'blur(0px)', height: 0, opacity: 0 },
+                            gsap.fromTo(modalContentDetails,
+                                { scale: 0, opacity: 0, filter: 'blur(10px)', x: 0 },
                                 {
-                                    height: heightModal,
+                                    scale: 1,
                                     opacity: 1,
-                                    backdropFilter: 'blur(90px)',
-                                    duration: .7,
-                                    ease: 'expo.out',
+                                    filter: 'blur(0px)',
+                                    duration: .5,
+                                    ease: 'power1.out',
                                 }
                             )
                         })
-                        window.addEventListener('click', event => {
-                            if (event.target == modalDelete) {
-                                gsap.to(modalContentDelete, {
-                                    height: '0px',
-                                    duration: .2,
-                                    ease: 'power1.in',
-                                    onComplete: () => {
-                                        modalDelete.style.display = 'none';
-                                    }
-                                });
-                            }
-                        })
-
-                        const openModalUpdate = document.querySelector('.openModalUpdate');
-                        const modalUpdate = document.querySelector('.modalUpdate');
-                        const modalContentUpdate = document.querySelector('.conModalUpdate');
-                        const closeModalUpdate = document.getElementById('closeModalUpdate')
-
-                        var inputNameUpdate = document.querySelector('.inputNameUpdate')
-                        var inputCategoryUpdate = document.querySelector('.inputCategoryUpdate')
-
-                        var btnUpdate = document.querySelector('.btnUpdate')
-
-                        inputNameUpdate.addEventListener('input', () => {
-                            if (inputNameUpdate.value.length != 0 && inputCategoryUpdate.value.length != 0) {
-                                btnUpdate.classList.add('active')
-                                btnUpdate.disabled = false
-                            } else {
-                                btnUpdate.classList.remove('active')
-                                btnUpdate.disabled = true
-                            }
-                        })
-
-                        inputCategoryUpdate.addEventListener('input', () => {
-                            if (inputNameUpdate.value.length != 0 && inputCategoryUpdate.value.length != 0) {
-                                btnUpdate.classList.add('active')
-                                btnUpdate.disabled = false
-                            } else {
-                                btnUpdate.classList.remove('active')
-                                btnUpdate.disabled = true
-                            }
-                        })
-
-                        openModalUpdate.addEventListener('click', () => {
-                            modalUpdate.style.display = 'flex'
-
-                            gsap.fromTo(modalContentUpdate,
-                                { backdropFilter: 'blur(0px)', height: 0, opacity: 0 },
-                                {
-                                    height: 'auto',
-                                    opacity: 1,
-                                    backdropFilter: 'blur(90px)',
-                                    duration: .7,
-                                    ease: 'expo.out',
-                                }
-                            )
-                            window.addEventListener('click', event => {
-                                if (event.target == modalUpdate) {
-                                    gsap.to(modalContentUpdate, {
-                                        height: '0px',
-                                        duration: .2,
-                                        ease: 'power1.in',
-                                        onComplete: () => {
-                                            modalUpdate.style.display = 'none';
-                                        }
-                                    });
-                                }
-                            })
-                            closeModalUpdate.addEventListener('click', () => {
-                                gsap.to(modalContentUpdate, {
-                                    height: '0px',
-                                    duration: .2,
-                                    ease: 'power1.in',
-                                    onComplete: () => {
-                                        modalUpdate.style.display = 'none';
-                                    }
-                                });
-                            })
-                        })
-
-                        var inputName = document.querySelector('.inputName')
-                        var inputPriority = document.querySelector('.inputPriority')
-
-                        var one = document.querySelector('.one')
-
-                        var cancelAdd = document.querySelector('.cancelAdd')
-                        var saveAdd = document.querySelector('.saveAdd')
-
-                        cancelAdd.addEventListener('click', () => {
-                            gsap.to(modalContentAdd, {
-                                height: '0px',
-                                padding: '0rem',
-                                overflow: 'hidden',
-                                duration: .2,
+                        closeModalDetails.addEventListener('click', () => {
+                            gsap.to(modalContentDetails, {
+                                filter: 'blur(10px)',
+                                opacity: 0,
+                                x: 1000,
                                 ease: 'power1.in',
                                 onComplete: () => {
-                                    modalAdd.style.display = 'none';
-
-                                    inputName.value = ''
-                                    inputPriority.value = ''
-
-                                    one.classList.remove('active')
-
-                                    saveAdd.classList.remove('active')
-                                    saveAdd.disabled = true
-                                }
-                            });
-                        })
-
-                        inputName.addEventListener("input", function () {
-                            if (inputName.value.length == 0 || inputPriority.value.length == 0) {
-                                one.classList.remove('active')
-                            } else {
-                                one.classList.add('active')
-                            }
-
-                            if (inputName.value.length != 0 && inputPriority.value.length != 0) {
-                                saveAdd.classList.add('active')
-                                saveAdd.disabled = false
-                            } else {
-                                saveAdd.classList.remove('active')
-                                saveAdd.disabled = true
-                            }
-                        });
-
-                        inputPriority.addEventListener("input", function () {
-                            if (inputName.value.length == 0 || inputPriority.value.length == 0) {
-                                one.classList.remove('active')
-                            } else {
-                                one.classList.add('active')
-                            }
-
-                            if (inputName.value.length != 0 && inputPriority.value.length != 0) {
-                                saveAdd.classList.add('active')
-                                saveAdd.disabled = false
-                            } else {
-                                saveAdd.classList.remove('active')
-                                saveAdd.disabled = true
-                            }
-                        });
-
-                        const openModalAdd = document.querySelector('.openModalAdd');
-                        const modalAdd = document.querySelector('.modalAdd');
-                        const modalContentAdd = document.querySelector('.conModalAdd');
-                        const closeModalAdd = document.getElementById('closeModalAdd')
-
-                        openModalAdd.addEventListener('click', () => {
-                            modalAdd.style.display = 'flex'
-
-                            gsap.fromTo(modalContentAdd,
-                                { backdropFilter: 'blur(0px)', height: 0, opacity: 0 },
-                                {
-                                    height: '100%',
-                                    padding: '1rem',
-                                    overflow: 'hidden',
-                                    opacity: 1,
-                                    backdropFilter: 'blur(90px)',
-                                    duration: .7,
-                                    ease: 'expo.out',
-                                }
-                            )
-                        })
-                        closeModalAdd.addEventListener('click', () => {
-                            gsap.to(modalContentAdd, {
-                                height: '0px',
-                                padding: '0rem',
-                                overflow: 'hidden',
-                                duration: .2,
-                                ease: 'power1.in',
-                                onComplete: () => {
-                                    modalAdd.style.display = 'none';
+                                    modalDetails.style.display = 'none';
                                 }
                             });
                         })
                         window.addEventListener('click', event => {
-                            if (event.target == modalAdd) {
-                                gsap.to(modalContentAdd, {
-                                    height: '0px',
-                                    padding: '0rem',
-                                    overflow: 'hidden',
-                                    duration: .2,
+                            if (event.target == modalDetails) {
+                                gsap.to(modalContentDetails, {
+                                    filter: 'blur(10px)',
+                                    opacity: 0,
+                                    x: 1000,
                                     ease: 'power1.in',
                                     onComplete: () => {
-                                        modalAdd.style.display = 'none';
+                                        modalDetails.style.display = 'none';
                                     }
                                 });
                             }

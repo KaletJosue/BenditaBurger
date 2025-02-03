@@ -29,6 +29,28 @@ onAuthStateChanged(auth, (user) => {
 
                     if (doc.data().Rol == "Administrador") {
 
+                        var btnSales = document.querySelectorAll('.btnSales')
+                        var btnStatistics = document.querySelectorAll('.btnStatistics')
+                        var btnBills = document.querySelectorAll('.btnBills')
+
+                        btnBills.forEach((btnBill) => {
+                            btnBill.addEventListener('click', () => {
+                                location.href = "/views/admin/bills/bills.html"
+                            })
+                        })
+
+                        btnStatistics.forEach((btnStatistic) => {
+                            btnStatistic.addEventListener('click', () => {
+                                location.href = "/views/admin/statics/statics.html"
+                            })
+                        })
+
+                        btnSales.forEach((btnSale) => {
+                            btnSale.addEventListener('click', () => {
+                                location.href = "/views/admin/sales/sales.html"
+                            })
+                        })
+
                         var btnProducts = document.querySelectorAll('.btnProducts')
                         var btnSections = document.querySelectorAll('.btnSections')
 

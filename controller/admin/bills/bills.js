@@ -66,61 +66,19 @@ onAuthStateChanged(auth, (user) => {
                             })
                         })
 
-                        const openModalDelete = document.querySelector('.openModalDelete');
-                        const modalDelete = document.querySelector('.modalDetele');
-                        const modalContentDelete = document.querySelector('.conModalDelete');
-
-                        const isSmallScreen = window.matchMedia("(height: 550)").matches;
-
-                        var heightModal = 0
-
-                        if (isSmallScreen) {
-                            heightModal = "100%"
-                        } else {
-                            heightModal = "auto"
-                        }
-
-                        openModalDelete.addEventListener('click', () => {
-                            modalDelete.style.display = 'flex'
-
-                            gsap.fromTo(modalContentDelete,
-                                { backdropFilter: 'blur(0px)', height: 0, opacity: 0 },
-                                {
-                                    height: heightModal,
-                                    opacity: 1,
-                                    backdropFilter: 'blur(90px)',
-                                    duration: .7,
-                                    ease: 'expo.out',
-                                }
-                            )
-                        })
-                        window.addEventListener('click', event => {
-                            if (event.target == modalDelete) {
-                                gsap.to(modalContentDelete, {
-                                    height: '0px',
-                                    duration: .2,
-                                    ease: 'power1.in',
-                                    onComplete: () => {
-                                        modalDelete.style.display = 'none';
-                                    }
-                                });
-                            }
-                        })
-
                         const openModalUpdate = document.querySelector('.openModalUpdate');
                         const modalUpdate = document.querySelector('.modalUpdate');
                         const modalContentUpdate = document.querySelector('.conModalUpdate');
-                        const closeModalUpdate = document.getElementById('closeModalUpdate')
+                        const closeModalUpdate = document.querySelectorAll('#closeModalUpdate')
 
                         var inputNameUpdate = document.querySelector('.inputNameUpdate')
                         var inputCategoryUpdate = document.querySelector('.inputCategoryUpdate')
-                        var inputStockUpdate = document.querySelector('.inputStockUpdate')
                         var inputPriceUpdate = document.querySelector('.inputPriceUpdate')
 
                         var btnUpdate = document.querySelector('.btnUpdate')
 
                         inputNameUpdate.addEventListener('input', () => {
-                            if (inputNameUpdate.value.length != 0 && inputCategoryUpdate.value.length != 0 && inputStockUpdate.value.length != 0 && inputPriceUpdate.value.length != 0) {
+                            if (inputNameUpdate.value.length != 0 && inputCategoryUpdate.value.length != 0 && inputPriceUpdate.value.length != 0) {
                                 btnUpdate.classList.add('active')
                                 btnUpdate.disabled = false
                             } else {
@@ -130,17 +88,7 @@ onAuthStateChanged(auth, (user) => {
                         })
 
                         inputCategoryUpdate.addEventListener('input', () => {
-                            if (inputNameUpdate.value.length != 0 && inputCategoryUpdate.value.length != 0 && inputStockUpdate.value.length != 0 && inputPriceUpdate.value.length != 0) {
-                                btnUpdate.classList.add('active')
-                                btnUpdate.disabled = false
-                            } else {
-                                btnUpdate.classList.remove('active')
-                                btnUpdate.disabled = true
-                            }
-                        })
-
-                        inputStockUpdate.addEventListener('input', () => {
-                            if (inputNameUpdate.value.length != 0 && inputCategoryUpdate.value.length != 0 && inputStockUpdate.value.length != 0 && inputPriceUpdate.value.length != 0) {
+                            if (inputNameUpdate.value.length != 0 && inputCategoryUpdate.value.length != 0 && inputPriceUpdate.value.length != 0) {
                                 btnUpdate.classList.add('active')
                                 btnUpdate.disabled = false
                             } else {
@@ -150,7 +98,7 @@ onAuthStateChanged(auth, (user) => {
                         })
 
                         inputPriceUpdate.addEventListener('input', () => {
-                            if (inputNameUpdate.value.length != 0 && inputCategoryUpdate.value.length != 0 && inputStockUpdate.value.length != 0 && inputPriceUpdate.value.length != 0) {
+                            if (inputNameUpdate.value.length != 0 && inputCategoryUpdate.value.length != 0 && inputPriceUpdate.value.length != 0) {
                                 btnUpdate.classList.add('active')
                                 btnUpdate.disabled = false
                             } else {
@@ -165,7 +113,7 @@ onAuthStateChanged(auth, (user) => {
                             gsap.fromTo(modalContentUpdate,
                                 { backdropFilter: 'blur(0px)', height: 0, opacity: 0 },
                                 {
-                                    height: 'auto',
+                                    height: '100%',
                                     opacity: 1,
                                     backdropFilter: 'blur(90px)',
                                     duration: .7,
@@ -184,25 +132,23 @@ onAuthStateChanged(auth, (user) => {
                                     });
                                 }
                             })
-                            closeModalUpdate.addEventListener('click', () => {
-                                gsap.to(modalContentUpdate, {
-                                    height: '0px',
-                                    duration: .2,
-                                    ease: 'power1.in',
-                                    onComplete: () => {
-                                        modalUpdate.style.display = 'none';
-                                    }
-                                });
+                            closeModalUpdate.forEach((closeModalUpdateBtn) => {
+                                closeModalUpdateBtn.addEventListener('click', () => {
+                                    gsap.to(modalContentUpdate, {
+                                        height: '0px',
+                                        duration: .2,
+                                        ease: 'power1.in',
+                                        onComplete: () => {
+                                            modalUpdate.style.display = 'none';
+                                        }
+                                    });
+                                })
                             })
                         })
 
                         var inputName = document.querySelector('.inputName')
-                        var inputCategory = document.querySelector('.inputCategory')
-                        var inputStock = document.querySelector('.inputStock')
                         var inputPrice = document.querySelector('.inputPrice')
-                        var inputPhoto = document.querySelector('#inputPhoto')
-
-                        var nameImagen = document.querySelector('.nameImagen')
+                        var inputPay = document.querySelector('.inputPay')
 
                         var one = document.querySelector('.one')
                         var two = document.querySelector('.two')
@@ -225,12 +171,8 @@ onAuthStateChanged(auth, (user) => {
                                     modalAdd.style.display = 'none';
 
                                     inputName.value = ''
-                                    inputCategory.value = ''
-                                    inputStock.value = ''
                                     inputPrice.value = ''
-                                    inputPhoto.value = ''
-
-                                    nameImagen.textContent = ''
+                                    inputPay.value = ''
 
                                     one.classList.remove('active')
                                     two.classList.remove('active')
@@ -244,66 +186,16 @@ onAuthStateChanged(auth, (user) => {
                             });
                         })
 
-                        inputPhoto.addEventListener('change', function () {
-                            if (inputPhoto.files.length > 0) {
-                                nameImagen.textContent = inputPhoto.files[0].name
+                        inputName.addEventListener("input", function () {
+                            if (inputName.value.length == 0) {
+                                one.classList.remove('active')
+                                line1.classList.remove('active')
+                            } else {
                                 one.classList.add('active')
                                 line1.classList.add('active')
                             }
 
-                            if (inputPrice.value.length != 0 && inputStock.value.length != 0 && inputCategory.value.length != 0 && inputName.value.length != 0 && inputPhoto.value.length != 0) {
-                                saveAdd.classList.add('active')
-                                saveAdd.disabled = false
-                            } else {
-                                saveAdd.classList.remove('active')
-                                saveAdd.disabled = true
-                            }
-                        })
-
-                        inputName.addEventListener("input", function () {
-                            if (inputName.value.length == 0 || inputCategory.value.length == 0) {
-                                two.classList.remove('active')
-                                line2.classList.remove('active')
-                            } else {
-                                two.classList.add('active')
-                                line2.classList.add('active')
-                            }
-
-                            if (inputPrice.value.length != 0 && inputStock.value.length != 0 && inputCategory.value.length != 0 && inputName.value.length != 0 && inputPhoto.value.length != 0) {
-                                saveAdd.classList.add('active')
-                                saveAdd.disabled = false
-                            } else {
-                                saveAdd.classList.remove('active')
-                                saveAdd.disabled = true
-                            }
-                        });
-
-                        inputCategory.addEventListener("input", function () {
-                            if (inputName.value.length == 0 || inputCategory.value.length == 0) {
-                                two.classList.remove('active')
-                                line2.classList.remove('active')
-                            } else {
-                                two.classList.add('active')
-                                line2.classList.add('active')
-                            }
-
-                            if (inputPrice.value.length != 0 && inputStock.value.length != 0 && inputCategory.value.length != 0 && inputName.value.length != 0 && inputPhoto.value.length != 0) {
-                                saveAdd.classList.add('active')
-                                saveAdd.disabled = false
-                            } else {
-                                saveAdd.classList.remove('active')
-                                saveAdd.disabled = true
-                            }
-                        });
-
-                        inputStock.addEventListener("input", function () {
-                            if (inputStock.value.length == 0 || inputPrice.value.length == 0) {
-                                three.classList.remove('active')
-                            } else {
-                                three.classList.add('active')
-                            }
-
-                            if (inputPrice.value.length != 0 && inputStock.value.length != 0 && inputCategory.value.length != 0 && inputName.value.length != 0 && inputPhoto.value.length != 0) {
+                            if (inputPrice.value.length != 0 && inputName.value.length != 0 && inputPay.value.length != 0) {
                                 saveAdd.classList.add('active')
                                 saveAdd.disabled = false
                             } else {
@@ -313,13 +205,31 @@ onAuthStateChanged(auth, (user) => {
                         });
 
                         inputPrice.addEventListener("input", function () {
-                            if (inputStock.value.length == 0 || inputPrice.value.length == 0) {
+                            if (inputPrice.value.length == 0) {
+                                two.classList.remove('active')
+                                line2.classList.add('active')
+                            } else {
+                                two.classList.add('active')
+                                line2.classList.remove('active')
+                            }
+
+                            if (inputPrice.value.length != 0 && inputName.value.length != 0 && inputPay.value.length != 0) {
+                                saveAdd.classList.add('active')
+                                saveAdd.disabled = false
+                            } else {
+                                saveAdd.classList.remove('active')
+                                saveAdd.disabled = true
+                            }
+                        });
+
+                        inputPay.addEventListener("input", function () {
+                            if (inputPay.value.length == 0) {
                                 three.classList.remove('active')
                             } else {
                                 three.classList.add('active')
                             }
 
-                            if (inputPrice.value.length != 0 && inputStock.value.length != 0 && inputCategory.value.length != 0 && inputName.value.length != 0 && inputPhoto.value.length != 0) {
+                            if (inputPrice.value.length != 0 && inputName.value.length != 0 && inputPay.value.length != 0) {
                                 saveAdd.classList.add('active')
                                 saveAdd.disabled = false
                             } else {
@@ -337,7 +247,7 @@ onAuthStateChanged(auth, (user) => {
                             modalAdd.style.display = 'flex'
 
                             gsap.fromTo(modalContentAdd,
-                                { backdropFilter: 'blur(0px)', height: '0px', opacity: 0 },
+                                { backdropFilter: 'blur(0px)', height: 0, opacity: 0 },
                                 {
                                     height: '100%',
                                     padding: '1rem',

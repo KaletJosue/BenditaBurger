@@ -61,8 +61,12 @@ body {
     background-color: var(--color-fondo);
 }
 
-.btnSections.active {
+.btnProducts {
     background-color: var(--color-fondo);
+}
+
+.optionsMenu .btnProducts {
+    margin-top: .5rem;
 }
 
 .conMenu {
@@ -398,218 +402,109 @@ body {
     font-size: 12px;
 }
 
-.conButton {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-}
-
-.conButton h1 {
-    font-size: 12px;
-    font-weight: 800;
-    color: var(--color-negro);
-}
-
-.conButton button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: .2rem;
-    padding: .5rem 1rem;
-    font-size: 12px;
-    background-color: var(--color-negro);
-    color: var(--color-blanco);
-    border: solid 1px var(--color-negro);
-    border-radius: 10px;
-    cursor: pointer;
-    transition: all .2s ease;
-}
-
-.conButton button:hover {
-    background-color: transparent;
-    color: var(--color-negro);
-    transform: translateX(-10px);
-}
-
-.conTable .espacio {
-    display: block;
-    height: 20px;
-}
-
-.conTable {
-    overflow: hidden;
-    overflow-x: auto;
-}
-
-.conTable::-webkit-scrollbar {
-    height: 7px;
-    background-color: var(--color-linea);
-    border-radius: 50px;
-}
-
-.conTable::-webkit-scrollbar-thumb {
-    background-color: var(--color-gris);
-    border-radius: 50px;
-    cursor: pointer;
-}
-
-.conTable .espacio {
-    display: block;
-    height: 20px;
+.btnBills {
+    background-color: var(--color-fondo);
 }
 
 .main {
-    padding: 0 2rem 1rem 7rem;
-}
-
-.main .table {
-    border-collapse: collapse;
-    width: 100%;
-    background-color: var(--color-blanco);
-    border-radius: 20px;
-}
-
-.main .table thead tr th {
-    font-size: 14px;
-    font-weight: 800;
-    color: var(--color-gris);
-    text-align: start;
-    padding: 2rem 1rem 1rem;
-}
-
-.main .table tbody tr:not(:last-child) {
-    border-bottom: solid 1px var(--color-linea);
-}
-
-.main .table tbody tr th {
-    text-align: start;
-    font-size: 12px;
-    color: var(--color-negro);
-    font-weight: 400;
-    padding: 1rem;
-}
-
-.main .table tbody tr th:nth-child(4) {
-    width: 200px;
-}
-
-.main .table tbody tr th img {
-    aspect-ratio: 1/1;
-    object-fit: contain;
-    object-position: center center;
-    width: 50px;
-}
-
-.main .table tbody tr th .actions {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: .2rem;
-}
-
-.main .table tbody tr th .actions button {
-    padding: .7rem;
-    font-size: 12px;
-    font-weight: 500;
-    border-radius: 10px;
-    background-color: transparent;
-}
-
-.main .table tbody tr th .actions button:first-child {
-    border: solid 1px var(--color-gris);
-    color: var(--color-gris);
-    cursor: pointer;
-    transition: all .2s ease;
-}
-
-.main .table tbody tr th .actions button:first-child:hover {
-    background-color: var(--color-gris);
-    color: var(--color-blanco);
-}
-
-.main .table tbody tr th .actions button:last-child {
-    border: solid 1px #FF4A43;
-    color: #FF4A43;
-    cursor: pointer;
-    transition: all .2s ease;
-}
-
-.main .table tbody tr th .actions button:last-child:hover {
-    background-color: #FF4A43;
-    color: white;
-}
-
-.modalDetele {
-    position: fixed;
-    width: 100vw;
-    height: 100dvh;
-    top: 0;
-    left: 0;
-    display: none;
-    align-items: end;
-    justify-content: center;
-    z-index: 1;
-}
-
-.modalDetele .conModalDelete {
-    backdrop-filter: blur(90px);
-    padding: 2rem 2rem 1rem;
-    width: 400px;
-    box-shadow: 1px 1px 1rem #0000008a;
-    border-radius: 20px 20px 0 0;
+    padding: 1rem 2rem 3rem 7rem;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 }
 
-.modalDetele .conModalDelete .inModalDelete {
+.main .openModalAdd {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    gap: 1rem;
+    justify-content: center;
+    font-size: 20px;
+    background-color: #6397bc;
+    border: none;
+    color: white;
+    border-radius: 20px;
+    cursor: pointer;
 }
 
-.modalDetele .conModalDelete .inModalDelete img {
-    aspect-ratio: 4/5;
-    object-fit: contain;
-    object-position: center center;
-    width: 200px;
+.main .totalBills {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2rem;
 }
 
-.modalDetele .conModalDelete .inModalDelete .textModalDelete {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem 0;
-}
-
-.modalDetele .conModalDelete .inModalDelete .textModalDelete p {
-    font-size: 12px;
+.main .totalBills h3 {
+    font-size: 15px;
+    font-weight: 500;
     color: var(--color-negro);
 }
 
-.modalDetele .conModalDelete .inModalDelete .textModalDelete p:first-child,
-.modalDetele .conModalDelete .inModalDelete .textModalDelete p:nth-child(3),
-.modalDetele .conModalDelete .inModalDelete .textModalDelete p:nth-child(5),
-.modalDetele .conModalDelete .inModalDelete .textModalDelete p:nth-child(7) {
-    color: var(--color-gris);
-    font-weight: 700;
+.main .totalBills h1 {
+    font-size: 60px;
+    font-weight: 900;
+    margin-top: -.5rem;
+    color: var(--color-negro);
 }
 
-.modalDetele .conModalDelete button {
+.main .contentBills {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 60%;
+    margin-top: 1rem;
+    gap: 1rem;
+}
+
+.main .contentBills .bill {
+    background-color: var(--color-blanco);
     width: 100%;
-    background-color: #FF4A43;
-    padding: .7rem;
-    border-radius: 7px;
-    border: none;
+    border-radius: 10px;
+    box-shadow: var(--box-shadow-suave);
+    padding: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--color-negro);
+}
+
+.main .contentBills .bill .leftBill {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.main .contentBills .bill .leftBill i {
+    width: 70px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 20px;
+    background-color: #6397bc;
+    color: white;
+}
+
+.main .contentBills .bill .leftBill .textLeftBill h4 {
     font-size: 12px;
     font-weight: 500;
-    color: white;
+}
+
+.main .contentBills .bill .leftBill .textLeftBill p {
+    font-size: 20px;
+    font-weight: 900;
+}
+
+.main .contentBills .bill i#menuVertical {
+    font-size: 15px;
     cursor: pointer;
-    margin-top: 1.5rem;
 }
 
 .modalUpdate {
@@ -619,23 +514,62 @@ body {
     top: 0;
     left: 0;
     display: none;
-    align-items: end;
+    align-items: center;
     justify-content: center;
     z-index: 1;
+    padding: 1rem;
 }
 
 .modalUpdate .conModalUpdate {
     backdrop-filter: blur(90px);
-    padding: 1rem 2rem;
+    padding: 2rem;
     width: 500px;
     box-shadow: 1px 1px 1rem #0000008a;
-    border-radius: 20px 20px 0 0;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.modalUpdate .conModalUpdate i#closeModalUpdate {
+    top: 10px;
+    left: 10px;
+    height: 35px;
+    width: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    position: absolute;
+    transition: all .2s ease;
+    cursor: pointer;
+    color: var(--color-negro);
+}
+
+.modalUpdate .conModalUpdate i#closeModalUpdate:hover {
+    background-color: var(--color-gris);
+    color: var(--color-blanco);
 }
 
 .modalUpdate .conModalUpdate .conInputs {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0 .5rem;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    overflow: hidden;
+    overflow-y: auto;
+}
+
+.modalUpdate .conModalUpdate .conInputs::-webkit-scrollbar {
+    width: 7px;
+    background-color: var(--color-linea);
+}
+
+.modalUpdate .conModalUpdate .conInputs::-webkit-scrollbar-thumb {
+    background-color: var(--color-gris);
+    border-radius: 50px;
+    cursor: pointer;
 }
 
 .modalUpdate .conModalUpdate .inputUpdate {
@@ -648,7 +582,8 @@ body {
     color: var(--color-negro);
 }
 
-.modalUpdate .conModalUpdate .inputUpdate input {
+.modalUpdate .conModalUpdate .inputUpdate input,
+.modalUpdate .conModalUpdate .inputUpdate textarea {
     padding: .7rem;
     width: 100%;
     border-radius: 7px;
@@ -666,6 +601,7 @@ body {
     justify-content: center;
     gap: .5rem;
     font-size: 12px;
+    width: 100%;
 }
 
 .modalUpdate .conModalUpdate .buttons button {
@@ -842,6 +778,9 @@ body {
     justify-content: center;
     margin-top: -1rem;
     padding-right: 1rem;
+    overflow: hidden;
+    overflow-y: auto;
+    margin-bottom: 2rem;
 }
 
 .modalAdd .conModalAdd .inModalAdd .inputs::-webkit-scrollbar {
@@ -897,7 +836,8 @@ body {
     margin-bottom: .2rem;
 }
 
-.modalAdd .conModalAdd .inModalAdd .inputs .inputAdd input {
+.modalAdd .conModalAdd .inModalAdd .inputs .inputAdd input,
+.modalAdd .conModalAdd .inModalAdd .inputs .inputAdd textarea {
     border: solid 1px var(--color-gris);
     outline: none;
     border-radius: 6px;
@@ -1267,18 +1207,20 @@ body {
     color: white;
 }
 
-@media (height < 350px) {
+@media (height < 390px) {
     .modalAdd .conModalAdd .inModalAdd .inputs {
         justify-content: start;
-        margin-bottom: 2rem;
-        overflow: hidden;
-        overflow-y: auto;
     }
 }
 
 @media (height < 550px) {
-    .modalDetele .conModalDelete {
-        height: 700px;
+    .modalUpdate .conModalUpdate {
+        justify-content: start;
+    }
+
+    .modalUpdate .conModalUpdate .conInputs {
+        margin-top: 3rem;
+        padding-right: 1rem;
     }
 }
 

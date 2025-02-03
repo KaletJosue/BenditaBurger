@@ -5,7 +5,7 @@
     <script src="https://unpkg.com/scrollreveal"></script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/styles/admin/products/products.css" />
+    <link rel="stylesheet" href="/styles/admin/bills/bills.css" />
     <!-- Loader -->
     <link rel="stylesheet" href="/styles/loader/loader.css">
     <link rel="shortcut icon" href="/assets/logo.png" type="image/x-icon">
@@ -113,71 +113,47 @@
     </div>
 
     <div class="main">
-        <div class="conTable">
-            <div class="conButton">
-                <h1>Productos Agregados:</h1>
-                <button class="openModalAdd">
-                    <i class="ph-bold ph-plus"></i>
-                    <p>Agregar</p>
-                </button>
+        <button class="openModalAdd"><i class="ph-bold ph-plus"></i></button>
+        <div class="totalBills">
+            <h3>Gastos Totales:</h3>
+            <h1>$<span>800.000</span></h1>
+        </div>
+        <div class="contentBills">
+            <div class="bill">
+                <div class="leftBill">
+                    <i class="ph-fill ph-piggy-bank"></i>
+                    <div class="textLeftBill">
+                        <h4>Carne de Hamburguesa</h4>
+                        <p>$800.000</p>
+                    </div>
+                </div>
+                <i class="ph-fill ph-dots-three-outline-vertical openModalUpdate" id="menuVertical"></i>
             </div>
-
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Imagen</th>
-                        <th>Producto</th>
-                        <th>Categoría</th>
-                        <th>Precio</th>
-                        <th>Descuento</th>
-                        <th>Estado</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th><img src="/assets/ham2.png" alt=""></th>
-                        <th>Whopper</th>
-                        <th>Hamburguesas</th>
-                        <th>$29.000</th>
-                        <th>Sin Descuento</th>
-                        <th>
-                            <div class="btnEstatus">
-                                <p>Activo</p>
-                                <p>Inactivo</p>
-                            </div>
-                        </th>
-                        <th>
-                            <div class="actions">
-                                <button class="openModalUpdate">Editar</button>
-                                <button class="openModalDelete">Eliminar</button>
-                            </div>
-                        </th>
-                    </tr>
-                </tbody>
-            </table>
-            <div class="espacio"></div>
+            <div class="bill">
+                <div class="leftBill">
+                    <i class="ph-fill ph-piggy-bank"></i>
+                    <div class="textLeftBill">
+                        <h4>Carne de Hamburguesa</h4>
+                        <p>$800.000</p>
+                    </div>
+                </div>
+                <i class="ph-fill ph-dots-three-outline-vertical" id="menuVertical"></i>
+            </div>
+            <div class="bill">
+                <div class="leftBill">
+                    <i class="ph-fill ph-piggy-bank"></i>
+                    <div class="textLeftBill">
+                        <h4>Carne de Hamburguesa</h4>
+                        <p>$800.000</p>
+                    </div>
+                </div>
+                <i class="ph-fill ph-dots-three-outline-vertical" id="menuVertical"></i>
+            </div>
         </div>
     </div>
 
     <div class="toast">
         <p>Debes ingresar el nombre del producto</p>
-    </div>
-
-    <div class="modalDetele">
-        <div class="conModalDelete">
-            <div class="inModalDelete">
-                <img src="/assets/ham2.png" alt="">
-                <div class="textModalDelete">
-                    <p>Nombre:</p>
-                    <p>Pan de Hamburguesa</p>
-                    <p>Categoria:</p>
-                    <p>Panaderia</p>
-                    <p>Precio:</p>
-                    <p>$29.000</p>
-                </div>
-            </div>
-            <button>Eliminar</button>
-        </div>
     </div>
 
     <div class="modalUpdate">
@@ -195,14 +171,6 @@
                 <div class="inputUpdate">
                     <p>Precio</p>
                     <input type="number" class="inputPriceUpdate">
-                </div>
-                <div class="inputUpdate">
-                    <p>Descuento</p>
-                    <input type="number" class="inputDiscountUpdate">
-                </div>
-                <div class="inputUpdate">
-                    <p>Descripcion</p>
-                    <textarea name="" id="" class="inputDescriptionUpdate" style="resize: none; height: 100px;"></textarea>
                 </div>
             </div>
             <div class="buttons">
@@ -233,28 +201,17 @@
                     </div>
                 </div>
                 <div class="inputs">
-                    <input type="file" hidden id="inputPhoto" accept="image/*">
-                    <label for="inputPhoto">Ingresa una Imagen</label>
-                    <h3>Imagen: <span class="nameImagen"></span></h3>
                     <div class="inputAdd">
                         <p>Nombre</p>
                         <input type="text" class="inputName">
-                    </div>
-                    <div class="inputAdd">
-                        <p>Categoria</p>
-                        <input type="text" class="inputCategory">
                     </div>
                     <div class="inputAdd">
                         <p>Precio</p>
                         <input type="number" class="inputPrice">
                     </div>
                     <div class="inputAdd">
-                        <p>Descuento</p>
-                        <input type="number" class="inputDiscount">
-                    </div>
-                    <div class="inputAdd">
-                        <p>Descripción</p>
-                        <textarea class="inputDescription" style="resize: none; height: 100px;"></textarea>
+                        <p>Metodo de Pago</p>
+                        <input type="text" class="inputPay">
                     </div>
                     <div class="buttons">
                         <button disabled class="saveAdd">Guardar</button>
@@ -310,7 +267,7 @@
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/gsap.min.js"></script>
-    <script src="/controller/admin/products/products.js" type="module"></script>
+    <script src="/controller/admin/bills/bills.js" type="module"></script>
 </body>
 
 </html>
