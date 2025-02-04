@@ -130,7 +130,6 @@ body {
 .sidebar .optionsMenu2,
 .sidebar .optionsFinanzas2 {
     display: none;
-    box-shadow: var(--box-shadow-suave);
 }
 
 .sidebar.active .optionsMenu2 {
@@ -145,6 +144,7 @@ body {
     left: -500vw;
     transition: all .5s ease;
     z-index: -10;
+    box-shadow: var(--box-shadow-suave);
 }
 
 .sidebar.active .optionsFinanzas2 {
@@ -159,6 +159,7 @@ body {
     left: -500vw;
     transition: all .5s ease;
     z-index: -1;
+    box-shadow: var(--box-shadow-suave);
 }
 
 .sidebar.active .optionsMenu2.active,
@@ -394,250 +395,121 @@ body {
     font-size: 12px;
 }
 
-.btnBills {
+.btnStatistics {
     background-color: var(--color-fondo);
 }
 
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    appearance: none;
+    margin: 0;
+}
+
 .main {
-    padding: 1rem 2rem 3rem 7rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    padding: 1rem 2rem 1rem 7rem;
 }
 
-.main .openModalAdd {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    width: 50px;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 20px;
-    background-color: #6397bc;
-    border: none;
-    color: white;
-    border-radius: 20px;
-    cursor: pointer;
-}
-
-.main .totalBills {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin-top: 2rem;
-}
-
-.main .totalBills h3 {
-    font-size: 15px;
-    font-weight: 500;
-    color: var(--color-negro);
-}
-
-.main .totalBills h1 {
-    font-size: 60px;
-    font-weight: 900;
-    margin-top: -.5rem;
-    color: var(--color-negro);
-}
-
-.main .contentBills {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 60%;
-    margin-top: 1rem;
+.main .inputs {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
     gap: 1rem;
 }
 
-.main .contentBills .bill {
-    background-color: var(--color-blanco);
+.main .inputs input {
     width: 100%;
+    padding: 1rem .7rem;
     border-radius: 10px;
-    box-shadow: var(--box-shadow-suave);
-    padding: 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    color: var(--color-negro);
-}
-
-.main .contentBills .bill .leftBill {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-}
-
-.main .contentBills .bill .leftBill i {
-    width: 70px;
-    height: 70px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    font-size: 20px;
-    background-color: #6397bc;
-    color: white;
-    flex: 0 0 auto;
-}
-
-.main .contentBills .bill .leftBill .textLeftBill h4 {
-    font-size: 12px;
-    font-weight: 500;
-}
-
-.main .contentBills .bill .leftBill .textLeftBill p {
-    font-size: 20px;
-    font-weight: 900;
-}
-
-.main .contentBills .bill i#menuVertical {
-    font-size: 15px;
-    cursor: pointer;
-}
-
-.modalUpdate {
-    position: fixed;
-    width: 100vw;
-    height: 100dvh;
-    top: 0;
-    left: 0;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    z-index: 1;
-    padding: 1rem;
-}
-
-.modalUpdate .conModalUpdate {
-    backdrop-filter: blur(90px);
-    padding: 2rem;
-    width: 500px;
-    box-shadow: 1px 1px 1rem #0000008a;
-    border-radius: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    max-height: 400px;
-}
-
-.modalUpdate .conModalUpdate i#closeModalUpdate {
-    top: 10px;
-    left: 10px;
-    height: 35px;
-    width: 35px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    position: absolute;
-    transition: all .2s ease;
-    cursor: pointer;
-    color: var(--color-negro);
-}
-
-.modalUpdate .conModalUpdate i#closeModalUpdate:hover {
-    background-color: var(--color-gris);
-    color: var(--color-blanco);
-}
-
-.modalUpdate .conModalUpdate .conInputs {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    overflow: hidden;
-    overflow-y: auto;
-}
-
-.modalUpdate .conModalUpdate .conInputs::-webkit-scrollbar {
-    width: 7px;
-    background-color: var(--color-linea);
-}
-
-.modalUpdate .conModalUpdate .conInputs::-webkit-scrollbar-thumb {
-    background-color: var(--color-gris);
-    border-radius: 50px;
-    cursor: pointer;
-}
-
-.modalUpdate .conModalUpdate .inputUpdate {
-    margin-top: 1rem;
-}
-
-.modalUpdate .conModalUpdate .inputUpdate p {
-    font-size: 12px;
-    margin-bottom: .2rem;
-    color: var(--color-negro);
-}
-
-.modalUpdate .conModalUpdate .inputUpdate input,
-.modalUpdate .conModalUpdate .inputUpdate textarea {
-    padding: .7rem;
-    width: 100%;
-    border-radius: 7px;
-    border: solid 1px var(--color-gris);
-    font-size: 12px;
+    border: solid 1px var(--color-linea);
     outline: none;
     background-color: transparent;
-    color: var(--color-negro);
+    font-size: 12px;
+    color: var(--color-gris);
+    text-align: center;
 }
 
-.modalUpdate .conModalUpdate .buttons {
+.main .inputs input:not(:last-child) {
+    cursor: pointer;
+}
+
+.main .cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1rem;
     margin-top: 1rem;
+}
+
+.main .cards .card {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: .5rem;
+    background-color: var(--color-blanco);
+    box-shadow: var(--box-shadow-suave);
+    border-radius: 10px;
+    padding: 4rem 1rem;
+    gap: 1rem;
+}
+
+.main .cards .card i {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: white;
+}
+
+.main .cards .card:first-child i {
+    background-color: #7d2ae8;
+}
+
+.main .cards .card:nth-child(2) i {
+    background-color: #ff7777;
+}
+
+.main .cards .card:last-child i {
+    background-color: #00be59;
+}
+
+.main .cards .card .textCard p {
     font-size: 12px;
+    font-weight: 500;
+    color: var(--color-negro);
+}
+
+.main .cards .card .textCard h1 {
+    font-size: 25px;
+    font-weight: 900;
+    color: var(--color-negro);
+}
+
+.main .containerChartLine {
     width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: start;
+    justify-content: center;
+    margin-top: 2rem;
+    overflow: hidden;
 }
 
-.modalUpdate .conModalUpdate .buttons button {
-    padding: .7rem;
-    width: 100%;
-    border-radius: 7px;
-    border: none;
-    cursor: pointer;
-    transition: all .2s ease;
-    font-size: 12px;
-}
-
-.modalUpdate .conModalUpdate .buttons button:first-child {
-    background-color: var(--color-gris);
-    color: var(--color-blanco);
-    opacity: .2;
-    cursor: no-drop;
-}
-
-.modalUpdate .conModalUpdate .buttons button:last-child {
-    background-color: #FF4A43;
-    color: var(--color-blanco);
-}
-
-.modalUpdate .conModalUpdate .buttons button:last-child:hover {
-    transform: translateY(-5px);
-}
-
-.modalUpdate .conModalUpdate .buttons button:first-child.active {
-    opacity: 1;
-    background-color: #6397bc;
-    cursor: pointer;
-}
-
-.modalUpdate .conModalUpdate .buttons button:first-child.active:hover {
-    transform: translateY(-5px);
-}
-
-.modalAdd {
+.modalYear {
+    display: none;
     position: fixed;
     width: 100vw;
-    height: 100dvh;
+    height: 100vh;
+    top: 0;
+    left: 0;
+}
+
+.modalYear.active {
+    display: flex;
+}
+
+.modalMonth {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
     top: 0;
     left: 0;
     display: none;
@@ -647,264 +519,36 @@ body {
     z-index: 1;
 }
 
-.modalAdd .conModalAdd {
+.modalMonth .conModalMonth {
     backdrop-filter: blur(90px);
     box-shadow: 1px 1px 1rem #0000008a;
-    width: 500px;
+    width: 400px;
     border-radius: 20px;
     padding: 1rem;
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    justify-content: start;
-    opacity: 0;
-    max-height: 400px;
+    opacity: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: .5rem;
+    max-height: 300px;
 }
 
-.modalAdd .conModalAdd i#closeModalAdd {
-    font-size: 12px;
-    height: 30px;
-    width: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--color-negro);
-    border-radius: 50%;
-    aspect-ratio: 1/1;
-    flex: 0 0 auto;
-    cursor: pointer;
-    transition: all .2s ease;
-}
-
-.modalAdd .conModalAdd i#closeModalAdd:hover {
-    background-color: var(--color-gris);
-    color: var(--color-blanco);
-}
-
-.modalAdd .conModalAdd .inModalAdd {
-    width: 100%;
+.modalMonth .conModalMonth p {
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 1rem;
-}
-
-.modalAdd .conModalAdd .inModalAdd .progress {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-.modalAdd .conModalAdd .inModalAdd .progress .one,
-.modalAdd .conModalAdd .inModalAdd .progress .two,
-.modalAdd .conModalAdd .inModalAdd .progress .three {
-    height: 50px;
-    width: 50px;
-    background-color: var(--color-gris);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
-    border-radius: 50%;
-    transition: all .2s ease;
-}
-
-.modalAdd .conModalAdd .inModalAdd .progress .one.active,
-.modalAdd .conModalAdd .inModalAdd .progress .two.active,
-.modalAdd .conModalAdd .inModalAdd .progress .three.active {
-    background-color: #6397bc;
-}
-
-.modalAdd .conModalAdd .inModalAdd .progress .one i,
-.modalAdd .conModalAdd .inModalAdd .progress .two i,
-.modalAdd .conModalAdd .inModalAdd .progress .three i {
-    position: absolute;
-    top: -60px;
-    color: #FFF;
-    font-size: 15px;
-    transition: all .5s;
-}
-
-.modalAdd .conModalAdd .inModalAdd .progress .one.active i,
-.modalAdd .conModalAdd .inModalAdd .progress .two.active i,
-.modalAdd .conModalAdd .inModalAdd .progress .three.active i {
-    top: 18px;
-}
-
-.modalAdd .conModalAdd .inModalAdd .progress .one h3,
-.modalAdd .conModalAdd .inModalAdd .progress .two h3,
-.modalAdd .conModalAdd .inModalAdd .progress .three h3 {
-    position: absolute;
-    color: var(--color-blanco);
-    font-size: 14px;
-    font-weight: 500;
-    transition: all .2s ease;
-    top: 15px;
-}
-
-.modalAdd .conModalAdd .inModalAdd .progress .one.active h3,
-.modalAdd .conModalAdd .inModalAdd .progress .two.active h3,
-.modalAdd .conModalAdd .inModalAdd .progress .three.active h3 {
-    position: absolute;
-    top: 60px;
-}
-
-.modalAdd .conModalAdd .inModalAdd .progress .line1,
-.modalAdd .conModalAdd .inModalAdd .progress .line2 {
-    display: block;
-    width: 3px;
-    height: 15px;
-    background-color: var(--color-gris);
-}
-
-.modalAdd .conModalAdd .inModalAdd .progress .line1.active,
-.modalAdd .conModalAdd .inModalAdd .progress .line2.active {
-    background-color: #6397bc;
-}
-
-.modalAdd .conModalAdd .inModalAdd .inputs {
-    flex-grow: 1;
-    height: calc(100% - 20px);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    margin-top: -1rem;
-    padding-right: 1rem;
-    overflow: hidden;
-    overflow-y: auto;
-    margin-bottom: 2rem;
-}
-
-.modalAdd .conModalAdd .inModalAdd .inputs::-webkit-scrollbar {
-    width: 7px;
-    background-color: var(--color-linea);
-}
-
-.modalAdd .conModalAdd .inModalAdd .inputs::-webkit-scrollbar-thumb {
-    background-color: var(--color-gris);
-    border-radius: 50px;
-    cursor: pointer;
-}
-
-.modalAdd .conModalAdd .inModalAdd .inputs label {
-    display: flex;
-    padding: 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     font-size: 12px;
+    font-weight: 500;
     border-radius: 10px;
-    border: dashed 2px #6397bc;
-    font-weight: 700;
-    color: #6397bc;
+    background-color: var(--color-blanco);
+    color: var(--color-gris);
     cursor: pointer;
     transition: all .2s ease;
 }
 
-.modalAdd .conModalAdd .inModalAdd .inputs label:hover {
-    background-color: #6397bc;
-    color: #fff;
-}
-
-.modalAdd .conModalAdd .inModalAdd .inputs h3 {
-    font-size: 12px;
-    margin-top: .3rem;
-    font-weight: 800;
-    color: var(--color-negro);
-}
-
-.modalAdd .conModalAdd .inModalAdd .inputs h3 span {
-    font-weight: 400;
-}
-
-.modalAdd .conModalAdd .inModalAdd .inputs .inputAdd {
-    margin-top: 1rem;
-}
-
-.modalAdd .conModalAdd .inModalAdd .inputs .inputAdd p {
-    font-size: 13px;
-    font-weight: 400;
-    color: var(--color-negro);
-    margin-bottom: .2rem;
-}
-
-.modalAdd .conModalAdd .inModalAdd .inputs .inputAdd input,
-.modalAdd .conModalAdd .inModalAdd .inputs .inputAdd textarea {
-    border: solid 1px var(--color-gris);
-    outline: none;
-    border-radius: 6px;
-    font-size: 12px;
-    padding: .7rem;
-    width: 100%;
-    background-color: transparent;
-    color: var(--color-negro);
-}
-
-.modalAdd .conModalAdd .inModalAdd .inputs .buttons {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: .5rem;
-    width: 100%;
-    margin-top: 1rem;
-}
-
-.modalAdd .conModalAdd .inModalAdd .inputs .buttons button {
-    width: 100%;
-    padding: .7rem 1rem;
-    border-radius: 7px;
-    border: none;
-    font-size: 12px;
-    font-weight: 500;
-    transition: all .2s ease;
-    cursor: pointer;
-}
-
-.modalAdd .conModalAdd .inModalAdd .inputs .buttons button:first-child {
+.modalMonth .conModalMonth p:hover {
     background-color: var(--color-gris);
     color: var(--color-blanco);
-    opacity: .2;
-    cursor: no-drop;
-}
-
-.modalAdd .conModalAdd .inModalAdd .inputs .buttons button:last-child {
-    background-color: #FF4A43;
-    color: var(--color-blanco);
-}
-
-.modalAdd .conModalAdd .inModalAdd .inputs .buttons button:last-child:hover {
-    transform: translateY(-5px);
-}
-
-.modalAdd .conModalAdd .inModalAdd .inputs .buttons button:first-child.active {
-    opacity: 1;
-    background-color: #6397bc;
-    cursor: pointer;
-}
-
-.modalAdd .conModalAdd .inModalAdd .inputs .buttons button:first-child.active:hover {
-    transform: translateY(-5px);
-}
-
-.toast {
-    position: fixed;
-    right: -200vw;
-    top: 30px;
-    z-index: 2;
-    background-color: var(--color-texto-cancelado);
-    padding: 1rem 2rem;
-    border-radius: 10px 0 0 10px;
-    font-size: 12px;
-    font-weight: 700;
-    color: var(--color-blanco);
-    transition: all .5s ease;
-}
-
-.toast.active {
-    right: 0;
 }
 
 .switch {
@@ -1202,31 +846,36 @@ body {
     color: white;
 }
 
-@media (height < 390px) {
-    .modalAdd .conModalAdd .inModalAdd .inputs {
-        justify-content: start;
-    }
-}
-
-@media (height < 550px) {
-    .modalUpdate .conModalUpdate {
-        justify-content: start;
+@media (height < 350px) {
+    .modalMonth {
+        align-items: start;
     }
 
-    .modalUpdate .conModalUpdate .conInputs {
-        margin-top: 3rem;
-        padding-right: 1rem;
+    .modalMonth .conModalMonth {
+        height: 100%;
+        overflow: hidden;
+        overflow-y: auto;
+    }
+
+    .modalMonth .conModalMonth p {
+        height: 60px;
     }
 }
 
 @media (width < 1000px) {
-    .main .contentBills {
-        width: 90%;
-    }
-
     .modal,
     .modal2 {
         padding: 1rem;
+    }
+
+    .main .cards {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+    }
+
+    .main .cards .card:last-child {
+        grid-column: 1/3;
     }
 }
 
@@ -1247,34 +896,42 @@ body {
         padding: 1rem;
     }
 
-    .main .contentBills {
-        width: 100%;
+    .main .inputs {
+        padding-right: 4rem;
+    }
+}
+
+@media (width < 550px) {
+    .main .inputs {
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: .5rem;
+    }
+
+    .main .inputs input:first-child {
+        width: calc(100% - 60px);
+    }
+
+    .main .cards .card {
+        padding: 3rem 1rem;
+        gap: .5rem;
+    }
+
+    .main .cards .card i {
+        height: 35px;
+        width: 35px;
+        font-size: 12px;
+    }
+
+    .main .cards .card .textCard h1 {
+        font-size: 17px;
     }
 }
 
 @media (width < 450px) {
-    .modalUpdate .conModalUpdate .conInputs {
-        display: grid;
-        grid-template-columns: 1fr;
-    }
-
-    .modalDetele .conModalDelete {
-        padding: 1rem;
-    }
-
-    .modalDetele .conModalDelete .inModalDelete {
-        display: flex;
-        flex-direction: column;
-        gap: 0;
-        text-align: center;
-    }
-
-    .modalDetele .conModalDelete .inModalDelete img {
-        aspect-ratio: 1/1;
-    }
-
-    .modalDetele .conModalDelete button {
-        margin-top: 1rem;
+    .modalDetalis .conModalDetails {
+        border-radius: 0;
     }
 
     .modal .modalContent,
@@ -1297,6 +954,10 @@ body {
         margin-top: 1rem;
     }
 
+    .modal2 .modalContent2 button:hover {
+        transform: translateX(0);
+    }
+
     .modal2 .modalContent2 button,
     .modal2 .modalContent2 button.logOut2 {
         position: relative;
@@ -1308,16 +969,20 @@ body {
     .modal2 .modalContent2 button.logOut2 {
         margin-top: 1rem;
     }
-}
 
-@media (width < 350px) {
-    .main .totalBills h1 {
-        font-size: 40px;
+    .main .cards {
+        gap: .5rem;
     }
 
-    .main .contentBills .bill .leftBill {
+    .main .cards .card {
         display: flex;
         flex-direction: column;
-        align-items: start;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .main .cards .card .textCard h1 {
+        font-size: 15px;
     }
 }

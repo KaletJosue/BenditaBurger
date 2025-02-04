@@ -718,6 +718,7 @@ body {
     align-items: start;
     justify-content: start;
     opacity: 0;
+    max-height: 500px;
 }
 
 .modalAdd .conModalAdd i#closeModalAdd {

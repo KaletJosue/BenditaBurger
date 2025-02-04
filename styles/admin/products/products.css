@@ -684,6 +684,7 @@ body {
     align-items: center;
     justify-content: center;
     position: relative;
+    max-height: 450px;
 }
 
 .modalUpdate .conModalUpdate i#closeModalUpdate {
@@ -819,6 +820,7 @@ body {
     align-items: start;
     justify-content: start;
     opacity: 0;
+    max-height: 550px;
 }
 
 .modalAdd .conModalAdd i#closeModalAdd {

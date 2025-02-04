@@ -5,7 +5,7 @@
     <script src="https://unpkg.com/scrollreveal"></script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/styles/admin/sections/sections.css" />
+    <link rel="stylesheet" href="/styles/admin/statics/statics.css" />
     <!-- Loader -->
     <link rel="stylesheet" href="/styles/loader/loader.css">
     <link rel="shortcut icon" href="/assets/logo.png" type="image/x-icon">
@@ -60,7 +60,7 @@
                     </div>
                     <div class="optionsMenu">
                         <p class="btnProducts">Productos</p>
-                        <p class="btnSections active">Secciones</p>
+                        <p class="btnSections">Secciones</p>
                     </div>
                 </li>
                 <li>
@@ -103,7 +103,7 @@
         </div>
         <div class="optionsMenu2">
             <p class="btnProducts">Productos</p>
-            <p class="btnSections active">Secciones</p>
+            <p class="btnSections">Secciones</p>
         </div>
         <div class="optionsFinanzas2">
             <p class="btnSales">Ventas</p>
@@ -113,105 +113,55 @@
     </div>
 
     <div class="main">
-        <div class="conTable">
-            <div class="conButton">
-                <h1>Secciones Agregadas:</h1>
-                <button class="openModalAdd">
-                    <i class="ph-bold ph-plus"></i>
-                    <p>Agregar</p>
-                </button>
+        <div class="inputs">
+            <input type="text" class="inputDay" placeholder="Buscar por Dia" value="16 / 07 / 2025">
+            <input type="text" class="inputMonth" placeholder="Buscar por Mes">
+            <input type="number" class="inputYear" placeholder="Buscar por Año">
+        </div>
+        <div class="cards">
+            <div class="card">
+                <i class="ph ph-chart-line"></i>
+                <div class="textCard">
+                    <p>Ingresos</p>
+                    <h1>$7.000.000</h1>
+                </div>
             </div>
-
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Nombre</th>
-                        <th>Prioridad</th>
-                        <th>Actualización</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th>Hamburguesas</th>
-                        <th>1</th>
-                        <th>12 / 07 / 25</th>
-                        <th>
-                            <div class="actions">
-                                <button class="openModalUpdate">Editar</button>
-                                <button class="openModalDelete">Eliminar</button>
-                            </div>
-                        </th>
-                    </tr>
-                </tbody>
-            </table>
-            <div class="espacio"></div>
+            <div class="card">
+                <i class="ph ph-trend-down"></i>
+                <div class="textCard">
+                    <p>Gastos</p>
+                    <h1>$800.000</h1>
+                </div>
+            </div>
+            <div class="card">
+                <i class="ph ph-chart-bar"></i>
+                <div class="textCard">
+                    <p>Ganancias</p>
+                    <h1>$6.200.000</h1>
+                </div>
+            </div>
+        </div>
+        <div class="containerChartLine">
+            <canvas id="myChart" class="chartLine"></canvas>
         </div>
     </div>
 
-    <div class="toast">
-        <p>Debes ingresar el nombre del producto</p>
-    </div>
+    <div class="modalYear"></div>
 
-    <div class="modalDetele">
-        <div class="conModalDelete">
-            <div class="inModalDelete">
-                <div class="textModalDelete">
-                    <p>Nombre:</p>
-                    <p>Hamburguesas</p>
-                    <p>Prioridad:</p>
-                    <p>1</p>
-                    <p>Actualización</p>
-                    <p>12 / 07 / 25</p>
-                </div>
-            </div>
-            <button>Eliminar</button>
-        </div>
-    </div>
-
-    <div class="modalUpdate">
-        <div class="conModalUpdate">
-            <div class="conInputs">
-                <div class="inputUpdate">
-                    <p>Nombre</p>
-                    <input type="text" class="inputNameUpdate">
-                </div>
-                <div class="inputUpdate">
-                    <p>Prioridad</p>
-                    <input type="number" class="inputCategoryUpdate">
-                </div>
-            </div>
-            <div class="buttons">
-                <button class="btnUpdate" disabled>Guardar</button>
-                <button id="closeModalUpdate">Cancelar</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="modalAdd">
-        <div class="conModalAdd">
-            <i class="ph-bold ph-x" id="closeModalAdd"></i>
-            <div class="inModalAdd">
-                <div class="progress">
-                    <div class="one">
-                        <h3>1</h3>
-                        <i class="ph-bold ph-check"></i>
-                    </div>
-                </div>
-                <div class="inputs">
-                    <div class="inputAdd">
-                        <p>Nombre</p>
-                        <input type="text" class="inputName">
-                    </div>
-                    <div class="inputAdd">
-                        <p>Prioridad</p>
-                        <input type="number" class="inputPriority">
-                    </div>
-                    <div class="buttons">
-                        <button disabled class="saveAdd">Guardar</button>
-                        <button class="cancelAdd">Cancelar</button>
-                    </div>
-                </div>
-            </div>
+    <div class="modalMonth">
+        <div class="conModalMonth">
+            <p>Enero</p>
+            <p>Febrero</p>
+            <p>Marzo</p>
+            <p>Abril</p>
+            <p>Mayo</p>
+            <p>Junio</p>
+            <p>Julio</p>
+            <p>Agosto</p>
+            <p>Septiembre</p>
+            <p>Octubre</p>
+            <p>Noviembre</p>
+            <p>Diciembre</p>
         </div>
     </div>
 
@@ -259,8 +209,9 @@
         </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/gsap.min.js"></script>
-    <script src="/controller/admin/sections/sections.js" type="module"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.4/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="/controller/admin/statics/statics.js" type="module"></script>
 </body>
 
 </html>
