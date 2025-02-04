@@ -27,7 +27,82 @@ onAuthStateChanged(auth, (user) => {
             then((querySnapshot) => {
                 querySnapshot.forEach((doc) => {
 
-                    if (doc.data().Rol == "Administrador") {
+                    if (doc.data().Rol == "Administrador" || doc.data().Rol == "SuperAdministrador") {
+
+                        const isLeapYear = (year) => {
+                            return (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0)
+                        }
+
+                        const getFebDays = (year) => {
+                            return isLeapYear(year) ? 29 : 28
+                        }
+
+                        let calendar = document.querySelector('.calendar')
+
+                        const month_names = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]
+
+                        let month_picker = document.querySelector('#month-picker')
+
+                        month_picker.addEventListener('click', () => {
+                            month_list.classList.add('show')
+                        })
+
+                        const generateCalendar = (month, year) => {
+                            let calendar_days = document.querySelector('.calendar-days')
+                            calendar_days.innerHTML = ''
+                            let calendar_header_year = document.querySelector('#year')
+
+                            let days_of_month = [31, getFebDays(year), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+
+                            let currDate = new Date()
+
+                            month_picker.innerHTML = month_names[month]
+                            calendar_header_year.innerHTML = year
+
+                            let first_day = new Date(year, month, 1)
+
+                            for (let i = 0; i <= days_of_month[month] + first_day.getDay() - 1; i++) {
+                                let day = document.createElement('div')
+                                if (i >= first_day.getDay()) {
+                                    day.classList.add('calendar-day-hover')
+                                    day.innerHTML = i - first_day.getDay() + 1
+                                    if (i - first_day.getDay() + 1 === currDate.getDate() && year === currDate.getFullYear() && month === currDate.getMonth()) {
+                                        day.classList.add('curr-date')
+                                    }
+                                }
+                                calendar_days.appendChild(day)
+                            }
+                        }
+
+                        let month_list = calendar.querySelector('.month-list')
+
+                        month_names.forEach((e, index) => {
+                            let month = document.createElement('div')
+                            month.innerHTML = `<div>${e}</div>`
+                            month.addEventListener('click', () => {
+                                month_list.classList.remove('show')
+                                curr_month.value = index
+                                generateCalendar(curr_month.value, curr_year.value)
+                            })
+                            month_list.appendChild(month)
+                        })
+
+                        document.querySelector('#prev-year').addEventListener('click', () => {
+                            --curr_year.value
+                            generateCalendar(curr_month.value, curr_year.value)
+                        })
+
+                        document.querySelector('#next-year').addEventListener('click', () => {
+                            ++curr_year.value
+                            generateCalendar(curr_month.value, curr_year.value)
+                        })
+
+                        let currDate = new Date()
+
+                        let curr_month = { value: currDate.getMonth() }
+                        let curr_year = { value: currDate.getFullYear() }
+
+                        generateCalendar(curr_month.value, curr_year.value)
 
                         var inputDay = document.querySelector('.inputDay')
                         var inputMonth = document.querySelector('.inputMonth')
@@ -35,6 +110,8 @@ onAuthStateChanged(auth, (user) => {
 
                         var modalMonth = document.querySelector('.modalMonth')
                         var conModalMonth = document.querySelector('.conModalMonth')
+
+                        var modalDay = document.querySelector('.modalDay')
 
                         var modalYear = document.querySelector('.modalYear')
 
@@ -75,6 +152,34 @@ onAuthStateChanged(auth, (user) => {
                         inputDay.addEventListener('click', () => {
                             inputMonth.value = ''
                             inputYear.value = ''
+
+                            modalDay.style.display = 'flex'
+                            let calendar = document.querySelector('.calendar')
+
+                            gsap.fromTo(calendar,
+                                { backdropFilter: 'blur(0px)', height: 0, opacity: 0 },
+                                {
+                                    height: '100%',
+                                    padding: '1rem',
+                                    opacity: 1,
+                                    backdropFilter: 'blur(90px)',
+                                    duration: .7,
+                                    ease: 'expo.out',
+                                }
+                            )
+                            window.addEventListener('click', event => {
+                                if (event.target == modalDay) {
+                                    gsap.to(calendar, {
+                                        height: '0',
+                                        padding: '1rem',
+                                        duration: .2,
+                                        ease: 'power1.in',
+                                        onComplete: () => {
+                                            modalDay.style.display = 'none';
+                                        }
+                                    });
+                                }
+                            })
                         })
 
                         inputYear.addEventListener('click', () => {
@@ -91,16 +196,21 @@ onAuthStateChanged(auth, (user) => {
                             })
                         })
 
-                        inputDay.addEventListener('mousedown', function(event) {
+                        inputDay.addEventListener('mousedown', function (event) {
                             event.preventDefault();
                         });
-                        inputMonth.addEventListener('mousedown', function(event) {
+                        inputMonth.addEventListener('mousedown', function (event) {
                             event.preventDefault();
                         });
 
                         var btnSales = document.querySelectorAll('.btnSales')
                         var btnStatistics = document.querySelectorAll('.btnStatistics')
                         var btnBills = document.querySelectorAll('.btnBills')
+                        var btnConfig = document.querySelector('.btnConfig')
+
+                        btnConfig.addEventListener('click', () => {
+                            location.href = "/views/admin/config/config.html"
+                        })
 
                         btnBills.forEach((btnBill) => {
                             btnBill.addEventListener('click', () => {

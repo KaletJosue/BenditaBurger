@@ -1,0 +1,582 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+:root {
+    --color-negro: #000;
+    --color-blanco: #ffffff;
+    --color-gris: #828282;
+
+    --color-fondo: #f0f0f0;
+    --color-linea: #ccc;
+    
+    --color-naranja: #FFF2E9;
+    --color-texto-naranja: #FF8B43;
+
+    --color-azul: #E7F4F5;
+    --color-texto-azul: #069C9C;
+
+    --color-rojo: #FFE9E9;
+    --color-texto-rojo: #FF4A43;
+
+    --color-verde: #EDF8DA;
+    --color-texto-verde: #9ABA62;
+
+    --box-shadow-suave: 1px 1px 1rem #00000017;
+}
+
+.darkMode {
+    --color-negro: #ffffff;
+    --color-blanco: #000000;
+    --color-gris: #b2b2b2;
+
+    --color-fondo: #161616;
+    --color-linea: #202020;
+
+    --color-naranja: #cd7742b0;
+    --color-texto-naranja: #FFF2E9;
+
+    --color-azul: #043e3e9d;
+    --color-texto-azul: #E7F4F5;
+
+    --color-rojo: #9b2d2998;
+    --color-texto-rojo: #FFE9E9;
+
+    --color-verde: #5c713795;
+    --color-texto-verde: #EDF8DA;
+
+    --box-shadow-suave: 1px 1px 1rem #ededed17;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    list-style: none;
+    font-family: 'Montserrat';
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+html::-webkit-scrollbar {
+    width: 0;
+}
+
+body {
+    background-color: var(--color-fondo);
+}
+
+.search input {
+    padding: 2rem;
+    width: 100%;
+    font-size: 12px;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    color: var(--color-negro);
+}
+
+.search input::placeholder {
+    color: var(--color-gris);
+}
+
+.main {
+    padding: 0 2rem 1rem;
+}
+
+.conButton {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.conButton h1 {
+    font-size: 12px;
+    font-weight: 800;
+    color: var(--color-negro);
+}
+
+.conButton button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .2rem;
+    padding: .5rem 1rem;
+    font-size: 12px;
+    background-color: var(--color-negro);
+    color: var(--color-blanco);
+    border: solid 1px var(--color-negro);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all .2s ease;
+}
+
+.conButton button:hover {
+    background-color: transparent;
+    color: var(--color-negro);
+    transform: translateX(-10px);
+}
+
+.conTable .espacio {
+    display: block;
+    height: 20px;
+}
+
+.conTable {
+    overflow: hidden;
+    overflow-x: auto;
+}
+
+.conTable::-webkit-scrollbar {
+    height: 7px;
+    background-color: var(--color-linea);
+    border-radius: 50px;
+}
+
+.conTable::-webkit-scrollbar-thumb {
+    background-color: var(--color-gris);
+    border-radius: 50px;
+    cursor: pointer;
+}
+
+.conTable .espacio {
+    display: block;
+    height: 20px;
+}
+
+.main .table {
+    border-collapse: collapse;
+    width: 100%;
+    background-color: var(--color-blanco);
+    border-radius: 20px;
+}
+
+.main .table thead tr th {
+    font-size: 14px;
+    font-weight: 800;
+    color: var(--color-gris);
+    text-align: start;
+    padding: 2rem 1rem 1rem;
+}
+
+.main .table tbody tr:not(:last-child) {
+    border-bottom: solid 1px var(--color-linea);
+}
+
+.main .table tbody tr th {
+    text-align: start;
+    font-size: 12px;
+    color: var(--color-negro);
+    font-weight: 400;
+    padding: 1rem;
+}
+
+.main .table tbody tr th .img {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    gap: .5rem;
+}
+
+.main .table tbody tr th .btnEstatus {
+    width: 100px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background-color: #6397bc;
+    font-size: 12px;
+    font-weight: 700;
+    color: white;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all .2s ease;
+}
+
+.main .table tbody tr th:nth-child(6) {
+    width: 140px;
+}
+
+.main .table tbody tr th .btnEstatus.active {
+    background-color: #FF4A43;
+}
+
+.main .table tbody tr th .btnEstatus p {
+    position: absolute;
+    transition: all .2s ease;
+}
+
+.main .table tbody tr th .btnEstatus p:last-child {
+    top: 60px;
+}
+
+.main .table tbody tr th .btnEstatus.active p:last-child {
+    top: 12px;
+}
+
+.main .table tbody tr th .btnEstatus p:first-child {
+    top: 12px;
+}
+
+.main .table tbody tr th .btnEstatus.active p:first-child {
+    top: -60px;
+}
+
+.main .table tbody tr th img {
+    aspect-ratio: 1/1;
+    object-fit: contain;
+    object-position: center center;
+    width: 50px;
+    border-radius: 15px;
+}
+
+.main .table tbody tr th:nth-child(5) {
+    white-space: nowrap;
+}
+
+.main .table tbody tr th .actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .2rem;
+}
+
+.main .table tbody tr th .actions button {
+    padding: .7rem;
+    font-size: 12px;
+    font-weight: 500;
+    border-radius: 10px;
+    background-color: transparent;
+}
+
+.main .table tbody tr th .actions button:first-child {
+    border: solid 1px var(--color-gris);
+    color: var(--color-gris);
+    cursor: pointer;
+    transition: all .2s ease;
+}
+
+.main .table tbody tr th .actions button:first-child:hover {
+    background-color: var(--color-gris);
+    color: var(--color-blanco);
+}
+
+.switch {
+    display: block;
+    width: 40px;
+    height: 25px;
+    background-color: #6397bc;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all .2s ease;
+    outline: solid 2px var(--color-fondo);
+}
+
+.switch.active {
+    background-color: #1c1f2c;
+}
+
+.switch.active .circle {
+    transform: translateX(17px) rotate(90deg);
+    background-color: #c4c8d1;
+}
+
+.switch.active::after {
+    background-color: white;
+    right: 70%;
+    width: 5px;
+    height: 5px;
+    bottom: 10px;
+}
+
+.switch.active::before {
+    background-color: white;
+    right: 60%;
+    width: 2px;
+    height: 2px;
+    bottom: 7px;
+}
+
+.switch::after {
+    content: '';
+    display: block;
+    width: 20px;
+    height: 20px;
+    background-color: white;
+    border-radius: 50%;
+    position: absolute;
+    bottom: -10px;
+    right: -6px;
+}
+
+.switch::before {
+    content: '';
+    display: block;
+    width: 20px;
+    height: 20px;
+    background-color: white;
+    border-radius: 50%;
+    position: absolute;
+    bottom: -2px;
+    right: -13px;
+}
+
+.switch .circle {
+    display: block;
+    width: 17px;
+    height: 17px;
+    border-radius: 7px;
+    background-color: #edca2e;
+    margin-left: .2rem;
+    transition: all .2s ease;
+}
+
+.modalUpdate {
+    position: fixed;
+    width: 100vw;
+    height: 100dvh;
+    top: 0;
+    left: 0;
+    display: none;
+    align-items: end;
+    justify-content: center;
+    z-index: 1;
+}
+
+.modalUpdate .conModalUpdate {
+    backdrop-filter: blur(90px);
+    padding: 1rem 2rem;
+    width: 500px;
+    box-shadow: 1px 1px 1rem #0000008a;
+    border-radius: 20px 20px 0 0;
+}
+
+.modalUpdate .conModalUpdate .conInputs {
+    display: grid;
+    grid-template-columns: 1fr;
+}
+
+.modalUpdate .conModalUpdate .inputUpdate {
+    margin-top: 1rem;
+}
+
+.modalUpdate .conModalUpdate .inputUpdate p {
+    font-size: 12px;
+    margin-bottom: .2rem;
+    color: var(--color-negro);
+}
+
+.modalUpdate .conModalUpdate .inputUpdate input {
+    padding: .7rem;
+    width: 100%;
+    border-radius: 7px;
+    border: solid 1px var(--color-gris);
+    font-size: 12px;
+    outline: none;
+    background-color: transparent;
+    color: var(--color-negro);
+}
+
+.modalUpdate .conModalUpdate .buttons {
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+    font-size: 12px;
+}
+
+.modalUpdate .conModalUpdate .buttons button {
+    padding: .7rem;
+    width: 100%;
+    border-radius: 7px;
+    border: none;
+    cursor: pointer;
+    transition: all .2s ease;
+    font-size: 12px;
+}
+
+.modalUpdate .conModalUpdate .buttons button:first-child {
+    background-color: var(--color-gris);
+    color: var(--color-blanco);
+    opacity: .2;
+    cursor: no-drop;
+}
+
+.modalUpdate .conModalUpdate .buttons button:last-child {
+    background-color: #FF4A43;
+    color: var(--color-blanco);
+}
+
+.modalUpdate .conModalUpdate .buttons button:last-child:hover {
+    transform: translateY(-5px);
+}
+
+.modalUpdate .conModalUpdate .buttons button:first-child.active {
+    opacity: 1;
+    background-color: #6397bc;
+    cursor: pointer;
+}
+
+.modalUpdate .conModalUpdate .buttons button:first-child.active:hover {
+    transform: translateY(-5px);
+}
+
+/* Modal */
+
+.modal {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all .2s ease;
+    transform: scale(0);
+    z-index: 2;
+}
+
+.modal.active {
+    left: 0;
+    background-color: #767676;
+    transform: scale(1);
+}
+
+.modal .modalContent {
+    width: 550px;
+    height: 300px;
+    background-color: #1c1c1c;
+    border-radius: 30px;
+    position: relative;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.modal .modalContent::after {
+    content: '';
+    display: block;
+    width: 300px;
+    height: 150px;
+    background-color: #ff7777;
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(180px);
+    bottom: -50px;
+    right: -100px;
+    z-index: 0;
+}
+
+.modal .modalContent .centerModal {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    padding: 0 4rem;
+    gap: 1.5rem;
+}
+
+.modal .modalContent .centerModal i {
+    font-size: 60px;
+    color: #ff7777;
+}
+
+.modal .modalContent .centerModal .textModal h1 {
+    font-size: 25px;
+    font-weight: 900;
+}
+
+.modal .modalContent .centerModal .textModal p {
+    font-size: 14px;
+}
+
+.modal .modalContent i#closeModal {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.modal .modalContent button {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    padding: .7rem 1rem;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+    border: solid 2px #ff7777;
+    background-color: transparent;
+    background-color: #ff7777;
+    color: white;
+    cursor: pointer;
+    transition: all .2s ease;
+    z-index: 1;
+}
+
+.modal .modalContent button:hover {
+    transform: translateX(-10px);
+    background-color: transparent;
+}
+
+@media (width < 1000px) {
+    .modal {
+        padding: 1rem;
+    }
+}
+
+@media (width < 650px) {
+    .conMenu {
+        display: flex;
+    }
+
+    .sidebar {
+        left: -100vw;
+    }
+
+    .sidebar.ocult {
+        left: 0;
+    }
+
+    .search input {
+        padding: 2rem 5rem 2rem 2rem;
+    }
+
+    .main {
+        padding: 0 1rem 1rem;
+    }
+}
+
+@media (width < 450px) {
+    .modal .modalContent {
+        flex-direction: column;
+    }
+
+    .modal .modalContent .centerModal {
+        padding: 0;
+        flex-direction: column;
+        text-align: center;
+        padding: 0 1rem;
+    }
+
+    .modal .modalContent button {
+        position: relative;
+        top: 0;
+        left: 0;
+        margin-top: 1rem;
+    }
+}

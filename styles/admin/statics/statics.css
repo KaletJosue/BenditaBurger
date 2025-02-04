@@ -493,6 +493,178 @@ input[type="number"]::-webkit-inner-spin-button {
     overflow: hidden;
 }
 
+.modalDay {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    display: none;
+    padding: 1rem;
+    z-index: 1;
+}
+
+.modalDay .calendar {
+    backdrop-filter: blur(90px);
+    box-shadow: 1px 1px 1rem #0000008a;
+    padding: 1rem;
+    border-radius: 20px;;
+    opacity: 1;
+    overflow: hidden;
+    width: 100%;
+    max-width: 500px;
+    max-height: 440px;
+}
+
+.modalDay .calendar .calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--color-negro);
+    padding: .5rem;
+}
+
+.modalDay .calendar .calendar-header .month-picker {
+    padding: .7rem 2rem;
+    border-radius: 7px;
+    cursor: pointer;
+    transition: all .2s ease;
+    font-size: 12px;
+}
+
+.modalDay .calendar .calendar-header .month-picker:hover {
+    background-color: var(--color-gris);
+    color: var(--color-blanco);
+}
+
+.modalDay .calendar .calendar-header .year-picker {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modalDay .calendar .calendar-header .year-picker .year-change {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    margin: 0 10px;
+    cursor: pointer;
+    transition: all .2s ease;
+}
+
+.modalDay .calendar .calendar-header .year-picker .year-change:hover {
+    background-color: var(--color-gris);
+    color: var(--color-blanco);
+}
+
+.modalDay .calendar .calendar-body {
+    padding: .5rem;
+}
+
+.modalDay .calendar .calendar-body .calendar-week-day {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    font-weight: 600;
+    font-size: 12px;
+}
+
+.modalDay .calendar .calendar-body .calendar-week-day div {
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-gris);
+}
+
+.modalDay .calendar .calendar-body .calendar-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+    color: var(--color-negro);
+    margin-top: 1rem;
+}
+
+.modalDay .calendar .calendar-body .calendar-days div {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: .5rem;
+    font-size: 12px;
+    position: relative;
+    border-radius: 50%;
+    transition: all .2s ease;
+}
+
+.modalDay .calendar .calendar-body .calendar-days div.curr-date {
+    background-color: #7d2ae8;
+    color: white;
+}
+
+.modalDay .calendar .calendar-body .calendar-days .calendar-day-hover:hover {
+    background-color: #7d2ae8;
+    color: white;
+    cursor: pointer;
+}
+
+.modalDay .calendar .month-list {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: var(--color-fondo);
+    border-radius: 20px;
+    padding: 1rem;
+    color: var(--color-negro);
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    gap: .5rem;
+    visibility: hidden;
+    pointer-events: none;
+    transform: scale(2);
+    transition: all .2s ease-in-out;
+    opacity: 0;
+}
+
+.modalDay .calendar .month-list.show {
+    transform: scale(1);
+    visibility: visible;
+    pointer-events: visible;
+    opacity: 1;
+}
+
+.modalDay .calendar .month-list > div {
+    display: grid;
+    place-items: center;
+}
+
+.modalDay .calendar .month-list > div > div {
+    width: 100%;
+    height: 100%;
+    padding: 1rem;
+    border-radius: 10px;
+    text-align: center;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    transition: all .2s ease;
+}
+
+.modalDay .calendar .month-list > div > div:hover {
+    background-color: var(--color-gris);
+    color: var(--color-blanco);
+}
+
 .modalYear {
     display: none;
     position: fixed;
@@ -863,6 +1035,7 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 @media (width < 1000px) {
+
     .modal,
     .modal2 {
         padding: 1rem;
@@ -926,6 +1099,29 @@ input[type="number"]::-webkit-inner-spin-button {
 
     .main .cards .card .textCard h1 {
         font-size: 17px;
+    }
+
+    .modalDay .calendar .calendar-header {
+        padding: 1rem 0;
+    }
+
+    .modalDay .calendar .calendar-header .month-picker {
+        padding: .7rem;
+    }
+
+    .modalDay .calendar .calendar-header .year-picker .year-change {
+        height: 20px;
+        width: 20px;
+        font-size: 10px;
+    }
+
+    .modalDay .calendar {
+        max-height: 300px;
+    }
+
+    .modalDay .calendar .calendar-body .calendar-days div {
+        width: 30px;
+        height: 30px;
     }
 }
 

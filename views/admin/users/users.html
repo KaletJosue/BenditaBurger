@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script src="https://unpkg.com/scrollreveal"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/styles/admin/users/users.css" />
+    <!-- Loader -->
+    <link rel="stylesheet" href="/styles/loader/loader.css">
+    <link rel="shortcut icon" href="/assets/logo.png" type="image/x-icon">
+    <title>Administrador | Bendita Burger</title>
+    <!-- Iconos -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css"
+        integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+
+    <div class="search">
+        <input type="text" placeholder="Busca por Cliente, Monto, Direccion...">
+    </div>
+
+    <div class="main">
+        <div class="conTable">
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Cliente</th>
+                        <th>Correo Electronico</th>
+                        <th>Direccion</th>
+                        <th>Telefono</th>
+                        <th>Privilegio</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>
+                            <div class="img">
+                                <img src="/assets/profile-1.jpg" alt="">
+                                <p>Kalet Josue</p>
+                            </div>
+                        </th>
+                        <th>kalet.jo28@gmail.com</th>
+                        <th>Cra 22 # 2 - 13</th>
+                        <th>3138577980</th>
+                        <th>SuperAdministrador</th>
+                        <th>
+                            <div class="btnEstatus">
+                                <p>Activo</p>
+                                <p>Inactivo</p>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="actions">
+                                <button class="openModalUpdate">Editar</button>
+                            </div>
+                        </th>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="espacio"></div>
+        </div>
+    </div>
+
+    <div class="modalUpdate">
+        <div class="conModalUpdate">
+            <div class="conInputs">
+                <div class="inputUpdate">
+                    <p>Privilegio</p>
+                    <input type="text" class="inputNameUpdate">
+                </div>
+            </div>
+            <div class="buttons">
+                <button class="btnUpdate" disabled>Guardar</button>
+                <button id="closeModalUpdate">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal">
+        <div class="modalContent">
+            <div class="centerModal">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+                <div class="textModal">
+                    <h1>Ooops!</h1>
+                    <p class="textErrorModal">No has iniciado sesión de manera correcta</p>
+                </div>
+            </div>
+            <button class="tryAgain">Iniciar Sesión</button>
+        </div>
+    </div>
+
+    <div class="loader">
+        <div class="icon">
+            <div class="comidaSarten"></div>
+            <div class="sartenCompleto">
+                <div class="sarten"></div>
+                <div class="mangoSarten"></div>
+            </div>
+            <div class="placaSarten"></div>
+        </div>
+        <div class="textLoader">
+            <img src="/assets/logo.png" alt="">
+            <h1>¡BENDITA BURGER!</h1>
+            <p>¡Aguanta el hambre! Ya casi está todo listo...</p>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/gsap.min.js"></script>
+    <script src="/controller/admin/users/users.js" type="module"></script>
+</body>
+
+</html>

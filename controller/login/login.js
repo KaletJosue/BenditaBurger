@@ -90,13 +90,12 @@ btnGoogle.addEventListener('click', () => {
                                 Telefono: '',
                                 Direccion: '',
                                 Rol: "Usuario",
-                                DarkMode: "desactive",
                                 URL: user.photoURL,
                             }).then(() => {
                                 return getDocs(query(collection(db, "Users", "IdUser", "Private_Data"), where("Id", "==", user.uid)))
                             }).then((querySnapshot) => {
                                 querySnapshot.forEach((doc) => {
-                                    if (doc.data().Rol == "Administrador") {
+                                    if (doc.data().Rol == "Administrador" || doc.data().Rol == "SuperAdministrador") {
                                         location.href = "/views/admin/home/home.html"
                                     } else if (doc.data().Rol == "Cajero") {
                                         location.href = "/views/cajero/home/home.html"
@@ -126,7 +125,7 @@ btnGoogle.addEventListener('click', () => {
                             loader.classList.remove('active')
 
                             querySnapshot.forEach((doc) => {
-                                if (doc.data().Rol == "Administrador") {
+                                if (doc.data().Rol == "Administrador" || doc.data().Rol == "SuperAdministrador") {
                                     location.href = "/views/admin/home/home.html"
                                 } else if (doc.data().Rol == "Cajero") {
                                     location.href = "/views/cajero/home/home.html"
@@ -192,7 +191,7 @@ btnLogin.addEventListener('click', () => {
                             then((querySnapshot) => {
                                 querySnapshot.forEach((doc) => {
 
-                                    if (doc.data().Rol == "Administrador") {
+                                    if (doc.data().Rol == "Administrador" || doc.data().Rol == "SuperAdministrador") {
                                         location.href = "/views/admin/home/home.html"
                                     } else if (doc.data().Rol == "Cajero") {
                                         location.href = "/views/cajero/home/home.html"
@@ -316,7 +315,6 @@ btnRegister.addEventListener('click', () => {
                                     Telefono: '',
                                     Direccion: '',
                                     Rol: "Usuario",
-                                    DarkMode: "desactive",
                                     URL: '',
                                 })
                             }).then(() => {

@@ -27,7 +27,7 @@ onAuthStateChanged(auth, (user) => {
             then((querySnapshot) => {
                 querySnapshot.forEach((doc) => {
 
-                    if (doc.data().Rol == "Administrador") {
+                    if (doc.data().Rol == "Administrador" || doc.data().Rol == "SuperAdministrador") {
 
                         var btnEstatus = document.querySelector('.btnEstatus')
 
@@ -38,6 +38,11 @@ onAuthStateChanged(auth, (user) => {
                         var btnSales = document.querySelectorAll('.btnSales')
                         var btnStatistics = document.querySelectorAll('.btnStatistics')
                         var btnBills = document.querySelectorAll('.btnBills')
+                        var btnConfig = document.querySelector('.btnConfig')
+
+                        btnConfig.addEventListener('click', () => {
+                            location.href = "/views/admin/config/config.html"
+                        })
 
                         btnBills.forEach((btnBill) => {
                             btnBill.addEventListener('click', () => {
