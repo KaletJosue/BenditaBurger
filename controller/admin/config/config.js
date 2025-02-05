@@ -160,11 +160,13 @@ onAuthStateChanged(auth, (user) => {
 
                         var inputNameUpdate = document.querySelector('.inputNameUpdate')
                         var inputCategoryUpdate = document.querySelector('.inputCategoryUpdate')
+                        var inputPhoneUpdate = document.querySelector('.inputPhoneUpdate')
+                        var inputDirectionUpdate = document.querySelector('.inputDirectionUpdate')
 
                         var btnUpdate = document.querySelector('.btnUpdate')
 
                         inputNameUpdate.addEventListener('input', () => {
-                            if (inputNameUpdate.value.length != 0 && inputCategoryUpdate.value.length != 0) {
+                            if (inputNameUpdate.value.length != 0 && inputCategoryUpdate.value.length != 0 && inputPhoneUpdate.value.length != 0 && inputDirectionUpdate.value.length != 0) {
                                 btnUpdate.classList.add('active')
                                 btnUpdate.disabled = false
                             } else {
@@ -174,7 +176,27 @@ onAuthStateChanged(auth, (user) => {
                         })
 
                         inputCategoryUpdate.addEventListener('input', () => {
-                            if (inputNameUpdate.value.length != 0 && inputCategoryUpdate.value.length != 0) {
+                            if (inputNameUpdate.value.length != 0 && inputCategoryUpdate.value.length != 0 && inputPhoneUpdate.value.length != 0 && inputDirectionUpdate.value.length != 0) {
+                                btnUpdate.classList.add('active')
+                                btnUpdate.disabled = false
+                            } else {
+                                btnUpdate.classList.remove('active')
+                                btnUpdate.disabled = true
+                            }
+                        })
+
+                        inputPhoneUpdate.addEventListener('input', () => {
+                            if (inputNameUpdate.value.length != 0 && inputCategoryUpdate.value.length != 0 && inputPhoneUpdate.value.length != 0 && inputDirectionUpdate.value.length != 0) {
+                                btnUpdate.classList.add('active')
+                                btnUpdate.disabled = false
+                            } else {
+                                btnUpdate.classList.remove('active')
+                                btnUpdate.disabled = true
+                            }
+                        })
+
+                        inputDirectionUpdate.addEventListener('input', () => {
+                            if (inputNameUpdate.value.length != 0 && inputCategoryUpdate.value.length != 0 && inputPhoneUpdate.value.length != 0 && inputDirectionUpdate.value.length != 0) {
                                 btnUpdate.classList.add('active')
                                 btnUpdate.disabled = false
                             } else {
