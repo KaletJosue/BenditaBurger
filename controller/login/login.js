@@ -98,7 +98,7 @@ btnGoogle.addEventListener('click', () => {
                                     if (doc.data().Rol == "Administrador" || doc.data().Rol == "SuperAdministrador") {
                                         location.href = "/views/admin/home/home.html"
                                     } else if (doc.data().Rol == "Cajero") {
-                                        location.href = "/views/cajero/home/home.html"
+                                        location.href = "/views/checker/home/home.html"
                                     } else if (doc.data().Rol == "Usuario") {
                                         location.href = "/views/user/home/home.html"
                                     } else if (doc.data().Rol == "") {
@@ -128,7 +128,7 @@ btnGoogle.addEventListener('click', () => {
                                 if (doc.data().Rol == "Administrador" || doc.data().Rol == "SuperAdministrador") {
                                     location.href = "/views/admin/home/home.html"
                                 } else if (doc.data().Rol == "Cajero") {
-                                    location.href = "/views/cajero/home/home.html"
+                                    location.href = "/views/checker/home/home.html"
                                 } else if (doc.data().Rol == "Usuario") {
                                     location.href = "/views/user/home/home.html"
                                 } else if (doc.data().Rol == "") {
@@ -194,7 +194,7 @@ btnLogin.addEventListener('click', () => {
                                     if (doc.data().Rol == "Administrador" || doc.data().Rol == "SuperAdministrador") {
                                         location.href = "/views/admin/home/home.html"
                                     } else if (doc.data().Rol == "Cajero") {
-                                        location.href = "/views/cajero/home/home.html"
+                                        location.href = "/views/checker/home/home.html"
                                     } else if (doc.data().Rol == "Usuario") {
                                         location.href = "/views/user/home/home.html"
                                     } else if (doc.data().Rol == "") {
