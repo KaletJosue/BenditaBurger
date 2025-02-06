@@ -82,7 +82,7 @@
 
     <div class="search">
         <input type="text" placeholder="Busca por Cliente, Monto, Direccion...">
-        <button class="addVenta"><i class="ph-bold ph-plus"></i> Agregar</button>
+        <button class="openModalAdd"><i class="ph-bold ph-plus"></i> Agregar</button>
     </div>
     <div class="main">
         <div class="conTable">
@@ -140,6 +140,20 @@
             </table>
 
             <div class="espacio"></div>
+        </div>
+    </div>
+
+    <div class="modalAdd">
+        <div class="topAdd">
+            <input type="text" placeholder="Busca por Nombre">
+            <i class="ph-bold ph-x" id="closeModalAdd"></i>
+        </div>
+        <div class="conModalAdd">
+
+        </div>
+        <div class="buttonsModalAdd">
+            <button class="continueModalAdd" disabled>Continuar</button>
+            <button class="cancelModalAdd">Cancelar</button>
         </div>
     </div>
 
@@ -221,10 +235,15 @@
                 <hr>
                 <p>Gracias por tu compra, Vuelve pronto</p>
             </div>
-            <button class="printer" onclick="window.print()">
-                <i class="ph-fill ph-printer"></i>
-                <p>Imprimir</p>
-            </button>
+            <div class="buttonsFactura">
+                <button class="printer" onclick="window.print()">
+                    <i class="ph-fill ph-printer"></i>
+                    <p>Imprimir</p>
+                </button>
+                <button class="closeModalFactura">
+                    Cerrar
+                </button>
+            </div>
         </div>
     </div>
 
@@ -235,8 +254,8 @@
             <div class="infoPedido">
                 <div class="campoPedido">
                     <div class="imgCampoPedido">
-                        <img src="/assets/ham2.png" alt="">
-                        <p>Whopper</p>
+                        <img src="/assets/cocacola.png" alt="">
+                        <p>CocaCola</p>
                     </div>
                     <p>$20.000</p>
                 </div>

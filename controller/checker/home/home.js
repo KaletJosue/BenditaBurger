@@ -6,6 +6,44 @@ loader.classList.add('active')
 const openModalFactura = document.querySelector('.openModalFactura');
 const modalFactura = document.querySelector('.modalFactura');
 const conModalFactura = document.querySelector('.conModalFactura');
+const closeModalFactura = document.querySelector('.closeModalFactura')
+
+const openModalAdd = document.querySelector('.openModalAdd');
+const modalAdd = document.querySelector('.modalAdd');
+const closeModalAdd = document.querySelector('#closeModalAdd')
+const cancelModalAdd = document.querySelector('.cancelModalAdd')
+
+openModalAdd.addEventListener('click', () => {
+    gsap.fromTo(modalAdd,
+        {height: 0, opacity: 0 },
+        {
+            padding: '1rem',
+            height: '100dvh',
+            opacity: 1,
+            duration: .2,
+            ease: 'expo.out',
+        }
+    )
+    closeModalAdd.addEventListener('click', () => {
+        gsap.to(modalAdd, {
+            height: '0px',
+            padding: '0rem 1rem',
+            duration: .2,
+            ease: 'power1.in',
+        });
+    })
+    cancelModalAdd.addEventListener('click', () => {
+        gsap.to(modalAdd, {
+            height: '0px',
+            padding: '0rem 1rem',
+            duration: .2,
+            ease: 'power1.in',
+            onComplete: () => {
+                
+            }
+        });
+    })
+})
 
 openModalFactura.addEventListener('click', () => {
     modalFactura.style.display = 'flex'
@@ -34,6 +72,17 @@ window.addEventListener('click', event => {
             }
         });
     }
+})
+closeModalFactura.addEventListener('click', () => {
+    gsap.to(conModalFactura, {
+        height: '0px',
+        padding: '0rem',
+        duration: .2,
+        ease: 'power1.in',
+        onComplete: () => {
+            modalFactura.style.display = 'none';
+        }
+    });
 })
 
 const openModalDetails = document.querySelector('.openModal');
@@ -86,10 +135,6 @@ var conMenu = document.querySelector('.conMenu')
 conMenu.addEventListener('click', () => {
     menu.classList.toggle('active')
     sidebar.classList.toggle('ocult')
-    if (menu.classList == "menu") {
-        optionsFinanzas2.classList.remove('active')
-        optionsMenu2.classList.remove('active')
-    }
 })
 
 var sidebar = document.querySelector('.sidebar')

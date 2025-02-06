@@ -701,7 +701,7 @@ body {
     justify-content: space-between;
     width: 100%;
     background-color: var(--color-blanco);
-    padding: 1rem;
+    padding: .5rem 1rem;
     box-shadow: 1px 1px 1rem var(--color-fondo);
     border-radius: 10px;
 }
@@ -729,10 +729,10 @@ body {
 }
 
 .modalDetalis .conModalDetails .infoPedido .campoPedido .imgCampoPedido img {
-    aspect-ratio: 14/9;
+    aspect-ratio: 2/3;
     object-fit: contain;
     object-position: center center;
-    width: 40px;
+    width: 30px;
 }
 
 /* Modal */
