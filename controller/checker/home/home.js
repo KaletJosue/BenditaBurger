@@ -1,47 +1,39 @@
+
 var loader = document.querySelector('.loader')
 
 loader.classList.add('active')
 
-var btnSales = document.querySelectorAll('.btnSales')
-var btnStatistics = document.querySelectorAll('.btnStatistics')
-var btnBills = document.querySelectorAll('.btnBills')
-var btnConfig = document.querySelector('.btnConfig')
+const openModalFactura = document.querySelector('.openModalFactura');
+const modalFactura = document.querySelector('.modalFactura');
+const conModalFactura = document.querySelector('.conModalFactura');
 
-btnConfig.addEventListener('click', () => {
-    location.href = "/views/admin/config/config.html"
+openModalFactura.addEventListener('click', () => {
+    modalFactura.style.display = 'flex'
+
+    gsap.fromTo(conModalFactura,
+        { backdropFilter: 'blur(0px)', height: 0, opacity: 0 },
+        {
+            padding: '2rem 1rem 1rem 2rem',
+            height: '100%',
+            opacity: 1,
+            backdropFilter: 'blur(90px)',
+            duration: .7,
+            ease: 'expo.out',
+        }
+    )
 })
-
-btnBills.forEach((btnBill) => {
-    btnBill.addEventListener('click', () => {
-        location.href = "/views/admin/bills/bills.html"
-    })
-})
-
-btnStatistics.forEach((btnStatistic) => {
-    btnStatistic.addEventListener('click', () => {
-        location.href = "/views/admin/statics/statics.html"
-    })
-})
-
-btnSales.forEach((btnSale) => {
-    btnSale.addEventListener('click', () => {
-        location.href = "/views/admin/sales/sales.html"
-    })
-})
-
-var btnProducts = document.querySelectorAll('.btnProducts')
-var btnSections = document.querySelectorAll('.btnSections')
-
-btnSections.forEach(btnSection => {
-    btnSection.addEventListener('click', () => {
-        location.href = "/views/admin/sections/sections.html"
-    })
-})
-
-btnProducts.forEach(btnProduct => {
-    btnProduct.addEventListener('click', () => {
-        location.href = "/views/admin/products/products.html"
-    })
+window.addEventListener('click', event => {
+    if (event.target == modalFactura) {
+        gsap.to(conModalFactura, {
+            height: '0px',
+            padding: '0rem',
+            duration: .2,
+            ease: 'power1.in',
+            onComplete: () => {
+                modalFactura.style.display = 'none';
+            }
+        });
+    }
 })
 
 const openModalDetails = document.querySelector('.openModal');
@@ -109,37 +101,6 @@ btnSidebar.addEventListener('click', () => {
     sidebar.classList.toggle('active')
 })
 
-var btnOptions2 = document.querySelector('.btnOptions2')
-var btnOptions = document.querySelector('.btnOptions')
-
-var optionsFinanzas = document.querySelector('.sidebar .centerSidebar ul li:nth-child(4)')
-var optionsMenu = document.querySelector('.sidebar .centerSidebar ul li:nth-child(3)')
-
-var optionsMenu2 = document.querySelector('.optionsMenu2')
-var optionsFinanzas2 = document.querySelector('.optionsFinanzas2')
-
-btnOptions2.addEventListener('click', () => {
-    optionsFinanzas.classList.toggle('active')
-    optionsMenu.classList.remove('active')
-    if (optionsFinanzas.classList == "active") {
-        optionsFinanzas2.classList.add('active')
-        optionsMenu2.classList.remove('active')
-    } else {
-        optionsFinanzas2.classList.remove('active')
-    }
-})
-
-btnOptions.addEventListener('click', () => {
-    optionsMenu.classList.toggle('active')
-    optionsFinanzas.classList.remove('active')
-    if (optionsMenu.classList == "active") {
-        optionsMenu2.classList.add('active')
-        optionsFinanzas2.classList.remove('active')
-    } else {
-        optionsMenu2.classList.remove('active')
-    }
-})
-
 var palanca = document.querySelector('.switch');
 var body = document.querySelector('body');
 
@@ -160,3 +121,4 @@ palanca.addEventListener('click', () => {
         localStorage.setItem('darkMode', 'desactive');
     }
 });
+
