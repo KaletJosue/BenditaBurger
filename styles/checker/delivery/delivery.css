@@ -7,7 +7,7 @@
 
     --color-fondo: #f0f0f0;
     --color-linea: #ccc;
-
+    
     --color-naranja: #FFF2E9;
     --color-texto-naranja: #FF8B43;
 
@@ -133,12 +133,68 @@ body {
     z-index: 2;
 }
 
+.sidebar .optionsMenu2,
+.sidebar .optionsFinanzas2 {
+    display: none;
+    box-shadow: var(--box-shadow-suave);
+}
+
+.sidebar.active .optionsMenu2 {
+    display: flex;
+    position: fixed;
+    flex-direction: column;
+    background-color: var(--color-blanco);
+    padding: 1rem;
+    border-radius: 10px;
+    gap: .5rem;
+    top: 200px;
+    left: -500vw;
+    transition: all .5s ease;
+    z-index: -10;
+}
+
+.sidebar.active .optionsFinanzas2 {
+    display: flex;
+    position: fixed;
+    flex-direction: column;
+    background-color: var(--color-blanco);
+    padding: 1rem;
+    border-radius: 10px;
+    gap: .5rem;
+    top: 250px;
+    left: -500vw;
+    transition: all .5s ease;
+    z-index: -1;
+}
+
+.sidebar.active .optionsMenu2.active,
+.sidebar.active .optionsFinanzas2.active {
+    left: 100px;
+}
+
+.sidebar.active .optionsMenu2 p,
+.sidebar.active .optionsFinanzas2 p {
+    font-size: 10px;
+    text-align: center;
+    width: 100%;
+    padding: .7rem;
+    border-radius: 10px;
+    transition: all .2s ease;
+    cursor: pointer;
+    color: var(--color-negro);
+}
+
+.sidebar.active .optionsMenu2 p:hover,
+.sidebar.active .optionsFinanzas2 p:hover {
+    background-color: var(--color-fondo);
+}
+
 .sidebar.active {
     width: 90px;
     padding: 2rem 1rem;
 }
 
-.sidebar .centerSidebar ul li.active {
+.sidebar .centerSidebar ul li:not(:nth-child(3), :nth-child(4)).active {
     background-color: var(--color-fondo);
 }
 
@@ -221,7 +277,7 @@ body {
     gap: .5rem;
 }
 
-.sidebar .centerSidebar ul li {
+.sidebar .centerSidebar ul li:not(:nth-child(3), :nth-child(4)) {
     display: flex;
     align-items: center;
     justify-content: start;
@@ -235,10 +291,79 @@ body {
     position: relative;
 }
 
-.sidebar .centerSidebar ul li:hover {
+.sidebar .centerSidebar ul li:not(:nth-child(3), :nth-child(4)):hover,
+.sidebar .centerSidebar ul li:nth-child(3) .btnOptions:hover,
+.sidebar .centerSidebar ul li:nth-child(4) .btnOptions2:hover {
     background-color: var(--color-fondo);
 }
 
+.sidebar .centerSidebar ul li:nth-child(3),
+.sidebar .centerSidebar ul li:nth-child(4) {
+    display: flex;
+    flex-direction: column;
+    font-size: 12px;
+    border-radius: 10px;
+    color: var(--color-negro);
+    transition: all .2s ease;
+    justify-content: center;
+    position: relative;
+}
+
+.sidebar .centerSidebar ul li:nth-child(3) .btnOptions,
+.sidebar .centerSidebar ul li:nth-child(4) .btnOptions2 {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    position: relative;
+    width: 100%;
+    cursor: pointer;
+    padding: .7rem 1rem;
+    border-radius: 10px;
+    transition: all .2s ease;
+}
+
+.sidebar .centerSidebar ul li:nth-child(3) .btnOptions i:last-child,
+.sidebar .centerSidebar ul li:nth-child(4) .btnOptions2 i:last-child {
+    position: absolute;
+    right: 10px;
+    transition: all .2s ease;
+}
+
+.sidebar .centerSidebar ul li:nth-child(3).active .btnOptions i:last-child,
+.sidebar .centerSidebar ul li:nth-child(4).active .btnOptions2 i:last-child {
+    transform: rotate(180deg);
+}
+
+.sidebar .centerSidebar ul li:nth-child(3) .optionsMenu,
+.sidebar .centerSidebar ul li:nth-child(4) .optionsFinanzas {
+    display: flex;
+    flex-direction: column;
+    padding-left: 1.8rem;
+    gap: .2rem;
+    overflow: hidden;
+    max-height: 0;
+    transition: all .5s;
+}
+
+.sidebar .centerSidebar ul li:nth-child(3).active .optionsMenu,
+.sidebar .centerSidebar ul li:nth-child(4).active .optionsFinanzas {
+    max-height: 500px;
+    padding-right: 2rem;
+}
+
+.sidebar .centerSidebar ul li:nth-child(3) .optionsMenu p,
+.sidebar .centerSidebar ul li:nth-child(4) .optionsFinanzas p {
+    padding: .7rem;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 11px;
+    transition: all .2s ease;
+}
+
+.sidebar .centerSidebar ul li:nth-child(3) .optionsMenu p:hover,
+.sidebar .centerSidebar ul li:nth-child(4) .optionsFinanzas p:hover {
+    background-color: var(--color-fondo);
+}
 
 .sidebar .bottomSidebar {
     border-top: solid 2px var(--color-fondo);
@@ -275,13 +400,6 @@ body {
     font-size: 12px;
 }
 
-.search {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0 1rem 0 0;
-}
-
 .search input {
     padding: 2rem 2rem 2rem 7rem;
     width: 100%;
@@ -294,31 +412,6 @@ body {
 
 .search input::placeholder {
     color: var(--color-gris);
-}
-
-.search button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: .7rem 1rem;
-    gap: .2rem;
-    font-size: 12px;
-    background-color: var(--color-negro);
-    color: var(--color-blanco);
-    border-radius: 10px;
-    border: solid 1px var(--color-negro);
-    cursor: pointer;
-    transition: all .2s ease;
-}
-
-.search button:hover {
-    background-color: transparent;
-    color: var(--color-negro);
-    transform: translateX(-10px);
-}
-
-.main {
-    padding: 0 2rem 1rem 7rem;
 }
 
 .main {
@@ -392,16 +485,93 @@ body {
     border-radius: 10px;
 }
 
-.main .table tbody tr th .buttons {
-    display: flex;
-    align-items: center;
-    justify-content: start;
-    gap: .3rem;
+.main .table tbody tr th:nth-child(6) {
+    position: relative;
 }
 
-.main .table tbody tr th .buttons button {
-    padding: .7rem 1rem;
-    font-size: 11px;
+.main .table tbody tr th:nth-child(6) .selectEstado {
+    position: absolute;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 0;
+    right: 100px;
+    top: 0;
+    z-index: 1;
+    background-color: var(--color-blanco);
+    box-shadow: var(--box-shadow-suave);
+    border-radius: 20px;
+    gap: .5rem;
+    width: 0px;
+    height: 0px;
+    overflow: hidden;
+}
+
+.main .table tbody tr th:nth-child(6) .selectEstado h3 {
+    padding: 1rem;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 700;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.main .table tbody tr th:nth-child(6) .selectEstado h3:first-child {
+    background-color: var(--color-azul);
+    color: var(--color-texto-azul);
+}
+
+.main .table tbody tr th:nth-child(6) .selectEstado h3:nth-child(2) {
+    background-color: var(--color-rojo);
+    color: var(--color-texto-rojo);
+}
+
+.main .table tbody tr th:nth-child(6) .selectEstado h3:nth-child(3) {
+    background-color: var(--color-naranja);
+    color: var(--color-texto-naranja);
+}
+
+.main .table tbody tr th:nth-child(6) .selectEstado h3:last-child {
+    background-color: var(--color-verde);
+    color: var(--color-texto-verde);
+}
+
+.main .table tbody tr th:nth-child(6) p {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: .8rem 1rem;
+    font-size: 12px;
+    font-weight: 800;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.main .table tbody tr th:nth-child(6) p.enviado {
+    background-color: var(--color-azul);
+    color: var(--color-texto-azul);
+}
+
+.main .table tbody tr th:nth-child(6) p.preparacion {
+    background-color: var(--color-naranja);
+    color: var(--color-texto-naranja);
+}
+
+.main .table tbody tr th:nth-child(6) p.cancelado {
+    background-color: var(--color-rojo);
+    color: var(--color-texto-rojo);
+}
+
+.main .table tbody tr th:nth-child(6) p.entregado {
+    background-color: var(--color-verde);
+    color: var(--color-texto-verde);
+}
+
+.main .table tbody tr th button {
+    padding: .8rem 1rem;
+    font-size: 12px;
     border: solid 1px var(--color-gris);
     border-radius: 10px;
     background-color: transparent;
@@ -410,27 +580,7 @@ body {
     transition: all .2s ease;
 }
 
-.main .table tbody tr th .buttons button.pago {
-    border: solid 1px #FF4A43;
-    color: #FF4A43;
-}
-
-.main .table tbody tr th .buttons button.pago:hover {
-    background-color: #FF4A43;
-    color: white;
-}
-
-.main .table tbody tr th .buttons button.factura {
-    border: solid 1px #6397bc;
-    color: #6397bc;
-}
-
-.main .table tbody tr th .buttons button.factura:hover {
-    background-color: #6397bc;
-    color: white;
-}
-
-.main .table tbody tr th .buttons button:hover {
+.main .table tbody tr th button:hover {
     background-color: var(--color-gris);
     color: var(--color-blanco);
     cursor: pointer;
@@ -511,314 +661,6 @@ body {
     transition: all .2s ease;
 }
 
-.modalAdd {
-    position: fixed;
-    width: 100vw;
-    height: 0;
-    background-color: var(--color-blanco);
-    bottom: 0;
-    left: 0;
-    z-index: 2;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0;
-}
-
-.modalAdd .topAdd {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    gap: .5rem;
-}
-
-.modalAdd .topAdd input {
-    width: 100%;
-    height: 100%;
-    background-color: var(--color-fondo);
-    border: none;
-    padding: 1rem;
-    outline: none;
-    font-size: 12px;
-    border-radius: 10px;
-    color: var(--color-negro);
-}
-
-.modalAdd .conModalAdd {
-    width: 100%;
-    flex: 1;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-    overflow: hidden;
-    overflow-y: auto;
-    display: grid;
-    gap: .5rem;
-    padding-right: 1rem;
-}
-
-.modalAdd .conModalAdd::-webkit-scrollbar {
-    width: 7px;
-    background-color: var(--color-fondo);
-    border-radius: 50px;
-}
-
-.modalAdd .conModalAdd::-webkit-scrollbar-thumb {
-    background-color: #ffeb00;
-    border-radius: 50px;
-    cursor: pointer;
-}
-
-.modalAdd .buttonsModalAdd {
-    display: flex;
-    align-items: center;
-    justify-content: end;
-    width: 100%;
-    gap: .5rem;
-}
-
-.modalAdd .buttonsModalAdd button {
-    padding: .7rem 2rem;
-    font-size: 12px;
-    border-radius: 7px;
-    border: none;
-    transition: all .2s ease;
-    font-weight: 600;
-}
-
-.modalAdd .buttonsModalAdd button.continueModalAdd {
-    background-color: #6397bc;
-    color: white;
-    filter: grayscale(2);
-    opacity: .5;
-    cursor: no-drop;
-}
-
-.modalAdd .buttonsModalAdd button.continueModalAdd.active {
-    opacity: 1;
-    filter: grayscale(0);
-    cursor: pointer;
-}
-
-.modalAdd .buttonsModalAdd button.cancelModalAdd {
-    background-color: #FF4A43;
-    color: white;
-    cursor: pointer;
-}
-
-.modalAdd i {
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 14px;
-    border-radius: 50%;
-    color: var(--color-negro);
-    cursor: pointer;
-    transition: all .2s ease;
-}
-
-.modalAdd i:hover {
-    background-color: var(--color-gris);
-    color: var(--color-blanco);
-}
-
-.modalFactura {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100dvh;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    padding: 1rem;
-    z-index: 1;
-}
-
-.modalFactura .conModalFactura {
-    backdrop-filter: blur(90px);
-    box-shadow: 1px 1px 1rem black;
-    border-radius: 20px;
-    height: 0;
-    padding: 0;
-    width: 400px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: start;
-    position: relative;
-    overflow: hidden;
-    max-height: 820px;
-}
-
-.modalFactura .conModalFactura .buttonsFactura {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: .5rem;
-    margin-top: 2rem;
-}
-
-.modalFactura .conModalFactura .buttonsFactura button:first-child {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: .2rem;
-    font-size: 11px;
-    padding: .7rem 2rem;
-    cursor: pointer;
-    border-radius: 10px;
-    border: none;
-    border: solid 1px #6397bc;
-    color: #6397bc;
-    font-weight: 500;
-    background-color: #6397bc;
-    color: white;
-    transition: all .2s ease;
-}
-
-.modalFactura .conModalFactura .buttonsFactura button:last-child {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: .2rem;
-    font-size: 11px;
-    padding: .7rem 2rem;
-    cursor: pointer;
-    border-radius: 10px;
-    border: none;
-    border: solid 1px #FF4A43;
-    color: #FF4A43;
-    font-weight: 500;
-    background-color: #FF4A43;
-    color: white;
-    transition: all .2s ease;
-}
-
-.modalFactura .conModalFactura .buttonsFactura button:first-child:hover {
-    background-color: transparent;
-    color: #6397bc;
-}
-
-.modalFactura .conModalFactura .buttonsFactura button:last-child:hover {
-    background-color: transparent;
-    color: #FF4A43;
-}
-
-.modalFactura .conModalFactura .buttonsFactura button:first-child i {
-    font-size: 15px;
-}
-
-.modalFactura .conModalFactura .inModalFactura {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: start;
-    overflow: hidden;
-    overflow-y: auto;
-    width: 100%;
-    padding-right: 1rem;
-}
-
-.modalFactura .conModalFactura .inModalFactura::-webkit-scrollbar {
-    width: 7px;
-    background-color: var(--color-linea);
-    border-radius: 50px;
-}
-
-.modalFactura .conModalFactura .inModalFactura::-webkit-scrollbar-thumb {
-    background-color: var(--color-gris);
-    border-radius: 50px;
-    cursor: pointer;
-}
-
-.modalFactura .conModalFactura .inModalFactura hr {
-    width: 100%;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-    border: dashed 1px var(--color-negro);
-}
-
-.modalFactura .conModalFactura .inModalFactura p {
-    font-size: 12px;
-    font-weight: 400;
-    color: var(--color-negro);
-}
-
-.modalFactura .conModalFactura .inModalFactura img {
-    aspect-ratio: 1/1;
-    object-fit: cover;
-    object-position: center center;
-    width: 50px;
-}
-
-.modalFactura .conModalFactura .inModalFactura .numberFactura {
-    width: 100%;
-    display: flex;
-    align-items: start;
-    justify-content: space-between;
-}
-
-.modalFactura .conModalFactura .inModalFactura .client {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.modalFactura .conModalFactura .inModalFactura table {
-    border-collapse: collapse;
-    width: 100%;
-}
-
-.modalFactura .conModalFactura .inModalFactura table tr th {
-    text-align: start;
-    font-size: 11px;
-    font-weight: 400;
-    padding: .5rem 0;
-    color: var(--color-negro);
-}
-
-.modalFactura .conModalFactura .inModalFactura table tr th:not(:first-child, :last-child) {
-    padding: .5rem .2rem;
-}
-
-.modalFactura .conModalFactura .inModalFactura table tr th:nth-child(2) {
-    text-align: center;
-}
-
-.modalFactura .conModalFactura .inModalFactura .subTotal,
-.modalFactura .conModalFactura .inModalFactura .metodo {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    width: 100%;
-}
-
-.modalFactura .conModalFactura .inModalFactura .subTotal p,
-.modalFactura .conModalFactura .inModalFactura .metodo p {
-    width: 100%;
-}
-
-.modalFactura .conModalFactura .inModalFactura .subTotal p:nth-child(2),
-.modalFactura .conModalFactura .inModalFactura .subTotal p:nth-child(4),
-.modalFactura .conModalFactura .inModalFactura .subTotal p:nth-child(6),
-.modalFactura .conModalFactura .inModalFactura .metodo p:nth-child(2),
-.modalFactura .conModalFactura .inModalFactura .metodo p:nth-child(4),
-.modalFactura .conModalFactura .inModalFactura .metodo p:nth-child(6) {
-    text-align: end;
-    margin-top: .4rem;
-}
-
-.modalFactura .conModalFactura .inModalFactura .total {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-}
-
 .modalDetalis {
     position: fixed;
     width: 100vw;
@@ -833,7 +675,7 @@ body {
 }
 
 .modalDetalis .conModalDetails {
-    height: 100dvh;
+    height: 100vh;
     width: 400px;
     backdrop-filter: blur(100px);
     box-shadow: 1px 1px 1rem black;
@@ -873,8 +715,48 @@ body {
     color: var(--color-blanco);
 }
 
+.modalDetalis .conModalDetails .infoUser {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.modalDetalis .conModalDetails .infoUser .campo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.modalDetalis .conModalDetails .infoUser .campo p:first-child {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--color-gris);
+}
+
+.modalDetalis .conModalDetails .infoUser .campo p:not(:first-child) {
+    font-size: 12px;
+    color: var(--color-negro);
+}
+
+.modalDetalis .conModalDetails .infoUser .campo .imgCampo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+}
+
+.modalDetalis .conModalDetails .infoUser .campo .imgCampo img {
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    object-position: center center;
+    width: 50px;
+    border-radius: 15px;
+}
+
 .modalDetalis .conModalDetails h3 {
-    margin-top: 1rem;
+    margin-top: 2rem;
     margin-left: 1rem;
     font-size: 15px;
     font-weight: 900;
@@ -886,7 +768,7 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin-top: 1rem;
+    margin-top: 2rem;
 }
 
 .modalDetalis .conModalDetails .infoPedido .campoPedido {
@@ -927,81 +809,6 @@ body {
     object-fit: contain;
     object-position: center center;
     width: 30px;
-}
-
-.switch {
-    display: block;
-    width: 40px;
-    height: 25px;
-    background-color: #6397bc;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: start;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-    transition: all .2s ease;
-    outline: solid 2px var(--color-fondo);
-}
-
-.switch.active {
-    background-color: #1c1f2c;
-}
-
-.switch.active .circle {
-    transform: translateX(17px) rotate(90deg);
-    background-color: #c4c8d1;
-}
-
-.switch.active::after {
-    background-color: white;
-    right: 70%;
-    width: 5px;
-    height: 5px;
-    bottom: 10px;
-}
-
-.switch.active::before {
-    background-color: white;
-    right: 60%;
-    width: 2px;
-    height: 2px;
-    bottom: 7px;
-}
-
-.switch::after {
-    content: '';
-    display: block;
-    width: 20px;
-    height: 20px;
-    background-color: white;
-    border-radius: 50%;
-    position: absolute;
-    bottom: -10px;
-    right: -6px;
-}
-
-.switch::before {
-    content: '';
-    display: block;
-    width: 20px;
-    height: 20px;
-    background-color: white;
-    border-radius: 50%;
-    position: absolute;
-    bottom: -2px;
-    right: -13px;
-}
-
-.switch .circle {
-    display: block;
-    width: 17px;
-    height: 17px;
-    border-radius: 7px;
-    background-color: #edca2e;
-    margin-left: .2rem;
-    transition: all .2s ease;
 }
 
 /* Modal */
@@ -1224,53 +1031,6 @@ body {
     color: white;
 }
 
-@media print {
-    body * {
-        visibility: hidden;
-    }
-
-    .modalFactura .conModalFactura {
-        width: 58mm;
-    }
-
-    .inModalFactura,
-    .inModalFactura * {
-        padding: 0;
-        visibility: visible;
-        page-break-inside: avoid;
-    }
-
-    .inModalFactura p:last-child {
-        text-align: center;
-        color: black;
-    }
-
-    .inModalFactura {
-        position: absolute;
-        left: 0;
-        top: 0;
-    }
-
-    .modalFactura .conModalFactura .inModalFactura hr {
-        border: dashed 1px black;
-    }
-
-    .modalFactura .conModalFactura .inModalFactura p {
-        font-size: 9px;
-        color: rgb(0, 0, 0);
-    }
-
-    .modalFactura .conModalFactura .inModalFactura table tr th {
-        font-size: 9px;
-        color: black;
-    }
-
-    @page {
-        size: auto 58mm;
-        margin: 0;
-    }
-}
-
 @media (width < 1000px) {
     .modal,
     .modal2 {
@@ -1291,12 +1051,8 @@ body {
         left: 0;
     }
 
-    .search {
-        padding: 0 5rem 0 0;
-    }
-
     .search input {
-        padding: 2rem 1rem 2rem 2rem;
+        padding: 2rem 5rem 2rem 2rem;
     }
 
     .main {

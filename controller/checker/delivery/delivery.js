@@ -2,48 +2,6 @@ var loader = document.querySelector('.loader')
 
 loader.classList.add('active')
 
-var btnSales = document.querySelectorAll('.btnSales')
-var btnStatistics = document.querySelectorAll('.btnStatistics')
-var btnBills = document.querySelectorAll('.btnBills')
-var btnConfig = document.querySelector('.btnConfig')
-
-btnConfig.addEventListener('click', () => {
-    location.href = "/views/admin/config/config.html"
-})
-
-btnBills.forEach((btnBill) => {
-    btnBill.addEventListener('click', () => {
-        location.href = "/views/admin/bills/bills.html"
-    })
-})
-
-btnStatistics.forEach((btnStatistic) => {
-    btnStatistic.addEventListener('click', () => {
-        location.href = "/views/admin/statics/statics.html"
-    })
-})
-
-btnSales.forEach((btnSale) => {
-    btnSale.addEventListener('click', () => {
-        location.href = "/views/admin/sales/sales.html"
-    })
-})
-
-var btnProducts = document.querySelectorAll('.btnProducts')
-var btnSections = document.querySelectorAll('.btnSections')
-
-btnSections.forEach(btnSection => {
-    btnSection.addEventListener('click', () => {
-        location.href = "/views/admin/sections/sections.html"
-    })
-})
-
-btnProducts.forEach(btnProduct => {
-    btnProduct.addEventListener('click', () => {
-        location.href = "/views/admin/products/products.html"
-    })
-})
-
 const openModalDetails = document.querySelector('.openModal');
 const modalDetails = document.querySelector('.modalDetalis');
 const modalContentDetails = document.querySelector('.conModalDetails');
@@ -142,37 +100,6 @@ sidebar.classList.add('active')
 
 btnSidebar.addEventListener('click', () => {
     sidebar.classList.toggle('active')
-})
-
-var btnOptions2 = document.querySelector('.btnOptions2')
-var btnOptions = document.querySelector('.btnOptions')
-
-var optionsFinanzas = document.querySelector('.sidebar .centerSidebar ul li:nth-child(4)')
-var optionsMenu = document.querySelector('.sidebar .centerSidebar ul li:nth-child(3)')
-
-var optionsMenu2 = document.querySelector('.optionsMenu2')
-var optionsFinanzas2 = document.querySelector('.optionsFinanzas2')
-
-btnOptions2.addEventListener('click', () => {
-    optionsFinanzas.classList.toggle('active')
-    optionsMenu.classList.remove('active')
-    if (optionsFinanzas.classList == "active") {
-        optionsFinanzas2.classList.add('active')
-        optionsMenu2.classList.remove('active')
-    } else {
-        optionsFinanzas2.classList.remove('active')
-    }
-})
-
-btnOptions.addEventListener('click', () => {
-    optionsMenu.classList.toggle('active')
-    optionsFinanzas.classList.remove('active')
-    if (optionsMenu.classList == "active") {
-        optionsMenu2.classList.add('active')
-        optionsFinanzas2.classList.remove('active')
-    } else {
-        optionsMenu2.classList.remove('active')
-    }
 })
 
 var palanca = document.querySelector('.switch');
