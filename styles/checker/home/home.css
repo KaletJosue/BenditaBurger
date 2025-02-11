@@ -532,6 +532,7 @@ body {
     justify-content: center;
     width: 100%;
     gap: .5rem;
+    padding: .5rem;
 }
 
 .modalAdd .topAdd input {
@@ -548,63 +549,264 @@ body {
 
 .modalAdd .conModalAdd {
     width: 100%;
-    flex: 1;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     overflow: hidden;
-    overflow-y: auto;
-    display: grid;
     gap: .5rem;
-    padding-right: 1rem;
 }
 
-.modalAdd .conModalAdd::-webkit-scrollbar {
+.modalAdd .conModalAdd .leftModalAdd {
+    width: 100%;
+    height: 100%;
+    transition: all .2s ease;
+    padding: 1rem; 
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    gap: .5rem;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.modalAdd .conModalAdd .leftModalAdd::-webkit-scrollbar {
     width: 7px;
-    background-color: var(--color-fondo);
     border-radius: 50px;
+    background-color: var(--color-fondo);
 }
 
-.modalAdd .conModalAdd::-webkit-scrollbar-thumb {
-    background-color: #ffeb00;
+.modalAdd .conModalAdd .leftModalAdd::-webkit-scrollbar-thumb {
+    background-color: #FF8B43;
     border-radius: 50px;
     cursor: pointer;
 }
 
-.modalAdd .buttonsModalAdd {
+.modalAdd .conModalAdd .leftModalAdd .product {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: solid 1px var(--color-linea);
+    padding: 0 1rem 2rem 1rem;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all .2s ease;
+}
+
+.modalAdd .conModalAdd .leftModalAdd .product:hover {
+    background-color: var(--color-fondo);
+    border-color: var(--color-fondo);
+}
+
+.modalAdd .conModalAdd .leftModalAdd .product img {
+    aspect-ratio: 2/3;
+    object-fit: contain;
+    object-position: center center;
+    width: 100%;
+}
+
+.modalAdd .conModalAdd .leftModalAdd .product h1 {
+    font-size: 20px;
+    font-weight: 900;
+    color: var(--color-negro);
+}
+
+.modalAdd .conModalAdd .leftModalAdd .product p {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--color-negro);
+}
+
+.modalAdd .conModalAdd .leftModalAdd .product h3 {
+    font-size: 20px;
+    font-weight: 900;
+    color: #FF8B43;
+}
+
+.modalAdd .conModalAdd.active .leftModalAdd {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.modalAdd .conModalAdd.active .rightModalAdd {
+    width: 40%;
+    padding: 1rem;
+}
+
+.modalAdd .conModalAdd .rightModalAdd {
+    background-color: var(--color-fondo);
+    border-radius: 10px;
+    width: 0%;
+    height: 100%;
+    transition: all .2s ease;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0;
+}
+
+.modalAdd .conModalAdd .rightModalAdd .topRightModalAdd p {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--color-gris);
+}
+
+.modalAdd .conModalAdd .rightModalAdd .conRightModalAdd {
+    width: 100%;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    gap: 2rem;
+    overflow-y: auto;
+    overflow-x: hidden;
+    margin: 1rem 0;
+}
+
+.modalAdd .conModalAdd .rightModalAdd .conRightModalAdd::-webkit-scrollbar {
+    width: 7px;
+    background-color: var(--color-linea);
+    border-radius: 50px;
+}
+
+.modalAdd .conModalAdd .rightModalAdd .conRightModalAdd::-webkit-scrollbar-thumb {
+    background-color: #FF8B43;
+    border-radius: 50px;
+    cursor: pointer;
+}
+
+.modalAdd .conModalAdd .rightModalAdd .conRightModalAdd .productPedido {
+    width: 100%;
     display: flex;
     align-items: center;
-    justify-content: end;
-    width: 100%;
+    justify-content: space-between;
+    padding-right: 1rem;
+    gap: 1rem;
+}
+
+.modalAdd .conModalAdd .rightModalAdd .conRightModalAdd .productPedido:first-child {
+    margin-top: 1rem;
+}
+
+.modalAdd .conModalAdd .rightModalAdd .conRightModalAdd .productPedido .leftProductPedido {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     gap: .5rem;
 }
 
-.modalAdd .buttonsModalAdd button {
-    padding: .7rem 2rem;
+.modalAdd .conModalAdd .rightModalAdd .conRightModalAdd .productPedido .leftProductPedido img {
+    aspect-ratio: 3/2;
+    width: 50px;
+}
+
+.modalAdd .conModalAdd .rightModalAdd .conRightModalAdd .productPedido .leftProductPedido .textLeftProductPedido h3 {
+    font-size: 15px;
+    font-weight: 900;
+    color: var(--color-negro);
+}
+
+.modalAdd .conModalAdd .rightModalAdd .conRightModalAdd .productPedido .leftProductPedido .textLeftProductPedido p {
+    font-size: 12px;
+    margin-top: .3rem;
+    margin-bottom: .5rem;
+    color: var(--color-negro);
+}
+
+.modalAdd .conModalAdd .rightModalAdd .conRightModalAdd .productPedido .leftProductPedido .textLeftProductPedido .plusMinus {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+}
+
+.modalAdd .conModalAdd .rightModalAdd .conRightModalAdd .productPedido .leftProductPedido .textLeftProductPedido .plusMinus i {
+    font-size: 10px;
+    width: 30px;
+    height: 30px;
+    border: solid 1px var(--color-gris);
+    background-color: transparent;
+    color: var(--color-gris);
+}
+
+.modalAdd .conModalAdd .rightModalAdd .conRightModalAdd .productPedido .leftProductPedido .textLeftProductPedido .plusMinus i:hover {
+    background-color: var(--color-gris);
+    color: var(--color-blanco);
+}
+
+.modalAdd .conModalAdd .rightModalAdd .conRightModalAdd .productPedido .leftProductPedido .textLeftProductPedido .plusMinus input {
+    text-align: center;
+    border: solid 1px var(--color-gris);
+    background-color: transparent;
+    color: var(--color-gris);
+    width: 40px;
+    height: 40px;
+    outline: none;
+    border-radius: 10px;
+}
+
+.modalAdd .conModalAdd .rightModalAdd .conRightModalAdd .productPedido i:last-child {
+    font-size: 10px;
+    height: 30px;
+    width: 30px;
+    margin-top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+input[type="number"]::-webkit-inner-spin-button, 
+input[type="number"]::-webkit-outer-spin-button { 
+    appearance: none;
+    margin: 0;
+}
+
+.modalAdd .conModalAdd .rightModalAdd .bottomRightModalAdd {
+    width: 100%;
+}
+
+.modalAdd .conModalAdd .rightModalAdd .bottomRightModalAdd .total {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 12px;
+    color: var(--color-negro);
+}
+
+.modalAdd .conModalAdd .rightModalAdd .bottomRightModalAdd .total p:last-child {
+    font-size: 15px;
+    font-weight: 900;
+}
+
+.modalAdd .conModalAdd .rightModalAdd .bottomRightModalAdd .buttonsRightModalAdd {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: .5rem;
+    gap: .5rem;
+}
+
+.modalAdd .conModalAdd .rightModalAdd .bottomRightModalAdd .buttonsRightModalAdd button {
+    width: 100%;
+    padding: .7rem;
     font-size: 12px;
     border-radius: 7px;
     border: none;
-    transition: all .2s ease;
-    font-weight: 600;
+    font-weight: 700;
+    cursor: pointer;
 }
 
-.modalAdd .buttonsModalAdd button.continueModalAdd {
+.modalAdd .conModalAdd .rightModalAdd .bottomRightModalAdd .buttonsRightModalAdd button.confir {
     background-color: #6397bc;
     color: white;
-    filter: grayscale(2);
-    opacity: .5;
-    cursor: no-drop;
 }
 
-.modalAdd .buttonsModalAdd button.continueModalAdd.active {
-    opacity: 1;
-    filter: grayscale(0);
-    cursor: pointer;
-}
-
-.modalAdd .buttonsModalAdd button.cancelModalAdd {
+.modalAdd .conModalAdd .rightModalAdd .bottomRightModalAdd .buttonsRightModalAdd button.cancel {
     background-color: #FF4A43;
     color: white;
-    cursor: pointer;
 }
 
 .modalAdd i {
@@ -618,6 +820,7 @@ body {
     color: var(--color-negro);
     cursor: pointer;
     transition: all .2s ease;
+    flex: 0 0 auto;
 }
 
 .modalAdd i:hover {
@@ -1276,6 +1479,32 @@ body {
     .modal2 {
         padding: 1rem;
     }
+
+    .modalAdd .conModalAdd.active .rightModalAdd {
+        width: 60%;
+    }
+
+    .modalAdd .conModalAdd .leftModalAdd {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+
+    .modalAdd .conModalAdd.active .leftModalAdd {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+}
+
+@media (width < 750px) {
+    .modalAdd .conModalAdd.active .rightModalAdd {
+        width: 100%;
+    }
+
+    .modalAdd .conModalAdd .leftModalAdd {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    .modalAdd .conModalAdd.active .leftModalAdd {
+        grid-template-columns: 1fr 1fr;
+    }
 }
 
 @media (width < 650px) {
@@ -1302,11 +1531,51 @@ body {
     .main {
         padding: 0 1rem 1rem;
     }
+
+    .modalAdd .conModalAdd .leftModalAdd .product h1,
+    .modalAdd .conModalAdd .leftModalAdd .product h3 {
+        font-size: 15px;
+    }
+
+    .modalAdd .conModalAdd .leftModalAdd .product p {
+        font-size: 10px;
+    }
+
+    .modalAdd .conModalAdd .rightModalAdd .conRightModalAdd .productPedido .leftProductPedido {
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+    }
+
+    .modalAdd .conModalAdd .rightModalAdd .conRightModalAdd .productPedido .leftProductPedido img {
+        width: 30px;
+    }
+}
+
+@media (width < 550px) {
+    .modalAdd .conModalAdd .leftModalAdd {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .modalAdd .conModalAdd.active .leftModalAdd {
+        grid-template-columns: 1fr;
+    }
 }
 
 @media (width < 450px) {
     .modalDetalis .conModalDetails {
         border-radius: 0;
+    }
+
+    .modalAdd .conModalAdd .rightModalAdd .conRightModalAdd .productPedido {
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        gap: 0;
+    }
+
+    .modalAdd .conModalAdd .rightModalAdd .bottomRightModalAdd .buttonsRightModalAdd button {
+        padding: .7rem .2rem;
     }
 
     .modal .modalContent,
@@ -1339,5 +1608,11 @@ body {
 
     .modal2 .modalContent2 button.logOut2 {
         margin-top: 1rem;
+    }
+}
+
+@media (width < 350px) {
+    .modalAdd .conModalAdd .leftModalAdd {
+        grid-template-columns: 1fr 1fr;
     }
 }

@@ -13,11 +13,26 @@ const modalAdd = document.querySelector('.modalAdd');
 const closeModalAdd = document.querySelector('#closeModalAdd')
 const cancelModalAdd = document.querySelector('.cancelModalAdd')
 
+var openResumen = document.querySelectorAll('.product')
+var containerResumen = document.querySelector('.conModalAdd')
+
+var cancelPedido = document.querySelector('.cancel')
+
+cancelPedido.addEventListener('click', () => {
+    containerResumen.classList.remove('active')
+})
+
+openResumen.forEach((product) => {
+    product.addEventListener('click', () => {
+        containerResumen.classList.add('active')
+    })
+})
+
 openModalAdd.addEventListener('click', () => {
     gsap.fromTo(modalAdd,
         {height: 0, opacity: 0 },
         {
-            padding: '1rem',
+            padding: '0.5rem',
             height: '100dvh',
             opacity: 1,
             duration: .2,
@@ -30,17 +45,6 @@ openModalAdd.addEventListener('click', () => {
             padding: '0rem 1rem',
             duration: .2,
             ease: 'power1.in',
-        });
-    })
-    cancelModalAdd.addEventListener('click', () => {
-        gsap.to(modalAdd, {
-            height: '0px',
-            padding: '0rem 1rem',
-            duration: .2,
-            ease: 'power1.in',
-            onComplete: () => {
-                
-            }
         });
     })
 })
