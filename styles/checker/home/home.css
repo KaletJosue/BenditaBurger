@@ -21,6 +21,7 @@
     --color-texto-verde: #9ABA62;
 
     --box-shadow-suave: 1px 1px 1rem #00000017;
+    --box-shadow-fuerte: 1px 1px 2rem #000000de;
 }
 
 .darkMode {
@@ -44,6 +45,7 @@
     --color-texto-verde: #EDF8DA;
 
     --box-shadow-suave: 1px 1px 1rem #ededed17;
+    --box-shadow-fuerte: 1px 1px 2rem #ffffff28;
 }
 
 * {
@@ -511,6 +513,291 @@ body {
     transition: all .2s ease;
 }
 
+.modalSeletTable {
+    position: fixed;
+    width: 100vw;
+    height: 100dvh;
+    top: 0;
+    left: 0;
+    z-index: 3;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.modalSeletTable .conModalSeletTable {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    background-color: var(--color-blanco);
+    box-shadow: var(--box-shadow-fuerte);
+    width: 250px;
+    height: auto;
+    border-radius: 20px;
+    padding: 1rem;
+    gap: .5rem;
+    overflow: hidden;
+    color: var(--color-negro);
+}
+
+.modalSeletTable .conModalSeletTable p {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: center;
+    gap: .3rem;
+    font-weight: 700;
+    border-radius: 50%;
+    aspect-ratio: 1/1;
+    border: solid 1px var(--color-gris);
+    transition: all .2s ease;
+}
+
+.modalSeletTable .conModalSeletTable p:hover {
+    background-color: var(--color-gris);
+    color: var(--color-fondo);
+    cursor: pointer;
+}
+
+.modalSelectModo {
+    position: fixed;
+    width: 100vw;
+    height: 100dvh;
+    top: 0;
+    left: 0;
+    z-index: 3;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.modalSelectModo .conModalSelectModo {
+    width: 500px;
+    height: 300px;
+    background-color: var(--color-blanco);
+    box-shadow: var(--box-shadow-fuerte);
+    border-radius: 20px;
+    padding: 1rem;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: .5rem;
+}
+
+.modalSelectModo .conModalSelectModo .carry {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    justify-content: center;
+    background-color: #ffeb00;
+    border: solid 1px var(--color-gris);
+    border-radius: 10px;
+    cursor: pointer;
+    cursor: pointer;
+}
+
+.modalSelectModo .conModalSelectModo .carry img {
+    width: 50px;
+    aspect-ratio: 1/1;
+    transition: all .2s ease;
+}
+
+.modalSelectModo .conModalSelectModo .carry p {
+    font-size: 15px;
+    font-weight: 900;
+    color: black;
+    transition: all .2s ease;
+}
+
+.modalSelectModo .conModalSelectModo .carry:hover img,
+.modalSelectModo .conModalSelectModo .carry:hover p {
+    transform: scale(1.1);
+}
+
+.modalSelectModo .conModalSelectModo .eat {
+    background-color: var(--color-fondo);
+    border: solid 1px var(--color-gris);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.modalSelectModo .conModalSelectModo .eat:hover .table {
+    transform: scale(.6);
+}
+
+.modalSelectModo .conModalSelectModo .eat:hover p {
+    transform: scale(1.1);
+}
+
+.modalSelectModo .conModalSelectModo .eat .table {
+    position: relative;
+    transform: scale(.7);
+    transition: all .2s ease;
+}
+
+.modalSelectModo .conModalSelectModo .eat .table .sobreMesa {
+    display: block;
+    width: 100px;
+    height: 20px;
+    background-color: var(--color-gris);
+    transform: skew(50deg);
+}
+
+.modalSelectModo .conModalSelectModo .eat .table .pata1 {
+    position: absolute;
+    display: block;
+    width: 3px;
+    height: 30px;
+    background-color: var(--color-gris);
+    top: 0px;
+    left: -10.6px;
+}
+
+.modalSelectModo .conModalSelectModo .eat .table .pata2 {
+    position: absolute;
+    display: block;
+    width: 3px;
+    height: 30px;
+    background-color: var(--color-gris);
+    top: 19px;
+    left: 10.6px;
+}
+
+.modalSelectModo .conModalSelectModo .eat .table .pata3 {
+    position: absolute;
+    display: block;
+    width: 3px;
+    height: 30px;
+    background-color: var(--color-gris);
+    top: 0px;
+    right: 10.6px;
+}
+
+.modalSelectModo .conModalSelectModo .eat .table .pata4 {
+    position: absolute;
+    display: block;
+    width: 3px;
+    height: 30px;
+    background-color: var(--color-gris);
+    top: 19px;
+    right: -11.3px;
+}
+
+.modalSelectModo .conModalSelectModo .eat p {
+    font-size: 15px;
+    font-weight: 900;
+    color: var(--color-negro);
+    margin-top: 1.5rem;
+    transition: all .2s ease;
+}
+
+.modalSelectModo .conModalSelectModo .order {
+    grid-column: 1/3;
+    border: solid 1px var(--color-gris);
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+    background-color: var(--color-fondo);
+    overflow: hidden;
+}
+
+.modalSelectModo .conModalSelectModo .order p {
+    font-size: 15px;
+    font-weight: 900;
+    color: var(--color-negro);
+}
+
+.modalSelectModo .conModalSelectModo .order .camion {
+    transition: all .2s ease;
+}
+
+.modalSelectModo .conModalSelectModo .order:hover .camion {
+    width: 0;
+}
+
+.modalSelectModo .conModalSelectModo .order .camion {
+    position: relative;
+    height: 40px;
+    width: 77px;
+}
+
+.modalSelectModo .conModalSelectModo .order .camion .container {
+    position: absolute;
+    display: block;
+    width: 50px;
+    height: 40px;
+    background-color: var(--color-fondo);
+    border: solid 1px var(--color-gris);
+    top: 0;
+    left: 0;
+}
+
+.modalSelectModo .conModalSelectModo .order .camion .cabezal {
+    position: absolute;
+    display: block;
+    width: 25px;
+    height: 30px;
+    background-color: #f83d3d;
+    left: 52px;
+    bottom: 0;
+    border-radius: 0 10px 0 0;
+    border: solid 1px black;
+}
+
+.modalSelectModo .conModalSelectModo .order .camion .rueda1 {
+    position: absolute;
+    display: block;
+    width: 15px;
+    height: 15px;
+    background-color: var(--color-negro);
+    border-radius: 50%;
+    bottom: -10px;
+    left: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modalSelectModo .conModalSelectModo .order .camion .rueda2 {
+    position: absolute;
+    display: block;
+    width: 15px;
+    height: 15px;
+    background-color: var(--color-negro);
+    border-radius: 50%;
+    bottom: -10px;
+    left: 55px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modalSelectModo .conModalSelectModo .order .camion .rueda1::after {
+    content: '';
+    display: block;
+    width: 10px;
+    height: 10px;
+    background-color: var(--color-blanco);
+    border-radius: 50%;
+}
+
+.modalSelectModo .conModalSelectModo .order .camion .rueda2::after {
+    content: '';
+    display: block;
+    width: 10px;
+    height: 10px;
+    background-color: var(--color-blanco);
+    border-radius: 50%;
+}
+
 .modalAdd {
     position: fixed;
     width: 100vw;
@@ -624,7 +911,7 @@ body {
 }
 
 .modalAdd .conModalAdd.active .leftModalAdd {
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: .5fr .5fr .5fr .5fr .5fr;
 }
 
 .modalAdd .conModalAdd.active .rightModalAdd {
@@ -1474,7 +1761,7 @@ input[type="number"]::-webkit-outer-spin-button {
     }
 }
 
-@media (width < 1000px) {
+@media (width < 1020px) {
     .modal,
     .modal2 {
         padding: 1rem;
@@ -1614,5 +1901,29 @@ input[type="number"]::-webkit-outer-spin-button {
 @media (width < 350px) {
     .modalAdd .conModalAdd .leftModalAdd {
         grid-template-columns: 1fr 1fr;
+    }
+
+    .modalSelectModo .conModalSelectModo {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .modalSelectModo .conModalSelectModo {
+        min-height: 350px;
+    }
+
+    .modalSelectModo .conModalSelectModo .order {
+        display: flex;
+        flex-direction: column-reverse;
+    }
+
+    .modalSelectModo .conModalSelectModo .order .camion {
+        transform: scale(.6);
+    }
+
+    .modalSelectModo .conModalSelectModo .eat,
+    .modalSelectModo .conModalSelectModo .order,
+    .modalSelectModo .conModalSelectModo .carry {
+        height: 100%;
     }
 }
