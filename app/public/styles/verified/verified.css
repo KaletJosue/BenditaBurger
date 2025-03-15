@@ -1,0 +1,363 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    list-style: none;
+    font-family: 'Montserrat';
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+html::-webkit-scrollbar {
+    width: 0;
+}
+
+.container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.container img {
+    width: 50px;
+    border-radius: 10px;
+}
+
+.container h1 {
+    margin-top: .5rem;
+    font-size: 30px;
+    font-weight: 900;
+}
+
+.container p {
+    font-size: 13px;
+}
+
+.container h3 {
+    margin-top: 1rem;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.container .code {
+    margin-top: 1rem;
+    background: linear-gradient(-45deg, #ebb417, #ebc417, #ffeb00);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+    padding: 3rem;
+    border-radius: 10px;
+}
+
+.container .code input {
+    padding: 1rem;
+    outline: none;
+    border: none;
+    background-color: white;
+    text-align: center;
+    font-size: 20px;
+    font-weight: 900;
+    width: 50px;
+    border-radius: 10px;
+}
+
+.container button {
+    margin-top: 1rem;
+    padding: 1rem 2rem;
+    border-radius: 10px;
+    border: none;
+    background-color: #ebb417;
+    border: solid 1px #ebb417;
+    font-weight: 500;
+    color: white;
+    cursor: pointer;
+    transition: all .2s ease;
+}
+
+.container button:hover {
+    background-color: transparent;
+    color: #ebb417;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Modal */
+
+.modal {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #00000000;
+    transition: all .2s ease;
+    transform: scale(0);
+    z-index: 2;
+}
+
+.modal.active {
+    left: 0;
+    background-color: #00000086;
+    transform: scale(1);
+}
+
+.modal .modalContent {
+    width: 550px;
+    height: 300px;
+    background-color: #1c1c1c;
+    border-radius: 30px;
+    position: relative;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.modal .modalContent::after {
+    content: '';
+    display: block;
+    width: 300px;
+    height: 150px;
+    background-color: #ff7777;
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(180px);
+    bottom: -50px;
+    right: -100px;
+    z-index: 0;
+}
+
+.modal .modalContent .centerModal {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    padding: 0 4rem;
+    gap: 1.5rem;
+}
+
+.modal .modalContent .centerModal i {
+    font-size: 60px;
+    color: #ff7777;
+}
+
+.modal .modalContent .centerModal .textModal h1 {
+    font-size: 25px;
+    font-weight: 900;
+}
+
+.modal .modalContent .centerModal .textModal p {
+    font-size: 14px;
+}
+
+.modal .modalContent i#closeModal {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.modal .modalContent button {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    padding: .7rem 1rem;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+    border: solid 2px #ff7777;
+    background-color: transparent;
+    background-color: #ff7777;
+    color: white;
+    cursor: pointer;
+    transition: all .2s ease;
+    z-index: 1;
+}
+
+.modal .modalContent button:hover {
+    transform: translateX(-10px);
+    background-color: transparent;
+}
+
+/* Modal2 */
+
+.modal2 {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #00000000;
+    transition: all .2s ease;
+    transform: scale(0);
+    z-index: 2;
+}
+
+.modal2.active {
+    left: 0;
+    background-color: #00000086;
+    transform: scale(1);
+}
+
+.modal2 .modalContent2 {
+    width: 550px;
+    height: 300px;
+    background-color: #1c1c1c;
+    border-radius: 30px;
+    position: relative;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.modal2 .modalContent2::after {
+    content: '';
+    display: block;
+    width: 300px;
+    height: 150px;
+    background-color: #92ff77;
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(180px);
+    bottom: -50px;
+    right: -100px;
+    z-index: 0;
+}
+
+.modal2 .modalContent2 .centerModal2 {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    padding: 0 4rem;
+    gap: 1.5rem;
+}
+
+.modal2 .modalContent2 .centerModal2 i {
+    font-size: 60px;
+    color: #92ff77;
+}
+
+.modal2 .modalContent2 .centerModal2 .textModal2 h1 {
+    font-size: 25px;
+    font-weight: 900;
+}
+
+.modal2 .modalContent2 .centerModal2 .textModal2 p {
+    font-size: 14px;
+}
+
+.modal2 .modalContent2 i#closeModal2 {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.modal2 .modalContent2 button {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    padding: .7rem 1rem;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+    border: solid 2px #92ff77;
+    background-color: transparent;
+    background-color: #589a48;
+    color: white;
+    cursor: pointer;
+    transition: all .2s ease;
+    z-index: 1;
+}
+
+.modal2 .modalContent2 button:hover {
+    transform: translateX(-10px);
+    background-color: transparent;
+}
+
+@media (height < 430px) {
+    .container {
+        height: 100%;
+        padding: 2rem;
+    }
+}
+
+@media (width < 1000px) {
+    .modal,
+    .modal2 {
+        padding: 1rem;
+    }
+}
+
+@media (width < 550px) {
+    body {
+        padding: 0;
+    }
+
+    .container {
+        padding: 2rem .5rem;
+    }
+
+    .container h1 {
+        line-height: 25px;
+        margin-bottom: 1rem;
+    }
+
+    .container .code {
+        padding: 3rem .5rem;
+        display: flex;
+        align-items: center;
+        justify-content: start;
+    }
+
+    .container .code input {
+        width: 100%;
+        padding: 1rem 0;
+    }
+}
+
+@media (width < 450px) {
+    .modal .modalContent,
+    .modal2 .modalContent2 {
+        flex-direction: column;
+    }
+
+    .modal .modalContent .centerModal,
+    .modal2 .modalContent2 .centerModal2 {
+        padding: 0;
+        flex-direction: column;
+        text-align: center;
+        padding: 0 1rem;
+    }
+
+    .modal .modalContent button,
+    .modal2 .modalContent2 button {
+        position: relative;
+        top: 0;
+        left: 0;
+        margin-top: 1rem;
+    }
+}

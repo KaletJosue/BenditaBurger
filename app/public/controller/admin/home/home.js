@@ -208,3 +208,30 @@ let progress = setInterval(() => {
         clearInterval(progress)
     }
 }, speed)
+
+var logOut = document.querySelector('.close')
+
+var modal2 = document.querySelector('.modal2')
+var closeModal2 = document.querySelector('#closeModal2')
+var logOut2 = document.querySelector('.logOut2')
+var tryAgain2 = document.querySelector('.tryAgain2')
+
+logOut.addEventListener('click', () => {
+    modal2.classList.add('active')
+    closeModal2.addEventListener('click', () => {
+        modal2.classList.remove('active')
+    })
+    logOut2.addEventListener('click', () => {
+        document.cookie = "jwt=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT"
+        document.location.href = "/"
+    })
+    tryAgain2.addEventListener('click', () => {
+        modal2.classList.remove('active')
+    })
+    window.addEventListener('click', event => {
+        if (event.target == modal2) {
+            modal2.classList.remove('active')
+        }
+    })
+})
+

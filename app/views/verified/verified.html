@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script src="https://unpkg.com/scrollreveal"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/styles/verified/verified.css" />
+    <!-- Loader -->
+     <link rel="stylesheet" href="/styles/loader/loader.css">
+    <link rel="shortcut icon" href="/assets/logo.png" type="image/x-icon">
+    <title>Bendita Burger</title>
+    <!-- Iconos -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css"
+        integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+
+    <div class="container">
+        <img src="/assets/logoAmarillo.png" alt="">
+        <h1>Verifica tu Correo Electronico</h1>
+        <p>Hemos enviado un mensaje con un codigo de verificacion a tu correo electronico</p>
+        <p>(No olvides revisar en spam)</p>
+        <h3>Ingresa el codigo:</h3>
+        <div class="code">
+            <input type="number">
+            <input type="number">
+            <input type="number">
+            <input type="number">
+            <input type="number">
+            <input type="number">
+        </div>
+        <button class="sendVerified">Verificar Codigo</button>
+    </div>
+
+    <div class="modal">
+        <div class="modalContent">
+            <i class="fa-solid fa-x" id="closeModal"></i>
+            <div class="centerModal">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+                <div class="textModal">
+                    <h1>Ooops!</h1>
+                    <p class="textErrorModal"></p>
+                </div>
+            </div>
+            <button class="tryAgain">Intentar de Nuevo</button>
+        </div>
+    </div>
+
+    <div class="modal2">
+        <div class="modalContent2">
+            <i class="fa-solid fa-x" id="closeModal2"></i>
+            <div class="centerModal2">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+                <div class="textModal2">
+                    <h1>Hecho</h1>
+                    <p class="textErrorModal2"></p>
+                </div>
+            </div>
+            <button class="tryAgain2">Iniciar Sesion</button>
+        </div>
+    </div>
+
+    <div class="loader">
+        <div class="icon">
+            <div class="comidaSarten"></div>
+            <div class="sartenCompleto">
+                <div class="sarten"></div>
+                <div class="mangoSarten"></div>
+            </div>
+            <div class="placaSarten"></div>
+        </div>
+        <div class="textLoader">
+            <img src="/assets/logo.png" alt="">
+            <h1>¡BENDITA BURGER!</h1>
+            <p>¡Aguanta el hambre! Ya casi está todo listo...</p>
+        </div>
+    </div>
+
+    <script src="/controller/verified/verified.js"></script>
+</body>
+
+</html>
