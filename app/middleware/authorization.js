@@ -20,14 +20,14 @@ async function soloAdmin(req, res, next) {
             if (logueado && revisarUsuario.Rol == "Administrador") {
                 return next()
             } else {
-                return res.status(200).send({ status: "Rol Incorrect", message: "No tienes acceso a este apartado" });
+                return res.status(200).redirect('/error?message=No tienes acceso a este apartado');
             }
         } else {
-            return res.status(200).send({ status: "Login Incorrect", message: "No iniciaste sesion de manera correcta" });
+            return res.status(200).redirect('/error?message=No iniciaste sesion de manera correcta');
         }
 
     } else {
-        return res.status(200).send({ status: "Login Incorrect", message: "No iniciaste sesion de manera correcta" });
+        return res.status(200).redirect('/error?message=No iniciaste sesion de manera correcta');
     }
 }
 
@@ -74,10 +74,10 @@ async function revisarVerified(req, res, next) {
         if (revisarUsuario.Verificado === true) {
             return next()
         } else {
-            return res.status(200).send({ status: "Email no Verified", message: "No has verificado tu correo electronico revisalo (no olvides revisar en spam)" });
+            return res.status(200).redirect('/error?message=No has verificado tu correo electronico, revisa tu correo (no olvides revisar en spam)');
         }
     } else {
-        return res.status(200).send({ status: "Login Incorrect", message: "No iniciaste sesion de manera correcta", redirect: '/signIn' });
+        return res.status(200).redirect('/error?message=No iniciaste sesion de manera correcta');
     }
 }
 
@@ -96,7 +96,7 @@ async function revisarCookie(req) {
         }
         return revisarUsuario
     } else {
-        return res.status(200).send({ status: "Login Incorrect", message: "No iniciaste sesion de manera correcta", redirect: '/signIn' });
+        return res.status(200).redirect('/error?message=No iniciaste sesion de manera correcta');
     }
 }
 

@@ -55,7 +55,7 @@ function crearMailVerification(direccion, codigo) {
                 <p style="font-size: 13px; font-weight: 800; padding: .7rem; margin-left: .5rem; background-color: white; border-radius: 10px; color: black;">${codigoStr[5]}</p>
             </div>
 
-            <a href="http://localhost:4000/verified" style="font-size: 13px; font-weight: 600; color: black; margin-top: 2rem;">Ir a Bendita Burger</a>
+            <a href="http://localhost:4000/verified" style="font-size: 13px; font-weight: 600; color: black; margin-top: 1rem; display: flex">Ir a Bendita Burger</a>
 
         </body>
     </html>`;

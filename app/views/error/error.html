@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script src="https://unpkg.com/scrollreveal"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/styles/error/error.css" />
+    <!-- Loader -->
+    <link rel="stylesheet" href="/styles/loader/loader.css">
+    <link rel="shortcut icon" href="/assets/logo.png" type="image/x-icon">
+    <title>Bendita Burger</title>
+    <!-- Iconos -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css"
+        integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+    <div class="container">
+        <img src="/assets/logoAmarillo.png" alt="">
+        <h1>Inicia Sesion Bien</h1>
+        <p>Y disfuta de todas las delicias que te ofrecemos</p>
+        <a href="/signIn">Iniciar Sesion</a>
+    </div>
+
+    <div class="modal">
+        <div class="modalContent">
+            <div class="centerModal">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+                <div class="textModal">
+                    <h1>Ooops!</h1>
+                    <p class="textErrorModal"></p>
+                </div>
+            </div>
+            <button class="tryAgain">Iniciar Sesion</button>
+        </div>
+    </div>
+
+    <div class="loader">
+        <div class="icon">
+            <div class="comidaSarten"></div>
+            <div class="sartenCompleto">
+                <div class="sarten"></div>
+                <div class="mangoSarten"></div>
+            </div>
+            <div class="placaSarten"></div>
+        </div>
+        <div class="textLoader">
+            <img src="/assets/logo.png" alt="">
+            <h1>¡BENDITA BURGER!</h1>
+            <p>¡Aguanta el hambre! Ya casi está todo listo...</p>
+        </div>
+    </div>
+
+    <script src="/controller/error/error.js"></script>
+</body>
+
+</html>

@@ -33,6 +33,10 @@ router.get('/verified', (req, res) => {
      res.sendFile(path.resolve(__dirname, '../views/verified/verified.html'))
 })
 
+router.get('/error', (req, res) => {
+     res.sendFile(path.resolve(__dirname, '../views/error/error.html'))
+})
+
 router.post('/api/signUp', authenticaction.signUp)
 router.post('/api/signIn', authenticaction.signIn)
 router.post('/api/verified', authenticaction.verified)
