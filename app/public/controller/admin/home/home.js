@@ -8,24 +8,24 @@ var btnBills = document.querySelectorAll('.btnBills')
 var btnConfig = document.querySelector('.btnConfig')
 
 btnConfig.addEventListener('click', () => {
-    location.href = "/views/admin/config/config.html"
+    window.location.href = "/admin/config"
 })
 
 btnBills.forEach((btnBill) => {
     btnBill.addEventListener('click', () => {
-        location.href = "/views/admin/bills/bills.html"
+        window.location.href = "/admin/expenses"
     })
 })
 
 btnStatistics.forEach((btnStatistic) => {
     btnStatistic.addEventListener('click', () => {
-        location.href = "/views/admin/statics/statics.html"
+        window.location.href = "/admin/statistic"
     })
 })
 
 btnSales.forEach((btnSale) => {
     btnSale.addEventListener('click', () => {
-        location.href = "/views/admin/sales/sales.html"
+        window.location.href = "/admin/sale"
     })
 })
 
@@ -34,13 +34,13 @@ var btnSections = document.querySelectorAll('.btnSections')
 
 btnSections.forEach(btnSection => {
     btnSection.addEventListener('click', () => {
-        location.href = "/views/admin/sections/sections.html"
+        window.location.href = "/admin/section"
     })
 })
 
 btnProducts.forEach(btnProduct => {
     btnProduct.addEventListener('click', () => {
-        location.href = "/views/admin/products/products.html"
+        window.location.href = "/admin/product"
     })
 })
 
@@ -235,3 +235,24 @@ logOut.addEventListener('click', () => {
     })
 })
 
+const res = await fetch("http://localhost:4000/api/userData", {
+    method: "GET",
+    headers: {
+        "Content-Type": "application/json"
+    }
+})
+
+const resJson = await res.json()
+
+var imgProfile = document.querySelector('.profile')
+var gmail = document.querySelector('.correo')
+var nombre = document.querySelector('.name')
+
+nombre.textContent = resJson.data.Nombre.split(' ').slice(0, 2).join(' ')
+gmail.textContent = resJson.data.Rol
+
+if (resJson.data.Photo == "") {
+    imgProfile.src = "/assets/profile-5.jpg"
+} else {
+    imgProfile.src = resJson.data.Photo
+}

@@ -4,28 +4,21 @@ loader.classList.add('active')
 
 var btnSales = document.querySelectorAll('.btnSales')
 var btnStatistics = document.querySelectorAll('.btnStatistics')
-var btnBills = document.querySelectorAll('.btnBills')
 var btnConfig = document.querySelector('.btnConfig')
 
 btnConfig.addEventListener('click', () => {
-    location.href = "/views/admin/config/config.html"
-})
-
-btnBills.forEach((btnBill) => {
-    btnBill.addEventListener('click', () => {
-        location.href = "/views/admin/bills/bills.html"
-    })
+    window.location.href = "/admin/config"
 })
 
 btnStatistics.forEach((btnStatistic) => {
     btnStatistic.addEventListener('click', () => {
-        location.href = "/views/admin/statics/statics.html"
+        window.location.href = "/admin/statistic"
     })
 })
 
 btnSales.forEach((btnSale) => {
     btnSale.addEventListener('click', () => {
-        location.href = "/views/admin/sales/sales.html"
+        window.location.href = "/admin/sale"
     })
 })
 
@@ -34,13 +27,13 @@ var btnSections = document.querySelectorAll('.btnSections')
 
 btnSections.forEach(btnSection => {
     btnSection.addEventListener('click', () => {
-        location.href = "/views/admin/sections/sections.html"
+        window.location.href = "/admin/section"
     })
 })
 
 btnProducts.forEach(btnProduct => {
     btnProduct.addEventListener('click', () => {
-        location.href = "/views/admin/products/products.html"
+        window.location.href = "/admin/product"
     })
 })
 
@@ -336,3 +329,51 @@ palanca.addEventListener('click', () => {
         localStorage.setItem('darkMode', 'desactive');
     }
 });
+
+var logOut = document.querySelector('.close')
+
+var modal2 = document.querySelector('.modal2')
+var closeModal2 = document.querySelector('#closeModal2')
+var logOut2 = document.querySelector('.logOut2')
+var tryAgain2 = document.querySelector('.tryAgain2')
+
+logOut.addEventListener('click', () => {
+    modal2.classList.add('active')
+    closeModal2.addEventListener('click', () => {
+        modal2.classList.remove('active')
+    })
+    logOut2.addEventListener('click', () => {
+        document.cookie = "jwt=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT"
+        document.location.href = "/"
+    })
+    tryAgain2.addEventListener('click', () => {
+        modal2.classList.remove('active')
+    })
+    window.addEventListener('click', event => {
+        if (event.target == modal2) {
+            modal2.classList.remove('active')
+        }
+    })
+})
+
+const res = await fetch("http://localhost:4000/api/userData", {
+    method: "GET",
+    headers: {
+        "Content-Type": "application/json"
+    }
+})
+
+const resJson = await res.json()
+
+var imgProfile = document.querySelector('.profile')
+var gmail = document.querySelector('.correo')
+var nombre = document.querySelector('.name')
+
+nombre.textContent = resJson.data.Nombre.split(' ').slice(0, 2).join(' ')
+gmail.textContent = resJson.data.Rol
+
+if (resJson.data.Photo == "") {
+    imgProfile.src = "/assets/profile-5.jpg"
+} else {
+    imgProfile.src = resJson.data.Photo
+}

@@ -38,7 +38,7 @@ async function signIn(req, res) {
                                 path: "/"
                             }
 
-                            if (revisarUsuario.Rol == "Administrador") {
+                            if (revisarUsuario.Rol == "Administrador" || revisarUsuario.Rol == "SuperAdministrador") {
                                 res.cookie('jwt', token, cookieOption)
                                 res.status(200).send({ status: "Login Correct", message: "Tu usuario ha sido logueado", redirect: "/admin" });
                             } else if (revisarUsuario.Rol == "Cajero") {
@@ -174,8 +174,37 @@ async function signUp(req, res) {
     }
 }
 
+async function userRol(req, res) {
+    if (req.headers.cookie) {
+        const cookieJWT = req.headers.cookie.split("; ").find(cookie => cookie.startsWith("jwt=")).slice(4)
+        const decodificada = jsonwebtoken.verify(cookieJWT, process.env.JWT_SECRET)
+
+        const db = await conectarConMongoDB()
+        const usuariosCollection = db.collection('usuarios')
+
+        const revisarUsuario = await usuariosCollection.findOne({ Correo: decodificada.user })
+
+        return res.status(200).send({ 
+            status: "Data User", 
+            message: `Data de los usuarios`,
+            data: {
+                Rol: revisarUsuario.Rol,
+                Nombre: revisarUsuario.Nombre,
+                Email: revisarUsuario.Correo,
+                Photo: revisarUsuario.Foto,
+                Direccion: revisarUsuario.Direccion,
+                Phone: revisarUsuario.Telefono,
+            }
+         })
+    } else {
+        return res.status(400).send({ status: "Error Login", message: "No has iniciado sesion bien" })
+    }
+}
+
+
 export const method = {
     signIn,
     signUp,
-    verified
+    verified,
+    userRol
 }

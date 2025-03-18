@@ -135,8 +135,29 @@ var inputNameUpdate = document.querySelector('.inputNameUpdate')
 var inputCategoryUpdate = document.querySelector('.inputCategoryUpdate')
 var inputPhoneUpdate = document.querySelector('.inputPhoneUpdate')
 var inputDirectionUpdate = document.querySelector('.inputDirectionUpdate')
+var inputPhoto = document.querySelector('#inputPhoto')
 
-var btnUpdate = document.querySelector('.btnUpdate')
+const photoProfileUpdate = document.querySelector('.photoProfile')
+
+inputPhoto.addEventListener('change', e => {
+    if (e.target.files[0]) {
+        const reader = new FileReader()
+        reader.onload = function(e) {
+            photoProfileUpdate.src = e.target.result
+        }
+        reader.readAsDataURL(e.target.files[0])
+    }
+})
+
+inputPhoto.addEventListener('input', () => {
+    if (inputNameUpdate.value.length != 0 && inputCategoryUpdate.value.length != 0 && inputPhoneUpdate.value.length != 0 && inputDirectionUpdate.value.length != 0 && inputPhoto.value.length != 0) {
+        btnUpdate.classList.add('active')
+        btnUpdate.disabled = false
+    } else {
+        btnUpdate.classList.remove('active')
+        btnUpdate.disabled = true
+    }
+})
 
 inputNameUpdate.addEventListener('input', () => {
     if (inputNameUpdate.value.length != 0 && inputCategoryUpdate.value.length != 0 && inputPhoneUpdate.value.length != 0 && inputDirectionUpdate.value.length != 0) {
@@ -178,15 +199,99 @@ inputDirectionUpdate.addEventListener('input', () => {
     }
 })
 
-var btnUser = document.querySelector('.user')
-
-btnUser.addEventListener('click', () => {
-    location.href = "/views/admin/users/users.html"
-})
-
 var leerDarkMode = localStorage.getItem('darkMode');
 var body = document.querySelector('body');
 
 if (leerDarkMode === 'active') {
     body.classList.add('darkMode');
 }
+
+const res = await fetch("http://localhost:4000/api/userData", {
+    method: "GET",
+    headers: {
+        "Content-Type": "application/json"
+    }
+})
+
+const resJson = await res.json()
+
+var btnUser = document.querySelector('.user')
+var btnSecurity = document.querySelector('.security')
+var imgProfile = document.querySelector('.profile')
+var gmail = document.querySelector('.correo')
+var nombre = document.querySelector('.name')
+
+var photoProfile = document.querySelector('.photoProfile')
+var inputNameUpdate = document.querySelector('.inputNameUpdate')
+var inputCategoryUpdate = document.querySelector('.inputCategoryUpdate')
+var inputPhoneUpdate = document.querySelector('.inputPhoneUpdate')
+var inputDirectionUpdate = document.querySelector('.inputDirectionUpdate')
+
+nombre.textContent = resJson.data.Nombre
+inputNameUpdate.value = resJson.data.Nombre
+gmail.textContent = resJson.data.Email
+inputCategoryUpdate.value = resJson.data.Email
+inputPhoneUpdate.value = resJson.data.Phone
+inputDirectionUpdate.value = resJson.data.Direccion
+
+if (resJson.data.Photo == "") {
+    imgProfile.src = "/assets/profile-5.jpg"
+    photoProfile.src = "/assets/profile-5.jpg"
+} else {
+    imgProfile.src = resJson.data.Photo
+    photoProfile.src = resJson.data.Photo
+}
+
+if (resJson.data.Rol == "SuperAdministrador") {
+    btnUser.addEventListener('click', () => {
+        location.href = "/admin/users"
+        btnSecurity.classList.remove('active')
+    })
+} else {
+    btnUser.style.display = "none"
+    btnSecurity.classList.add('active')
+}
+
+var btnUpdate = document.querySelector('.btnUpdate')
+
+var modal = document.querySelector('.modal')
+var closeModal = document.querySelector('#closeModal')
+var tryAgain = document.querySelector('.tryAgain')
+var textErrorModal = document.querySelector('.textErrorModal')
+
+btnUpdate.addEventListener('click', async () => {
+    loader.classList.remove('active')
+
+    const res = await fetch("http://localhost:4000/api/updateUser", {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            Name: inputNameUpdate.value,
+            Phone: inputPhoneUpdate.value,
+            Direccion: inputDirectionUpdate.value
+        })
+    })
+
+    const resJson = await res.json()
+
+    if (resJson.status == "Update correct") {
+        location.reload()
+    } else {
+        loader.classList.add('active')
+        textErrorModal.textContent = resJson.message
+        modal.classList.add('active')
+        closeModal.addEventListener('click', () => {
+            modal.classList.remove('active')
+        })
+        tryAgain.addEventListener('click', () => {
+            modal.classList.remove('active')
+        })
+        window.addEventListener('click', event => {
+            if (event.target == modal) {
+                modal.classList.remove('active')
+            }
+        })
+    }
+})

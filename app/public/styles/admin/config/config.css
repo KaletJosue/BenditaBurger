@@ -183,6 +183,14 @@ body {
     color: var(--color-blanco);
 }
 
+.main .conMain .security.active {
+    border-radius: 0 0 20px 20px;
+}
+
+.main .conMain .security.active:hover {
+    border-radius: 0 0 20px 20px;
+}
+
 .main .conMain .security {
     padding: 3rem;
     display: flex;
