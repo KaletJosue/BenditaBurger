@@ -120,11 +120,31 @@ body {
     gap: 1rem;
 }
 
+.main .conMain .delete {
+    padding: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all .2s ease;
+    cursor: pointer;
+    gap: 1rem;
+    border-radius: 0 0 20px 20px;
+}
+
 .main .conMain .info:hover {
     background-color: var(--color-gris);
 }
 
+.main .conMain .delete:hover {
+    background-color: var(--color-gris);
+}
+
 .main .conMain .info:hover i:last-child {
+    color: var(--color-blanco);
+    transform: rotate(90deg);
+}
+
+.main .conMain .delete:hover i:last-child {
     color: var(--color-blanco);
     transform: rotate(90deg);
 }
@@ -135,19 +155,28 @@ body {
     background-color: var(--color-blanco);
 }
 
-.main .conMain .info i:last-child {
+.main .conMain .delete:hover .leftDelete i {
+    color: var(--color-gris);
+    border-color: var(--color-blanco);
+    background-color: var(--color-blanco);
+}
+
+.main .conMain .info i:last-child,
+.main .conMain .delete i:last-child {
     color: var(--color-negro);
     transition: all .2s ease;
 }
 
-.main .conMain .info .leftInfo {
+.main .conMain .info .leftInfo,
+.main .conMain .delete .leftDelete {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 1rem;
 }
 
-.main .conMain .info .leftInfo i {
+.main .conMain .info .leftInfo i,
+.main .conMain .delete .leftDelete i {
     width: 60px;
     height: 60px;
     display: flex;
@@ -161,34 +190,30 @@ body {
     flex: 0 0 auto;
 }
 
-.main .conMain .info .leftInfo .textLeftInfo h3 {
+.main .conMain .info .leftInfo .textLeftInfo h3,
+.main .conMain .delete .leftDelete .textLeftDelete h3 {
     font-size: 17px;
     font-weight: 900;
     color: var(--color-gris);
     transition: all .2s ease;
 }
 
-.main .conMain .info:hover .leftInfo .textLeftInfo h3 {
+.main .conMain .info:hover .leftInfo .textLeftInfo h3,
+.main .conMain .delete:hover .leftDelete .textLeftDelete h3 {
     color: var(--color-blanco);
 }
 
-.main .conMain .info .leftInfo .textLeftInfo p {
+.main .conMain .info .leftInfo .textLeftInfo p,
+.main .conMain .delete .leftDelete .textLeftDelete p {
     font-size: 12px;
     font-weight: 500;
     color: var(--color-negro);
     transition: all .2s ease;
 }
 
-.main .conMain .info:hover .leftInfo .textLeftInfo p {
+.main .conMain .info:hover .leftInfo .textLeftInfo p,
+.main .conMain .delete:hover .leftDelete .textLeftDelete p {
     color: var(--color-blanco);
-}
-
-.main .conMain .security.active {
-    border-radius: 0 0 20px 20px;
-}
-
-.main .conMain .security.active:hover {
-    border-radius: 0 0 20px 20px;
 }
 
 .main .conMain .security {
@@ -271,7 +296,6 @@ body {
     align-items: center;
     justify-content: space-between;
     transition: all .2s ease;
-    border-radius: 0 0 20px 20px;
     cursor: pointer;
     gap: 1rem;
 }
@@ -744,6 +768,125 @@ body {
     background-color: transparent;
 }
 
+/* Modal2 */
+
+.modal2 {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all .2s ease;
+    transform: scale(0);
+    z-index: 2;
+}
+
+.modal2.active {
+    left: 0;
+    background-color: #00000086;
+    transform: scale(1);
+}
+
+.modal2 .modalContent2 {
+    width: 550px;
+    height: 300px;
+    background-color: #353535;
+    border-radius: 30px;
+    position: relative;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.modal2 .modalContent2::after {
+    content: '';
+    display: block;
+    width: 300px;
+    height: 150px;
+    background-color: #fff177;
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(180px);
+    bottom: -50px;
+    right: -100px;
+    z-index: 0;
+}
+
+.modal2 .modalContent2 .centerModal2 {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    padding: 0 4rem;
+    gap: 1.5rem;
+}
+
+.modal2 .modalContent2 .centerModal2 i {
+    font-size: 60px;
+    color: #fff177;
+}
+
+.modal2 .modalContent2 .centerModal2 .textModal2 h1 {
+    font-size: 25px;
+    font-weight: 900;
+}
+
+.modal2 .modalContent2 .centerModal2 .textModal2 p {
+    font-size: 14px;
+}
+
+.modal2 .modalContent2 i#closeModal2 {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.modal2 .modalContent2 button.logOut2 {
+    position: absolute;
+    bottom: 20px;
+    right: 115px;
+    padding: .7rem 1rem;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+    border: solid 2px #ff7777;
+    background-color: transparent;
+    background-color: #ff7777;
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    transition: all .2s ease;
+    z-index: 1;
+}
+
+.modal2 .modalContent2 button {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    padding: .7rem 1rem;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+    border: solid 2px #fff177;
+    background-color: transparent;
+    background-color: #fff177;
+    color: rgb(0, 0, 0);
+    cursor: pointer;
+    transition: all .2s ease;
+    z-index: 1;
+}
+
+.modal2 .modalContent2 button:hover {
+    transform: translateY(-10px);
+    background-color: transparent;
+    color: white;
+}
+
 @media (height < 550px) {
     .modalUpdate .conModalUpdate {
         justify-content: start;
@@ -765,7 +908,8 @@ body {
 }
 
 @media (width < 1000px) {
-    .modal {
+    .modal,
+    .modal2 {
         padding: 1rem;
     }
 }
@@ -808,11 +952,13 @@ body {
         grid-template-columns: 1fr;
     }
 
-    .modal .modalContent {
+    .modal .modalContent,
+    .modal2 .modalContent2 {
         flex-direction: column;
     }
 
-    .modal .modalContent .centerModal {
+    .modal .modalContent .centerModal,
+    .modal2 .modalContent2 .centerModal2 {
         padding: 0;
         flex-direction: column;
         text-align: center;
@@ -823,6 +969,22 @@ body {
         position: relative;
         top: 0;
         left: 0;
+        margin-top: 1rem;
+    }
+
+    .modal2 .modalContent2 button:hover {
+        transform: translateX(0);
+    }
+
+    .modal2 .modalContent2 button,
+    .modal2 .modalContent2 button.logOut2 {
+        position: relative;
+        top: 0;
+        left: 0;
+        margin-top: .2rem;
+    }
+
+    .modal2 .modalContent2 button.logOut2 {
         margin-top: 1rem;
     }
 }

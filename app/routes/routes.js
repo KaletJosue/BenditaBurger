@@ -4,6 +4,8 @@ import { method as authenticaction} from "../auth/authentication.js"
 import { method as updateUser} from "../auth/updateUser.js"
 import { method as authorization} from "../middleware/authorization.js"
 
+import upload from '../cloudinary/cloudinary.js'
+
 import path, { dirname } from 'path'
 import { fileURLToPath } from "url"
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
@@ -78,11 +80,12 @@ router.get('/error', (req, res) => {
 
 router.get('/api/userData', authenticaction.userRol)
 
-router.put('/api/updateUser', updateUser.updateData)
+router.put('/api/updateUser', upload.single('profilePic'), updateUser.updateData)
 
 router.post('/api/signUp', authenticaction.signUp)
 router.post('/api/signIn', authenticaction.signIn)
 router.post('/api/verified', authenticaction.verified)
 router.post('/api/updatePassword', updateUser.updatePassword)
+router.post('/api/deleteUser', authenticaction.deleteUser)
 
 export default router;

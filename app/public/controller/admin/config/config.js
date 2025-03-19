@@ -142,7 +142,7 @@ const photoProfileUpdate = document.querySelector('.photoProfile')
 inputPhoto.addEventListener('change', e => {
     if (e.target.files[0]) {
         const reader = new FileReader()
-        reader.onload = function(e) {
+        reader.onload = function (e) {
             photoProfileUpdate.src = e.target.result
         }
         reader.readAsDataURL(e.target.files[0])
@@ -245,11 +245,9 @@ if (resJson.data.Photo == "") {
 if (resJson.data.Rol == "SuperAdministrador") {
     btnUser.addEventListener('click', () => {
         location.href = "/admin/users"
-        btnSecurity.classList.remove('active')
     })
 } else {
     btnUser.style.display = "none"
-    btnSecurity.classList.add('active')
 }
 
 var btnUpdate = document.querySelector('.btnUpdate')
@@ -260,41 +258,44 @@ var tryAgain = document.querySelector('.tryAgain')
 var textErrorModal = document.querySelector('.textErrorModal')
 
 btnUpdate.addEventListener('click', async () => {
-    loader.classList.remove('active')
+    const formData = new FormData();
+    formData.append('Name', inputNameUpdate.value);
+    formData.append('Phone', inputPhoneUpdate.value);
+    formData.append('Direccion', inputDirectionUpdate.value);
+
+    const file = inputPhoto.files[0];
+    if (file) {
+        formData.append('profilePic', file);
+    }
+
+    loader.classList.remove('active');
 
     const res = await fetch("http://localhost:4000/api/updateUser", {
         method: "PUT",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            Name: inputNameUpdate.value,
-            Phone: inputPhoneUpdate.value,
-            Direccion: inputDirectionUpdate.value
-        })
-    })
+        body: formData,
+    });
 
-    const resJson = await res.json()
+    const resJson = await res.json();
 
     if (resJson.status == "Update correct") {
-        location.reload()
+        location.reload();
     } else {
-        loader.classList.add('active')
-        textErrorModal.textContent = resJson.message
-        modal.classList.add('active')
+        loader.classList.add('active');
+        textErrorModal.textContent = resJson.message;
+        modal.classList.add('active');
         closeModal.addEventListener('click', () => {
-            modal.classList.remove('active')
-        })
+            modal.classList.remove('active');
+        });
         tryAgain.addEventListener('click', () => {
-            modal.classList.remove('active')
-        })
+            modal.classList.remove('active');
+        });
         window.addEventListener('click', event => {
             if (event.target == modal) {
-                modal.classList.remove('active')
+                modal.classList.remove('active');
             }
-        })
+        });
     }
-})
+});
 
 var btnUpdatePassword = document.querySelector('.btnAdd')
 
@@ -335,4 +336,57 @@ btnUpdatePassword.addEventListener('click', async () => {
             }
         })
     }
+})
+
+var deleteUser = document.querySelector('.delete')
+
+var modal2 = document.querySelector('.modal2')
+var closeModal2 = document.querySelector('#closeModal2')
+var logOut2 = document.querySelector('.logOut2')
+var tryAgain2 = document.querySelector('.tryAgain2')
+
+deleteUser.addEventListener('click', () => {
+    modal2.classList.add('active')
+    closeModal2.addEventListener('click', () => {
+        modal2.classList.remove('active')
+    })
+    logOut2.addEventListener('click', async () => {
+        loader.classList.remove('active')
+        const res = await fetch("http://localhost:4000/api/deleteUser", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+
+        const resJson = await res.json()
+
+        if (resJson.redirect) {
+            document.cookie = "jwt=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT"
+            document.location.href = "/"
+        } else {
+            loader.classList.add('active')
+            textErrorModal.textContent = resJson.message
+            modal.classList.add('active')
+            closeModal.addEventListener('click', () => {
+                modal.classList.remove('active')
+            })
+            tryAgain.addEventListener('click', () => {
+                modal.classList.remove('active')
+            })
+            window.addEventListener('click', event => {
+                if (event.target == modal) {
+                    modal.classList.remove('active')
+                }
+            })
+        }
+    })
+    tryAgain2.addEventListener('click', () => {
+        modal2.classList.remove('active')
+    })
+    window.addEventListener('click', event => {
+        if (event.target == modal2) {
+            modal2.classList.remove('active')
+        }
+    })
 })

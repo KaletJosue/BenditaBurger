@@ -115,6 +115,26 @@ async function verified(req, res) {
     }
 }
 
+async function deleteUser(req, res) {
+    if (req.headers.cookie) {
+
+        const cookieJWT = req.headers.cookie.split("; ").find(cookie => cookie.startsWith("jwt=")).slice(4)
+        const decodificada = jsonwebtoken.verify(cookieJWT, process.env.JWT_SECRET)
+
+        const db = await conectarConMongoDB()
+        const usuariosCollection = db.collection('usuarios')
+
+        const revisarUsuario = await usuariosCollection.findOne({ Correo: decodificada.user })
+
+        const resultado = await usuariosCollection.deleteOne({Correo: revisarUsuario.Correo});
+
+        return res.status(200).send({ status: "User Delete", message: "Tu usuario se ha eliminado correctamente", redirect: '/' })
+
+    } else {
+        return res.status(400).send({ status: "Error Login", message: "No has iniciado sesion bien" })
+    }
+}
+
 async function signUp(req, res) {
     const name = req.body.Name
     const email = req.body.Email
@@ -184,8 +204,8 @@ async function userRol(req, res) {
 
         const revisarUsuario = await usuariosCollection.findOne({ Correo: decodificada.user })
 
-        return res.status(200).send({ 
-            status: "Data User", 
+        return res.status(200).send({
+            status: "Data User",
             message: `Data de los usuarios`,
             data: {
                 Rol: revisarUsuario.Rol,
@@ -195,7 +215,7 @@ async function userRol(req, res) {
                 Direccion: revisarUsuario.Direccion,
                 Phone: revisarUsuario.Telefono,
             }
-         })
+        })
     } else {
         return res.status(400).send({ status: "Error Login", message: "No has iniciado sesion bien" })
     }
@@ -206,5 +226,6 @@ export const method = {
     signIn,
     signUp,
     verified,
-    userRol
+    userRol,
+    deleteUser
 }
