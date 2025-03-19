@@ -295,3 +295,44 @@ btnUpdate.addEventListener('click', async () => {
         })
     }
 })
+
+var btnUpdatePassword = document.querySelector('.btnAdd')
+
+var password = document.querySelector('.inputNameAdd')
+var confirPassword = document.querySelector('.inputCategoryAdd')
+
+btnUpdatePassword.addEventListener('click', async () => {
+    loader.classList.remove('active')
+
+    const res = await fetch("http://localhost:4000/api/updatePassword", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            Password: password.value,
+            ConfirPassword: confirPassword.value,
+        })
+    })
+
+    const resJson = await res.json()
+
+    if (resJson.status == "Update correct") {
+        location.reload()
+    } else {
+        loader.classList.add('active')
+        textErrorModal.textContent = resJson.message
+        modal.classList.add('active')
+        closeModal.addEventListener('click', () => {
+            modal.classList.remove('active')
+        })
+        tryAgain.addEventListener('click', () => {
+            modal.classList.remove('active')
+        })
+        window.addEventListener('click', event => {
+            if (event.target == modal) {
+                modal.classList.remove('active')
+            }
+        })
+    }
+})

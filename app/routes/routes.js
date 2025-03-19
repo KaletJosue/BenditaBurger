@@ -83,5 +83,6 @@ router.put('/api/updateUser', updateUser.updateData)
 router.post('/api/signUp', authenticaction.signUp)
 router.post('/api/signIn', authenticaction.signIn)
 router.post('/api/verified', authenticaction.verified)
+router.post('/api/updatePassword', updateUser.updatePassword)
 
 export default router;

@@ -653,6 +653,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    background-color: #00000000;
     transition: all .2s ease;
     transform: scale(0);
     z-index: 2;
@@ -660,7 +661,7 @@ body {
 
 .modal.active {
     left: 0;
-    background-color: #767676;
+    background-color: #00000086;
     transform: scale(1);
 }
 
