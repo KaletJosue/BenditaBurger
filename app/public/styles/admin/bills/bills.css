@@ -473,13 +473,13 @@ body {
 }
 
 .main .contentBills .bill .leftBill i {
-    width: 70px;
-    height: 70px;
+    width: 60px;
+    height: 60px;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    font-size: 20px;
+    font-size: 18px;
     background-color: #6397bc;
     color: white;
     flex: 0 0 auto;
@@ -493,6 +493,11 @@ body {
 .main .contentBills .bill .leftBill .textLeftBill p {
     font-size: 20px;
     font-weight: 900;
+}
+
+.main .contentBills .bill .leftBill .textLeftBill h3 {
+    font-size: 12px;
+    font-weight: 400;
 }
 
 .main .contentBills .bill i#menuVertical {
@@ -588,6 +593,20 @@ body {
     color: var(--color-negro);
 }
 
+.modalUpdate .conModalUpdate .inputUpdate h3 {
+    padding: .7rem;
+    width: 100%;
+    border-radius: 7px;
+    border: solid 1px var(--color-gris);
+    font-size: 12px;
+    outline: none;
+    background-color: transparent;
+    color: var(--color-negro);
+    height: 38px;
+    font-weight: 400;
+    cursor: pointer;
+}
+
 .modalUpdate .conModalUpdate .buttons {
     margin-top: 1rem;
     display: flex;
@@ -634,7 +653,8 @@ body {
     transform: translateY(-5px);
 }
 
-.modalAdd {
+.modalAdd,
+.modalSelect {
     position: fixed;
     width: 100vw;
     height: 100dvh;
@@ -661,7 +681,22 @@ body {
     max-height: 400px;
 }
 
-.modalAdd .conModalAdd i#closeModalAdd {
+.modalSelect .conModalSelect {
+    backdrop-filter: blur(90px);
+    box-shadow: 1px 1px 1rem #0000008a;
+    width: 415px;
+    border-radius: 20px;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+    opacity: 0;
+    max-height: 250px;
+}
+
+.modalAdd .conModalAdd i#closeModalAdd,
+.modalSelect .conModalSelect i#closeModalSelect {
     font-size: 12px;
     height: 30px;
     width: 30px;
@@ -676,7 +711,8 @@ body {
     transition: all .2s ease;
 }
 
-.modalAdd .conModalAdd i#closeModalAdd:hover {
+.modalAdd .conModalAdd i#closeModalAdd:hover,
+.modalSelect .conModalSelect i#closeModalSelect:hover {
     background-color: var(--color-gris);
     color: var(--color-blanco);
 }
@@ -688,6 +724,51 @@ body {
     align-items: center;
     justify-content: center;
     gap: 1rem;
+}
+
+.modalSelect .conModalSelect .inModalSelect {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+    height: 100%;
+    gap: .5rem;
+    padding-top: 1rem;
+}
+
+.modalSelect .conModalSelect .inModalSelect .select {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    gap: .5rem;
+    padding: 1rem 2rem;
+    border-radius: 10px;
+    transition: all .2s ease;
+    cursor: pointer;
+    border: solid 1px var(--color-negro);
+}
+
+.modalSelect .conModalSelect .inModalSelect .select:hover {
+    background-color: var(--color-negro);
+}
+
+.modalSelect .conModalSelect .inModalSelect .select:hover p {
+    color: var(--color-blanco);
+}
+
+.modalSelect .conModalSelect .inModalSelect .select p {
+    font-size: 13px;
+    font-weight: 900;
+    color: var(--color-negro);
+}
+
+.modalSelect .conModalSelect .inModalSelect .select img {
+    aspect-ratio: 16/9;
+    object-fit: cover;
+    object-position: center center;
+    width: 50px;
+    border-radius: 5px;
 }
 
 .modalAdd .conModalAdd .inModalAdd .progress {
@@ -843,6 +924,20 @@ body {
     color: var(--color-negro);
 }
 
+.modalAdd .conModalAdd .inModalAdd .inputs .inputAdd h3 {
+    border: solid 1px var(--color-gris);
+    outline: none;
+    border-radius: 6px;
+    font-size: 12px;
+    padding: .7rem;
+    height: 38px;
+    width: 100%;
+    background-color: transparent;
+    color: var(--color-negro);
+    font-weight: 400;
+    cursor: pointer;
+}
+
 .modalAdd .conModalAdd .inModalAdd .inputs .buttons {
     display: flex;
     align-items: center;
@@ -993,6 +1088,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    background-color: #00000000;
     transition: all .2s ease;
     transform: scale(0);
     z-index: 2;
@@ -1000,7 +1096,7 @@ body {
 
 .modal.active {
     left: 0;
-    background-color: #767676;
+    background-color: #00000086;
     transform: scale(1);
 }
 

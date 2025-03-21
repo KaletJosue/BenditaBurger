@@ -3,8 +3,10 @@ import { Router } from "express";
 import { method as authenticaction} from "../auth/authentication.js"
 import { method as updateUser} from "../auth/updateUser.js"
 import { method as authorization} from "../middleware/authorization.js"
+import { method as inventory} from "../modules/inventory/inventory.js"
+import { method as expense} from "../modules/expenses/expenses.js"
 
-import upload from '../cloudinary/cloudinary.js'
+import { upload, upload2 } from '../cloudinary/cloudinary.js';
 
 import path, { dirname } from 'path'
 import { fileURLToPath } from "url"
@@ -79,6 +81,8 @@ router.get('/error', (req, res) => {
 })
 
 router.get('/api/userData', authenticaction.userRol)
+router.get('/api/inventoryData', inventory.inventoryData)
+router.get('/api/expenseData', expense.expenseData)
 
 router.put('/api/updateUser', upload.single('profilePic'), updateUser.updateData)
 
@@ -87,5 +91,10 @@ router.post('/api/signIn', authenticaction.signIn)
 router.post('/api/verified', authenticaction.verified)
 router.post('/api/updatePassword', updateUser.updatePassword)
 router.post('/api/deleteUser', authenticaction.deleteUser)
+router.post('/api/deleteInventory', inventory.deleteInventory)
+router.post('/api/updateInventory', inventory.updateInventory)
+router.post('/api/updateExpense', expense.updateExpense)
+router.post('/api/addExpense', expense.addExpense)
+router.post('/api/addInventory', upload2.single('inventoryPic'), inventory.addInventory)
 
 export default router;

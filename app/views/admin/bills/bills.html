@@ -116,44 +116,11 @@
         <button class="openModalAdd"><i class="ph-bold ph-plus"></i></button>
         <div class="totalBills">
             <h3>Gastos Totales:</h3>
-            <h1>$<span>800.000</span></h1>
+            <h1>$<span class="expense">800.000</span></h1>
         </div>
         <div class="contentBills">
-            <div class="bill">
-                <div class="leftBill">
-                    <i class="ph-fill ph-piggy-bank"></i>
-                    <div class="textLeftBill">
-                        <h4>Carne de Hamburguesa</h4>
-                        <p>$800.000</p>
-                    </div>
-                </div>
-                <i class="ph-fill ph-dots-three-outline-vertical openModalUpdate" id="menuVertical"></i>
-            </div>
-            <div class="bill">
-                <div class="leftBill">
-                    <i class="ph-fill ph-piggy-bank"></i>
-                    <div class="textLeftBill">
-                        <h4>Carne de Hamburguesa</h4>
-                        <p>$800.000</p>
-                    </div>
-                </div>
-                <i class="ph-fill ph-dots-three-outline-vertical" id="menuVertical"></i>
-            </div>
-            <div class="bill">
-                <div class="leftBill">
-                    <i class="ph-fill ph-piggy-bank"></i>
-                    <div class="textLeftBill">
-                        <h4>Carne de Hamburguesa</h4>
-                        <p>$800.000</p>
-                    </div>
-                </div>
-                <i class="ph-fill ph-dots-three-outline-vertical" id="menuVertical"></i>
-            </div>
-        </div>
-    </div>
 
-    <div class="toast">
-        <p>Debes ingresar el nombre del producto</p>
+        </div>
     </div>
 
     <div class="modalUpdate">
@@ -170,7 +137,9 @@
                 </div>
                 <div class="inputUpdate">
                     <p>Metodo de Pago</p>
-                    <input type="text" class="inputCategoryUpdate">
+                    <h3 class="inputCategoryUpdate">
+                        
+                    </h3>
                 </div>
             </div>
             <div class="buttons">
@@ -211,7 +180,7 @@
                     </div>
                     <div class="inputAdd">
                         <p>Metodo de Pago</p>
-                        <input type="text" class="inputPay">
+                        <h3 class="inputPay"></h3>
                     </div>
                     <div class="buttons">
                         <button disabled class="saveAdd">Guardar</button>
@@ -222,16 +191,37 @@
         </div>
     </div>
 
+    <div class="modalSelect">
+        <div class="conModalSelect">
+            <i class="ph-bold ph-x" id="closeModalSelect"></i>
+            <div class="inModalSelect">
+                <div class="select">
+                    <p>Tarjetas</p>
+                </div>
+                <div class="select">
+                    <p>Nequi</p>
+                </div>
+                <div class="select">
+                    <p>DaviPlata</p>
+                </div>
+                <div class="select">
+                    <p>Efectivo</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="modal">
         <div class="modalContent">
+            <i class="fa-solid fa-x" id="closeModal"></i>
             <div class="centerModal">
                 <i class="fa-solid fa-triangle-exclamation"></i>
                 <div class="textModal">
                     <h1>Ooops!</h1>
-                    <p class="textErrorModal">No has iniciado sesión de manera correcta</p>
+                    <p class="textErrorModal"></p>
                 </div>
             </div>
-            <button class="tryAgain">Iniciar Sesión</button>
+            <button class="tryAgain">Intentar de Nuevo</button>
         </div>
     </div>
 

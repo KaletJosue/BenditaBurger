@@ -133,63 +133,8 @@
                         <th>Actualización</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <th><img src="/assets/pan.png" alt=""></th>
-                        <th>Pan de Hamburguesa</th>
-                        <th>Panaderia</th>
-                        <th>100 Kg</th>
-                        <th>$29.000</th>
-                        <th>29 / 07 / 24</th>
-                        <th>
-                            <div class="actions">
-                                <button class="editar">Editar</button>
-                                <button>Eliminar</button>
-                            </div>
-                        </th>
-                    </tr>
-                    <tr>
-                        <th><img src="/assets/carne.png" alt=""></th>
-                        <th>Carne de Hamburguesa</th>
-                        <th>Carnicos</th>
-                        <th>100 Kg</th>
-                        <th>$29.000</th>
-                        <th>29 / 07 / 24</th>
-                        <th>
-                            <div class="actions">
-                                <button>Editar</button>
-                                <button>Eliminar</button>
-                            </div>
-                        </th>
-                    </tr>
-                    <tr>
-                        <th><img src="/assets/lechuga.png" alt=""></th>
-                        <th>Lechuga</th>
-                        <th>Carnicos</th>
-                        <th>100 Kg</th>
-                        <th>$29.000</th>
-                        <th>29 / 07 / 24</th>
-                        <th>
-                            <div class="actions">
-                                <button>Editar</button>
-                                <button>Eliminar</button>
-                            </div>
-                        </th>
-                    </tr>
-                    <tr>
-                        <th><img src="/assets/aguacate.png" alt=""></th>
-                        <th>Aguacate</th>
-                        <th>Carnicos</th>
-                        <th>100 Kg</th>
-                        <th>$29.000</th>
-                        <th>29 / 07 / 24</th>
-                        <th>
-                            <div class="actions">
-                                <button class="openModalUpdate">Editar</button>
-                                <button class="openModalDelete">Eliminar</button>
-                            </div>
-                        </th>
-                    </tr>
+                <tbody class="tbody">
+
                 </tbody>
             </table>
             <div class="espacio"></div>
@@ -203,19 +148,19 @@
     <div class="modalDetele">
         <div class="conModalDelete">
             <div class="inModalDelete">
-                <img src="/assets/carne.png" alt="">
+                <img src="" alt="" class="imgDelete">
                 <div class="textModalDelete">
                     <p>Nombre:</p>
-                    <p>Pan de Hamburguesa</p>
+                    <p class="nameDelete"></p>
                     <p>Categoria:</p>
-                    <p>Panaderia</p>
+                    <p class="categoryDelete"></p>
                     <p>Cantidad en Stock:</p>
-                    <p>100 Kg</p>
+                    <p class="stockDelete"></p>
                     <p>Precio Unitario:</p>
-                    <p>$29.000</p>
+                    <p class="priceDelete"></p>
                 </div>
             </div>
-            <button>Eliminar</button>
+            <button class="deleteProduct">Eliminar</button>
         </div>
     </div>
 
@@ -297,14 +242,15 @@
 
     <div class="modal">
         <div class="modalContent">
+            <i class="fa-solid fa-x" id="closeModal"></i>
             <div class="centerModal">
                 <i class="fa-solid fa-triangle-exclamation"></i>
                 <div class="textModal">
                     <h1>Ooops!</h1>
-                    <p class="textErrorModal">No has iniciado sesión de manera correcta</p>
+                    <p class="textErrorModal"></p>
                 </div>
             </div>
-            <button class="tryAgain">Iniciar Sesión</button>
+            <button class="tryAgain">Intentar de Nuevo</button>
         </div>
     </div>
 

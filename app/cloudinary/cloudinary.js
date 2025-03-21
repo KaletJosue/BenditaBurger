@@ -27,6 +27,20 @@ const storage = new CloudinaryStorage({
     },
 });
 
-const upload = multer({ storage });
+const storage2 = new CloudinaryStorage({
+    cloudinary: cloudinary.v2,
+    params: async (req, file) => {
+        return {
+            folder: 'inventory_pictures',
+            allowed_formats: ['jpg', 'png'],
+        };
+    },
+});
 
-export default upload;
+const upload = multer({ storage });
+const upload2 = multer({ storage: storage2 });
+
+export {
+    upload,
+    upload2
+};
