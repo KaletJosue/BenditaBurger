@@ -651,6 +651,14 @@ if (resJsonInventory.status === "Data Inventory") {
             inputPriceUpdate.value = doc.Precio
 
             btnUpdate.addEventListener('click', async () => {
+
+                let fecha = new Date();
+                let dia = String(fecha.getDate()).padStart(2, '0');
+                const mes = String(fecha.getMonth() + 1).padStart(2, '0'); // Los meses en JS empiezan desde 0
+                let anio = String(fecha.getFullYear()).slice(-2);
+            
+                let fechaActual = `${dia} / ${mes} / ${anio}`;
+
                 if (inputNameUpdate.value == doc.Nombre && inputCategoryUpdate.value == doc.Categoria && inputStockUpdate.value == doc.Stock && inputPriceUpdate.value == doc.Precio) {
                     btnUpdate.classList.remove('active')
                     btnUpdate.disabled = true
@@ -681,7 +689,7 @@ if (resJsonInventory.status === "Data Inventory") {
                             Categoria: inputCategoryUpdate.value,
                             Stock: inputStockUpdate.value,
                             Precio: inputPriceUpdate.value,
-                            Fecha: fecha,
+                            Fecha: fechaActual,
                             NombreReferencia: doc.Nombre,
                             precioReferencia: doc.Precio
                         })

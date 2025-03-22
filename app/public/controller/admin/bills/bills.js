@@ -23,143 +23,124 @@ if (resJsonExpense.status === "Data Expenses") {
 
     const expenseData = resJsonExpense.data;
 
+    let fecha = new Date();
+    let dia = String(fecha.getDate()).padStart(2, '0');
+    const mes = String(fecha.getMonth() + 1).padStart(2, '0'); // Los meses en JS empiezan desde 0
+    let anio = String(fecha.getFullYear()).slice(-2);
+
+    let fechaActual = `${dia} / ${mes} / ${anio}`;
+
     expenseData.forEach((doc) => {
-        expensesTotal += parseInt(doc.Precio)
+        if (fechaActual == doc.Fecha) {
+            expensesTotal += parseInt(doc.Precio)
 
-        var bill = document.createElement('div')
-        var leftBill = document.createElement('div')
-        var icon = document.createElement('i')
-        var textLeftBill = document.createElement('div')
-        var nameBill = document.createElement('h4')
-        var priceBill = document.createElement('p')
-        var pay = document.createElement('h3')
-        var iconMenu = document.createElement('i')
+            var bill = document.createElement('div')
+            var leftBill = document.createElement('div')
+            var icon = document.createElement('i')
+            var textLeftBill = document.createElement('div')
+            var nameBill = document.createElement('h4')
+            var priceBill = document.createElement('p')
+            var pay = document.createElement('h3')
+            var iconMenu = document.createElement('i')
 
-        nameBill.textContent = doc.Nombre
-        priceBill.textContent = `$${(parseInt(doc.Precio).toLocaleString('es-ES'))}`
-        pay.textContent = `Pagaste con: ${doc.Pago}`
+            nameBill.textContent = doc.Nombre
+            priceBill.textContent = `$${(parseInt(doc.Precio).toLocaleString('es-ES'))}`
+            pay.textContent = `Pagaste con: ${doc.Pago}`
 
-        if ((doc.Pago).toLowerCase() == "tarjetas") {
-            icon.className = "ph ph-credit-card"
-            icon.style.backgroundColor = "#ff5733"
-        } else if ((doc.Pago).toLowerCase() == "nequi") {
-            icon.className = "ph ph-devices"
-            icon.style.backgroundColor = "#8233ff"
-        } else if ((doc.Pago).toLowerCase() == "daviplata") {
-            icon.className = "ph ph-devices"
-            icon.style.backgroundColor = "#ff3333"
-        } else if ((doc.Pago).toLowerCase() == "efectivo") {
-            icon.className = "ph ph-piggy-bank"
-            icon.style.backgroundColor = "#35c318"
-        }
+            if ((doc.Pago).toLowerCase() == "tarjetas") {
+                icon.className = "ph ph-credit-card"
+                icon.style.backgroundColor = "#ff5733"
+            } else if ((doc.Pago).toLowerCase() == "nequi") {
+                icon.className = "ph ph-devices"
+                icon.style.backgroundColor = "#8233ff"
+            } else if ((doc.Pago).toLowerCase() == "daviplata") {
+                icon.className = "ph ph-devices"
+                icon.style.backgroundColor = "#ff3333"
+            } else if ((doc.Pago).toLowerCase() == "efectivo") {
+                icon.className = "ph ph-piggy-bank"
+                icon.style.backgroundColor = "#35c318"
+            }
 
-        iconMenu.className = "ph-fill ph-dots-three-outline-vertical"
-        iconMenu.style.fontSize = "15px"
-        iconMenu.style.cursor = "pointer"
+            iconMenu.className = "ph-fill ph-dots-three-outline-vertical"
+            iconMenu.style.fontSize = "15px"
+            iconMenu.style.cursor = "pointer"
 
-        bill.className = "bill"
-        leftBill.className = "leftBill"
-        textLeftBill.className = "textLeftBill"
+            bill.className = "bill"
+            leftBill.className = "leftBill"
+            textLeftBill.className = "textLeftBill"
 
-        contentBills.appendChild(bill)
-        bill.appendChild(leftBill)
-        leftBill.appendChild(icon)
-        leftBill.appendChild(textLeftBill)
-        textLeftBill.appendChild(nameBill)
-        textLeftBill.appendChild(pay)
-        textLeftBill.appendChild(priceBill)
-        bill.appendChild(iconMenu)
+            contentBills.appendChild(bill)
+            bill.appendChild(leftBill)
+            leftBill.appendChild(icon)
+            leftBill.appendChild(textLeftBill)
+            textLeftBill.appendChild(nameBill)
+            textLeftBill.appendChild(pay)
+            textLeftBill.appendChild(priceBill)
+            bill.appendChild(iconMenu)
 
-        iconMenu.addEventListener('click', () => {
-            modalUpdate.style.display = 'flex'
+            iconMenu.addEventListener('click', () => {
+                modalUpdate.style.display = 'flex'
 
-            gsap.fromTo(modalContentUpdate,
-                { backdropFilter: 'blur(0px)', height: 0, opacity: 0 },
-                {
-                    height: '100%',
-                    opacity: 1,
-                    backdropFilter: 'blur(90px)',
-                    duration: .7,
-                    ease: 'expo.out',
-                }
-            )
-            window.addEventListener('click', event => {
-                if (event.target == modalUpdate) {
-                    gsap.to(modalContentUpdate, {
-                        height: '0px',
-                        duration: .2,
-                        ease: 'power1.in',
-                        onComplete: () => {
-                            modalUpdate.style.display = 'none';
-                        }
-                    });
-                }
-            })
-            closeModalUpdate.forEach((closeModalUpdateBtn) => {
-                closeModalUpdateBtn.addEventListener('click', () => {
-                    gsap.to(modalContentUpdate, {
-                        height: '0px',
-                        duration: .2,
-                        ease: 'power1.in',
-                        onComplete: () => {
-                            modalUpdate.style.display = 'none';
-                        }
-                    });
-                })
-            })
-
-            let inputNameUpdate = document.querySelector('.inputNameUpdate')
-            let inputCategoryUpdate = document.querySelector('.inputCategoryUpdate')
-            let inputPriceUpdate = document.querySelector('.inputPriceUpdate')
-
-            inputNameUpdate.value = doc.Nombre
-            inputPriceUpdate.value = doc.Precio
-            inputCategoryUpdate.textContent = doc.Pago
-
-            inputCategoryUpdate.addEventListener('click', () => {
-                modalSelect.style.display = 'flex'
-
-                gsap.fromTo(modalContentSelect,
+                gsap.fromTo(modalContentUpdate,
                     { backdropFilter: 'blur(0px)', height: 0, opacity: 0 },
                     {
                         height: '100%',
-                        padding: '1rem',
-                        overflow: 'hidden',
                         opacity: 1,
                         backdropFilter: 'blur(90px)',
                         duration: .7,
                         ease: 'expo.out',
                     }
                 )
-
-                closeModalSelect.addEventListener('click', () => {
-                    gsap.to(modalContentSelect, {
-                        height: '0px',
-                        padding: '0rem',
-                        overflow: 'hidden',
-                        duration: .2,
-                        ease: 'power1.in',
-                        onComplete: () => {
-                            modalSelect.style.display = 'none';
-                        }
-                    });
-                })
                 window.addEventListener('click', event => {
-                    if (event.target == modalSelect) {
-                        gsap.to(modalContentSelect, {
+                    if (event.target == modalUpdate) {
+                        gsap.to(modalContentUpdate, {
                             height: '0px',
-                            padding: '0rem',
-                            overflow: 'hidden',
                             duration: .2,
                             ease: 'power1.in',
                             onComplete: () => {
-                                modalSelect.style.display = 'none';
+                                modalUpdate.style.display = 'none';
                             }
                         });
                     }
                 })
-                select.forEach((select) => {
-                    select.addEventListener('click', () => {
+                closeModalUpdate.forEach((closeModalUpdateBtn) => {
+                    closeModalUpdateBtn.addEventListener('click', () => {
+                        gsap.to(modalContentUpdate, {
+                            height: '0px',
+                            duration: .2,
+                            ease: 'power1.in',
+                            onComplete: () => {
+                                modalUpdate.style.display = 'none';
+                            }
+                        });
+                    })
+                })
+
+                let inputNameUpdate = document.querySelector('.inputNameUpdate')
+                let inputCategoryUpdate = document.querySelector('.inputCategoryUpdate')
+                let inputPriceUpdate = document.querySelector('.inputPriceUpdate')
+
+                inputNameUpdate.value = doc.Nombre
+                inputPriceUpdate.value = doc.Precio
+                inputCategoryUpdate.textContent = doc.Pago
+
+                inputCategoryUpdate.addEventListener('click', () => {
+                    modalSelect.style.display = 'flex'
+
+                    gsap.fromTo(modalContentSelect,
+                        { backdropFilter: 'blur(0px)', height: 0, opacity: 0 },
+                        {
+                            height: '100%',
+                            padding: '1rem',
+                            overflow: 'hidden',
+                            opacity: 1,
+                            backdropFilter: 'blur(90px)',
+                            duration: .7,
+                            ease: 'expo.out',
+                        }
+                    )
+
+                    closeModalSelect.addEventListener('click', () => {
                         gsap.to(modalContentSelect, {
                             height: '0px',
                             padding: '0rem',
@@ -170,60 +151,88 @@ if (resJsonExpense.status === "Data Expenses") {
                                 modalSelect.style.display = 'none';
                             }
                         });
-
-                        inputCategoryUpdate.textContent = select.textContent
-
-                        if (inputNameUpdate.value.length != 0 && inputCategoryUpdate.textContent.length != 0 && inputPriceUpdate.value.length != 0) {
-                            btnUpdate.classList.add('active')
-                            btnUpdate.disabled = false
-                        } else {
-                            btnUpdate.classList.remove('active')
-                            btnUpdate.disabled = true
-                        }
-                    })
-                })
-            })
-
-            btnUpdate.addEventListener('click', async () => {
-                loader.classList.remove('active');
-
-                const resUpdate = await fetch("http://localhost:4000/api/updateExpense", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        Nombre: inputNameUpdate.value,
-                        Precio: inputPriceUpdate.value,
-                        Pago: ((inputCategoryUpdate.textContent).trimStart()).trimEnd(),
-                        FechaRefe: doc.Fecha,
-                        NombreRefe: doc.Nombre,
-                        PrecioRefe: doc.Precio,
-                        PagoRefe: doc.Pago
-                    })
-                })
-
-                const resJsonUpdate = await resUpdate.json()
-
-                if (resJsonUpdate.status == "Update Correct") {
-                    location.reload()
-                } else {
-                    textErrorModal.textContent = resJsonExpense.message
-                    modal.classList.add('active')
-                    closeModal.addEventListener('click', () => {
-                        modal.classList.remove('active')
-                    })
-                    tryAgain.addEventListener('click', () => {
-                        modal.classList.remove('active')
                     })
                     window.addEventListener('click', event => {
-                        if (event.target == modal) {
-                            modal.classList.remove('active')
+                        if (event.target == modalSelect) {
+                            gsap.to(modalContentSelect, {
+                                height: '0px',
+                                padding: '0rem',
+                                overflow: 'hidden',
+                                duration: .2,
+                                ease: 'power1.in',
+                                onComplete: () => {
+                                    modalSelect.style.display = 'none';
+                                }
+                            });
                         }
                     })
-                }
+                    select.forEach((select) => {
+                        select.addEventListener('click', () => {
+                            gsap.to(modalContentSelect, {
+                                height: '0px',
+                                padding: '0rem',
+                                overflow: 'hidden',
+                                duration: .2,
+                                ease: 'power1.in',
+                                onComplete: () => {
+                                    modalSelect.style.display = 'none';
+                                }
+                            });
+
+                            inputCategoryUpdate.textContent = select.textContent
+
+                            if (inputNameUpdate.value.length != 0 && inputCategoryUpdate.textContent.length != 0 && inputPriceUpdate.value.length != 0) {
+                                btnUpdate.classList.add('active')
+                                btnUpdate.disabled = false
+                            } else {
+                                btnUpdate.classList.remove('active')
+                                btnUpdate.disabled = true
+                            }
+                        })
+                    })
+                })
+
+                btnUpdate.addEventListener('click', async () => {
+                    loader.classList.remove('active');
+
+                    const resUpdate = await fetch("http://localhost:4000/api/updateExpense", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            Nombre: inputNameUpdate.value,
+                            Precio: inputPriceUpdate.value,
+                            Pago: ((inputCategoryUpdate.textContent).trimStart()).trimEnd(),
+                            FechaRefe: doc.Fecha,
+                            NombreRefe: doc.Nombre,
+                            PrecioRefe: doc.Precio,
+                            PagoRefe: doc.Pago
+                        })
+                    })
+
+                    const resJsonUpdate = await resUpdate.json()
+
+                    if (resJsonUpdate.status == "Update Correct") {
+                        location.reload()
+                    } else {
+                        textErrorModal.textContent = resJsonExpense.message
+                        modal.classList.add('active')
+                        closeModal.addEventListener('click', () => {
+                            modal.classList.remove('active')
+                        })
+                        tryAgain.addEventListener('click', () => {
+                            modal.classList.remove('active')
+                        })
+                        window.addEventListener('click', event => {
+                            if (event.target == modal) {
+                                modal.classList.remove('active')
+                            }
+                        })
+                    }
+                })
             })
-        })
+        }
     })
 } else {
     textErrorModal.textContent = resJsonExpense.message
@@ -301,7 +310,7 @@ inputNameUpdate.addEventListener('input', () => {
     }
 })
 
-inputCategoryUpdate.addEventListener('input', () => {
+inputPriceUpdate.addEventListener('input', () => {
     if (inputNameUpdate.value.length != 0 && inputCategoryUpdate.textContent.length != 0 && inputPriceUpdate.value.length != 0) {
         btnUpdate.classList.add('active')
         btnUpdate.disabled = false
