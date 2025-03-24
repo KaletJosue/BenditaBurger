@@ -12,7 +12,10 @@
     <title>Administrador | Bendita Burger</title>
     <!-- Iconos -->
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
-    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link rel="stylesheet" type="text/css"
+        href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css" />
+    <link rel="stylesheet" type="text/css"
+        href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/fill/style.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css"
         integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -117,7 +120,7 @@
             <div class="conButton">
                 <h1>Productos Agregados:</h1>
                 <button class="openModalAdd">
-                    <i class="ph-bold ph-plus"></i>
+                    <i class="ph ph-plus"></i>
                     <p>Agregar</p>
                 </button>
             </div>
@@ -133,7 +136,7 @@
                         <th>Estado</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody class="tbody">
                     <tr>
                         <th><img src="/assets/ham2.png" alt=""></th>
                         <th>Whopper</th>
@@ -182,7 +185,7 @@
 
     <div class="modalUpdate">
         <div class="conModalUpdate">
-            <i class="ph-bold ph-x" id="closeModalUpdate"></i>
+            <i class="ph ph-x" id="closeModalUpdate"></i>
             <div class="conInputs">
                 <div class="inputUpdate">
                     <p>Nombre</p>
@@ -214,22 +217,22 @@
 
     <div class="modalAdd">
         <div class="conModalAdd">
-            <i class="ph-bold ph-x" id="closeModalAdd"></i>
+            <i class="ph ph-x" id="closeModalAdd"></i>
             <div class="inModalAdd">
                 <div class="progress">
                     <div class="one">
                         <h3>1</h3>
-                        <i class="ph-bold ph-check"></i>
+                        <i class="ph ph-check"></i>
                     </div>
                     <div class="line1"></div>
                     <div class="two">
                         <h3>2</h3>
-                        <i class="ph-bold ph-check"></i>
+                        <i class="ph ph-check"></i>
                     </div>
                     <div class="line2"></div>
                     <div class="three">
                         <h3>3</h3>
-                        <i class="ph-bold ph-check"></i>
+                        <i class="ph ph-check"></i>
                     </div>
                 </div>
                 <div class="inputs">
@@ -264,17 +267,18 @@
             </div>
         </div>
     </div>
-
+    
     <div class="modal">
         <div class="modalContent">
+            <i class="fa-solid fa-x" id="closeModal"></i>
             <div class="centerModal">
                 <i class="fa-solid fa-triangle-exclamation"></i>
                 <div class="textModal">
                     <h1>Ooops!</h1>
-                    <p class="textErrorModal">No has iniciado sesión de manera correcta</p>
+                    <p class="textErrorModal"></p>
                 </div>
             </div>
-            <button class="tryAgain">Iniciar Sesión</button>
+            <button class="tryAgain">Intentar de Nuevo</button>
         </div>
     </div>
 

@@ -1,6 +1,8 @@
 var loader = document.querySelector('.loader')
 
-loader.classList.add('active')
+window.onload = function () {
+    loader.classList.add('active')
+}
 
 var btnSales = document.querySelectorAll('.btnSales')
 var btnStatistics = document.querySelectorAll('.btnStatistics')

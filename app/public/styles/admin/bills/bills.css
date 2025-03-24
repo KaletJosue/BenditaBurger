@@ -684,15 +684,14 @@ body {
 .modalSelect .conModalSelect {
     backdrop-filter: blur(90px);
     box-shadow: 1px 1px 1rem #0000008a;
-    width: 315px;
+    width: 250px;
     border-radius: 20px;
-    padding: 1rem;
     display: flex;
     flex-direction: column;
     align-items: start;
     justify-content: start;
     opacity: 0;
-    max-height: 250px;
+    max-height: 200px;
 }
 
 .modalAdd .conModalAdd i#closeModalAdd,
@@ -732,7 +731,6 @@ body {
     width: 100%;
     height: 100%;
     gap: .5rem;
-    padding-top: 1rem;
 }
 
 .modalSelect .conModalSelect .inModalSelect .select {
@@ -772,10 +770,9 @@ body {
     color: #eae6f5;
 }
 
-
 .modalSelect .conModalSelect .inModalSelect .select p {
-    font-size: 13px;
-    font-weight: 900;
+    font-size: 12px;
+    font-weight: 500;
     color: var(--color-negro);
 }
 

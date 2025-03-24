@@ -1,6 +1,8 @@
 var loader = document.querySelector('.loader')
 
-loader.classList.add('active')
+window.onload = function () {
+    loader.classList.add('active')
+}
 
 var modal = document.querySelector('.modal')
 var closeModal = document.querySelector('#closeModal')
@@ -139,19 +141,6 @@ if (resJsonExpense.status === "Data Expenses") {
                             ease: 'expo.out',
                         }
                     )
-
-                    closeModalSelect.addEventListener('click', () => {
-                        gsap.to(modalContentSelect, {
-                            height: '0px',
-                            padding: '0rem',
-                            overflow: 'hidden',
-                            duration: .2,
-                            ease: 'power1.in',
-                            onComplete: () => {
-                                modalSelect.style.display = 'none';
-                            }
-                        });
-                    })
                     window.addEventListener('click', event => {
                         if (event.target == modalSelect) {
                             gsap.to(modalContentSelect, {
@@ -567,7 +556,6 @@ if (resJson.data.Photo == "") {
 
 const modalSelect = document.querySelector('.modalSelect');
 const modalContentSelect = document.querySelector('.conModalSelect');
-const closeModalSelect = document.getElementById('closeModalSelect')
 const select = document.querySelectorAll('.select')
 
 inputPay.addEventListener('click', () => {
@@ -585,19 +573,6 @@ inputPay.addEventListener('click', () => {
             ease: 'expo.out',
         }
     )
-
-    closeModalSelect.addEventListener('click', () => {
-        gsap.to(modalContentSelect, {
-            height: '0px',
-            padding: '0rem',
-            overflow: 'hidden',
-            duration: .2,
-            ease: 'power1.in',
-            onComplete: () => {
-                modalSelect.style.display = 'none';
-            }
-        });
-    })
     window.addEventListener('click', event => {
         if (event.target == modalSelect) {
             gsap.to(modalContentSelect, {

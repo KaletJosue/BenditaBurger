@@ -5,8 +5,10 @@ import { method as updateUser} from "../auth/updateUser.js"
 import { method as authorization} from "../middleware/authorization.js"
 import { method as inventory} from "../modules/inventory/inventory.js"
 import { method as expense} from "../modules/expenses/expenses.js"
+import { method as products} from "../modules/products/products.js"
+import { method as category} from "../modules//category/category.js"
 
-import { upload, upload2 } from '../cloudinary/cloudinary.js';
+import { upload, upload2, upload3 } from '../cloudinary/cloudinary.js';
 
 import path, { dirname } from 'path'
 import { fileURLToPath } from "url"
@@ -83,6 +85,8 @@ router.get('/error', (req, res) => {
 router.get('/api/userData', authenticaction.userRol)
 router.get('/api/inventoryData', inventory.inventoryData)
 router.get('/api/expenseData', expense.expenseData)
+router.get('/api/productData', products.productData)
+router.get('/api/categoryData', category.categoryData)
 
 router.put('/api/updateUser', upload.single('profilePic'), updateUser.updateData)
 
@@ -96,5 +100,11 @@ router.post('/api/updateInventory', inventory.updateInventory)
 router.post('/api/updateExpense', expense.updateExpense)
 router.post('/api/addExpense', expense.addExpense)
 router.post('/api/addInventory', upload2.single('inventoryPic'), inventory.addInventory)
+router.post('/api/addProduct', upload3.single('productPic'), products.addProduct)
+router.post('/api/addProduct', upload3.single('productPic'), products.addProduct)
+router.post('/api/products/updateStatus', products.updateStatusProduct)
+router.post('/api/addCategory', category.addCategory)
+router.post('/api/updateCategory', category.updateCategory)
+router.post('/api/deleteCategory', category.deleteCategory)
 
 export default router;

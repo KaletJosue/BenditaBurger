@@ -37,10 +37,22 @@ const storage2 = new CloudinaryStorage({
     },
 });
 
+const storage3 = new CloudinaryStorage({
+    cloudinary: cloudinary.v2,
+    params: async (req, file) => {
+        return {
+            folder: 'product_pictures',
+            allowed_formats: ['jpg', 'png'],
+        };
+    },
+});
+
 const upload = multer({ storage });
 const upload2 = multer({ storage: storage2 });
+const upload3 = multer({ storage: storage3 });
 
 export {
     upload,
-    upload2
+    upload2,
+    upload3
 };

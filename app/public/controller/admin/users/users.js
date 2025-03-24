@@ -1,6 +1,8 @@
 var loader = document.querySelector('.loader')
 
-loader.classList.add('active')
+window.onload = function () {
+    loader.classList.add('active')
+}
 
 const openModalUpdate = document.querySelector('.openModalUpdate');
 const modalUpdate = document.querySelector('.modalUpdate');

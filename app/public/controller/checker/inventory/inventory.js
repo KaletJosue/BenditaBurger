@@ -1,6 +1,8 @@
 var loader = document.querySelector('.loader')
 
-loader.classList.add('active')
+window.onload = function () {
+    loader.classList.add('active')
+}
 
 const openModalDelete = document.querySelector('.openModalDelete');
 const modalDelete = document.querySelector('.modalDetele');

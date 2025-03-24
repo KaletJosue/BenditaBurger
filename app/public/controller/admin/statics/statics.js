@@ -1,6 +1,8 @@
 var loader = document.querySelector('.loader')
 
-loader.classList.add('active')
+window.onload = function () {
+    loader.classList.add('active')
+}
 
 const isLeapYear = (year) => {
     return (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0)

@@ -1,6 +1,8 @@
 var loader = document.querySelector('.loader')
 
-loader.classList.add('active')
+window.onload = function () {
+    loader.classList.add('active')
+}
 
 var btnSales = document.querySelectorAll('.btnSales')
 var btnStatistics = document.querySelectorAll('.btnStatistics')
@@ -37,48 +39,238 @@ btnProducts.forEach(btnProduct => {
     })
 })
 
-const openModalDelete = document.querySelector('.openModalDelete');
-const modalDelete = document.querySelector('.modalDetele');
-const modalContentDelete = document.querySelector('.conModalDelete');
+var modal = document.querySelector('.modal')
+var closeModal = document.querySelector('#closeModal')
+var tryAgain = document.querySelector('.tryAgain')
+var textErrorModal = document.querySelector('.textErrorModal')
 
-const isSmallScreen = window.matchMedia("(height: 550)").matches;
-
-var heightModal = 0
-
-if (isSmallScreen) {
-    heightModal = "100%"
-} else {
-    heightModal = "auto"
-}
-
-openModalDelete.addEventListener('click', () => {
-    modalDelete.style.display = 'flex'
-
-    gsap.fromTo(modalContentDelete,
-        { backdropFilter: 'blur(0px)', height: 0, opacity: 0 },
-        {
-            height: heightModal,
-            opacity: 1,
-            backdropFilter: 'blur(90px)',
-            duration: .7,
-            ease: 'expo.out',
-        }
-    )
-})
-window.addEventListener('click', event => {
-    if (event.target == modalDelete) {
-        gsap.to(modalContentDelete, {
-            height: '0px',
-            duration: .2,
-            ease: 'power1.in',
-            onComplete: () => {
-                modalDelete.style.display = 'none';
-            }
-        });
+const resCategory = await fetch("http://localhost:4000/api/categoryData", {
+    method: "GET",
+    headers: {
+        "Content-Type": "application/json"
     }
 })
 
-const openModalUpdate = document.querySelector('.openModalUpdate');
+const resJsonCategory = await resCategory.json()
+
+if (resJsonCategory.status === "Data Category") {
+    var tbody = document.querySelector('.tbody')
+
+    const categoryData = resJsonCategory.data;
+
+    categoryData.forEach((doc) => {
+        var tr = document.createElement('tr')
+        var nombre = document.createElement('th')
+        var prioridad = document.createElement('th')
+        var fecha = document.createElement('th')
+        var thActions = document.createElement('th')
+        var divActions = document.createElement('div')
+        var editAction = document.createElement('button')
+        var deleteAction = document.createElement('button')
+
+        nombre.textContent = (doc.Nombre).charAt(0).toUpperCase() + (doc.Nombre).slice(1)
+        prioridad.textContent = doc.Prioridad
+        fecha.textContent = doc.Fecha
+        editAction.textContent = "Editar"
+        deleteAction.textContent = "Eliminar"
+
+        divActions.className = "actions"
+
+        tbody.appendChild(tr)
+        tr.appendChild(nombre)
+        tr.appendChild(prioridad)
+        tr.appendChild(fecha)
+        tr.appendChild(thActions)
+        thActions.appendChild(divActions)
+        divActions.appendChild(editAction)
+        divActions.appendChild(deleteAction)
+
+        deleteAction.addEventListener('click', () => {
+            modalDelete.style.display = 'flex'
+
+            gsap.fromTo(modalContentDelete,
+                { backdropFilter: 'blur(0px)', height: 0, opacity: 0 },
+                {
+                    height: 'auto',
+                    opacity: 1,
+                    backdropFilter: 'blur(90px)',
+                    duration: .7,
+                    ease: 'expo.out',
+                }
+            )
+
+            window.addEventListener('click', event => {
+                if (event.target == modalDelete) {
+                    gsap.to(modalContentDelete, {
+                        height: '0px',
+                        duration: .2,
+                        ease: 'power1.in',
+                        onComplete: () => {
+                            modalDelete.style.display = 'none';
+                        }
+                    });
+                }
+            })
+
+            let deleteName = document.querySelector('.deleteName')
+            let deletePriority = document.querySelector('.deletePriority')
+            let deleteFecha = document.querySelector('.deleteFecha')
+
+            let sendDelete = document.querySelector('.sendDelete')
+
+            deleteName.textContent = (doc.Nombre).charAt(0).toUpperCase() + (doc.Nombre).slice(1)
+            deletePriority.textContent = doc.Prioridad
+            deleteFecha.textContent = doc.Fecha
+
+            sendDelete.addEventListener('click', async () => {
+                loader.classList.remove('active')
+
+                const resDeleteCategory = await fetch("http://localhost:4000/api/deleteCategory", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        Name: doc.Nombre,
+                        Priority: doc.Prioridad,
+                        Fecha: doc.Fecha,
+                    })
+                })
+
+                const resJsonDeleteCategory = await resDeleteCategory.json()
+
+                if (resJsonDeleteCategory.status == "Product Delete") {
+                    location.reload()
+                } else {
+                    loader.classList.add('active')
+                    textErrorModal.textContent = resJsonDeleteCategory.message
+                    modal.classList.add('active')
+                    closeModal.addEventListener('click', () => {
+                        modal.classList.remove('active')
+                    })
+                    tryAgain.addEventListener('click', () => {
+                        modal.classList.remove('active')
+                    })
+                    window.addEventListener('click', event => {
+                        if (event.target == modal) {
+                            modal.classList.remove('active')
+                        }
+                    })
+                }
+            })
+
+        })
+
+        editAction.addEventListener('click', () => {
+            modalUpdate.style.display = 'flex'
+
+            gsap.fromTo(modalContentUpdate,
+                { backdropFilter: 'blur(0px)', height: 0, opacity: 0 },
+                {
+                    height: 'auto',
+                    opacity: 1,
+                    backdropFilter: 'blur(90px)',
+                    duration: .7,
+                    ease: 'expo.out',
+                }
+            )
+            window.addEventListener('click', event => {
+                if (event.target == modalUpdate) {
+                    gsap.to(modalContentUpdate, {
+                        height: '0px',
+                        duration: .2,
+                        ease: 'power1.in',
+                        onComplete: () => {
+                            modalUpdate.style.display = 'none';
+                        }
+                    });
+                }
+            })
+            closeModalUpdate.addEventListener('click', () => {
+                gsap.to(modalContentUpdate, {
+                    height: '0px',
+                    duration: .2,
+                    ease: 'power1.in',
+                    onComplete: () => {
+                        modalUpdate.style.display = 'none';
+                    }
+                });
+            })
+
+            let inputNameUpdate = document.querySelector('.inputNameUpdate')
+            let inputCategoryUpdate = document.querySelector('.inputCategoryUpdate')
+
+            let btnUpdate = document.querySelector('.btnUpdate')
+
+            inputNameUpdate.value = (doc.Nombre).charAt(0).toUpperCase() + (doc.Nombre).slice(1)
+            inputCategoryUpdate.value = doc.Prioridad
+
+            btnUpdate.addEventListener('click', async () => {
+                loader.classList.remove('active')
+
+                let fecha = new Date();
+                let dia = String(fecha.getDate()).padStart(2, '0');
+                const mes = String(fecha.getMonth() + 1).padStart(2, '0');
+                let anio = String(fecha.getFullYear()).slice(-2);
+
+                let fechaActual = `${dia} / ${mes} / ${anio}`;
+
+                const resUpdateCategory = await fetch("http://localhost:4000/api/updateCategory", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        Name: inputNameUpdate.value,
+                        Priority: inputCategoryUpdate.value,
+                        NameRefe: doc.Nombre,
+                        PriorityRefe: doc.Prioridad,
+                        Fecha: fechaActual,
+                    })
+                })
+
+                const resJsonCategory = await resUpdateCategory.json()
+
+                if (resJsonCategory.status == "Update Correct") {
+                    location.reload()
+                } else {
+                    loader.classList.add('active')
+                    textErrorModal.textContent = resJsonCategory.message
+                    modal.classList.add('active')
+                    closeModal.addEventListener('click', () => {
+                        modal.classList.remove('active')
+                    })
+                    tryAgain.addEventListener('click', () => {
+                        modal.classList.remove('active')
+                    })
+                    window.addEventListener('click', event => {
+                        if (event.target == modal) {
+                            modal.classList.remove('active')
+                        }
+                    })
+                }
+            })
+        })
+    })
+} else {
+    textErrorModal.textContent = resJsonExpense.message
+    modal.classList.add('active')
+    closeModal.addEventListener('click', () => {
+        modal.classList.remove('active')
+    })
+    tryAgain.addEventListener('click', () => {
+        modal.classList.remove('active')
+    })
+    window.addEventListener('click', event => {
+        if (event.target == modal) {
+            modal.classList.remove('active')
+        }
+    })
+}
+
+const modalDelete = document.querySelector('.modalDetele');
+const modalContentDelete = document.querySelector('.conModalDelete');
+
 const modalUpdate = document.querySelector('.modalUpdate');
 const modalContentUpdate = document.querySelector('.conModalUpdate');
 const closeModalUpdate = document.getElementById('closeModalUpdate')
@@ -108,43 +300,6 @@ inputCategoryUpdate.addEventListener('input', () => {
     }
 })
 
-openModalUpdate.addEventListener('click', () => {
-    modalUpdate.style.display = 'flex'
-
-    gsap.fromTo(modalContentUpdate,
-        { backdropFilter: 'blur(0px)', height: 0, opacity: 0 },
-        {
-            height: 'auto',
-            opacity: 1,
-            backdropFilter: 'blur(90px)',
-            duration: .7,
-            ease: 'expo.out',
-        }
-    )
-    window.addEventListener('click', event => {
-        if (event.target == modalUpdate) {
-            gsap.to(modalContentUpdate, {
-                height: '0px',
-                duration: .2,
-                ease: 'power1.in',
-                onComplete: () => {
-                    modalUpdate.style.display = 'none';
-                }
-            });
-        }
-    })
-    closeModalUpdate.addEventListener('click', () => {
-        gsap.to(modalContentUpdate, {
-            height: '0px',
-            duration: .2,
-            ease: 'power1.in',
-            onComplete: () => {
-                modalUpdate.style.display = 'none';
-            }
-        });
-    })
-})
-
 var inputName = document.querySelector('.inputName')
 var inputPriority = document.querySelector('.inputPriority')
 
@@ -152,6 +307,51 @@ var one = document.querySelector('.one')
 
 var cancelAdd = document.querySelector('.cancelAdd')
 var saveAdd = document.querySelector('.saveAdd')
+
+const today = new Date();
+
+const day = String(today.getDate()).padStart(2, '0');
+const month = String(today.getMonth() + 1).padStart(2, '0');
+const year = String(today.getFullYear()).slice(-2);
+
+var fecha = `${day} / ${month} / ${year}`;
+
+saveAdd.addEventListener('click', async () => {
+    loader.classList.remove('active')
+
+    const res = await fetch("http://localhost:4000/api/addCategory", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            Name: inputName.value,
+            Priority: inputPriority.value,
+            Fecha: fecha,
+        })
+    })
+
+    const resJson = await res.json()
+
+    if (resJson.status == "Add Category Correct") {
+        location.reload()
+    } else if (resJson.status) {
+        loader.classList.add('active')
+        textErrorModal.textContent = resJson.message
+        modal.classList.add('active')
+        closeModal.addEventListener('click', () => {
+            modal.classList.remove('active')
+        })
+        tryAgain.addEventListener('click', () => {
+            modal.classList.remove('active')
+        })
+        window.addEventListener('click', event => {
+            if (event.target == modal) {
+                modal.classList.remove('active')
+            }
+        })
+    }
+})
 
 cancelAdd.addEventListener('click', () => {
     gsap.to(modalContentAdd, {

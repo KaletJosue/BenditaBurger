@@ -1,7 +1,8 @@
-
 var loader = document.querySelector('.loader')
 
-loader.classList.add('active')
+window.onload = function () {
+    loader.classList.add('active')
+}
 
 const openModalFactura = document.querySelector('.openModalFactura');
 const modalFactura = document.querySelector('.modalFactura');
