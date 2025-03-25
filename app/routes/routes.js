@@ -103,6 +103,8 @@ router.post('/api/addInventory', upload2.single('inventoryPic'), inventory.addIn
 router.post('/api/addProduct', upload3.single('productPic'), products.addProduct)
 router.post('/api/addProduct', upload3.single('productPic'), products.addProduct)
 router.post('/api/products/updateStatus', products.updateStatusProduct)
+router.post('/api/updateProduct', products.updateProduct)
+router.post('/api/deleteProduct', products.deleteProduct)
 router.post('/api/addCategory', category.addCategory)
 router.post('/api/updateCategory', category.updateCategory)
 router.post('/api/deleteCategory', category.deleteCategory)

@@ -1416,13 +1416,13 @@ body {
     }
 
     .modalDetele .conModalDelete {
-        padding: 1rem;
+        padding: 2rem 1rem 1rem 1rem;
     }
 
     .modalDetele .conModalDelete .inModalDelete {
         display: flex;
         flex-direction: column;
-        gap: 0;
+        gap: 1rem;
         text-align: center;
     }
 

@@ -4,12 +4,6 @@ window.onload = function () {
     loader.classList.add('active')
 }
 
-var btnEstatus = document.querySelector('.btnEstatus')
-
-btnEstatus.addEventListener('click', () => {
-    btnEstatus.classList.toggle('active')
-})
-
 var btnSales = document.querySelectorAll('.btnSales')
 var btnStatistics = document.querySelectorAll('.btnStatistics')
 var btnBills = document.querySelectorAll('.btnBills')
@@ -125,8 +119,6 @@ if (resProductJson.status == "Data Products") {
         divActions.appendChild(deleteActions)
 
         divStatus.addEventListener('click', async () => {
-            loader.classList.remove('active')
-
             divStatus.classList.toggle('active')
 
             if (divStatus.classList == "btnEstatus active") {
@@ -140,7 +132,7 @@ if (resProductJson.status == "Data Products") {
                         Nombre: doc.Nombre
                     })
                 })
-                
+
                 const resJsonStatus = await resStatus.json()
 
                 if (resJsonStatus.status == "Update Correct") {
@@ -172,7 +164,7 @@ if (resProductJson.status == "Data Products") {
                         Nombre: doc.Nombre
                     })
                 })
-                
+
                 const resJsonStatus = await resStatus.json()
 
                 if (resJsonStatus.status == "Update Correct") {
@@ -194,6 +186,177 @@ if (resProductJson.status == "Data Products") {
                     });
                 }
             }
+        })
+
+        editActions.addEventListener('click', () => {
+            modalUpdate.style.display = 'flex'
+
+            gsap.fromTo(modalContentUpdate,
+                { backdropFilter: 'blur(0px)', height: 0, opacity: 0 },
+                {
+                    height: '100%',
+                    opacity: 1,
+                    backdropFilter: 'blur(90px)',
+                    duration: .7,
+                    ease: 'expo.out',
+                }
+            )
+            window.addEventListener('click', event => {
+                if (event.target == modalUpdate) {
+                    gsap.to(modalContentUpdate, {
+                        height: '0px',
+                        duration: .2,
+                        ease: 'power1.in',
+                        onComplete: () => {
+                            modalUpdate.style.display = 'none';
+                        }
+                    });
+                }
+            })
+            closeModalUpdate.forEach((closeModalUpdateBtn) => {
+                closeModalUpdateBtn.addEventListener('click', () => {
+                    gsap.to(modalContentUpdate, {
+                        height: '0px',
+                        duration: .2,
+                        ease: 'power1.in',
+                        onComplete: () => {
+                            modalUpdate.style.display = 'none';
+                        }
+                    });
+                })
+            })
+
+            let inputNameUpdate = document.querySelector('.inputNameUpdate')
+            let inputCategoryUpdate = document.querySelector('.inputCategoryUpdate')
+            let inputPriceUpdate = document.querySelector('.inputPriceUpdate')
+            let inputDescriptionUpdate = document.querySelector('.inputDescriptionUpdate')
+            let inputDiscountUpdate = document.querySelector('.inputDiscountUpdate')
+
+            let btnUpdate = document.querySelector('.btnUpdate')
+
+            inputNameUpdate.value = doc.Nombre
+            inputCategoryUpdate.value = doc.Categoria
+            inputPriceUpdate.value = doc.Precio
+            inputDescriptionUpdate.value = doc.Descripcion
+            inputDiscountUpdate.value = doc.Descuento
+
+            btnUpdate.addEventListener('click', async () => {
+                loader.classList.remove('active')
+
+                const resUpdate = await fetch("http://localhost:4000/api/updateProduct", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        Name: inputNameUpdate.value,
+                        Category: inputCategoryUpdate.value,
+                        Price: inputPriceUpdate.value,
+                        Description: inputDescriptionUpdate.value,
+                        Discount: inputDiscountUpdate.value,
+                        NameRefe: doc.Nombre
+                    })
+                })
+
+                const resJsonUpdate = await resUpdate.json()
+
+                if (resJsonUpdate.status == "Update Correct") {
+                    location.reload()
+                } else {
+                    loader.classList.add('active')
+                    textErrorModal.textContent = resJsonUpdate.message;
+                    modal.classList.add('active');
+                    closeModal.addEventListener('click', () => {
+                        modal.classList.remove('active');
+                    });
+                    tryAgain.addEventListener('click', () => {
+                        modal.classList.remove('active');
+                    });
+                    window.addEventListener('click', event => {
+                        if (event.target == modal) {
+                            modal.classList.remove('active');
+                        }
+                    });
+                }
+            })
+        })
+
+        deleteActions.addEventListener('click', () => {
+            modalDelete.style.display = 'flex'
+
+            gsap.fromTo(modalContentDelete,
+                { backdropFilter: 'blur(0px)', height: 0, opacity: 0 },
+                {
+                    height: 'auto',
+                    opacity: 1,
+                    backdropFilter: 'blur(90px)',
+                    duration: .7,
+                    ease: 'expo.out',
+                }
+            )
+
+            window.addEventListener('click', event => {
+                if (event.target == modalDelete) {
+                    gsap.to(modalContentDelete, {
+                        height: '0px',
+                        duration: .2,
+                        ease: 'power1.in',
+                        onComplete: () => {
+                            modalDelete.style.display = 'none';
+                        }
+                    });
+                }
+            })
+
+            let deleteImg = document.querySelector('.deleteImg')
+            let deleteName = document.querySelector('.deleteName')
+            let deleteCategory = document.querySelector('.deleteCategory')
+            let deletePrice = document.querySelector('.deletePrice')
+
+            deleteImg.src = doc.Foto
+            deleteName.textContent = doc.Nombre
+            deleteCategory.textContent = doc.Categoria
+            deletePrice.textContent = doc.Precio
+
+            let deleteButton = document.querySelector('.deleteButton')
+
+            deleteButton.addEventListener('click', async () => {
+                loader.classList.remove('active')
+
+                const resDelete = await fetch("http://localhost:4000/api/deleteProduct", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        Nombre: deleteName.textContent,
+                        Categoria: deleteCategory.textContent,
+                        Precio: deletePrice.textContent,
+                        Foto: doc.Foto
+                    })
+                })
+
+                const resJsonDelete = await resDelete.json()
+
+                if (resJsonDelete.status == "Product Delete") {
+                    location.reload()
+                } else {
+                    loader.classList.add('active')
+                    textErrorModal.textContent = resJsonDelete.message;
+                    modal.classList.add('active');
+                    closeModal.addEventListener('click', () => {
+                        modal.classList.remove('active');
+                    });
+                    tryAgain.addEventListener('click', () => {
+                        modal.classList.remove('active');
+                    });
+                    window.addEventListener('click', event => {
+                        if (event.target == modal) {
+                            modal.classList.remove('active');
+                        }
+                    });
+                }
+            })
         })
     })
 
@@ -217,33 +380,6 @@ const openModalDelete = document.querySelector('.openModalDelete');
 const modalDelete = document.querySelector('.modalDetele');
 const modalContentDelete = document.querySelector('.conModalDelete');
 
-openModalDelete.addEventListener('click', () => {
-    modalDelete.style.display = 'flex'
-
-    gsap.fromTo(modalContentDelete,
-        { backdropFilter: 'blur(0px)', height: 0, opacity: 0 },
-        {
-            height: 'auto',
-            opacity: 1,
-            backdropFilter: 'blur(90px)',
-            duration: .7,
-            ease: 'expo.out',
-        }
-    )
-})
-window.addEventListener('click', event => {
-    if (event.target == modalDelete) {
-        gsap.to(modalContentDelete, {
-            height: '0px',
-            duration: .2,
-            ease: 'power1.in',
-            onComplete: () => {
-                modalDelete.style.display = 'none';
-            }
-        });
-    }
-})
-
 const openModalUpdate = document.querySelector('.openModalUpdate');
 const modalUpdate = document.querySelector('.modalUpdate');
 const modalContentUpdate = document.querySelector('.conModalUpdate');
@@ -257,18 +393,8 @@ var inputDiscountUpdate = document.querySelector('.inputDiscountUpdate')
 
 var btnUpdate = document.querySelector('.btnUpdate')
 
-inputDiscountUpdate.addEventListener('input', () => {
-    if (inputNameUpdate.value.length != 0 && inputCategoryUpdate.value.length != 0 && inputPriceUpdate.value.length != 0 && inputDescriptionUpdate.value.length != 0 && inputDiscountUpdate.value.length != 0) {
-        btnUpdate.classList.add('active')
-        btnUpdate.disabled = false
-    } else {
-        btnUpdate.classList.remove('active')
-        btnUpdate.disabled = true
-    }
-})
-
 inputDescriptionUpdate.addEventListener('input', () => {
-    if (inputNameUpdate.value.length != 0 && inputCategoryUpdate.value.length != 0 && inputPriceUpdate.value.length != 0 && inputDescriptionUpdate.value.length != 0 && inputDiscountUpdate.value.length != 0) {
+    if (inputNameUpdate.value.length != 0 && inputCategoryUpdate.value.length != 0 && inputPriceUpdate.value.length != 0 && inputDescriptionUpdate.value.length != 0) {
         btnUpdate.classList.add('active')
         btnUpdate.disabled = false
     } else {
@@ -278,7 +404,7 @@ inputDescriptionUpdate.addEventListener('input', () => {
 })
 
 inputNameUpdate.addEventListener('input', () => {
-    if (inputNameUpdate.value.length != 0 && inputCategoryUpdate.value.length != 0 && inputPriceUpdate.value.length != 0 && inputDescriptionUpdate.value.length != 0 && inputDiscountUpdate.value.length != 0) {
+    if (inputNameUpdate.value.length != 0 && inputCategoryUpdate.value.length != 0 && inputPriceUpdate.value.length != 0 && inputDescriptionUpdate.value.length != 0) {
         btnUpdate.classList.add('active')
         btnUpdate.disabled = false
     } else {
@@ -288,7 +414,7 @@ inputNameUpdate.addEventListener('input', () => {
 })
 
 inputCategoryUpdate.addEventListener('input', () => {
-    if (inputNameUpdate.value.length != 0 && inputCategoryUpdate.value.length != 0 && inputPriceUpdate.value.length != 0 && inputDescriptionUpdate.value.length != 0 && inputDiscountUpdate.value.length != 0) {
+    if (inputNameUpdate.value.length != 0 && inputCategoryUpdate.value.length != 0 && inputPriceUpdate.value.length != 0 && inputDescriptionUpdate.value.length != 0) {
         btnUpdate.classList.add('active')
         btnUpdate.disabled = false
     } else {
@@ -298,52 +424,13 @@ inputCategoryUpdate.addEventListener('input', () => {
 })
 
 inputPriceUpdate.addEventListener('input', () => {
-    if (inputNameUpdate.value.length != 0 && inputCategoryUpdate.value.length != 0 && inputPriceUpdate.value.length != 0 && inputDescriptionUpdate.value.length != 0 && inputDiscountUpdate.value.length != 0) {
+    if (inputNameUpdate.value.length != 0 && inputCategoryUpdate.value.length != 0 && inputPriceUpdate.value.length != 0 && inputDescriptionUpdate.value.length != 0) {
         btnUpdate.classList.add('active')
         btnUpdate.disabled = false
     } else {
         btnUpdate.classList.remove('active')
         btnUpdate.disabled = true
     }
-})
-
-openModalUpdate.addEventListener('click', () => {
-    modalUpdate.style.display = 'flex'
-
-    gsap.fromTo(modalContentUpdate,
-        { backdropFilter: 'blur(0px)', height: 0, opacity: 0 },
-        {
-            height: '100%',
-            opacity: 1,
-            backdropFilter: 'blur(90px)',
-            duration: .7,
-            ease: 'expo.out',
-        }
-    )
-    window.addEventListener('click', event => {
-        if (event.target == modalUpdate) {
-            gsap.to(modalContentUpdate, {
-                height: '0px',
-                duration: .2,
-                ease: 'power1.in',
-                onComplete: () => {
-                    modalUpdate.style.display = 'none';
-                }
-            });
-        }
-    })
-    closeModalUpdate.forEach((closeModalUpdateBtn) => {
-        closeModalUpdateBtn.addEventListener('click', () => {
-            gsap.to(modalContentUpdate, {
-                height: '0px',
-                duration: .2,
-                ease: 'power1.in',
-                onComplete: () => {
-                    modalUpdate.style.display = 'none';
-                }
-            });
-        })
-    })
 })
 
 var inputName = document.querySelector('.inputName')

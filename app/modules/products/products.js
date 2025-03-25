@@ -94,8 +94,81 @@ async function updateStatusProduct (req, res) {
     }
 }
 
+async function updateProduct (req, res) {
+    if (req.headers.cookie) {
+        const name = req.body.Name;
+        const category = req.body.Category;
+        const price = req.body.Price;
+        const discount = req.body.Discount;
+        const description = req.body.Description;
+        const nameRefe = req.body.NameRefe
+
+        const db = await conectarConMongoDB();
+        const productsCollection = db.collection('productos');
+        const categoryCollection = db.collection('categorias');
+
+        const revisarProduct = await productsCollection.findOne({ Nombre: name.toLowerCase() });
+        const revisarCategory = await categoryCollection.findOne({ Nombre: (category).toLowerCase() });
+
+        if (revisarCategory) {
+            if (revisarProduct) {
+                return res.status(400).send({ status: "Error Product", message: "Este producto ya esta agregado" });
+            } else {
+    
+                const filtro = {
+                    Nombre: nameRefe,
+                };
+                const newProduct = {
+                    $set: {
+                        Nombre: name.toLowerCase(),
+                        Categoria: category,
+                        Precio: price,
+                        Descuento: discount || '',
+                        Descripcion: description,
+                    }
+                }
+    
+                const resultado = await productsCollection.updateOne(filtro, newProduct);
+    
+                return res.status(200).send({ status: "Update Correct", message: "Producto Actualizado corretamente" });
+    
+            }
+        } else {
+            return res.status(400).send({ status: "Error Category", message: "Este categoria no existe" });
+        }
+
+    } else {
+        return res.status(400).send({ status: "Error Login", message: "No has iniciado sesión bien" });
+    }
+}
+
+async function deleteProduct(req, res) {
+    if (req.headers.cookie) {
+        const name = req.body.Nombre
+        const category = req.body.Categoria
+        const price = req.body.Precio
+        const photo = req.body.Foto
+
+        const db = await conectarConMongoDB()
+        const productsCollection = db.collection('productos')
+
+        const resultado = await productsCollection.deleteOne({
+            Nombre: name.toLowerCase(),
+            Categoria: category,
+            Precio: price,
+            Foto: photo
+        });
+
+        return res.status(200).send({ status: "Product Delete", message: "Producto Eliminado correctamente" })
+    } else {
+        return res.status(400).send({ status: "Error Login", message: "No has iniciado sesión correctamente" });
+    }
+}
+
 export const method = {
     addProduct,
     productData,
-    updateStatusProduct
+    updateStatusProduct,
+    updateProduct,
+    deleteProduct
 }
