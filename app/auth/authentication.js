@@ -26,32 +26,34 @@ async function signIn(req, res) {
 
                     if (passwordCorrect) {
 
-                        if (revisarUsuario.Verificado === true) {
-                            const token = jsonwebtoken.sign(
-                                { user: revisarUsuario.Correo },
-                                process.env.JWT_SECRET,
-                                { expiresIn: process.env.JWT_EXPIRATION }
-                            )
-
-                            const cookieOption = {
-                                expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRES * 24 * 60 * 60 * 1000),
-                                path: "/"
-                            }
-
-                            if (revisarUsuario.Rol == "Administrador" || revisarUsuario.Rol == "SuperAdministrador") {
-                                res.cookie('jwt', token, cookieOption)
-                                res.status(200).send({ status: "Login Correct", message: "Tu usuario ha sido logueado", redirect: "/admin" });
-                            } else if (revisarUsuario.Rol == "Cajero") {
-                                res.cookie('jwt', token, cookieOption)
-                                res.status(200).send({ status: "Login Correct", message: "Tu usuario ha sido logueado", redirect: "/checker" });
-                            } else if (revisarUsuario.Rol == "Usuario") {
-                                res.cookie('jwt', token, cookieOption)
-                                res.status(200).send({ status: "Login Correct", message: "Tu usuario ha sido logueado", redirect: "/user" });
-                            } else if (revisarUsuario.Rol == "") {
-                                return res.status(400).send({ status: "Not Authorization", message: "Parece que no tienes acceso a Bendita Burger, comunicate a este numero (322 964 56 00)" });
+                        if (revisarUsuario.Estado == true) {
+                            if (revisarUsuario.Verificado === true) {
+                                const token = jsonwebtoken.sign(
+                                    { user: revisarUsuario.Correo },
+                                    process.env.JWT_SECRET,
+                                    { expiresIn: process.env.JWT_EXPIRATION }
+                                )
+    
+                                const cookieOption = {
+                                    expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRES * 24 * 60 * 60 * 1000),
+                                    path: "/"
+                                }
+    
+                                if (revisarUsuario.Rol == "Administrador" || revisarUsuario.Rol == "SuperAdministrador") {
+                                    res.cookie('jwt', token, cookieOption)
+                                    res.status(200).send({ status: "Login Correct", message: "Tu usuario ha sido logueado", redirect: "/admin" });
+                                } else if (revisarUsuario.Rol == "Cajero") {
+                                    res.cookie('jwt', token, cookieOption)
+                                    res.status(200).send({ status: "Login Correct", message: "Tu usuario ha sido logueado", redirect: "/checker" });
+                                } else if (revisarUsuario.Rol == "Usuario") {
+                                    res.cookie('jwt', token, cookieOption)
+                                    res.status(200).send({ status: "Login Correct", message: "Tu usuario ha sido logueado", redirect: "/user" });
+                                }
+                            } else {
+                                return res.status(400).send({ status: "Error Verified", message: "No has verificado tu correo electronico revisalo (no olvides revisar en spam)" })
                             }
                         } else {
-                            return res.status(400).send({ status: "Error Verified", message: "No has verificado tu correo electronico revisalo (no olvides revisar en spam)" })
+                            return res.status(400).send({ status: "Not Authorization", message: "Parece que no tienes acceso a Bendita Burger, comunicate a este numero (322 964 56 00)" });
                         }
 
                     } else {
@@ -126,7 +128,7 @@ async function deleteUser(req, res) {
 
         const revisarUsuario = await usuariosCollection.findOne({ Correo: decodificada.user })
 
-        const resultado = await usuariosCollection.deleteOne({Correo: revisarUsuario.Correo});
+        const resultado = await usuariosCollection.deleteOne({ Correo: revisarUsuario.Correo });
 
         return res.status(200).send({ status: "User Delete", message: "Tu usuario se ha eliminado correctamente", redirect: '/' })
 
@@ -163,7 +165,8 @@ async function signUp(req, res) {
                             Telefono: "",
                             Rol: "Usuario",
                             Foto: "",
-                            Verificado: false
+                            Verificado: false,
+                            Estado: true,
                         }
 
                         function generarCodigoAleatorio() {

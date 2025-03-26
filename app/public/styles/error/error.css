@@ -152,3 +152,40 @@ html::-webkit-scrollbar {
     transform: translateX(-10px);
     background-color: transparent;
 }
+
+@media (width < 1000px) {
+    .loader {
+        display: flex;
+        flex-direction: column-reverse;
+        gap: 4rem;
+    }
+
+    .loader .icon {
+        transform: scale(.4);
+        margin-left: 3rem;
+    }
+
+    .modal {
+        padding: 1rem;
+    }
+}
+
+@media (width < 450px) {
+    .modal .modalContent {
+        flex-direction: column;
+    }
+
+    .modal .modalContent .centerModal {
+        padding: 0;
+        flex-direction: column;
+        text-align: center;
+        padding: 0 1rem;
+    }
+
+    .modal .modalContent button {
+        position: relative;
+        top: 0;
+        left: 0;
+        margin-top: 1rem;
+    }
+}

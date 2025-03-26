@@ -88,6 +88,26 @@ async function userToken(req, res, next) {
     }
 }
 
+async function revisarStatus(req, res, next) {
+    if (req.headers.cookie) {
+        const cookieJWT = req.headers.cookie.split("; ").find(cookie => cookie.startsWith("jwt=")).slice(4)
+        const decodificada = jsonwebtoken.verify(cookieJWT, process.env.JWT_SECRET)
+
+        const db = await conectarConMongoDB()
+        const usuariosCollection = db.collection('usuarios')
+
+        const revisarUsuario = await usuariosCollection.findOne({ Correo: decodificada.user })
+
+        if (revisarUsuario.Estado === true) {
+            return next()
+        } else {
+            return res.status(400).redirect('/error?message=Parece que no tienes acceso a Bendita Burger, comunicate a este numero (322 964 56 00)');
+        }
+    } else {
+        return res.status(400).redirect('/error?message=No iniciaste sesion de manera correcta');
+    }
+}
+
 async function revisarVerified(req, res, next) {
     if (req.headers.cookie) {
         const cookieJWT = req.headers.cookie.split("; ").find(cookie => cookie.startsWith("jwt=")).slice(4)
@@ -131,5 +151,6 @@ export const method = {
     soloAdmin,
     userToken,
     revisarVerified,
-    soloSuperAdmin
+    soloSuperAdmin,
+    revisarStatus
 }
