@@ -13,59 +13,63 @@ async function signIn(req, res) {
     if (email) {
         if (password) {
 
-            try {
+            if (password.length >= 8) {
+                try {
 
-                const db = await conectarConMongoDB()
-                const usuariosCollection = db.collection('usuarios')
-
-                const revisarUsuario = await usuariosCollection.findOne({ Correo: email })
-
-                if (revisarUsuario) {
-
-                    const passwordCorrect = await bcryptsjs.compare(password, revisarUsuario.Contraseña)
-
-                    if (passwordCorrect) {
-
-                        if (revisarUsuario.Estado == true) {
-                            if (revisarUsuario.Verificado === true) {
-                                const token = jsonwebtoken.sign(
-                                    { user: revisarUsuario.Correo },
-                                    process.env.JWT_SECRET,
-                                    { expiresIn: process.env.JWT_EXPIRATION }
-                                )
+                    const db = await conectarConMongoDB()
+                    const usuariosCollection = db.collection('usuarios')
     
-                                const cookieOption = {
-                                    expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRES * 24 * 60 * 60 * 1000),
-                                    path: "/"
-                                }
+                    const revisarUsuario = await usuariosCollection.findOne({ Correo: email })
     
-                                if (revisarUsuario.Rol == "Administrador" || revisarUsuario.Rol == "SuperAdministrador") {
-                                    res.cookie('jwt', token, cookieOption)
-                                    res.status(200).send({ status: "Login Correct", message: "Tu usuario ha sido logueado", redirect: "/admin" });
-                                } else if (revisarUsuario.Rol == "Cajero") {
-                                    res.cookie('jwt', token, cookieOption)
-                                    res.status(200).send({ status: "Login Correct", message: "Tu usuario ha sido logueado", redirect: "/checker" });
-                                } else if (revisarUsuario.Rol == "Usuario") {
-                                    res.cookie('jwt', token, cookieOption)
-                                    res.status(200).send({ status: "Login Correct", message: "Tu usuario ha sido logueado", redirect: "/user" });
+                    if (revisarUsuario) {
+    
+                        const passwordCorrect = await bcryptsjs.compare(password, revisarUsuario.Contraseña)
+    
+                        if (passwordCorrect) {
+    
+                            if (revisarUsuario.Estado == true) {
+                                if (revisarUsuario.Verificado === true) {
+                                    const token = jsonwebtoken.sign(
+                                        { user: revisarUsuario.Correo },
+                                        process.env.JWT_SECRET,
+                                        { expiresIn: process.env.JWT_EXPIRATION }
+                                    )
+        
+                                    const cookieOption = {
+                                        expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRES * 24 * 60 * 60 * 1000),
+                                        path: "/"
+                                    }
+        
+                                    if (revisarUsuario.Rol == "Administrador" || revisarUsuario.Rol == "SuperAdministrador") {
+                                        res.cookie('jwt', token, cookieOption)
+                                        res.status(200).send({ status: "Login Correct", message: "Tu usuario ha sido logueado", redirect: "/admin" });
+                                    } else if (revisarUsuario.Rol == "Cajero") {
+                                        res.cookie('jwt', token, cookieOption)
+                                        res.status(200).send({ status: "Login Correct", message: "Tu usuario ha sido logueado", redirect: "/checker" });
+                                    } else if (revisarUsuario.Rol == "Usuario") {
+                                        res.cookie('jwt', token, cookieOption)
+                                        res.status(200).send({ status: "Login Correct", message: "Tu usuario ha sido logueado", redirect: "/user" });
+                                    }
+                                } else {
+                                    return res.status(400).send({ status: "Error Verified", message: "No has verificado tu correo electronico revisalo (no olvides revisar en spam)" })
                                 }
                             } else {
-                                return res.status(400).send({ status: "Error Verified", message: "No has verificado tu correo electronico revisalo (no olvides revisar en spam)" })
+                                return res.status(400).send({ status: "Not Authorization", message: "Parece que no tienes acceso a Bendita Burger, comunicate a este numero (322 964 56 00)" });
                             }
+    
                         } else {
-                            return res.status(400).send({ status: "Not Authorization", message: "Parece que no tienes acceso a Bendita Burger, comunicate a este numero (322 964 56 00)" });
+                            return res.status(400).send({ status: "Error Credentials", message: "Correo o contraseña incorrectos" })
                         }
-
+    
                     } else {
-                        return res.status(400).send({ status: "Error Credentials", message: "Correo o contraseña incorrectos" })
+                        return res.status(400).send({ status: "Error Credentials", message: "Correo o contraseña incorrectos" });
                     }
-
-                } else {
-                    return res.status(400).send({ status: "Error Credentials", message: "Correo o contraseña incorrectos" });
+    
+                } catch (error) {
+                    return res.status(500).send({ status: 'Error', message: `Tuvimos problemas, intenta iniciar sesion mas tarde` });
                 }
-
-            } catch (error) {
-                return res.status(500).send({ status: 'Error', message: `Tuvimos problemas, intenta iniciar sesion mas tarde` });
+            } else {
+                return res.status(400).send({ status: "Error Name", message: "Tu contraseña debe ser de al menos 8 caracteres" })
             }
 
         } else {
