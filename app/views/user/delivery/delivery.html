@@ -16,6 +16,8 @@
         href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css" />
     <link rel="stylesheet" type="text/css"
         href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/fill/style.css" />
+        <link rel="stylesheet" type="text/css"
+        href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/bold/style.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css"
         integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -90,7 +92,7 @@
     </div>
 
     <div class="search">
-        <input type="text" placeholder="Busca por Cliente, Monto, Estado...">
+        <input type="text" placeholder="Busca por Fecha, Monto, Estado...">
     </div>
 
     <div class="main">
@@ -159,6 +161,19 @@
                             <button>Detalles</button>
                         </th>
                     </tr>
+                    <tr>
+                        <th>Cra 22 # 2 - 13 Sociego</th>
+                        <th>12 / 09 / 25</th>
+                        <th>12 : 54</th>
+                        <th>Tarjeta Debito</th>
+                        <th>
+                            <p class="cerca">Cerca</p>
+                        </th>
+                        <th>$29.000</th>
+                        <th>
+                            <button>Detalles</button>
+                        </th>
+                    </tr>
                 </tbody>
             </table>
 
@@ -199,6 +214,61 @@
                     </div>
                     <p>$20.000</p>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modalUpdate">
+        <div class="conModalUpdate">
+            <div class="topConModalUpdate">
+                <i class="ph ph-x" id="closeModalUpdate"></i>
+            </div>
+            <div class="inModalUpdate">
+                <div class="progress">
+                    <div class="conOne">
+                        <div class="oneProgress">
+                            <i class="ph-bold ph-check"></i>
+                            <p>1</p>
+                        </div>
+                        <div class="oneDescription">
+                            <h3>En preparacion</h3>
+                            <p>Estamos preparando tu pedido. Por favor, espera un momento mientras lo cocinamos y pronto te lo enviaremos.</p>
+                        </div>
+                    </div>
+                    <div class="conTwo">
+                        <div class="twoProgress">
+                            <i class="ph-bold ph-check"></i>
+                            <p>2</p>
+                        </div>
+                        <div class="twoDescription">
+                            <h3>Enviado</h3>
+                            <p>Tu pedido ya está en camino. Mantente atento para salir a recibirlo.</p>
+                        </div>
+                    </div>
+                    <div class="conThree">
+                        <div class="threeProgress">
+                            <i class="ph-bold ph-check"></i>
+                            <p>3</p>
+                        </div>
+                        <div class="threeDescription">
+                            <h3>Ya estamos cerca</h3>
+                            <p>Estamos a la vuelta de la esquina, puedes ir saliendo para recogerlo.</p>
+                        </div>
+                    </div>
+                    <div class="conFourth">
+                        <div class="fourtProgress">
+                            <i class="ph-bold ph-check"></i>
+                            <p>4</p>
+                        </div>
+                        <div class="fourtDescription">
+                            <h3>Entregado</h3>
+                            <p>Ya entregamos tu pedido, esperamos que disfrutes nuestros productos y vuelvas a visitarnos pronto.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bottomConModalUpdate">
+                <button id="closeModalUpdate">Cerrar</button>
             </div>
         </div>
     </div>

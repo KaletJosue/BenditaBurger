@@ -456,6 +456,7 @@ body {
     justify-content: center;
     z-index: 2;
     padding: 1rem;
+    background-color: #000000a2;
 }
 
 .modalUpdate .conModalUpdate {
@@ -495,6 +496,7 @@ body {
     font-size: 12px;
     transition: all .2s ease;
     cursor: pointer;
+    color: var(--color-negro);
 }
 
 .modalUpdate .conModalUpdate .topConModalUpdate i:hover {

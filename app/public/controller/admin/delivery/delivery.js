@@ -100,7 +100,7 @@ btnSelectEstado.addEventListener('click', () => {
         gsap.fromTo(selectEstado,
             { height: 0, width: 0, opacity: 0, padding: 0 },
             {
-                height: '130px',
+                height: '190px',
                 width: '250px',
                 opacity: 1,
                 padding: '1rem',

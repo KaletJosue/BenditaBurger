@@ -143,3 +143,49 @@ if (resJson.data.Photo == "") {
 } else {
     imgProfile.src = resJson.data.Photo
 }
+
+const modalUpdate = document.querySelector('.modalUpdate');
+const modalContentUpdate = document.querySelector('.conModalUpdate');
+const closeModalUpdate = document.querySelectorAll('#closeModalUpdate')
+
+const btnModal = document.querySelector('.enviado')
+
+btnModal.addEventListener('click', () => {
+    modalUpdate.style.display = 'flex'
+
+    gsap.fromTo(modalContentUpdate,
+        { height: 0, opacity: 0 },
+        {
+            height: '100%',
+            opacity: 1,
+            backgroundColor: 'var(--color-blanco)',
+            duration: .7,
+            ease: 'expo.out',
+        }
+    )
+    window.addEventListener('click', event => {
+        if (event.target == modalUpdate) {
+            gsap.to(modalContentUpdate, {
+                height: '0px',
+                duration: .2,
+                ease: 'power1.in',
+                onComplete: () => {
+
+                    modalUpdate.style.display = 'none';
+                }
+            });
+        }
+    })
+    closeModalUpdate.forEach((closeModalUpdate) => {
+        closeModalUpdate.addEventListener('click', () => {
+            gsap.to(modalContentUpdate, {
+                height: '0px',
+                duration: .2,
+                ease: 'power1.in',
+                onComplete: () => {
+                    modalUpdate.style.display = 'none';
+                }
+            });
+        })
+    })
+})

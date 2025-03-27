@@ -114,14 +114,6 @@ const closeModalUpdate = document.getElementById('closeModalUpdate')
 addCar.forEach((addCar) => {
     addCar.addEventListener('click', () => {
         modalUpdate.style.display = 'flex'
-        modalContentUpdate.style.display = "flex"
-
-        gsap.fromTo(modalUpdate,
-            { backgroundColor: 'transparent' },
-            {
-                backgroundColor: '#000000a2'
-            }
-        )
 
         gsap.fromTo(modalContentUpdate,
             { height: 0, opacity: 0 },

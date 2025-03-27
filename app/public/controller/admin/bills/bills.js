@@ -9,7 +9,7 @@ var closeModal = document.querySelector('#closeModal')
 var tryAgain = document.querySelector('.tryAgain')
 var textErrorModal = document.querySelector('.textErrorModal')
 
-const resExpense = await fetch("http://localhost:4000/api/expenseData", {
+const resExpense = await fetch(`http://localhost:4000/api/expenseData`, {
     method: "GET",
     headers: {
         "Content-Type": "application/json"

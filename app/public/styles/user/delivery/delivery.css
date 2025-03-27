@@ -7,18 +7,21 @@
 
     --color-fondo: #f0f0f0;
     --color-linea: #ccc;
-    
-    --color-naranja: #FFF2E9;
-    --color-texto-naranja: #FF8B43;
 
-    --color-azul: #E7F4F5;
-    --color-texto-azul: #069C9C;
+    --color-naranja: #FF8B43;
+    --color-texto-naranja: #FFF2E9;
 
-    --color-rojo: #FFE9E9;
-    --color-texto-rojo: #FF4A43;
+    --color-azul: #069C9C;
+    --color-texto-azul: #E7F4F5;
 
-    --color-verde: #EDF8DA;
-    --color-texto-verde: #9ABA62;
+    --color-rojo: #FF4A43;
+    --color-texto-rojo: #FFE9E9;
+
+    --color-verde: #9ABA62;
+    --color-texto-verde: #EDF8DA;
+
+    --color-lila: #C860AE;
+    --color-texto-lila: #FFD8F6;
 
     --box-shadow-suave: 1px 1px 1rem #00000017;
 }
@@ -42,6 +45,9 @@
 
     --color-verde: #5c713795;
     --color-texto-verde: #EDF8DA;
+
+    --color-lila: #4a0739cd;
+    --color-texto-lila: #FFD8F6;
 
     --box-shadow-suave: 1px 1px 1rem #ededed17;
 }
@@ -352,6 +358,7 @@ body {
     font-size: 12px;
     font-weight: 800;
     border-radius: 10px;
+    cursor: pointer;
 }
 
 .main .table tbody tr th:nth-child(5) p.enviado {
@@ -372,6 +379,11 @@ body {
 .main .table tbody tr th:nth-child(5) p.entregado {
     background-color: var(--color-verde);
     color: var(--color-texto-verde);
+}
+
+.main .table tbody tr th:nth-child(5) p.cerca {
+    background-color: var(--color-lila);
+    color: var(--color-texto-lila);
 }
 
 .main .table tbody tr th button {
@@ -574,6 +586,217 @@ body {
     object-fit: contain;
     object-position: center center;
     width: 30px;
+}
+
+.modalUpdate {
+    position: fixed;
+    width: 100vw;
+    height: 100dvh;
+    top: 0;
+    left: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    padding: 1rem;
+    background-color: #000000a2
+}
+
+.modalUpdate .conModalUpdate {
+    width: 800px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: var(--box-shadow-suave);
+    overflow: hidden;
+    max-height: 500px;
+}
+
+.modalUpdate .conModalUpdate .topConModalUpdate {
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+    padding: 1rem;
+    width: 100%;
+    border-bottom: solid 1px var(--color-linea);
+}
+
+.modalUpdate .conModalUpdate .topConModalUpdate h1 {
+    font-size: 20px;
+    font-weight: 900;
+    color: var(--color-negro);
+}
+
+.modalUpdate .conModalUpdate .topConModalUpdate i {
+    height: 30px;
+    width: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 12px;
+    transition: all .2s ease;
+    cursor: pointer;
+    color: var(--color-negro);
+}
+
+.modalUpdate .conModalUpdate .topConModalUpdate i:hover {
+    background-color: var(--color-gris);
+    color: var(--color-blanco);
+}
+
+.modalUpdate .conModalUpdate .inModalUpdate {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+    padding: 1rem 3rem;
+    gap: 1rem;
+    overflow: hidden;
+    overflow-y: auto;
+}
+
+.modalUpdate .conModalUpdate .inModalUpdate::-webkit-scrollbar {
+    width: 7px;
+    background-color: var(--color-fondo);
+}
+
+.modalUpdate .conModalUpdate .inModalUpdate::-webkit-scrollbar-thumb {
+    background-color: var(--color-gris);
+    border-radius: 50px;
+}
+
+.modalUpdate .conModalUpdate .inModalUpdate .progress {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.modalUpdate .conModalUpdate .inModalUpdate .progress .conOne,
+.modalUpdate .conModalUpdate .inModalUpdate .progress .conTwo,
+.modalUpdate .conModalUpdate .inModalUpdate .progress .conThree,
+.modalUpdate .conModalUpdate .inModalUpdate .progress .conFourth {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    width: 80%;
+}
+
+.modalUpdate .conModalUpdate .inModalUpdate .progress .conOne .oneDescription h3,
+.modalUpdate .conModalUpdate .inModalUpdate .progress .conTwo .twoDescription h3,
+.modalUpdate .conModalUpdate .inModalUpdate .progress .conThree .threeDescription h3,
+.modalUpdate .conModalUpdate .inModalUpdate .progress .conFourth .fourtDescription h3 {
+    font-size: 14px;
+    font-weight: 900;
+    color: var(--color-negro);
+    transition: all .2s ease;
+}
+
+.modalUpdate .conModalUpdate .inModalUpdate .progress .conOne.active .oneDescription h3,
+.modalUpdate .conModalUpdate .inModalUpdate .progress .conTwo.active .twoDescription h3,
+.modalUpdate .conModalUpdate .inModalUpdate .progress .conThree.active .threeDescription h3,
+.modalUpdate .conModalUpdate .inModalUpdate .progress .conFourth.active .fourtDescription h3 {
+    color: var(--color-azul);
+}
+
+.modalUpdate .conModalUpdate .inModalUpdate .progress .conOne .oneDescription p,
+.modalUpdate .conModalUpdate .inModalUpdate .progress .conTwo .twoDescription p,
+.modalUpdate .conModalUpdate .inModalUpdate .progress .conThree .threeDescription p,
+.modalUpdate .conModalUpdate .inModalUpdate .progress .conFourth .fourtDescription p {
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--color-negro);
+}
+
+.modalUpdate .conModalUpdate .inModalUpdate .progress .oneProgress,
+.modalUpdate .conModalUpdate .inModalUpdate .progress .twoProgress,
+.modalUpdate .conModalUpdate .inModalUpdate .progress .threeProgress,
+.modalUpdate .conModalUpdate .inModalUpdate .progress .fourtProgress {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+    transition: all .2s ease;
+    background-color: var(--color-fondo);
+    color: var(--color-negro);
+    flex: 0 0 auto;
+}
+
+.modalUpdate .conModalUpdate .inModalUpdate .progress .oneProgress p,
+.modalUpdate .conModalUpdate .inModalUpdate .progress .twoProgress p,
+.modalUpdate .conModalUpdate .inModalUpdate .progress .threeProgress p,
+.modalUpdate .conModalUpdate .inModalUpdate .progress .fourtProgress p {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 15px;
+    font-weight: 900;
+    transition: all .2s ease;
+}
+
+.modalUpdate .conModalUpdate .inModalUpdate .progress .oneProgress i,
+.modalUpdate .conModalUpdate .inModalUpdate .progress .twoProgress i,
+.modalUpdate .conModalUpdate .inModalUpdate .progress .threeProgress i,
+.modalUpdate .conModalUpdate .inModalUpdate .progress .fourtProgress i {
+    position: absolute;
+    top: -200px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--color-texto-azul);
+    transition: all .2s ease;
+}
+
+.modalUpdate .conModalUpdate .inModalUpdate .progress .conOne.active .oneProgress,
+.modalUpdate .conModalUpdate .inModalUpdate .progress .conTwo.active .twoProgress,
+.modalUpdate .conModalUpdate .inModalUpdate .progress .conThree.active .threeProgress,
+.modalUpdate .conModalUpdate .inModalUpdate .progress .conFourth.active .fourtProgress {
+    background-color: var(--color-azul);
+    color: var(--color-texto-azul);
+}
+
+.modalUpdate .conModalUpdate .inModalUpdate .progress .conOne.active .oneProgress p,
+.modalUpdate .conModalUpdate .inModalUpdate .progress .conTwo.active .twoProgress p,
+.modalUpdate .conModalUpdate .inModalUpdate .progress .conThree.active .threeProgress p,
+.modalUpdate .conModalUpdate .inModalUpdate .progress .conFourth.active .fourtProgress p {
+    top: 200px;
+}
+
+.modalUpdate .conModalUpdate .inModalUpdate .progress .conOne.active .oneProgress i,
+.modalUpdate .conModalUpdate .inModalUpdate .progress .conTwo.active .twoProgress i,
+.modalUpdate .conModalUpdate .inModalUpdate .progress .conThree.active .threeProgress i,
+.modalUpdate .conModalUpdate .inModalUpdate .progress .conFourth.active .fourtProgress i {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.modalUpdate .conModalUpdate .bottomConModalUpdate {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    gap: 1rem;
+    width: 100%;
+    padding: 1rem;
+    border-top: solid 1px var(--color-linea);
+}
+
+.modalUpdate .conModalUpdate .bottomConModalUpdate button {
+    padding: .7rem 2rem;
+    border-radius: 5px;
+    background-color: #FF4A43;
+    border: none;
+    font-weight: 700;
+    cursor: pointer;
+    color: white;
 }
 
 /* Modal */
@@ -796,7 +1019,16 @@ body {
     color: white;
 }
 
+@media (width > 450px) and (height < 500px) {
+    .modalUpdate .conModalUpdate .inModalUpdate {
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
+    }
+}
+
 @media (width < 1000px) {
+
     .modal,
     .modal2 {
         padding: 1rem;
@@ -823,11 +1055,28 @@ body {
     .main {
         padding: 0 1rem 1rem;
     }
+
+    .modalUpdate .conModalUpdate .inModalUpdate {
+        padding: 2rem 1rem;
+    }
+
+    .modalUpdate .conModalUpdate .inModalUpdate .progress .conOne,
+    .modalUpdate .conModalUpdate .inModalUpdate .progress .conTwo,
+    .modalUpdate .conModalUpdate .inModalUpdate .progress .conThree,
+    .modalUpdate .conModalUpdate .inModalUpdate .progress .conFourth {
+        width: 100%;
+    }
 }
 
 @media (width < 450px) {
     .modalDetalis .conModalDetails {
         border-radius: 0;
+    }
+
+    .modalUpdate .conModalUpdate .inModalUpdate {
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
     }
 
     .modal .modalContent,

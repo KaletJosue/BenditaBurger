@@ -8,17 +8,20 @@
     --color-fondo: #f0f0f0;
     --color-linea: #ccc;
     
-    --color-naranja: #FFF2E9;
-    --color-texto-naranja: #FF8B43;
+    --color-naranja: #FF8B43;
+    --color-texto-naranja: #FFF2E9;
 
-    --color-azul: #E7F4F5;
-    --color-texto-azul: #069C9C;
+    --color-azul: #069C9C;
+    --color-texto-azul: #E7F4F5;
 
-    --color-rojo: #FFE9E9;
-    --color-texto-rojo: #FF4A43;
+    --color-rojo: #FF4A43;
+    --color-texto-rojo: #FFE9E9;
 
-    --color-verde: #EDF8DA;
-    --color-texto-verde: #9ABA62;
+    --color-verde: #9ABA62;
+    --color-texto-verde: #EDF8DA;
+
+    --color-lila: #C860AE;
+    --color-texto-lila: #FFD8F6;
 
     --box-shadow-suave: 1px 1px 1rem #00000017;
 }
@@ -42,6 +45,9 @@
 
     --color-verde: #5c713795;
     --color-texto-verde: #EDF8DA;
+
+    --color-lila: #4a0739cd;
+    --color-texto-lila: #FFD8F6;
 
     --box-shadow-suave: 1px 1px 1rem #ededed17;
 }
@@ -533,9 +539,14 @@ body {
     color: var(--color-texto-naranja);
 }
 
-.main .table tbody tr th:nth-child(6) .selectEstado h3:last-child {
+.main .table tbody tr th:nth-child(6) .selectEstado h3:nth-child(4) {
     background-color: var(--color-verde);
     color: var(--color-texto-verde);
+}
+
+.main .table tbody tr th:nth-child(6) .selectEstado h3:last-child {
+    background-color: var(--color-lila);
+    color: var(--color-texto-lila);
 }
 
 .main .table tbody tr th:nth-child(6) p {
@@ -567,6 +578,11 @@ body {
 .main .table tbody tr th:nth-child(6) p.entregado {
     background-color: var(--color-verde);
     color: var(--color-texto-verde);
+}
+
+.main .table tbody tr th:nth-child(6) p.cerca {
+    background-color: var(--color-lila);
+    color: var(--color-texto-lila);
 }
 
 .main .table tbody tr th button {
