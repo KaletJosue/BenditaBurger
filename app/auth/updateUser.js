@@ -10,6 +10,8 @@ async function updateData(req, res) {
         const name = req.body.Name;
         const phone = req.body.Phone;
         const direccion = req.body.Direccion;
+        const barrio = req.body.Barrio;
+        const descripcion = req.body.Descripcion;
 
         const cookieJWT = req.headers.cookie.split("; ").find(cookie => cookie.startsWith("jwt=")).slice(4);
         const decodificada = jsonwebtoken.verify(cookieJWT, process.env.JWT_SECRET);
@@ -30,7 +32,9 @@ async function updateData(req, res) {
                 Nombre: name,
                 Telefono: phone,
                 Direccion: direccion,
-                ...(imageUrl && { Foto: imageUrl })
+                ...(imageUrl && { Foto: imageUrl }),
+                Barrio: barrio,
+                Descripcion: descripcion
             }
         };
 

@@ -71,8 +71,24 @@ router.get('/checker', authorization.revisarVerified, (req, res) => {
      res.sendFile(path.resolve(__dirname, '../views/checker/home/home.html')) 
 })
 
-router.get('/user', authorization.revisarVerified, (req, res) => {
+router.get('/user', authorization.revisarVerified, authorization.soloUsers, (req, res) => {
      res.sendFile(path.resolve(__dirname, '../views/user/home/home.html')) 
+})
+
+router.get('/user/delivery', authorization.revisarVerified, authorization.soloUsers, (req, res) => {
+     res.sendFile(path.resolve(__dirname, '../views/user/delivery/delivery.html')) 
+})
+
+router.get('/user/car', authorization.revisarVerified, authorization.soloUsers, (req, res) => {
+     res.sendFile(path.resolve(__dirname, '../views/user/car/car.html')) 
+})
+
+router.get('/user/favorite', authorization.revisarVerified, authorization.soloUsers, (req, res) => {
+     res.sendFile(path.resolve(__dirname, '../views/user/favorite/favorite.html')) 
+})
+
+router.get('/user/config', authorization.revisarVerified, authorization.soloUsers, (req, res) => {
+     res.sendFile(path.resolve(__dirname, '../views/user/config/config.html')) 
 })
 
 router.get('/verified', (req, res) => {

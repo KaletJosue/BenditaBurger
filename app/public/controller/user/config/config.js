@@ -239,7 +239,6 @@ const res = await fetch("http://localhost:4000/api/userData", {
 
 const resJson = await res.json()
 
-var btnUser = document.querySelector('.user')
 var btnSecurity = document.querySelector('.security')
 var imgProfile = document.querySelector('.profile')
 var gmail = document.querySelector('.correo')
@@ -266,14 +265,6 @@ if (resJson.data.Photo == "") {
 } else {
     imgProfile.src = resJson.data.Photo
     photoProfile.src = resJson.data.Photo
-}
-
-if (resJson.data.Rol == "SuperAdministrador") {
-    btnUser.addEventListener('click', () => {
-        location.href = "/admin/users"
-    })
-} else {
-    btnUser.style.display = "none"
 }
 
 var btnUpdate = document.querySelector('.btnUpdate')

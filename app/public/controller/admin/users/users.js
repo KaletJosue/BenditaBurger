@@ -44,7 +44,7 @@ if (resJson.status == "Data Users") {
         img.src = doc.Foto
         nameUser.textContent = doc.Nombre
         gmail.textContent = doc.Correo
-        direccion.textContent = doc.Direccion
+        direccion.textContent = doc.Direccion + " " + doc.Barrio
         telefono.textContent = doc.Telefono
         rol.textContent = doc.Rol
         active.textContent = "Activo"

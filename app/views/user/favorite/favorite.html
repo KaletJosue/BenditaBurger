@@ -5,7 +5,7 @@
     <script src="https://unpkg.com/scrollreveal"></script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/styles/user/home/home.css" />
+    <link rel="stylesheet" href="/styles/user/favorite/favorite.css" />
     <!-- Loader -->
     <link rel="stylesheet" href="/styles/loader/loader.css">
     <link rel="shortcut icon" href="/assets/logo.png" type="image/x-icon">
@@ -45,8 +45,8 @@
         </div>
         <div class="centerSidebar">
             <ul>
-                <a>
-                    <li class="active">
+                <a href="/user">
+                    <li>
                         <i class="ph ph-house-simple"></i>
                         <p>Inicio</p>
                     </li>
@@ -63,8 +63,8 @@
                         <p>Carrito</p>
                     </li>
                 </a>
-                <a href="/user/favorite">
-                    <li>
+                <a href="">
+                    <li class="active">
                         <i class="ph ph-heart"></i>
                         <p>Favoritos</p>
                     </li>
@@ -92,20 +92,13 @@
     </div>
 
     <div class="main">
-        <div class="selectCategory">
-            <p class="active">Hamburguesas</p>
-            <p>Gaseosas</p>
-            <p>Complementos</p>
-        </div>
-
         <div class="conCategory">
             <div class="category">
-                <h1>Hamburguesas</h1>
                 <div class="productsCategory">
                     <div class="product">
                         <img src="/assets/ham2.png" alt="">
                         <div class="rightProduct">
-                            <p>$23.000</p>
+                            <p class="discount">$23.000 <span>-12%</span></p>
                             <h3>La Zunga</h3>
                             <h4>Hamburguesa de carne cubierta asudhgi uasgid gauys duyg quwyg duyasg duy qgwuydg uaysg
                                 dug
@@ -115,26 +108,7 @@
                                     Agregar
                                     <i class="ph ph-shopping-cart"></i>
                                 </button>
-                                <button class="addFavorite">
-                                    <i class="ph-bold ph-heart"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="product">
-                        <img src="/assets/ham2.png" alt="">
-                        <div class="rightProduct">
-                            <p>$23.000</p>
-                            <h3>La Zunga</h3>
-                            <h4>Hamburguesa de carne cubierta asudhgi uasgid gauys duyg quwyg duyasg duy qgwuydg uaysg
-                                dug
-                                qwuydg uaysg duyasgduy quwyd uaysg du asuydgquwd</h4>
-                            <div class="buttons">
-                                <button class="addCar">
-                                    Agregar
-                                    <i class="ph ph-shopping-cart"></i>
-                                </button>
-                                <button class="addFavorite">
+                                <button class="addFavorite active">
                                     <i class="ph-bold ph-heart"></i>
                                 </button>
                             </div>
@@ -172,7 +146,7 @@
                                     Agregar
                                     <i class="ph ph-shopping-cart"></i>
                                 </button>
-                                <button class="addFavorite">
+                                <button class="addFavorite active">
                                     <i class="ph-bold ph-heart"></i>
                                 </button>
                             </div>
@@ -191,22 +165,17 @@
                                     Agregar
                                     <i class="ph ph-shopping-cart"></i>
                                 </button>
-                                <button class="addFavorite">
+                                <button class="addFavorite active">
                                     <i class="ph-bold ph-heart"></i>
                                 </button>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="category">
-                <h1>Gaseosas</h1>
-                <div class="productsCategory">
                     <div class="product">
-                        <img src="/assets/cocacola.png" alt="">
+                        <img src="/assets/ham2.png" alt="">
                         <div class="rightProduct">
-                            <p>$9.000</p>
-                            <h3>CocaCola 1.5L</h3>
+                            <p class="discount">$23.000 <span>-12%</span></p>
+                            <h3>La Zunga</h3>
                             <h4>Hamburguesa de carne cubierta asudhgi uasgid gauys duyg quwyg duyasg duy qgwuydg uaysg
                                 dug
                                 qwuydg uaysg duyasgduy quwyd uaysg du asuydgquwd</h4>
@@ -215,7 +184,7 @@
                                     Agregar
                                     <i class="ph ph-shopping-cart"></i>
                                 </button>
-                                <button class="addFavorite">
+                                <button class="addFavorite active">
                                     <i class="ph-bold ph-heart"></i>
                                 </button>
                             </div>
@@ -300,7 +269,7 @@
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/gsap.min.js"></script>
-    <script src="/controller/user/home/home.js" type="module"></script>
+    <script src="/controller/user/favorite/favorite.js" type="module"></script>
 </body>
 
 </html>

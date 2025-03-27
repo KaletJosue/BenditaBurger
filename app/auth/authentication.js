@@ -165,6 +165,8 @@ async function signUp(req, res) {
                             Telefono: "",
                             Rol: "Usuario",
                             Foto: "",
+                            Barrio: "",
+                            Descripcion: "",
                             Verificado: false,
                             Estado: true,
                         }
@@ -217,6 +219,9 @@ async function userRol(req, res) {
                 Photo: revisarUsuario.Foto,
                 Direccion: revisarUsuario.Direccion,
                 Phone: revisarUsuario.Telefono,
+                Status: revisarUsuario.Estado,
+                Barrio: revisarUsuario.Barrio,
+                Descripcion: revisarUsuario.Descripcion
             }
         })
     } else {

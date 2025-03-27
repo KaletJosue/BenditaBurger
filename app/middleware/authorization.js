@@ -58,6 +58,33 @@ async function soloAdmin(req, res, next) {
     }
 }
 
+async function soloUsers(req, res, next) {
+    if (req.headers.cookie) {
+        const logueado = revisarCookie(req)
+
+        if (logueado) {
+            const cookieJWT = req.headers.cookie.split("; ").find(cookie => cookie.startsWith("jwt=")).slice(4)
+            const decodificada = jsonwebtoken.verify(cookieJWT, process.env.JWT_SECRET)
+
+            const db = await conectarConMongoDB()
+            const usuariosCollection = db.collection('usuarios')
+
+            const revisarUsuario = await usuariosCollection.findOne({ Correo: decodificada.user })
+
+            if (logueado && revisarUsuario.Rol == "Usuario") {
+                return next()
+            } else {
+                return res.status(400).redirect('/error?message=No tienes acceso a este apartado');
+            }
+        } else {
+            return res.status(400).redirect('/error?message=No iniciaste sesion de manera correcta');
+        }
+
+    } else {
+        return res.status(400).redirect('/error?message=No iniciaste sesion de manera correcta');
+    }
+}
+
 async function userToken(req, res, next) {
     if (req.headers.cookie) {
         const logueado = revisarCookie(req)
@@ -152,5 +179,6 @@ export const method = {
     userToken,
     revisarVerified,
     soloSuperAdmin,
-    revisarStatus
+    revisarStatus,
+    soloUsers
 }

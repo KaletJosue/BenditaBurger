@@ -1,0 +1,1011 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+:root {
+    --color-negro: #000;
+    --color-blanco: #ffffff;
+    --color-gris: #828282;
+
+    --color-fondo: #f0f0f0;
+    --color-linea: #ccc;
+
+    --color-naranja: #FFF2E9;
+    --color-texto-naranja: #FF8B43;
+
+    --color-azul: #E7F4F5;
+    --color-texto-azul: #069C9C;
+
+    --color-cancelado: #FFE9E9;
+    --color-texto-cancelado: #FF4A43;
+
+    --box-shadow-suave: 1px 1px 1rem #00000017;
+}
+
+.darkMode {
+    --color-negro: #ffffff;
+    --color-blanco: #000000;
+    --color-gris: #b2b2b2;
+
+    --color-fondo: #161616;
+    --color-linea: #202020;
+
+    --color-naranja: #cd7742b0;
+    --color-texto-naranja: #FFF2E9;
+
+    --color-azul: #043e3e9d;
+    --color-texto-azul: #E7F4F5;
+
+    --color-cancelado: #9b2d2998;
+    --color-texto-cancelado: #FFE9E9;
+
+    --box-shadow-suave: 1px 1px 1rem #ededed17;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    list-style: none;
+    font-family: 'Montserrat';
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+html::-webkit-scrollbar {
+    width: 0;
+}
+
+body {
+    background-color: var(--color-fondo);
+}
+
+.conMenu {
+    position: fixed;
+    right: 15px;
+    top: 15px;
+    background-color: var(--color-negro);
+    height: 50px;
+    width: 50px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 1;
+    box-shadow: var(--box-shadow-suave);
+}
+
+.menu {
+    width: 20px;
+    height: 10px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    display: flex;
+    transition: all .2s ease;
+}
+
+.menu.active {
+    transform: translateY(-3px);
+}
+
+.menu span {
+    width: 100%;
+    height: 2px;
+    background-color: var(--color-blanco);
+    transition: all .3s ease;
+}
+
+.menu.active span:first-child {
+    transform: rotate(45deg) translate(5px, 5px);
+}
+
+.menu.active span:nth-child(2) {
+    margin-left: 2rem;
+    opacity: 0;
+}
+
+.menu.active span:last-child {
+    transform: rotate(-45deg) translate(0px, -1px);
+}
+
+.sidebar {
+    background-color: var(--color-blanco);
+    box-shadow: var(--box-shadow-suave);
+    position: fixed;
+    height: 100dvh;
+    width: 256px;
+    border-radius: 0 20px 20px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 2rem 2rem;
+    transition: all .2s ease;
+    z-index: 2;
+}
+
+.sidebar.active {
+    width: 90px;
+    padding: 2rem 1rem;
+}
+
+.sidebar .centerSidebar ul li.active {
+    background-color: var(--color-fondo);
+}
+
+.sidebar.active .topSidebar .user .textUser,
+.sidebar.active .centerSidebar ul li p,
+.sidebar.active .centerSidebar ul li i:last-child,
+.sidebar.active .bottomSidebar p {
+    display: none;
+}
+
+.sidebar.active .topSidebar .user {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+
+
+.sidebar.active .centerSidebar ul li i,
+.sidebar.active .bottomSidebar ul li i {
+    padding-left: .4rem;
+}
+
+.sidebar.active .bottomSidebar ul li:first-child {
+    padding: 1rem 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sidebar .topSidebar {
+    border-bottom: solid 2px var(--color-fondo);
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+}
+
+.sidebar .topSidebar .user {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+}
+
+.sidebar .topSidebar .user img {
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    object-position: center center;
+    width: 50px;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+.sidebar .topSidebar .user .textUser p {
+    font-size: 10px;
+    color: var(--color-negro);
+}
+
+.sidebar .topSidebar .user .textUser h1 {
+    font-size: 11px;
+    color: var(--color-negro);
+}
+
+.sidebar .centerSidebar {
+    flex-grow: 1;
+    overflow-y: auto;
+    margin-bottom: 1rem;
+}
+
+.sidebar .centerSidebar::-webkit-scrollbar {
+    width: 3px;
+    background-color: var(--color-fondo);
+    border-radius: 20px;
+}
+
+.sidebar .centerSidebar::-webkit-scrollbar-thumb {
+    background-color: var(--color-linea);
+}
+
+.sidebar .centerSidebar ul {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+}
+
+.sidebar .centerSidebar ul li {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    padding: 1rem;
+    gap: 1rem;
+    font-size: 12px;
+    border-radius: 10px;
+    color: var(--color-negro);
+    transition: all .2s ease;
+    cursor: pointer;
+    position: relative;
+}
+
+.sidebar .centerSidebar ul li:hover {
+    background-color: var(--color-fondo);
+}
+
+.sidebar .bottomSidebar {
+    border-top: solid 2px var(--color-fondo);
+    padding-top: 1rem;
+}
+
+.sidebar .bottomSidebar ul {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+}
+
+.sidebar .bottomSidebar ul li {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    padding: 1rem;
+    gap: 1rem;
+    font-size: 12px;
+    border-radius: 10px;
+    color: var(--color-negro);
+    transition: all .2s ease;
+}
+
+.sidebar .bottomSidebar ul li:not(:first-child) {
+    cursor: pointer;
+}
+
+.sidebar .bottomSidebar ul li:not(:first-child):hover {
+    background-color: var(--color-fondo);
+}
+
+.sidebar .bottomSidebar ul li i {
+    font-size: 12px;
+}
+
+.main {
+    padding: 1rem 2rem 3rem 7rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.main .selectCategory {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    overflow: hidden;
+    overflow-x: auto;
+    gap: .5rem;
+}
+
+.main .selectCategory::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+}
+
+.main .selectCategory p {
+    font-size: 12px;
+    padding: .8rem 1rem;
+    border-radius: 10px;
+    transition: all .2s ease;
+    cursor: pointer;
+    color: var(--color-negro);
+}
+
+.main .selectCategory p.active {
+    background-color: var(--color-linea);
+    color: var(--color-gris);
+    font-weight: 800;
+}
+
+.main .selectCategory p:hover {
+    background-color: var(--color-linea);
+    color: var(--color-gris);
+    font-weight: 800;
+}
+
+.main .conCategory {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+    width: 100%;
+}
+
+.main .conCategory .category:not(:first-child) {
+    margin-top: 2rem;
+}
+
+.main .conCategory .category {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+}
+
+.main .conCategory .category h1 {
+    font-size: 25px;
+    font-weight: 900;
+    color: var(--color-negro);
+}
+
+.main .conCategory .category .productsCategory {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.main .conCategory .category .productsCategory .product {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    background-color: var(--color-blanco);
+    padding: 1rem;
+    border-radius: 10px;
+    box-shadow: var(--box-shadow-suave);
+}
+
+.main .conCategory .category .productsCategory .product img {
+    aspect-ratio: 1/1;
+    object-fit: contain;
+    object-position: center center;
+    width: 200px;
+}
+
+.main .conCategory .category .productsCategory .product .rightProduct {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+}
+
+.main .conCategory .category .productsCategory .product .rightProduct p {
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: .5rem;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    color: var(--color-negro);
+}
+
+.main .conCategory .category .productsCategory .product .rightProduct p.discount span {
+    padding: .2rem .5rem;
+    background-color: #FF4A43;
+    color: white;
+    font-size: 12px;
+    border-radius: 20px;
+}
+
+.main .conCategory .category .productsCategory .product .rightProduct h3 {
+    font-size: 20px;
+    font-weight: 900;
+    color: var(--color-negro);
+}
+
+.main .conCategory .category .productsCategory .product .rightProduct h4 {
+    font-size: 12px;
+    font-weight: 400;
+    margin-top: .2rem;
+    height: 30px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: var(--color-negro);
+}
+
+.main .conCategory .category .productsCategory .product .rightProduct .buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+    margin-top: .5rem;
+}
+
+.main .conCategory .category .productsCategory .product .rightProduct .buttons .addCar {
+    padding: .7rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .2rem;
+    font-size: 13px;
+    border-radius: 5px;
+    border: none;
+    background-color: var(--color-negro);
+    color: var(--color-blanco);
+    cursor: pointer;
+    transition: all .2s ease;
+}
+
+.main .conCategory .category .productsCategory .product .rightProduct .buttons .addFavorite {
+    height: 35px;
+    aspect-ratio: 1/1;
+    background-color: transparent;
+    border: solid 1px #ebb417;
+    border-radius: 5px;
+    color: #ebb417;
+    cursor: pointer;
+    transition: all .2s ease;
+}
+
+.main .conCategory .category .productsCategory .product .rightProduct .buttons .addFavorite:hover,
+.main .conCategory .category .productsCategory .product .rightProduct .buttons .addFavorite.active {
+    background-color: #ebb417;
+    color: white;
+}
+
+.modalUpdate {
+    position: fixed;
+    width: 100vw;
+    height: 100dvh;
+    top: 0;
+    left: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    padding: 1rem;
+}
+
+.modalUpdate .conModalUpdate {
+    width: 800px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: var(--box-shadow-suave);
+    overflow: hidden;
+    max-height: 500px;
+}
+
+.modalUpdate .conModalUpdate .topConModalUpdate {
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+    padding: 1rem;
+    width: 100%;
+    border-bottom: solid 1px var(--color-gris);
+}
+
+.modalUpdate .conModalUpdate .topConModalUpdate h1 {
+    font-size: 20px;
+    font-weight: 900;
+    color: var(--color-negro);
+}
+
+.modalUpdate .conModalUpdate .topConModalUpdate i {
+    height: 30px;
+    width: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 12px;
+    transition: all .2s ease;
+    cursor: pointer;
+}
+
+.modalUpdate .conModalUpdate .topConModalUpdate i:hover {
+    background-color: var(--color-gris);
+    color: var(--color-blanco);
+}
+
+.modalUpdate .conModalUpdate .inModalUpdate {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+    padding: 1rem 3rem;
+    gap: 1rem;
+    overflow: hidden;
+    overflow-y: auto;
+}
+
+.modalUpdate .conModalUpdate .inModalUpdate::-webkit-scrollbar {
+    width: 7px;
+    background-color: var(--color-fondo);
+}
+
+.modalUpdate .conModalUpdate .inModalUpdate::-webkit-scrollbar-thumb {
+    background-color: var(--color-gris);
+    border-radius: 50px;
+}
+
+.modalUpdate .conModalUpdate .inModalUpdate img {
+    aspect-ratio: 1/1;
+    object-fit: contain;
+    object-position: center center;
+    width: 300px;
+}
+
+.modalUpdate .conModalUpdate .inModalUpdate .rightModalUpdate img {
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    object-position: center center;
+    width: 50px;
+    border-radius: 20px;
+    margin-bottom: .5rem;
+}
+
+.modalUpdate .conModalUpdate .inModalUpdate .rightModalUpdate p {
+    font-size: 13px;
+    color: var(--color-negro);
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    gap: .5rem;
+}
+
+.modalUpdate .conModalUpdate .inModalUpdate .rightModalUpdate p.discount span {
+    background-color: #FF4A43;
+    padding: .2rem .5rem;
+    color: white;
+    border-radius: 20px;
+    font-size: 12px;
+}
+
+.modalUpdate .conModalUpdate .inModalUpdate .rightModalUpdate h1 {
+    font-size: 25px;
+    font-weight: 900;
+    color: var(--color-negro);
+    margin-top: .5rem;
+}
+
+.modalUpdate .conModalUpdate .inModalUpdate .rightModalUpdate h3 {
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--color-negro);
+}
+
+.modalUpdate .conModalUpdate .bottomConModalUpdate {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    gap: 1rem;
+    width: 100%;
+    padding: 1rem;
+    border-top: solid 1px var(--color-gris);
+}
+
+.modalUpdate .conModalUpdate .bottomConModalUpdate .count {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.modalUpdate .conModalUpdate .bottomConModalUpdate .count i {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: solid 1px var(--color-gris);
+    color: var(--color-gris);
+    border-radius: 50%;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.modalUpdate .conModalUpdate .bottomConModalUpdate button {
+    padding: .7rem 1rem;
+    border-radius: 5px;
+    background-color: #efbb00;
+    border: none;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.switch {
+    display: block;
+    width: 40px;
+    height: 25px;
+    background-color: #6397bc;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all .2s ease;
+    outline: solid 2px var(--color-fondo);
+}
+
+.switch.active {
+    background-color: #1c1f2c;
+}
+
+.switch.active .circle {
+    transform: translateX(17px) rotate(90deg);
+    background-color: #c4c8d1;
+}
+
+.switch.active::after {
+    background-color: white;
+    right: 70%;
+    width: 5px;
+    height: 5px;
+    bottom: 10px;
+}
+
+.switch.active::before {
+    background-color: white;
+    right: 60%;
+    width: 2px;
+    height: 2px;
+    bottom: 7px;
+}
+
+.switch::after {
+    content: '';
+    display: block;
+    width: 20px;
+    height: 20px;
+    background-color: white;
+    border-radius: 50%;
+    position: absolute;
+    bottom: -10px;
+    right: -6px;
+}
+
+.switch::before {
+    content: '';
+    display: block;
+    width: 20px;
+    height: 20px;
+    background-color: white;
+    border-radius: 50%;
+    position: absolute;
+    bottom: -2px;
+    right: -13px;
+}
+
+.switch .circle {
+    display: block;
+    width: 17px;
+    height: 17px;
+    border-radius: 7px;
+    background-color: #edca2e;
+    margin-left: .2rem;
+    transition: all .2s ease;
+}
+
+/* Modal */
+
+.modal {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #00000000;
+    transition: all .2s ease;
+    transform: scale(0);
+    z-index: 2;
+}
+
+.modal.active {
+    left: 0;
+    background-color: #00000086;
+    transform: scale(1);
+}
+
+.modal .modalContent {
+    width: 550px;
+    height: 300px;
+    background-color: #1c1c1c;
+    border-radius: 30px;
+    position: relative;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.modal .modalContent::after {
+    content: '';
+    display: block;
+    width: 300px;
+    height: 150px;
+    background-color: #ff7777;
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(180px);
+    bottom: -50px;
+    right: -100px;
+    z-index: 0;
+}
+
+.modal .modalContent .centerModal {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    padding: 0 4rem;
+    gap: 1.5rem;
+}
+
+.modal .modalContent .centerModal i {
+    font-size: 60px;
+    color: #ff7777;
+}
+
+.modal .modalContent .centerModal .textModal h1 {
+    font-size: 25px;
+    font-weight: 900;
+}
+
+.modal .modalContent .centerModal .textModal p {
+    font-size: 14px;
+}
+
+.modal .modalContent i#closeModal {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.modal .modalContent button {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    padding: .7rem 1rem;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+    border: solid 2px #ff7777;
+    background-color: transparent;
+    background-color: #ff7777;
+    color: white;
+    cursor: pointer;
+    transition: all .2s ease;
+    z-index: 1;
+}
+
+.modal .modalContent button:hover {
+    transform: translateX(-10px);
+    background-color: transparent;
+}
+
+/* Modal2 */
+
+.modal2 {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all .2s ease;
+    transform: scale(0);
+    z-index: 2;
+}
+
+.modal2.active {
+    left: 0;
+    background-color: #00000086;
+    transform: scale(1);
+}
+
+.modal2 .modalContent2 {
+    width: 550px;
+    height: 300px;
+    background-color: #353535;
+    border-radius: 30px;
+    position: relative;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.modal2 .modalContent2::after {
+    content: '';
+    display: block;
+    width: 300px;
+    height: 150px;
+    background-color: #fff177;
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(180px);
+    bottom: -50px;
+    right: -100px;
+    z-index: 0;
+}
+
+.modal2 .modalContent2 .centerModal2 {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    padding: 0 4rem;
+    gap: 1.5rem;
+}
+
+.modal2 .modalContent2 .centerModal2 i {
+    font-size: 60px;
+    color: #fff177;
+}
+
+.modal2 .modalContent2 .centerModal2 .textModal2 h1 {
+    font-size: 25px;
+    font-weight: 900;
+}
+
+.modal2 .modalContent2 .centerModal2 .textModal2 p {
+    font-size: 14px;
+}
+
+.modal2 .modalContent2 i#closeModal2 {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.modal2 .modalContent2 button.logOut2 {
+    position: absolute;
+    bottom: 20px;
+    right: 100px;
+    padding: .7rem 1rem;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+    border: solid 2px #ff7777;
+    background-color: transparent;
+    background-color: #ff7777;
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    transition: all .2s ease;
+    z-index: 1;
+}
+
+.modal2 .modalContent2 button {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    padding: .7rem 1rem;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+    border: solid 2px #fff177;
+    background-color: transparent;
+    background-color: #fff177;
+    color: rgb(0, 0, 0);
+    cursor: pointer;
+    transition: all .2s ease;
+    z-index: 1;
+}
+
+.modal2 .modalContent2 button:hover {
+    transform: translateY(-10px);
+    background-color: transparent;
+    color: white;
+}
+
+@media (width < 550px) and (height < 520px) {
+    .modalUpdate .conModalUpdate .inModalUpdate {
+        padding: 2rem 1rem;
+        justify-content: start;
+    }
+}
+
+@media (height < 410px) and (width > 520px) {
+    .modalUpdate .conModalUpdate .inModalUpdate {
+        padding: 2rem 5rem;
+        align-items: start;
+    }
+
+    .modalUpdate .conModalUpdate .inModalUpdate img {
+        width: 200px;
+    }
+}
+
+@media (width < 1000px) {
+    .main .conCategory .category .productsCategory .product img {
+        width: 150px;
+    }
+
+    .modal,
+    .modal2 {
+        padding: 1rem;
+    }
+}
+
+@media (width < 850px) {
+    .main .conCategory .category .productsCategory .product {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+@media (width < 650px) {
+    .conMenu {
+        display: flex;
+    }
+
+    .sidebar {
+        left: -100vw;
+    }
+
+    .sidebar.ocult {
+        left: 0;
+    }
+
+    .main {
+        padding: 1rem;
+    }
+
+    .modalUpdate .conModalUpdate .inModalUpdate {
+        padding: 1rem;
+    }
+
+    .modalUpdate .conModalUpdate .inModalUpdate img {
+        width: 200px;
+    }
+}
+
+@media (width < 550px) {
+    .modalUpdate .conModalUpdate .inModalUpdate {
+        flex-direction: column;
+    }
+}
+
+@media (width < 450px) {
+    .main .conCategory .category .productsCategory {
+        grid-template-columns: 1fr;
+    }
+
+    .modal .modalContent,
+    .modal2 .modalContent2 {
+        flex-direction: column;
+    }
+
+    .modal .modalContent .centerModal,
+    .modal2 .modalContent2 .centerModal2 {
+        padding: 0;
+        flex-direction: column;
+        text-align: center;
+        padding: 0 1rem;
+    }
+
+    .modal .modalContent button {
+        position: relative;
+        top: 0;
+        left: 0;
+        margin-top: 1rem;
+    }
+
+    .modal2 .modalContent2 button,
+    .modal2 .modalContent2 button.logOut2 {
+        position: relative;
+        top: 0;
+        left: 0;
+        margin-top: .2rem;
+    }
+
+    .modal2 .modalContent2 button.logOut2 {
+        margin-top: 1rem;
+    }
+}
