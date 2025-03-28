@@ -18,99 +18,89 @@ const res = await fetch("http://localhost:4000/api/userDataControl", {
 
 const resJson = await res.json()
 
-if (resJson.status == "Data Users") {
-    var tbody = document.querySelector('.tbody')
+if (resJson.status == "Data User") {
 
+    var tbody = document.querySelector('.tbody');
     const usersData = resJson.data;
 
     usersData.forEach((doc) => {
-        var tr = document.createElement('tr')
-        var thImg = document.createElement('th')
-        var divUser = document.createElement('div')
-        var img = document.createElement('img')
-        var nameUser = document.createElement('p')
-        var gmail = document.createElement('th')
-        var direccion = document.createElement('th')
-        var telefono = document.createElement('th')
-        var rol = document.createElement('th')
-        var thStatus = document.createElement('th')
-        var divStatus = document.createElement('div')
-        var active = document.createElement('p')
-        var inactive = document.createElement('p')
-        var thActions = document.createElement('th')
-        var divActions = document.createElement('div')
-        var editAction = document.createElement('button')
+        var tr = document.createElement('tr');
+        var thImg = document.createElement('th');
+        var divUser = document.createElement('div');
+        var img = document.createElement('img');
+        var nameUser = document.createElement('p');
+        var gmail = document.createElement('th');
+        var direccion = document.createElement('th');
+        var telefono = document.createElement('th');
+        var rol = document.createElement('th');
+        var thStatus = document.createElement('th');
+        var divStatus = document.createElement('div');
+        var active = document.createElement('p');
+        var inactive = document.createElement('p');
+        var thActions = document.createElement('th');
+        var divActions = document.createElement('div');
+        var editAction = document.createElement('button');
 
-        img.src = doc.Foto
-        nameUser.textContent = doc.Nombre
-        gmail.textContent = doc.Correo
-        direccion.textContent = doc.Direccion + " " + doc.Barrio
-        telefono.textContent = doc.Telefono
-        rol.textContent = doc.Rol
-        active.textContent = "Activo"
-        inactive.textContent = "Inactivo"
-        editAction.textContent = "Editar"
+        img.src = doc.Photo ? doc.Photo : "/assets/profile-5.jpg";
+        nameUser.textContent = doc.Nombre;
+        gmail.textContent = doc.Email;
+        direccion.textContent = `${doc.Direccion} ${doc.Barrio}`;
+        telefono.textContent = doc.Phone;
+        rol.textContent = doc.Rol;
+        active.textContent = "Activo";
+        inactive.textContent = "Inactivo";
+        editAction.textContent = "Editar";
 
-        divUser.className = "img"
-        divStatus.className = "btnEstatus"
-        divActions.className = "actions"
+        divUser.className = "img";
+        divStatus.className = "btnEstatus";
+        divActions.className = "actions";
 
-        if (doc.Estado == true) {
-            divStatus.classList.remove('active')
+        if (doc.Status == false) {
+            divStatus.classList.add('active');
         } else {
-            divStatus.classList.add('active')
+            divStatus.classList.remove('active');
         }
 
-        tbody.appendChild(tr)
-        tr.appendChild(thImg)
-        thImg.appendChild(divUser)
-        divUser.appendChild(img)
-        divUser.appendChild(nameUser)
-        tr.appendChild(gmail)
-        tr.appendChild(direccion)
-        tr.appendChild(telefono)
-        tr.appendChild(rol)
-        tr.appendChild(thStatus)
-        thStatus.appendChild(divStatus)
-        divStatus.appendChild(active)
-        divStatus.appendChild(inactive)
-        tr.appendChild(thActions)
-        thActions.appendChild(divActions)
-        divActions.appendChild(editAction)
+        tbody.appendChild(tr);
+        tr.appendChild(thImg);
+        thImg.appendChild(divUser);
+        divUser.appendChild(img);
+        divUser.appendChild(nameUser);
+        tr.appendChild(gmail);
+        tr.appendChild(direccion);
+        tr.appendChild(telefono);
+        tr.appendChild(rol);
+        tr.appendChild(thStatus);
+        thStatus.appendChild(divStatus);
+        divStatus.appendChild(active);
+        divStatus.appendChild(inactive);
+        tr.appendChild(thActions);
+        thActions.appendChild(divActions);
+        divActions.appendChild(editAction);
 
         divStatus.addEventListener('click', async () => {
-            divStatus.classList.toggle('active')
-
-            if (divStatus.classList == "btnEstatus") {
+            if (doc.Status == true) {
                 const resStatus = await fetch("http://localhost:4000/api/userDataControl/updateStatus", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"
                     },
                     body: JSON.stringify({
-                        Estatus: true,
-                        Gmail: doc.Correo
+                        Estatus: false,
+                        Gmail: doc.Email
                     })
-                })
-                
-                const resJsonStatus = await resStatus.json()
+                });
     
-                if (resJsonStatus.status = "Update Correct") {
-                    location.reload()
+                const resJsonStatus = await resStatus.json();
+    
+                if (resJsonStatus.status === "Update Correct") {
+                    divStatus.classList.add('active');
                 } else {
-                    textErrorModal.textContent = resJsonStatus.message
-                    modal.classList.add('active')
+                    textErrorModal.textContent = resJsonStatus.message;
+                    modal.classList.add('active');
                     closeModal.addEventListener('click', () => {
-                        modal.classList.remove('active')
-                    })
-                    tryAgain.addEventListener('click', () => {
-                        modal.classList.remove('active')
-                    })
-                    window.addEventListener('click', event => {
-                        if (event.target == modal) {
-                            modal.classList.remove('active')
-                        }
-                    })
+                        modal.classList.remove('active');
+                    });
                 }
             } else {
                 const resStatus = await fetch("http://localhost:4000/api/userDataControl/updateStatus", {
@@ -119,36 +109,28 @@ if (resJson.status == "Data Users") {
                         "Content-Type": "application/json"
                     },
                     body: JSON.stringify({
-                        Estatus: false,
-                        Gmail: doc.Correo
+                        Estatus: true,
+                        Gmail: doc.Email
                     })
-                })
-                
-                const resJsonStatus = await resStatus.json()
+                });
     
-                if (resJsonStatus.status = "Update Correct") {
-                    location.reload()
+                const resJsonStatus = await resStatus.json();
+    
+                if (resJsonStatus.status === "Update Correct") {
+                    divStatus.classList.remove('active');
                 } else {
-                    textErrorModal.textContent = resJsonStatus.message
-                    modal.classList.add('active')
+                    textErrorModal.textContent = resJsonStatus.message;
+                    modal.classList.add('active');
                     closeModal.addEventListener('click', () => {
-                        modal.classList.remove('active')
-                    })
-                    tryAgain.addEventListener('click', () => {
-                        modal.classList.remove('active')
-                    })
-                    window.addEventListener('click', event => {
-                        if (event.target == modal) {
-                            modal.classList.remove('active')
-                        }
-                    })
+                        modal.classList.remove('active');
+                    });
                 }
             }
-        })
+        });
 
         editAction.addEventListener('click', () => {
-            modalUpdate.style.display = 'flex'
-        
+            modalUpdate.style.display = 'flex';
+
             gsap.fromTo(modalContentUpdate,
                 { backdropFilter: 'blur(0px)', height: 0, opacity: 0 },
                 {
@@ -158,9 +140,10 @@ if (resJson.status == "Data Users") {
                     duration: .7,
                     ease: 'expo.out',
                 }
-            )
+            );
+
             window.addEventListener('click', event => {
-                if (event.target == modalUpdate) {
+                if (event.target === modalUpdate) {
                     gsap.to(modalContentUpdate, {
                         height: '0px',
                         duration: .2,
@@ -170,7 +153,8 @@ if (resJson.status == "Data Users") {
                         }
                     });
                 }
-            })
+            });
+
             closeModalUpdate.addEventListener('click', () => {
                 gsap.to(modalContentUpdate, {
                     height: '0px',
@@ -180,15 +164,15 @@ if (resJson.status == "Data Users") {
                         modalUpdate.style.display = 'none';
                     }
                 });
-            })
+            });
 
-            let inputNameUpdate = document.querySelector('.inputNameUpdate')
-            let btnUpdate = document.querySelector('.btnUpdate')
+            let inputNameUpdate = document.querySelector('.inputNameUpdate');
+            let btnUpdate = document.querySelector('.btnUpdate');
 
-            inputNameUpdate.value = doc.Rol
+            inputNameUpdate.value = doc.Rol;
 
             btnUpdate.addEventListener('click', async () => {
-                loader.classList.remove('active')
+                loader.classList.remove('active');
 
                 const resUpdate = await fetch("http://localhost:4000/api/userUpdate", {
                     method: "POST",
@@ -199,31 +183,20 @@ if (resJson.status == "Data Users") {
                         Gmail: doc.Correo,
                         Rol: inputNameUpdate.value
                     })
-                })
-                
-                const resJsonUpdate = await resUpdate.json()
+                });
 
-                if (resJsonUpdate.status == "Update Correct") {
-                    location.reload()
+                const resJsonUpdate = await resUpdate.json();
+
+                if (resJsonUpdate.status === "Update Correct") {
+                    location.reload();
                 } else {
-                    loader.classList.add('active')
-                    textErrorModal.textContent = resJsonUpdate.message
-                    modal.classList.add('active')
-                    closeModal.addEventListener('click', () => {
-                        modal.classList.remove('active')
-                    })
-                    tryAgain.addEventListener('click', () => {
-                        modal.classList.remove('active')
-                    })
-                    window.addEventListener('click', event => {
-                        if (event.target == modal) {
-                            modal.classList.remove('active')
-                        }
-                    })
+                    loader.classList.add('active');
+                    textErrorModal.textContent = resJsonUpdate.message;
+                    modal.classList.add('active');
                 }
-            })
-        })
-    })
+            });
+        });
+    });
 
 } else {
     textErrorModal.textContent = resJson.message

@@ -4,6 +4,334 @@ window.onload = function () {
     loader.classList.add('active')
 }
 
+var modal = document.querySelector('.modal')
+var closeModal = document.querySelector('#closeModal')
+var tryAgain = document.querySelector('.tryAgain')
+var textErrorModal = document.querySelector('.textErrorModal')
+
+const resCategory = await fetch("http://localhost:4000/api/categoryData", {
+    method: "GET",
+    headers: {
+        "Content-Type": "application/json"
+    }
+})
+
+const resJsonCategory = await resCategory.json()
+
+if (resJsonCategory.status === "Data Category") {
+    var selectCategory = document.querySelector('.selectCategory')
+    var containerCategory = document.querySelector('.conCategory')
+
+    const categoryData = resJsonCategory.data;
+
+    categoryData.forEach(async (doc) => {
+        var nombre = document.createElement('p')
+        nombre.textContent = (doc.Nombre).charAt(0).toUpperCase() + (doc.Nombre).slice(1)
+        selectCategory.appendChild(nombre)
+
+        nombre.addEventListener('click', () => {
+            location.href = `#${doc.Nombre.toLowerCase()}`
+        })
+
+        // Create Category Container
+
+        var conCategory = document.createElement('div')
+        var nameCategory = document.createElement('h1')
+
+        nameCategory.textContent = (doc.Nombre).charAt(0).toUpperCase() + (doc.Nombre).slice(1)
+
+        conCategory.className = "category"
+
+        containerCategory.appendChild(conCategory)
+        conCategory.appendChild(nameCategory)
+
+        const resProduct = await fetch("http://localhost:4000/api/productData", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+
+        const resProductJson = await resProduct.json()
+
+        if (resProductJson.status == "Data Products") {
+            var productsCategory = document.createElement('div')
+            productsCategory.id = doc.Nombre.toLowerCase()
+
+            const productData = resProductJson.data;
+
+            productData.forEach(async (doc) => {
+                if (doc.Estado == true) {
+                    if (doc.Categoria.toLowerCase() == nameCategory.textContent.toLowerCase()) {
+                        var product = document.createElement('div')
+                        var img = document.createElement('img')
+                        var rightProduct = document.createElement('div')
+                        var price = document.createElement('p')
+                        var discount = document.createElement('span')
+                        var name = document.createElement('h3')
+                        var description = document.createElement('h4')
+                        var divButtons = document.createElement('div')
+                        var addCar = document.createElement('button')
+                        var iCar = document.createElement('i')
+                        var addFavorite = document.createElement('button')
+                        var iFavorite = document.createElement('i')
+    
+                        img.src = doc.Foto
+                        if (doc.Descuento != "") {
+                            price.textContent = `$${parseInt(parseInt(doc.Precio) - (parseInt(doc.Precio) * (parseInt(doc.Descuento) / 100))).toLocaleString('ed-ED')}`
+                            discount.textContent = `-${doc.Descuento}%`
+    
+                            price.className = "discount1"
+                            price.appendChild(discount)
+                        } else {
+                            price.textContent = `$${parseInt(doc.Precio).toLocaleString('ed-ED')}`
+                        }
+    
+                        name.textContent = (doc.Nombre).charAt(0).toUpperCase() + (doc.Nombre).slice(1)
+                        description.textContent = doc.Descripcion
+                        addCar.textContent = "Agregar"
+    
+                        productsCategory.className = "productsCategory"
+                        product.className = "product"
+                        rightProduct.className = "rightProduct"
+                        divButtons.className = "buttons"
+                        addCar.className = "addCar"
+                        addFavorite.className = "addFavorite"
+                        iCar.className = "ph ph-shopping-cart"
+                        iFavorite.className = "ph-bold ph-heart"
+    
+                        conCategory.appendChild(productsCategory)
+                        productsCategory.appendChild(product)
+                        product.appendChild(img)
+                        product.appendChild(rightProduct)
+                        rightProduct.appendChild(price)
+                        rightProduct.appendChild(name)
+                        rightProduct.appendChild(description)
+                        rightProduct.appendChild(divButtons)
+                        divButtons.appendChild(addCar)
+                        addCar.appendChild(iCar)
+                        divButtons.appendChild(addFavorite)
+                        addFavorite.appendChild(iFavorite)
+    
+                        const resDataFavorite = await fetch("http://localhost:4000/api/favoriteData", {
+                            method: "GET",
+                            headers: {
+                                "Content-Type": "application/json"
+                            }
+                        })
+    
+                        const resJsonDataFavorite = await resDataFavorite.json()
+    
+                        if (resJsonDataFavorite.status == "Data Favorite") {
+                            const favoriteData = resJsonDataFavorite.data;
+    
+                            const resUser = await fetch("http://localhost:4000/api/userData", {
+                                method: "GET",
+                                headers: {
+                                    "Content-Type": "application/json"
+                                }
+                            })
+    
+                            const resJsonUser = await resUser.json()
+    
+                            favoriteData.forEach((doc) => {
+                                if (resJsonUser.data.Email.toLowerCase() == doc.Correo.toLowerCase()) {
+                                    if (doc.Nombre.toLowerCase() == name.textContent.toLowerCase()) {
+                                        addFavorite.classList.add('active')
+                                    }
+                                }
+                            })
+                        } else {
+                            textErrorModal.textContent = resJsonDataFavorite.message;
+                            modal.classList.add('active');
+                            closeModal.addEventListener('click', () => {
+                                modal.classList.remove('active');
+                            });
+                            tryAgain.addEventListener('click', () => {
+                                modal.classList.remove('active');
+                            });
+                            window.addEventListener('click', event => {
+                                if (event.target == modal) {
+                                    modal.classList.remove('active');
+                                }
+                            });
+                        }
+    
+                        const modalUpdate = document.querySelector('.modalUpdate');
+                        const modalContentUpdate = document.querySelector('.conModalUpdate');
+                        const closeModalUpdate = document.getElementById('closeModalUpdate')
+    
+                        addCar.addEventListener('click', () => {
+                            modalUpdate.style.display = 'flex'
+    
+                            gsap.fromTo(modalContentUpdate,
+                                { height: 0, opacity: 0 },
+                                {
+                                    height: '100%',
+                                    opacity: 1,
+                                    backgroundColor: 'var(--color-blanco)',
+                                    duration: .7,
+                                    ease: 'expo.out',
+                                }
+                            )
+                            window.addEventListener('click', event => {
+                                if (event.target == modalUpdate) {
+                                    gsap.to(modalContentUpdate, {
+                                        height: '0px',
+                                        duration: .2,
+                                        ease: 'power1.in',
+                                        onComplete: () => {
+    
+                                            modalUpdate.style.display = 'none';
+                                        }
+                                    });
+                                }
+                            })
+                            closeModalUpdate.addEventListener('click', () => {
+                                gsap.to(modalContentUpdate, {
+                                    height: '0px',
+                                    duration: .2,
+                                    ease: 'power1.in',
+                                    onComplete: () => {
+                                        modalUpdate.style.display = 'none';
+                                    }
+                                });
+                            })
+    
+                            var nameUpdate = document.querySelectorAll('.nameUpdate')
+                            var imgUpdate = document.querySelector('.imgUpdate')
+                            var price = document.querySelector('.price')
+                            var discount = document.querySelector('.discount')
+                            var descriptionUpdate = document.querySelector('.descriptionUpdate')
+    
+                            if (doc.Descuento == '') {
+                                discount.style.display = 'none'
+                                price.textContent = `$${parseInt(doc.Precio).toLocaleString('ed-ED')}`
+                            } else {
+                                discount.style.display = 'flex'
+                                price.textContent = `$${parseInt(parseInt(doc.Precio) - (parseInt(doc.Precio) * (parseInt(doc.Descuento) / 100))).toLocaleString('ed-ED')}`
+                            }
+    
+                            nameUpdate.forEach((nameUpdate) => {
+                                nameUpdate.textContent = (doc.Nombre).charAt(0).toUpperCase() + (doc.Nombre).slice(1)
+                            })
+                            imgUpdate.src = doc.Foto
+                            discount.textContent = `-${doc.Descuento}%`
+                            descriptionUpdate.textContent = doc.Descripcion
+                            discount.className = "discount"
+                            price.appendChild(discount)
+    
+                        })
+    
+                        addFavorite.addEventListener('click', async () => {
+                            if (addFavorite.classList == "addFavorite active") {
+                                const resDeleteFavorite = await fetch("http://localhost:4000/api/deleteFavorite", {
+                                    method: "POST",
+                                    headers: {
+                                        "Content-Type": "application/json"
+                                    },
+                                    body: JSON.stringify({
+                                        Name: doc.Nombre,
+                                    })
+                                })
+    
+                                const resJsonDeleteFavorite = await resDeleteFavorite.json()
+    
+                                if (resJsonDeleteFavorite.status == "Favorite Delete") {
+                                    addFavorite.classList.remove('active')
+                                } else {
+                                    textErrorModal.textContent = resJsonDeleteFavorite.message;
+                                    modal.classList.add('active');
+                                    closeModal.addEventListener('click', () => {
+                                        modal.classList.remove('active');
+                                    });
+                                    tryAgain.addEventListener('click', () => {
+                                        modal.classList.remove('active');
+                                    });
+                                    window.addEventListener('click', event => {
+                                        if (event.target == modal) {
+                                            modal.classList.remove('active');
+                                        }
+                                    });
+                                }
+                            } else if (addFavorite.classList == "addFavorite") {
+                                const resUser = await fetch("http://localhost:4000/api/userData", {
+                                    method: "GET",
+                                    headers: {
+                                        "Content-Type": "application/json"
+                                    }
+                                })
+    
+                                const resJsonUser = await resUser.json()
+    
+                                const resAddFavorite = await fetch("http://localhost:4000/api/addFavorite", {
+                                    method: "POST",
+                                    headers: {
+                                        "Content-Type": "application/json"
+                                    },
+                                    body: JSON.stringify({
+                                        Name: doc.Nombre,
+                                        Correo: resJsonUser.data.Email
+                                    })
+                                })
+    
+                                const resJsonAddFavorite = await resAddFavorite.json()
+    
+                                if (resJsonAddFavorite.status == "Add Favorite Correct") {
+                                    addFavorite.classList.add('active')
+                                } else {
+                                    textErrorModal.textContent = resJsonAddFavorite.message;
+                                    modal.classList.add('active');
+                                    closeModal.addEventListener('click', () => {
+                                        modal.classList.remove('active');
+                                    });
+                                    tryAgain.addEventListener('click', () => {
+                                        modal.classList.remove('active');
+                                    });
+                                    window.addEventListener('click', event => {
+                                        if (event.target == modal) {
+                                            modal.classList.remove('active');
+                                        }
+                                    });
+                                }
+                            }
+                        })
+                    }
+                }
+            })
+
+        } else {
+            textErrorModal.textContent = resProductJson.message;
+            modal.classList.add('active');
+            closeModal.addEventListener('click', () => {
+                modal.classList.remove('active');
+            });
+            tryAgain.addEventListener('click', () => {
+                modal.classList.remove('active');
+            });
+            window.addEventListener('click', event => {
+                if (event.target == modal) {
+                    modal.classList.remove('active');
+                }
+            });
+        }
+    })
+} else {
+    textErrorModal.textContent = resJsonExpense.message
+    modal.classList.add('active')
+    closeModal.addEventListener('click', () => {
+        modal.classList.remove('active')
+    })
+    tryAgain.addEventListener('click', () => {
+        modal.classList.remove('active')
+    })
+    window.addEventListener('click', event => {
+        if (event.target == modal) {
+            modal.classList.remove('active')
+        }
+    })
+}
+
 var btnConfig = document.querySelector('.btnConfig')
 
 btnConfig.addEventListener('click', () => {
@@ -104,49 +432,3 @@ if (resJson.data.Photo == "") {
 } else {
     imgProfile.src = resJson.data.Photo
 }
-
-var addCar = document.querySelectorAll('.addCar')
-
-const modalUpdate = document.querySelector('.modalUpdate');
-const modalContentUpdate = document.querySelector('.conModalUpdate');
-const closeModalUpdate = document.getElementById('closeModalUpdate')
-
-addCar.forEach((addCar) => {
-    addCar.addEventListener('click', () => {
-        modalUpdate.style.display = 'flex'
-
-        gsap.fromTo(modalContentUpdate,
-            { height: 0, opacity: 0 },
-            {
-                height: '100%',
-                opacity: 1,
-                backgroundColor: 'var(--color-blanco)',
-                duration: .7,
-                ease: 'expo.out',
-            }
-        )
-        window.addEventListener('click', event => {
-            if (event.target == modalUpdate) {
-                gsap.to(modalContentUpdate, {
-                    height: '0px',
-                    duration: .2,
-                    ease: 'power1.in',
-                    onComplete: () => {
-
-                        modalUpdate.style.display = 'none';
-                    }
-                });
-            }
-        })
-        closeModalUpdate.addEventListener('click', () => {
-            gsap.to(modalContentUpdate, {
-                height: '0px',
-                duration: .2,
-                ease: 'power1.in',
-                onComplete: () => {
-                    modalUpdate.style.display = 'none';
-                }
-            });
-        })
-    })
-})

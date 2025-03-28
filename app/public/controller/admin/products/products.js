@@ -393,6 +393,16 @@ var inputDiscountUpdate = document.querySelector('.inputDiscountUpdate')
 
 var btnUpdate = document.querySelector('.btnUpdate')
 
+inputDiscountUpdate.addEventListener('input', () => {
+    if (inputNameUpdate.value.length != 0 && inputCategoryUpdate.value.length != 0 && inputPriceUpdate.value.length != 0 && inputDescriptionUpdate.value.length != 0) {
+        btnUpdate.classList.add('active')
+        btnUpdate.disabled = false
+    } else {
+        btnUpdate.classList.remove('active')
+        btnUpdate.disabled = true
+    }
+})
+
 inputDescriptionUpdate.addEventListener('input', () => {
     if (inputNameUpdate.value.length != 0 && inputCategoryUpdate.value.length != 0 && inputPriceUpdate.value.length != 0 && inputDescriptionUpdate.value.length != 0) {
         btnUpdate.classList.add('active')

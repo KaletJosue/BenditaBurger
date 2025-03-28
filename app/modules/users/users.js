@@ -5,16 +5,32 @@ dotenv.config()
 
 async function usersData(req, res) {
     if (req.headers.cookie) {
+
         const db = await conectarConMongoDB();
         const productsCollection = db.collection('usuarios');
 
         const usersData = await productsCollection.find({}).toArray();
 
-        return res.status(200).send({
-            status: "Data Users",
-            message: "Datos de los usuarios obtenidos correctamente",
-            data: usersData,
+        const usuariosFiltrados = usersData.map(revisarUsuario => {
+            return {
+                Rol: revisarUsuario.Rol,
+                Nombre: revisarUsuario.Nombre,
+                Email: revisarUsuario.Correo,
+                Photo: revisarUsuario.Foto,
+                Direccion: revisarUsuario.Direccion,
+                Phone: revisarUsuario.Telefono,
+                Status: revisarUsuario.Estado,
+                Barrio: revisarUsuario.Barrio,
+                Descripcion: revisarUsuario.Descripcion
+            };
         });
+
+        return res.status(200).send({
+            status: "Data User",
+            message: `Data de los usuarios`,
+            data: usuariosFiltrados
+        });
+
     } else {
         return res.status(400).send({ status: "Error Login", message: "No has iniciado sesión correctamente" });
     }

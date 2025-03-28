@@ -111,10 +111,7 @@ async function updateProduct (req, res) {
         const revisarCategory = await categoryCollection.findOne({ Nombre: (category).toLowerCase() });
 
         if (revisarCategory) {
-            if (revisarProduct) {
-                return res.status(400).send({ status: "Error Product", message: "Este producto ya esta agregado" });
-            } else {
-    
+            if (revisarProduct && revisarProduct.Nombre.toLowerCase() == nameRefe.toLowerCase()) {
                 const filtro = {
                     Nombre: nameRefe,
                 };
@@ -131,6 +128,9 @@ async function updateProduct (req, res) {
                 const resultado = await productsCollection.updateOne(filtro, newProduct);
     
                 return res.status(200).send({ status: "Update Correct", message: "Producto Actualizado corretamente" });
+            } else {
+    
+                return res.status(400).send({ status: "Error Product", message: "Este producto ya esta agregado" });
     
             }
         } else {

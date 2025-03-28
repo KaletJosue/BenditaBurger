@@ -300,12 +300,6 @@ body {
     color: var(--color-negro);
 }
 
-.main .selectCategory p.active {
-    background-color: var(--color-linea);
-    color: var(--color-gris);
-    font-weight: 800;
-}
-
 .main .selectCategory p:hover {
     background-color: var(--color-linea);
     color: var(--color-gris);
@@ -330,6 +324,7 @@ body {
     flex-direction: column;
     align-items: start;
     justify-content: start;
+    width: 100%;
 }
 
 .main .conCategory .category h1 {
@@ -343,17 +338,19 @@ body {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1rem;
+    width: 100%;
 }
 
 .main .conCategory .category .productsCategory .product {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: start;
     gap: 1rem;
     background-color: var(--color-blanco);
     padding: 1rem;
     border-radius: 10px;
     box-shadow: var(--box-shadow-suave);
+    width: 100%;
 }
 
 .main .conCategory .category .productsCategory .product img {
@@ -380,7 +377,7 @@ body {
     color: var(--color-negro);
 }
 
-.main .conCategory .category .productsCategory .product .rightProduct p.discount span {
+.main .conCategory .category .productsCategory .product .rightProduct p.discount1 span {
     padding: .2rem .5rem;
     background-color: #FF4A43;
     color: white;
@@ -552,7 +549,7 @@ body {
     gap: .5rem;
 }
 
-.modalUpdate .conModalUpdate .inModalUpdate .rightModalUpdate p.discount span {
+.modalUpdate .conModalUpdate .inModalUpdate .rightModalUpdate p span.discount {
     background-color: #FF4A43;
     padding: .2rem .5rem;
     color: white;
@@ -941,6 +938,13 @@ body {
     .main .conCategory .category .productsCategory .product {
         display: flex;
         flex-direction: column;
+    }
+
+    .main .conCategory .category .productsCategory .product .rightProduct {
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        width: 100%;
     }
 }
 
