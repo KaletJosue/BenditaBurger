@@ -977,6 +977,11 @@ body {
 @media (width < 550px) {
     .modalUpdate .conModalUpdate .inModalUpdate {
         flex-direction: column;
+        width: 100%;
+    }
+
+    .modalUpdate .conModalUpdate .inModalUpdate .rightModalUpdate {
+        width: 100%;
     }
 }
 

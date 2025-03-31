@@ -9,6 +9,7 @@ import { method as products} from "../modules/products/products.js"
 import { method as category} from "../modules/category/category.js"
 import { method as users} from "../modules/users/users.js"
 import { method as favorite} from "../modules/favorite/favorite.js"
+import { method as car} from "../modules/car/car.js"
 
 import { upload, upload2, upload3 } from '../cloudinary/cloudinary.js';
 
@@ -106,6 +107,7 @@ router.get('/api/expenseData', expense.expenseData)
 router.get('/api/productData', products.productData)
 router.get('/api/categoryData', category.categoryData)
 router.get('/api/favoriteData', favorite.favoriteData)
+router.get('/api/carData', car.carData)
 
 router.put('/api/updateUser', upload.single('profilePic'), updateUser.updateData)
 
@@ -138,5 +140,9 @@ router.post('/api/userUpdate', users.updateRol)
 
 router.post('/api/addFavorite', favorite.addFavorite)
 router.post('/api/deleteFavorite', favorite.deleteFavorite)
+
+router.post('/api/addCar', car.addCar)
+router.post('/api/updateCar', car.updateCar)
+router.post('/api/deleteCar', car.deleteCar)
 
 export default router;

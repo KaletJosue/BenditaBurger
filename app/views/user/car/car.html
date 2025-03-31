@@ -95,86 +95,7 @@
         <h1 class="resumenH1">Resumen de Compra</h1>
         <div class="containerProducts">
             <div class="conProducts">
-                <div class="product">
-                    <div class="leftProduct">
-                        <img src="/assets/ham2.png" alt="">
-                        <div class="conLeftProduct">
-                            <h1>La zunga</h1>
-                            <button>Eliminar</button>
-                        </div>
-                    </div>
-                    <div class="centerProduct">
-                        <i class="ph-bold ph-minus"></i>
-                        <p>1</p>
-                        <i class="ph-bold ph-plus"></i>
-                    </div>
-                    <div class="rightProduct">
-                        <div class="discount">
-                            <p>$76.000</p>
-                            <span>-12%</span>
-                        </div>
-                        <p>$23.000</p>
-                    </div>
-                </div>
-                <div class="product">
-                    <div class="leftProduct">
-                        <img src="/assets/ham2.png" alt="">
-                        <div class="conLeftProduct">
-                            <h1>La zunga</h1>
-                            <button>Eliminar</button>
-                        </div>
-                    </div>
-                    <div class="centerProduct">
-                        <i class="ph-bold ph-minus"></i>
-                        <p>1</p>
-                        <i class="ph-bold ph-plus"></i>
-                    </div>
-                    <div class="rightProduct">
-                        <p>$23.000</p>
-                    </div>
-                </div>
-                <div class="product">
-                    <div class="leftProduct">
-                        <img src="/assets/ham2.png" alt="">
-                        <div class="conLeftProduct">
-                            <h1>La zunga</h1>
-                            <button>Eliminar</button>
-                        </div>
-                    </div>
-                    <div class="centerProduct">
-                        <i class="ph-bold ph-minus"></i>
-                        <p>1</p>
-                        <i class="ph-bold ph-plus"></i>
-                    </div>
-                    <div class="rightProduct">
-                        <div class="discount">
-                            <p>$76.000</p>
-                            <span>-12%</span>
-                        </div>
-                        <p>$23.000</p>
-                    </div>
-                </div>
-                <div class="product">
-                    <div class="leftProduct">
-                        <img src="/assets/ham2.png" alt="">
-                        <div class="conLeftProduct">
-                            <h1>La zunga</h1>
-                            <button>Eliminar</button>
-                        </div>
-                    </div>
-                    <div class="centerProduct">
-                        <i class="ph-bold ph-minus"></i>
-                        <p>1</p>
-                        <i class="ph-bold ph-plus"></i>
-                    </div>
-                    <div class="rightProduct">
-                        <div class="discount">
-                            <p>$76.000</p>
-                            <span>-12%</span>
-                        </div>
-                        <p>$23.000</p>
-                    </div>
-                </div>
+
             </div>
         </div>
         <div class="resumenCompra">
@@ -182,15 +103,15 @@
                 <h3>Resumen de Compra</h3>
             </div>
             <div class="conCompra">
-                <p>Productos(2)</p>
-                <p>$ 76.000</p>
+                <p class="compraCant"></p>
+                <p class="compraPrice"></p>
                 <p>Envios</p>
                 <p>$ 5.000</p>
                 <p class="cupon" id="cupon">Ingresar codigo de cupon</p>
             </div>
             <div class="pTotal">
                 <h1>Total</h1>
-                <h1>$81.000</h1>
+                <h1 class="totalEnvio"></h1>
             </div>
             <div class="btnComprar">
                 <button>Continuar compra</button>
@@ -215,14 +136,15 @@
 
     <div class="modal">
         <div class="modalContent">
+            <i class="fa-solid fa-x" id="closeModal"></i>
             <div class="centerModal">
                 <i class="fa-solid fa-triangle-exclamation"></i>
                 <div class="textModal">
                     <h1>Ooops!</h1>
-                    <p class="textErrorModal">No has iniciado sesión de manera correcta</p>
+                    <p class="textErrorModal"></p>
                 </div>
             </div>
-            <button class="tryAgain">Iniciar Sesión</button>
+            <button class="tryAgain">Intentar de Nuevo</button>
         </div>
     </div>
 

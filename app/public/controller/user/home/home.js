@@ -75,22 +75,22 @@ if (resJsonCategory.status === "Data Category") {
                         var iCar = document.createElement('i')
                         var addFavorite = document.createElement('button')
                         var iFavorite = document.createElement('i')
-    
+
                         img.src = doc.Foto
                         if (doc.Descuento != "") {
                             price.textContent = `$${parseInt(parseInt(doc.Precio) - (parseInt(doc.Precio) * (parseInt(doc.Descuento) / 100))).toLocaleString('ed-ED')}`
                             discount.textContent = `-${doc.Descuento}%`
-    
+
                             price.className = "discount1"
                             price.appendChild(discount)
                         } else {
                             price.textContent = `$${parseInt(doc.Precio).toLocaleString('ed-ED')}`
                         }
-    
+
                         name.textContent = (doc.Nombre).charAt(0).toUpperCase() + (doc.Nombre).slice(1)
                         description.textContent = doc.Descripcion
                         addCar.textContent = "Agregar"
-    
+
                         productsCategory.className = "productsCategory"
                         product.className = "product"
                         rightProduct.className = "rightProduct"
@@ -99,7 +99,7 @@ if (resJsonCategory.status === "Data Category") {
                         addFavorite.className = "addFavorite"
                         iCar.className = "ph ph-shopping-cart"
                         iFavorite.className = "ph-bold ph-heart"
-    
+
                         conCategory.appendChild(productsCategory)
                         productsCategory.appendChild(product)
                         product.appendChild(img)
@@ -112,28 +112,28 @@ if (resJsonCategory.status === "Data Category") {
                         addCar.appendChild(iCar)
                         divButtons.appendChild(addFavorite)
                         addFavorite.appendChild(iFavorite)
-    
+
                         const resDataFavorite = await fetch("http://localhost:4000/api/favoriteData", {
                             method: "GET",
                             headers: {
                                 "Content-Type": "application/json"
                             }
                         })
-    
+
                         const resJsonDataFavorite = await resDataFavorite.json()
-    
+
                         if (resJsonDataFavorite.status == "Data Favorite") {
                             const favoriteData = resJsonDataFavorite.data;
-    
+
                             const resUser = await fetch("http://localhost:4000/api/userData", {
                                 method: "GET",
                                 headers: {
                                     "Content-Type": "application/json"
                                 }
                             })
-    
+
                             const resJsonUser = await resUser.json()
-    
+
                             favoriteData.forEach((doc) => {
                                 if (resJsonUser.data.Email.toLowerCase() == doc.Correo.toLowerCase()) {
                                     if (doc.Nombre.toLowerCase() == name.textContent.toLowerCase()) {
@@ -156,14 +156,14 @@ if (resJsonCategory.status === "Data Category") {
                                 }
                             });
                         }
-    
+
                         const modalUpdate = document.querySelector('.modalUpdate');
                         const modalContentUpdate = document.querySelector('.conModalUpdate');
                         const closeModalUpdate = document.getElementById('closeModalUpdate')
-    
+
                         addCar.addEventListener('click', () => {
                             modalUpdate.style.display = 'flex'
-    
+
                             gsap.fromTo(modalContentUpdate,
                                 { height: 0, opacity: 0 },
                                 {
@@ -181,7 +181,7 @@ if (resJsonCategory.status === "Data Category") {
                                         duration: .2,
                                         ease: 'power1.in',
                                         onComplete: () => {
-    
+
                                             modalUpdate.style.display = 'none';
                                         }
                                     });
@@ -197,13 +197,13 @@ if (resJsonCategory.status === "Data Category") {
                                     }
                                 });
                             })
-    
+
                             var nameUpdate = document.querySelectorAll('.nameUpdate')
                             var imgUpdate = document.querySelector('.imgUpdate')
                             var price = document.querySelector('.price')
                             var discount = document.querySelector('.discount')
                             var descriptionUpdate = document.querySelector('.descriptionUpdate')
-    
+
                             if (doc.Descuento == '') {
                                 discount.style.display = 'none'
                                 price.textContent = `$${parseInt(doc.Precio).toLocaleString('ed-ED')}`
@@ -211,7 +211,7 @@ if (resJsonCategory.status === "Data Category") {
                                 discount.style.display = 'flex'
                                 price.textContent = `$${parseInt(parseInt(doc.Precio) - (parseInt(doc.Precio) * (parseInt(doc.Descuento) / 100))).toLocaleString('ed-ED')}`
                             }
-    
+
                             nameUpdate.forEach((nameUpdate) => {
                                 nameUpdate.textContent = (doc.Nombre).charAt(0).toUpperCase() + (doc.Nombre).slice(1)
                             })
@@ -220,9 +220,9 @@ if (resJsonCategory.status === "Data Category") {
                             descriptionUpdate.textContent = doc.Descripcion
                             discount.className = "discount"
                             price.appendChild(discount)
-    
+
                         })
-    
+
                         addFavorite.addEventListener('click', async () => {
                             if (addFavorite.classList == "addFavorite active") {
                                 const resDeleteFavorite = await fetch("http://localhost:4000/api/deleteFavorite", {
@@ -234,9 +234,9 @@ if (resJsonCategory.status === "Data Category") {
                                         Name: doc.Nombre,
                                     })
                                 })
-    
+
                                 const resJsonDeleteFavorite = await resDeleteFavorite.json()
-    
+
                                 if (resJsonDeleteFavorite.status == "Favorite Delete") {
                                     addFavorite.classList.remove('active')
                                 } else {
@@ -261,9 +261,9 @@ if (resJsonCategory.status === "Data Category") {
                                         "Content-Type": "application/json"
                                     }
                                 })
-    
+
                                 const resJsonUser = await resUser.json()
-    
+
                                 const resAddFavorite = await fetch("http://localhost:4000/api/addFavorite", {
                                     method: "POST",
                                     headers: {
@@ -274,9 +274,9 @@ if (resJsonCategory.status === "Data Category") {
                                         Correo: resJsonUser.data.Email
                                     })
                                 })
-    
+
                                 const resJsonAddFavorite = await resAddFavorite.json()
-    
+
                                 if (resJsonAddFavorite.status == "Add Favorite Correct") {
                                     addFavorite.classList.add('active')
                                 } else {
@@ -332,6 +332,116 @@ if (resJsonCategory.status === "Data Category") {
     })
 }
 
+var addCarBtn = document.querySelector('.addCarBtn')
+
+addCarBtn.addEventListener('click', async () => {
+    loader.classList.remove('active')
+
+    let name = document.querySelector('.nameUpdate')
+    let cant = document.querySelector('#count')
+    let correo = resJson.data.Email
+
+    const resUser = await fetch("http://localhost:4000/api/userData", {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })
+
+    const resJsonUser = await resUser.json()
+
+    const resAddCar = await fetch("http://localhost:4000/api/addCar", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            Name: name.textContent,
+            Cant: cant.textContent,
+            Correo: resJsonUser.data.Email
+        })
+    })
+
+    const resJsonAddCar = await resAddCar.json()
+
+    if (resJsonAddCar.status == "Add Car") {
+        loader.classList.add('active')
+
+        let modalUpdate = document.querySelector('.modalUpdate');
+        let modalContentUpdate = document.querySelector('.conModalUpdate');
+
+        gsap.to(modalContentUpdate, {
+            height: '0px',
+            duration: .2,
+            ease: 'power1.in',
+            onComplete: () => {
+                modalUpdate.style.display = 'none';
+            }
+        });
+
+    } else {
+        loader.classList.add('active')
+        textErrorModal.textContent = resJsonAddCar.message
+        modal.classList.add('active')
+        closeModal.addEventListener('click', () => {
+            modal.classList.remove('active')
+        })
+        tryAgain.addEventListener('click', () => {
+            modal.classList.remove('active')
+        })
+        window.addEventListener('click', event => {
+            if (event.target == modal) {
+                modal.classList.remove('active')
+            }
+        })
+    }
+})
+
+var countMinus = document.querySelector('#countMinus')
+var count = document.querySelector('#count')
+var countPlus = document.querySelector('#countPlus')
+
+var cont = 1
+
+countMinus.style.display = "none"
+
+countMinus.addEventListener('click', () => {
+    if (cont == 2) {
+        countMinus.style.display = "none"
+
+        cont--
+        count.textContent = cont
+    } else {
+        countMinus.style.display = "flex"
+
+        cont--
+        count.textContent = cont
+    }
+})
+
+countPlus.addEventListener('click', () => {
+    if (cont < 10) {
+        cont++
+        count.textContent = cont
+
+        countMinus.style.display = "flex"
+    } else {
+        textErrorModal.textContent = "Puedes pedir hasta un maximo de 10 unidades de este producto"
+        modal.classList.add('active')
+        closeModal.addEventListener('click', () => {
+            modal.classList.remove('active')
+        })
+        tryAgain.addEventListener('click', () => {
+            modal.classList.remove('active')
+        })
+        window.addEventListener('click', event => {
+            if (event.target == modal) {
+                modal.classList.remove('active')
+            }
+        })
+    }
+})
+
 var btnConfig = document.querySelector('.btnConfig')
 
 btnConfig.addEventListener('click', () => {
@@ -349,10 +459,6 @@ var conMenu = document.querySelector('.conMenu')
 conMenu.addEventListener('click', () => {
     menu.classList.toggle('active')
     sidebar.classList.toggle('ocult')
-    if (menu.classList == "menu") {
-        optionsFinanzas2.classList.remove('active')
-        optionsMenu2.classList.remove('active')
-    }
 })
 
 var sidebar = document.querySelector('.sidebar')

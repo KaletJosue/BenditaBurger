@@ -1,14 +1,18 @@
 import dotenv from "dotenv"
 import conectarConMongoDB from "../../db/db.js"
+import jsonwebtoken from "jsonwebtoken"
 
 dotenv.config()
 
 async function favoriteData(req, res) {
     if (req.headers.cookie) {
+        const cookieJWT = req.headers.cookie.split("; ").find(cookie => cookie.startsWith("jwt=")).slice(4)
+        const decodificada = jsonwebtoken.verify(cookieJWT, process.env.JWT_SECRET)
+
         const db = await conectarConMongoDB();
         const favoriteCollection = db.collection('favoritos');
 
-        const favoriteData = await favoriteCollection.find({}).toArray();
+        const favoriteData = await favoriteCollection.find({Correo: decodificada.user}).toArray();
 
         return res.status(200).send({
             status: "Data Favorite",
