@@ -26,235 +26,247 @@ if (resJsonCar.status == "Data Car") {
 
     var conProducts = document.querySelector('.conProducts')
 
-    carData.forEach(async (doc) => {
-        var emailUser = doc.Correo
-        var nameProduct = doc.Nombre.toLowerCase()
-        var cantidad = doc.Cantidad
+    if (carData != "") {
+        var main2 = document.querySelector('.main2')
 
-        const resProduct = await fetch("http://localhost:4000/api/productData", {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json"
-            }
-        })
-        const resProductJson = await resProduct.json()
+        main2.style.display = "none"
 
-        if (resProductJson.status == "Data Products") {
+        carData.forEach(async (doc) => {
+            var emailUser = doc.Correo
+            var nameProduct = doc.Nombre.toLowerCase()
+            var cantidad = doc.Cantidad
 
-            const productData = resProductJson.data;
-
-            var conProducts = document.querySelector('.conProducts')
-
-            productData.forEach((doc) => {
-                if (nameProduct == doc.Nombre && doc.Estado == true) {
-                    var product = document.createElement('div')
-                    var leftProduct = document.createElement('div')
-                    var img = document.createElement('img')
-                    var conLeftProduct = document.createElement('div')
-                    var name = document.createElement('h1')
-                    var deleteCar = document.createElement('button')
-                    var centerProduct = document.createElement('div')
-                    var countMinus = document.createElement('i')
-                    var count = document.createElement('p')
-                    var countPlus = document.createElement('i')
-                    var rightProduct = document.createElement('div')
-                    var discount = document.createElement('div')
-                    var priceDiscount = document.createElement('p')
-                    var cantDiscount = document.createElement('span')
-                    var price = document.createElement('p')
-
-                    img.src = doc.Foto
-                    name.textContent = (doc.Nombre).charAt(0).toUpperCase() + (doc.Nombre).slice(1)
-                    deleteCar.textContent = "Eliminar"
-                    count.textContent = cantidad
-
-                    if (doc.Descuento != "") {
-                        priceDiscount.textContent = `$${parseInt(doc.Precio).toLocaleString('ed-ED')}`
-                        cantDiscount.textContent = `-${doc.Descuento}%`
-                        price.textContent = `$${parseInt(parseInt(doc.Precio) - (parseInt(doc.Precio) * (parseInt(doc.Descuento) / 100))).toLocaleString('ed-ED')}`
-
-                        discount.className = "discount"
-
-                        rightProduct.appendChild(discount)
-                        discount.appendChild(priceDiscount)
-                        discount.appendChild(cantDiscount)
-                    } else {
-                        price.textContent = `$${parseInt(doc.Precio).toLocaleString('ed-ED')}`
-                    }
-
-                    product.className = "product"
-                    leftProduct.className = "leftProduct"
-                    conLeftProduct.className = "conLeftProduct"
-                    centerProduct.className = "centerProduct"
-                    countMinus.className = "ph-bold ph-minus"
-                    countPlus.className = "ph-bold ph-plus"
-                    rightProduct.className = "rightProduct"
-
-                    conProducts.appendChild(product)
-                    product.appendChild(leftProduct)
-                    leftProduct.appendChild(img)
-                    leftProduct.appendChild(conLeftProduct)
-                    conLeftProduct.appendChild(name)
-                    conLeftProduct.appendChild(deleteCar)
-                    product.appendChild(centerProduct)
-                    centerProduct.appendChild(countMinus)
-                    centerProduct.appendChild(count)
-                    centerProduct.appendChild(countPlus)
-                    product.appendChild(rightProduct)
-                    rightProduct.appendChild(price)
-
-                    if (doc.Descuento != "") {
-                        cantTotal += (doc.Precio - (doc.Precio * (doc.Descuento / 100))) * cantidad
-                    } else {
-                        cantTotal += parseInt(doc.Precio) * cantidad
-                    }
-
-                    cantProducts++
-
-                    var compraCant = document.querySelector('.compraCant')
-                    var compraPrice = document.querySelector('.compraPrice')
-
-                    compraCant.textContent = `Productos(${cantProducts})`
-                    compraPrice.textContent = `$ ${cantTotal.toLocaleString('ed-ED')}`
-
-                    var totalEnvio = document.querySelector('.totalEnvio')
-
-                    totalEnvio.textContent = `$${parseInt(cantTotal + 5000).toLocaleString('ed-ED')}`
-
-                    var contador = parseInt(count.textContent)
-
-                    countMinus.addEventListener('click', async () => {
-                        const resUpdateCar = await fetch("http://localhost:4000/api/updateCar", {
-                            method: "POST",
-                            headers: {
-                                "Content-Type": "application/json"
-                            },
-                            body: JSON.stringify({
-                                Name: doc.Nombre,
-                                Cant: parseInt(count.textContent) - 1,
-                                Correo: emailUser
-                            })
-                        })
-
-                        const resUpdateCarJson = await resUpdateCar.json()
-
-                        if (resUpdateCarJson.status == "Update Correct") {
-                            contador--
-                            count.textContent = contador
-
-                            if (doc.Descuento != "") {
-                                cantTotal -= doc.Precio - (doc.Precio * (doc.Descuento / 100))
-
-                                compraPrice.textContent = `$ ${cantTotal.toLocaleString('ed-ED')}`
-                                totalEnvio.textContent = `$${parseInt(cantTotal + 5000).toLocaleString('ed-ED')}`
-                            } else {
-                                cantTotal -= doc.Precio
-
-                                compraPrice.textContent = `$ ${cantTotal.toLocaleString('ed-ED')}`
-                                totalEnvio.textContent = `$${parseInt(cantTotal + 5000).toLocaleString('ed-ED')}`
-                            }
-                        } else {
-                            textErrorModal.textContent = resUpdateCarJson.message
-                            modal.classList.add('active')
-                            closeModal.addEventListener('click', () => {
-                                modal.classList.remove('active')
-                            })
-                            tryAgain.addEventListener('click', () => {
-                                modal.classList.remove('active')
-                            })
-                            window.addEventListener('click', event => {
-                                if (event.target == modal) {
-                                    modal.classList.remove('active')
-                                }
-                            })
-                        }
-                    })
-
-                    deleteCar.addEventListener('click', async () => {
-                        const resDeleteCar = await fetch("http://localhost:4000/api/deleteCar", {
-                            method: "POST",
-                            headers: {
-                                "Content-Type": "application/json"
-                            },
-                            body: JSON.stringify({
-                                Name: doc.Nombre,
-                                Cant: count.textContent,
-                                Correo: emailUser
-                            })
-                        })
-
-                        const resDeleteCarJson = await resDeleteCar.json()
-
-                        if (resDeleteCarJson.status == "Delete Correct") {
-                            location.reload()
-                        } else {
-                            textErrorModal.textContent = resDeleteCarJson.message
-                            modal.classList.add('active')
-                            closeModal.addEventListener('click', () => {
-                                modal.classList.remove('active')
-                            })
-                            tryAgain.addEventListener('click', () => {
-                                modal.classList.remove('active')
-                            })
-                            window.addEventListener('click', event => {
-                                if (event.target == modal) {
-                                    modal.classList.remove('active')
-                                }
-                            })
-                        }
-                    })
-
-                    countPlus.addEventListener('click', async () => {
-                        const resUpdateCar = await fetch("http://localhost:4000/api/updateCar", {
-                            method: "POST",
-                            headers: {
-                                "Content-Type": "application/json"
-                            },
-                            body: JSON.stringify({
-                                Name: doc.Nombre,
-                                Cant: parseInt(count.textContent) + 1,
-                                Correo: emailUser
-                            })
-                        })
-
-                        const resUpdateCarJson = await resUpdateCar.json()
-
-                        if (resUpdateCarJson.status == "Update Correct") {
-                            contador++
-                            count.textContent = contador
-
-                            if (doc.Descuento != "") {
-                                cantTotal += parseInt(doc.Precio - (doc.Precio * (doc.Descuento / 100)))
-
-                                compraPrice.textContent = `$ ${cantTotal.toLocaleString('ed-ED')}`
-                                totalEnvio.textContent = `$${parseInt(cantTotal + 5000).toLocaleString('ed-ED')}`
-                            } else {
-                                cantTotal += parseInt(doc.Precio)
-
-                                compraPrice.textContent = `$ ${cantTotal.toLocaleString('ed-ED')}`
-                                totalEnvio.textContent = `$${parseInt(cantTotal + 5000).toLocaleString('ed-ED')}`
-                            }
-                        } else {
-                            textErrorModal.textContent = resUpdateCarJson.message
-                            modal.classList.add('active')
-                            closeModal.addEventListener('click', () => {
-                                modal.classList.remove('active')
-                            })
-                            tryAgain.addEventListener('click', () => {
-                                modal.classList.remove('active')
-                            })
-                            window.addEventListener('click', event => {
-                                if (event.target == modal) {
-                                    modal.classList.remove('active')
-                                }
-                            })
-                        }
-                    })
+            const resProduct = await fetch("http://localhost:4000/api/productData", {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json"
                 }
             })
+            const resProductJson = await resProduct.json()
 
-        }
-    })
+            if (resProductJson.status == "Data Products") {
+
+                const productData = resProductJson.data;
+
+                var conProducts = document.querySelector('.conProducts')
+
+                productData.forEach((doc) => {
+                    if (nameProduct == doc.Nombre && doc.Estado == true) {
+                        var product = document.createElement('div')
+                        var leftProduct = document.createElement('div')
+                        var img = document.createElement('img')
+                        var conLeftProduct = document.createElement('div')
+                        var name = document.createElement('h1')
+                        var deleteCar = document.createElement('button')
+                        var centerProduct = document.createElement('div')
+                        var countMinus = document.createElement('i')
+                        var count = document.createElement('p')
+                        var countPlus = document.createElement('i')
+                        var rightProduct = document.createElement('div')
+                        var discount = document.createElement('div')
+                        var priceDiscount = document.createElement('p')
+                        var cantDiscount = document.createElement('span')
+                        var price = document.createElement('p')
+
+                        img.src = doc.Foto
+                        name.textContent = (doc.Nombre).charAt(0).toUpperCase() + (doc.Nombre).slice(1)
+                        deleteCar.textContent = "Eliminar"
+                        count.textContent = cantidad
+
+                        if (doc.Descuento != "") {
+                            priceDiscount.textContent = `$${parseInt(doc.Precio).toLocaleString('ed-ED')}`
+                            cantDiscount.textContent = `-${doc.Descuento}%`
+                            price.textContent = `$${parseInt(parseInt(doc.Precio) - (parseInt(doc.Precio) * (parseInt(doc.Descuento) / 100))).toLocaleString('ed-ED')}`
+
+                            discount.className = "discount"
+
+                            rightProduct.appendChild(discount)
+                            discount.appendChild(priceDiscount)
+                            discount.appendChild(cantDiscount)
+                        } else {
+                            price.textContent = `$${parseInt(doc.Precio).toLocaleString('ed-ED')}`
+                        }
+
+                        product.className = "product"
+                        leftProduct.className = "leftProduct"
+                        conLeftProduct.className = "conLeftProduct"
+                        centerProduct.className = "centerProduct"
+                        countMinus.className = "ph-bold ph-minus"
+                        countPlus.className = "ph-bold ph-plus"
+                        rightProduct.className = "rightProduct"
+
+                        conProducts.appendChild(product)
+                        product.appendChild(leftProduct)
+                        leftProduct.appendChild(img)
+                        leftProduct.appendChild(conLeftProduct)
+                        conLeftProduct.appendChild(name)
+                        conLeftProduct.appendChild(deleteCar)
+                        product.appendChild(centerProduct)
+                        centerProduct.appendChild(countMinus)
+                        centerProduct.appendChild(count)
+                        centerProduct.appendChild(countPlus)
+                        product.appendChild(rightProduct)
+                        rightProduct.appendChild(price)
+
+                        if (doc.Descuento != "") {
+                            cantTotal += (doc.Precio - (doc.Precio * (doc.Descuento / 100))) * cantidad
+                        } else {
+                            cantTotal += parseInt(doc.Precio) * cantidad
+                        }
+
+                        cantProducts++
+
+                        var compraCant = document.querySelector('.compraCant')
+                        var compraPrice = document.querySelector('.compraPrice')
+
+                        compraCant.textContent = `Productos(${cantProducts})`
+                        compraPrice.textContent = `$ ${cantTotal.toLocaleString('ed-ED')}`
+
+                        var totalEnvio = document.querySelector('.totalEnvio')
+
+                        totalEnvio.textContent = `$${parseInt(cantTotal + 5000).toLocaleString('ed-ED')}`
+
+                        var contador = parseInt(count.textContent)
+
+                        countMinus.addEventListener('click', async () => {
+                            const resUpdateCar = await fetch("http://localhost:4000/api/updateCar", {
+                                method: "POST",
+                                headers: {
+                                    "Content-Type": "application/json"
+                                },
+                                body: JSON.stringify({
+                                    Name: doc.Nombre,
+                                    Cant: parseInt(count.textContent) - 1,
+                                    Correo: emailUser
+                                })
+                            })
+
+                            const resUpdateCarJson = await resUpdateCar.json()
+
+                            if (resUpdateCarJson.status == "Update Correct") {
+                                contador--
+                                count.textContent = contador
+
+                                if (doc.Descuento != "") {
+                                    cantTotal -= doc.Precio - (doc.Precio * (doc.Descuento / 100))
+
+                                    compraPrice.textContent = `$ ${cantTotal.toLocaleString('ed-ED')}`
+                                    totalEnvio.textContent = `$${parseInt(cantTotal + 5000).toLocaleString('ed-ED')}`
+                                } else {
+                                    cantTotal -= doc.Precio
+
+                                    compraPrice.textContent = `$ ${cantTotal.toLocaleString('ed-ED')}`
+                                    totalEnvio.textContent = `$${parseInt(cantTotal + 5000).toLocaleString('ed-ED')}`
+                                }
+                            } else {
+                                textErrorModal.textContent = resUpdateCarJson.message
+                                modal.classList.add('active')
+                                closeModal.addEventListener('click', () => {
+                                    modal.classList.remove('active')
+                                })
+                                tryAgain.addEventListener('click', () => {
+                                    modal.classList.remove('active')
+                                })
+                                window.addEventListener('click', event => {
+                                    if (event.target == modal) {
+                                        modal.classList.remove('active')
+                                    }
+                                })
+                            }
+                        })
+
+                        deleteCar.addEventListener('click', async () => {
+                            const resDeleteCar = await fetch("http://localhost:4000/api/deleteCar", {
+                                method: "POST",
+                                headers: {
+                                    "Content-Type": "application/json"
+                                },
+                                body: JSON.stringify({
+                                    Name: doc.Nombre,
+                                    Cant: count.textContent,
+                                    Correo: emailUser
+                                })
+                            })
+
+                            const resDeleteCarJson = await resDeleteCar.json()
+
+                            if (resDeleteCarJson.status == "Delete Correct") {
+                                location.reload()
+                            } else {
+                                textErrorModal.textContent = resDeleteCarJson.message
+                                modal.classList.add('active')
+                                closeModal.addEventListener('click', () => {
+                                    modal.classList.remove('active')
+                                })
+                                tryAgain.addEventListener('click', () => {
+                                    modal.classList.remove('active')
+                                })
+                                window.addEventListener('click', event => {
+                                    if (event.target == modal) {
+                                        modal.classList.remove('active')
+                                    }
+                                })
+                            }
+                        })
+
+                        countPlus.addEventListener('click', async () => {
+                            const resUpdateCar = await fetch("http://localhost:4000/api/updateCar", {
+                                method: "POST",
+                                headers: {
+                                    "Content-Type": "application/json"
+                                },
+                                body: JSON.stringify({
+                                    Name: doc.Nombre,
+                                    Cant: parseInt(count.textContent) + 1,
+                                    Correo: emailUser
+                                })
+                            })
+
+                            const resUpdateCarJson = await resUpdateCar.json()
+
+                            if (resUpdateCarJson.status == "Update Correct") {
+                                contador++
+                                count.textContent = contador
+
+                                if (doc.Descuento != "") {
+                                    cantTotal += parseInt(doc.Precio - (doc.Precio * (doc.Descuento / 100)))
+
+                                    compraPrice.textContent = `$ ${cantTotal.toLocaleString('ed-ED')}`
+                                    totalEnvio.textContent = `$${parseInt(cantTotal + 5000).toLocaleString('ed-ED')}`
+                                } else {
+                                    cantTotal += parseInt(doc.Precio)
+
+                                    compraPrice.textContent = `$ ${cantTotal.toLocaleString('ed-ED')}`
+                                    totalEnvio.textContent = `$${parseInt(cantTotal + 5000).toLocaleString('ed-ED')}`
+                                }
+                            } else {
+                                textErrorModal.textContent = resUpdateCarJson.message
+                                modal.classList.add('active')
+                                closeModal.addEventListener('click', () => {
+                                    modal.classList.remove('active')
+                                })
+                                tryAgain.addEventListener('click', () => {
+                                    modal.classList.remove('active')
+                                })
+                                window.addEventListener('click', event => {
+                                    if (event.target == modal) {
+                                        modal.classList.remove('active')
+                                    }
+                                })
+                            }
+                        })
+                    }
+                })
+
+            }
+        })
+    } else {
+        var main = document.querySelector('.main')
+        var main2 = document.querySelector('.main2')
+
+        main.style.display = "none"
+        main2.style.display = "flex"
+    }
 } else {
     textErrorModal.textContent = resJsonCar.message
     modal.classList.add('active')
