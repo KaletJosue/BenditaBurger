@@ -11,6 +11,8 @@ import { method as users} from "../modules/users/users.js"
 import { method as favorite} from "../modules/favorite/favorite.js"
 import { method as car} from "../modules/car/car.js"
 
+import { createSession } from "../pay/payment.controller.js";
+
 import { upload, upload2, upload3 } from '../cloudinary/cloudinary.js';
 
 import path, { dirname } from 'path'
@@ -144,5 +146,7 @@ router.post('/api/deleteFavorite', favorite.deleteFavorite)
 router.post('/api/addCar', car.addCar)
 router.post('/api/updateCar', car.updateCar)
 router.post('/api/deleteCar', car.deleteCar)
+
+router.post('/api/payment', createSession)
 
 export default router;

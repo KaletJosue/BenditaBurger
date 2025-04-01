@@ -144,19 +144,35 @@ if (resJsonCar.status == "Data Car") {
                             const resUpdateCarJson = await resUpdateCar.json()
 
                             if (resUpdateCarJson.status == "Update Correct") {
-                                contador--
-                                count.textContent = contador
+                                if (contador > 1) {
+                                    contador--
+                                    count.textContent = contador
 
-                                if (doc.Descuento != "") {
-                                    cantTotal -= doc.Precio - (doc.Precio * (doc.Descuento / 100))
+                                    if (doc.Descuento != "") {
+                                        cantTotal -= doc.Precio - (doc.Precio * (doc.Descuento / 100))
 
-                                    compraPrice.textContent = `$ ${cantTotal.toLocaleString('ed-ED')}`
-                                    totalEnvio.textContent = `$${parseInt(cantTotal + 5000).toLocaleString('ed-ED')}`
+                                        compraPrice.textContent = `$ ${cantTotal.toLocaleString('ed-ED')}`
+                                        totalEnvio.textContent = `$${parseInt(cantTotal + 5000).toLocaleString('ed-ED')}`
+                                    } else {
+                                        cantTotal -= doc.Precio
+
+                                        compraPrice.textContent = `$ ${cantTotal.toLocaleString('ed-ED')}`
+                                        totalEnvio.textContent = `$${parseInt(cantTotal + 5000).toLocaleString('ed-ED')}`
+                                    }
                                 } else {
-                                    cantTotal -= doc.Precio
-
-                                    compraPrice.textContent = `$ ${cantTotal.toLocaleString('ed-ED')}`
-                                    totalEnvio.textContent = `$${parseInt(cantTotal + 5000).toLocaleString('ed-ED')}`
+                                    textErrorModal.textContent = "No puedes pedir menos de 1 producto"
+                                    modal.classList.add('active')
+                                    closeModal.addEventListener('click', () => {
+                                        modal.classList.remove('active')
+                                    })
+                                    tryAgain.addEventListener('click', () => {
+                                        modal.classList.remove('active')
+                                    })
+                                    window.addEventListener('click', event => {
+                                        if (event.target == modal) {
+                                            modal.classList.remove('active')
+                                        }
+                                    })
                                 }
                             } else {
                                 textErrorModal.textContent = resUpdateCarJson.message
@@ -225,19 +241,35 @@ if (resJsonCar.status == "Data Car") {
                             const resUpdateCarJson = await resUpdateCar.json()
 
                             if (resUpdateCarJson.status == "Update Correct") {
-                                contador++
-                                count.textContent = contador
+                                if (contador < 10) {
+                                    contador++
+                                    count.textContent = contador
 
-                                if (doc.Descuento != "") {
-                                    cantTotal += parseInt(doc.Precio - (doc.Precio * (doc.Descuento / 100)))
+                                    if (doc.Descuento != "") {
+                                        cantTotal += parseInt(doc.Precio - (doc.Precio * (doc.Descuento / 100)))
 
-                                    compraPrice.textContent = `$ ${cantTotal.toLocaleString('ed-ED')}`
-                                    totalEnvio.textContent = `$${parseInt(cantTotal + 5000).toLocaleString('ed-ED')}`
+                                        compraPrice.textContent = `$ ${cantTotal.toLocaleString('ed-ED')}`
+                                        totalEnvio.textContent = `$${parseInt(cantTotal + 5000).toLocaleString('ed-ED')}`
+                                    } else {
+                                        cantTotal += parseInt(doc.Precio)
+
+                                        compraPrice.textContent = `$ ${cantTotal.toLocaleString('ed-ED')}`
+                                        totalEnvio.textContent = `$${parseInt(cantTotal + 5000).toLocaleString('ed-ED')}`
+                                    }
                                 } else {
-                                    cantTotal += parseInt(doc.Precio)
-
-                                    compraPrice.textContent = `$ ${cantTotal.toLocaleString('ed-ED')}`
-                                    totalEnvio.textContent = `$${parseInt(cantTotal + 5000).toLocaleString('ed-ED')}`
+                                    textErrorModal.textContent = "Puedes pedir hasta un maximo de 10 productos"
+                                    modal.classList.add('active')
+                                    closeModal.addEventListener('click', () => {
+                                        modal.classList.remove('active')
+                                    })
+                                    tryAgain.addEventListener('click', () => {
+                                        modal.classList.remove('active')
+                                    })
+                                    window.addEventListener('click', event => {
+                                        if (event.target == modal) {
+                                            modal.classList.remove('active')
+                                        }
+                                    })
                                 }
                             } else {
                                 textErrorModal.textContent = resUpdateCarJson.message
@@ -433,4 +465,73 @@ btnCupon.addEventListener('click', () => {
             btnUpdate.disabled = true
         }
     })
+})
+
+var btnPay = document.querySelector('.btnPay')
+
+btnPay.addEventListener('click', async () => {
+    loader.classList.remove('active')
+    var product = []
+
+    const resCar = await fetch("http://localhost:4000/api/carData", {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })
+
+    const resJsonCar = await resCar.json()
+    const carData = resJsonCar.data
+
+    for (const doc of carData) {
+        var nombreCar = doc.Nombre
+        var cant = parseInt(doc.Cantidad)
+
+        const resProduct = await fetch("http://localhost:4000/api/productData", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+        const resProductJson = await resProduct.json()
+
+        if (resProductJson.status === "Data Products") {
+            const productData = resProductJson.data;
+
+            var precio
+
+            productData.forEach((doc) => {
+                if (doc.Descuento != "") {
+                    precio = parseInt(doc.Precio) - (parseInt(doc.Precio) * (doc.Descuento / 100))
+                } else {
+                    precio = parseInt(doc.Precio)
+                }
+
+                if (nombreCar.toLowerCase() === doc.Nombre.toLowerCase()) {
+                    product.push({
+                        nombre: doc.Nombre,
+                        descripcion: doc.Descripcion,
+                        foto: doc.Foto,
+                        precio: precio,
+                        cantidad: cant
+                    })
+                }
+            })
+        }
+    }
+
+    const resPay = await fetch('/api/payment', {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ 
+            products: product
+         })
+    })
+    const dataPay = await resPay.json()
+
+    if (dataPay) {
+        window.location.href = dataPay.url
+    }
 })

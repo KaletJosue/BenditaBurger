@@ -587,6 +587,10 @@ body {
     gap: 1rem;
 }
 
+.modalUpdate .conModalUpdate .bottomConModalUpdate .count p {
+    color: var(--color-negro);
+}
+
 .modalUpdate .conModalUpdate .bottomConModalUpdate .count i {
     width: 30px;
     height: 30px;
