@@ -501,20 +501,22 @@ btnPay.addEventListener('click', async () => {
             var precio
 
             productData.forEach((doc) => {
-                if (doc.Descuento != "") {
-                    precio = parseInt(doc.Precio) - (parseInt(doc.Precio) * (doc.Descuento / 100))
-                } else {
-                    precio = parseInt(doc.Precio)
-                }
-
-                if (nombreCar.toLowerCase() === doc.Nombre.toLowerCase()) {
-                    product.push({
-                        nombre: doc.Nombre,
-                        descripcion: doc.Descripcion,
-                        foto: doc.Foto,
-                        precio: precio,
-                        cantidad: cant
-                    })
+                if (doc.Estado == true) {
+                    if (doc.Descuento != "") {
+                        precio = parseInt(doc.Precio) - (parseInt(doc.Precio) * (doc.Descuento / 100))
+                    } else {
+                        precio = parseInt(doc.Precio)
+                    }
+    
+                    if (nombreCar.toLowerCase() === doc.Nombre.toLowerCase()) {
+                        product.push({
+                            nombre: doc.Nombre,
+                            descripcion: doc.Descripcion,
+                            foto: doc.Foto,
+                            precio: precio,
+                            cantidad: cant
+                        })
+                    }
                 }
             })
         }
