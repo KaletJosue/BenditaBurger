@@ -23,28 +23,32 @@ async function addProduct(req, res) {
             imageUrl = req.file.path;
         }
 
-        if (revisarCategory) {
-            if (revisarProduct) {
-                return res.status(400).send({ status: "Error Product", message: "Este producto ya esta agregado" });
-            } else {
-    
-                const newProduct = {
-                    Nombre: name.toLowerCase(),
-                    Categoria: category,
-                    Precio: price,
-                    Descuento: discount || '',
-                    Descripcion: description,
-                    Estado: true,
-                    Foto: imageUrl,
+        if (description.length <= 200) {
+            if (revisarCategory) {
+                if (revisarProduct) {
+                    return res.status(400).send({ status: "Error Product", message: "Este producto ya esta agregado" });
+                } else {
+
+                    const newProduct = {
+                        Nombre: name.toLowerCase(),
+                        Categoria: category,
+                        Precio: price,
+                        Descuento: discount || '',
+                        Descripcion: description,
+                        Estado: true,
+                        Foto: imageUrl,
+                    }
+
+                    const result = await productsCollection.insertOne(newProduct)
+
+                    return res.status(200).send({ status: "Add Correct", message: "Producto Agregado corretamente" });
+
                 }
-    
-                const result = await productsCollection.insertOne(newProduct)
-    
-                return res.status(200).send({ status: "Add Correct", message: "Producto Agregado corretamente" });
-    
+            } else {
+                return res.status(400).send({ status: "Error Category", message: "Este categoria no existe" });
             }
         } else {
-            return res.status(400).send({ status: "Error Category", message: "Este categoria no existe" });
+            return res.status(400).send({ status: "Error Description", message: "La descripcion es demasido larga, no puede superar los 200 caracteres" });
         }
 
     } else {
@@ -52,7 +56,7 @@ async function addProduct(req, res) {
     }
 }
 
-async function productData (req, res) {
+async function productData(req, res) {
     if (req.headers.cookie) {
         const db = await conectarConMongoDB();
         const productsCollection = db.collection('productos');
@@ -69,7 +73,7 @@ async function productData (req, res) {
     }
 }
 
-async function updateStatusProduct (req, res) {
+async function updateStatusProduct(req, res) {
     if (req.headers.cookie) {
         const name = req.body.Nombre
         const status = req.body.Status
@@ -94,7 +98,7 @@ async function updateStatusProduct (req, res) {
     }
 }
 
-async function updateProduct (req, res) {
+async function updateProduct(req, res) {
     if (req.headers.cookie) {
         const name = req.body.Name;
         const category = req.body.Category;
@@ -110,31 +114,35 @@ async function updateProduct (req, res) {
         const revisarProduct = await productsCollection.findOne({ Nombre: name.toLowerCase() });
         const revisarCategory = await categoryCollection.findOne({ Nombre: (category).toLowerCase() });
 
-        if (revisarCategory) {
-            if (revisarProduct && revisarProduct.Nombre.toLowerCase() == nameRefe.toLowerCase()) {
-                const filtro = {
-                    Nombre: nameRefe,
-                };
-                const newProduct = {
-                    $set: {
-                        Nombre: name.toLowerCase(),
-                        Categoria: category,
-                        Precio: price,
-                        Descuento: discount || '',
-                        Descripcion: description,
+        if (description.length <= 200) {
+            if (revisarCategory) {
+                if (revisarProduct && revisarProduct.Nombre.toLowerCase() == nameRefe.toLowerCase()) {
+                    const filtro = {
+                        Nombre: nameRefe,
+                    };
+                    const newProduct = {
+                        $set: {
+                            Nombre: name.toLowerCase(),
+                            Categoria: category,
+                            Precio: price,
+                            Descuento: discount || '',
+                            Descripcion: description,
+                        }
                     }
+    
+                    const resultado = await productsCollection.updateOne(filtro, newProduct);
+    
+                    return res.status(200).send({ status: "Update Correct", message: "Producto Actualizado corretamente" });
+                } else {
+    
+                    return res.status(400).send({ status: "Error Product", message: "Este producto ya esta agregado" });
+    
                 }
-    
-                const resultado = await productsCollection.updateOne(filtro, newProduct);
-    
-                return res.status(200).send({ status: "Update Correct", message: "Producto Actualizado corretamente" });
             } else {
-    
-                return res.status(400).send({ status: "Error Product", message: "Este producto ya esta agregado" });
-    
+                return res.status(400).send({ status: "Error Category", message: "Este categoria no existe" });
             }
         } else {
-            return res.status(400).send({ status: "Error Category", message: "Este categoria no existe" });
+            return res.status(400).send({ status: "Error Description", message: "La descripcion es demasido larga, no puede superar los 200 caracteres" });
         }
 
     } else {

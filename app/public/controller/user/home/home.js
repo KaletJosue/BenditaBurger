@@ -9,6 +9,11 @@ var closeModal = document.querySelector('#closeModal')
 var tryAgain = document.querySelector('.tryAgain')
 var textErrorModal = document.querySelector('.textErrorModal')
 
+var modal3 = document.querySelector('.modal3')
+var closeModal3 = document.querySelector('#closeModal3')
+var tryAgain3 = document.querySelector('.tryAgain3')
+var textErrorModal3 = document.querySelector('.textErrorModal3')
+
 const resCategory = await fetch("http://localhost:4000/api/categoryData", {
     method: "GET",
     headers: {
@@ -23,6 +28,8 @@ if (resJsonCategory.status === "Data Category") {
     var containerCategory = document.querySelector('.conCategory')
 
     const categoryData = resJsonCategory.data;
+
+    categoryData.sort((a, b) => a.Prioridad - b.Prioridad);
 
     categoryData.forEach(async (doc) => {
         var nombre = document.createElement('p')
@@ -376,6 +383,20 @@ addCarBtn.addEventListener('click', async () => {
             ease: 'power1.in',
             onComplete: () => {
                 modalUpdate.style.display = 'none';
+
+                textErrorModal3.textContent = `Listo, el producto '${name.textContent}' ya esta agregado en el Carrito`
+                modal3.classList.add('active');
+                closeModal3.addEventListener('click', () => {
+                    modal3.classList.remove('active');
+                });
+                tryAgain3.addEventListener('click', () => {
+                    window.location.href = "/user/car"
+                });
+                window.addEventListener('click', event => {
+                    if (event.target == modal3) {
+                        modal3.classList.remove('active');
+                    }
+                });
             }
         });
 

@@ -407,66 +407,6 @@ if (resJson.data.Photo == "") {
     imgProfile.src = resJson.data.Photo
 }
 
-var btnCupon = document.querySelector('#cupon')
-
-const modalUpdate = document.querySelector('.modalUpdate');
-const modalContentUpdate = document.querySelector('.conModalUpdate');
-const closeModalUpdate = document.getElementById('closeModalUpdate')
-
-btnCupon.addEventListener('click', () => {
-    modalUpdate.style.display = 'flex'
-
-    gsap.fromTo(modalContentUpdate,
-        { backdropFilter: 'blur(0px)', height: 0, opacity: 0 },
-        {
-            height: 'auto',
-            opacity: 1,
-            backdropFilter: 'blur(90px)',
-            duration: .7,
-            ease: 'expo.out',
-        }
-    )
-    window.addEventListener('click', event => {
-        if (event.target == modalUpdate) {
-            gsap.to(modalContentUpdate, {
-                height: '0px',
-                duration: .2,
-                ease: 'power1.in',
-                onComplete: () => {
-                    modalUpdate.style.display = 'none';
-                }
-            });
-        }
-    })
-    closeModalUpdate.addEventListener('click', () => {
-        gsap.to(modalContentUpdate, {
-            height: '0px',
-            duration: .2,
-            ease: 'power1.in',
-            onComplete: () => {
-                modalUpdate.style.display = 'none';
-
-                inputNameUpdate.value = ""
-                btnUpdate.classList.remove('active')
-                btnUpdate.disabled = true
-            }
-        });
-    })
-
-    var inputNameUpdate = document.querySelector('.inputNameUpdate')
-    var btnUpdate = document.querySelector('.btnUpdate')
-
-    inputNameUpdate.addEventListener('input', () => {
-        if (inputNameUpdate.value.length != 0) {
-            btnUpdate.classList.add('active')
-            btnUpdate.disabled = false
-        } else {
-            btnUpdate.classList.remove('active')
-            btnUpdate.disabled = true
-        }
-    })
-})
-
 var btnPay = document.querySelector('.btnPay')
 
 btnPay.addEventListener('click', async () => {
