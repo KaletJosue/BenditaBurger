@@ -1,5 +1,7 @@
 import Stripe from "stripe";
 import dotenv from "dotenv";
+import conectarConMongoDB from "../db/db.js"
+import jsonwebtoken from "jsonwebtoken"
 
 dotenv.config();
 
@@ -8,7 +10,6 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 export const createSession = async (req, res) => {
     const { products } = req.body;
 
-    // Calcular subtotal
     let subtotal = 0;
 
     const line_items = products.map(product => {
@@ -28,16 +29,13 @@ export const createSession = async (req, res) => {
         };
     });
 
-    // Costo fijo de envío
-    const costoEnvio = 500000; // en centavos (5000 COP)
+    const costoEnvio = 500000;
     subtotal += costoEnvio;
 
-    // Calcular total bruto para cubrir comisión
     const netoDeseado = subtotal;
     const brutoRequerido = Math.round((netoDeseado + 900) / (1 - 0.0399));
     const extraTotal = brutoRequerido - netoDeseado;
 
-    // Total combinado: envío + comisión
     const totalAdicional = costoEnvio + extraTotal;
 
     const cargoManejo = {
@@ -53,14 +51,18 @@ export const createSession = async (req, res) => {
         quantity: 1
     };
 
+    const cookieJWT = req.headers.cookie.split("; ").find(cookie => cookie.startsWith("jwt=")).slice(4)
+    const decodificada = jsonwebtoken.verify(cookieJWT, process.env.JWT_SECRET)
+
     const session = await stripe.checkout.sessions.create({
         line_items: [
             ...line_items,
             cargoManejo
         ],
         mode: 'payment',
-        success_url: 'http://localhost:4000/user',
-        cancel_url: 'http://localhost:4000/user/car'
+        success_url: 'http://localhost:4000/user/delivery',
+        cancel_url: 'http://localhost:4000/user/car',
+        customer_email: decodificada.user
     });
 
     return res.json({ url: session.url });

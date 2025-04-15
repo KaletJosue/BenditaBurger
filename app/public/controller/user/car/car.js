@@ -410,70 +410,118 @@ if (resJson.data.Photo == "") {
 var btnPay = document.querySelector('.btnPay')
 
 btnPay.addEventListener('click', async () => {
-    loader.classList.remove('active')
-    var product = []
+    if (resJson.data.Barrio != "") {
+        if (resJson.data.Direccion != "") {
+            if (resJson.data.Telefono != "") {
+                loader.classList.remove('active')
+                var product = []
 
-    const resCar = await fetch("http://localhost:4000/api/carData", {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json"
-        }
-    })
-
-    const resJsonCar = await resCar.json()
-    const carData = resJsonCar.data
-
-    for (const doc of carData) {
-        var nombreCar = doc.Nombre
-        var cant = parseInt(doc.Cantidad)
-
-        const resProduct = await fetch("http://localhost:4000/api/productData", {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json"
-            }
-        })
-        const resProductJson = await resProduct.json()
-
-        if (resProductJson.status === "Data Products") {
-            const productData = resProductJson.data;
-
-            var precio
-
-            productData.forEach((doc) => {
-                if (doc.Estado == true) {
-                    if (doc.Descuento != "") {
-                        precio = parseInt(doc.Precio) - (parseInt(doc.Precio) * (doc.Descuento / 100))
-                    } else {
-                        precio = parseInt(doc.Precio)
+                const resCar = await fetch("http://localhost:4000/api/carData", {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json"
                     }
-    
-                    if (nombreCar.toLowerCase() === doc.Nombre.toLowerCase()) {
-                        product.push({
-                            nombre: doc.Nombre,
-                            descripcion: doc.Descripcion,
-                            foto: doc.Foto,
-                            precio: precio,
-                            cantidad: cant
+                })
+
+                const resJsonCar = await resCar.json()
+                const carData = resJsonCar.data
+
+                for (const doc of carData) {
+                    var nombreCar = doc.Nombre
+                    var cant = parseInt(doc.Cantidad)
+
+                    const resProduct = await fetch("http://localhost:4000/api/productData", {
+                        method: "GET",
+                        headers: {
+                            "Content-Type": "application/json"
+                        }
+                    })
+                    const resProductJson = await resProduct.json()
+
+                    if (resProductJson.status === "Data Products") {
+                        const productData = resProductJson.data;
+
+                        var precio
+
+                        productData.forEach((doc) => {
+                            if (doc.Estado == true) {
+                                if (doc.Descuento != "") {
+                                    precio = parseInt(doc.Precio) - (parseInt(doc.Precio) * (doc.Descuento / 100))
+                                } else {
+                                    precio = parseInt(doc.Precio)
+                                }
+
+                                if (nombreCar.toLowerCase() === doc.Nombre.toLowerCase()) {
+                                    product.push({
+                                        nombre: doc.Nombre,
+                                        descripcion: doc.Descripcion,
+                                        foto: doc.Foto,
+                                        precio: precio,
+                                        cantidad: cant
+                                    })
+                                }
+                            }
                         })
                     }
                 }
+
+                const resPay = await fetch('/api/payment', {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        products: product
+                    })
+                })
+                const dataPay = await resPay.json()
+
+                if (dataPay) {
+                    window.location.href = dataPay.url
+                }
+            } else {
+                textErrorModal.textContent = "Para poder enviar tu pedido, necesitamos saber tu numero de telefono, actualiza la informacion en tu perfil"
+                modal.classList.add('active')
+                closeModal.addEventListener('click', () => {
+                    modal.classList.remove('active')
+                })
+                tryAgain.addEventListener('click', () => {
+                    modal.classList.remove('active')
+                })
+                window.addEventListener('click', event => {
+                    if (event.target == modal) {
+                        modal.classList.remove('active')
+                    }
+                })
+            }
+        } else {
+            textErrorModal.textContent = "Para poder enviar tu pedido, necesitamos saber la Direccion en el que vives, actualiza la informacion en tu perfil"
+            modal.classList.add('active')
+            closeModal.addEventListener('click', () => {
+                modal.classList.remove('active')
+            })
+            tryAgain.addEventListener('click', () => {
+                modal.classList.remove('active')
+            })
+            window.addEventListener('click', event => {
+                if (event.target == modal) {
+                    modal.classList.remove('active')
+                }
             })
         }
-    }
-
-    const resPay = await fetch('/api/payment', {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ 
-            products: product
-         })
-    })
-    const dataPay = await resPay.json()
-
-    if (dataPay) {
-        window.location.href = dataPay.url
+    } else {
+        textErrorModal.textContent = "Para poder enviar tu pedido, necesitamos saber el Barrio en el que vives, actualiza la informacion en tu perfil"
+        modal.classList.add('active')
+        closeModal.addEventListener('click', () => {
+            modal.classList.remove('active')
+        })
+        tryAgain.addEventListener('click', () => {
+            modal.classList.remove('active')
+        })
+        window.addEventListener('click', event => {
+            if (event.target == modal) {
+                modal.classList.remove('active')
+            }
+        })
     }
 })

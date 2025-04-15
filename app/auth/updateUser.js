@@ -13,34 +13,43 @@ async function updateData(req, res) {
         const barrio = req.body.Barrio;
         const descripcion = req.body.Descripcion;
 
-        const cookieJWT = req.headers.cookie.split("; ").find(cookie => cookie.startsWith("jwt=")).slice(4);
-        const decodificada = jsonwebtoken.verify(cookieJWT, process.env.JWT_SECRET);
-
-        const db = await conectarConMongoDB();
-        const usuariosCollection = db.collection('usuarios');
-
-        const revisarUsuario = await usuariosCollection.findOne({ Correo: decodificada.user });
-
-        let imageUrl;
-        if (req.file) {
-            imageUrl = req.file.path;
+        if (descripcion.length <= 100) {
+            if (phone == 10) {
+                const cookieJWT = req.headers.cookie.split("; ").find(cookie => cookie.startsWith("jwt=")).slice(4);
+                const decodificada = jsonwebtoken.verify(cookieJWT, process.env.JWT_SECRET);
+    
+                const db = await conectarConMongoDB();
+                const usuariosCollection = db.collection('usuarios');
+    
+                const revisarUsuario = await usuariosCollection.findOne({ Correo: decodificada.user });
+    
+                let imageUrl;
+                if (req.file) {
+                    imageUrl = req.file.path;
+                }
+    
+                const filtro = { Correo: revisarUsuario.Correo };
+                const nuevosDatos = {
+                    $set: {
+                        Nombre: name,
+                        Telefono: phone,
+                        Direccion: direccion,
+                        ...(imageUrl && { Foto: imageUrl }),
+                        Barrio: barrio,
+                        Descripcion: descripcion
+                    }
+                };
+    
+                const resultado = await usuariosCollection.updateOne(filtro, nuevosDatos);
+    
+                return res.status(200).send({ status: "Update correct", message: "Tus datos ya han sido actualizados" });
+            } else {
+                return res.status(400).send({ status: "Error Phone", message: "Tu numero de telefono debe ser de 10 digitos" });
+            }
+        } else {
+            return res.status(400).send({ status: "Error Description", message: "La descripcion de tu cada no debe superar los 100 caracteres" });
         }
 
-        const filtro = { Correo: revisarUsuario.Correo };
-        const nuevosDatos = {
-            $set: {
-                Nombre: name,
-                Telefono: phone,
-                Direccion: direccion,
-                ...(imageUrl && { Foto: imageUrl }),
-                Barrio: barrio,
-                Descripcion: descripcion
-            }
-        };
-
-        const resultado = await usuariosCollection.updateOne(filtro, nuevosDatos);
-
-        return res.status(200).send({ status: "Update correct", message: "Tus datos ya han sido actualizados" });
     } else {
         return res.status(400).send({ status: "Error Login", message: "No has iniciado sesión bien" });
     }

@@ -1,2 +1,4 @@
 .env
 node_modules
+.wwebsjs_auth
+.wwebsjs_cache

@@ -3,17 +3,20 @@ import cookieParser from 'cookie-parser';
 import path, { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import router from './routes/routes.js';
+import handleStripeWebhook from './pay/webhook.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const app = express();
 const port = 4000;
 
+app.use('/webhook', express.raw({ type: 'application/json' }), handleStripeWebhook);
+
 app.use((req, res, next) => {
-  res.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
-  res.set('Pragma', 'no-cache');
-  res.set('Expires', '0');
-  res.set('Surrogate-Control', 'no-store');
-  next();
+    res.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+    res.set('Pragma', 'no-cache');
+    res.set('Expires', '0');
+    res.set('Surrogate-Control', 'no-store');
+    next();
 });
 
 app.use(express.static(__dirname + "/public"));
@@ -25,5 +28,5 @@ export default app;
 app.use('/', router);
 
 app.listen(port, () => {
-  console.log(`Servidor corriendo en el puerto ${port}`);
+    console.log(`Servidor corriendo en el puerto ${port}`);
 });
