@@ -23,7 +23,6 @@ export const sendWhatsAppMessage = async (numero, mensaje) => {
     try {
         const chatId = `${numero}@c.us`;
         await client.sendMessage(chatId, mensaje);
-        console.log(`📤 Mensaje enviado a ${numero}`);
     } catch (error) {
         console.error('❌ Error enviando mensaje:', error.message);
     }

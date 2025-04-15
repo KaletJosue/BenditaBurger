@@ -310,7 +310,13 @@ if (resJsonOrder.status == "Data Orders") {
 
                                             img.src = docCar.Foto
                                             name.textContent = product.name
-                                            price.textContent = `$${parseInt(docCar.Precio).toLocaleString('de-DE')}`
+
+                                            if (docCar.Descuento != '') {
+                                                var precioDescuento = docCar.Precio - (docCar.Precio * (docCar.Descuento / 100))
+                                                price.textContent = `$${parseInt(precioDescuento).toLocaleString('de-DE')}`
+                                            } else {
+                                                price.textContent = `$${parseInt(docCar.Precio).toLocaleString('de-DE')}`
+                                            }
 
                                             campoPedido.className = "campoPedido"
                                             imgCampoPedido.className = "imgCampoPedido"
@@ -334,7 +340,13 @@ if (resJsonOrder.status == "Data Orders") {
 
                                         img.src = docCar.Foto
                                         name.textContent = product.name
-                                        price.textContent = `$${parseInt(docCar.Precio).toLocaleString('de-DE')}`
+                                        
+                                        if (docCar.Descuento != '') {
+                                            var precioDescuento = docCar.Precio - (docCar.Precio * (docCar.Descuento / 100))
+                                            price.textContent = `$${parseInt(precioDescuento).toLocaleString('de-DE')}`
+                                        } else {
+                                            price.textContent = `$${parseInt(docCar.Precio).toLocaleString('de-DE')}`
+                                        }
 
                                         campoPedido.className = "campoPedido"
                                         imgCampoPedido.className = "imgCampoPedido"

@@ -14,7 +14,7 @@ async function updateData(req, res) {
         const descripcion = req.body.Descripcion;
 
         if (descripcion.length <= 100) {
-            if (phone == 10) {
+            if (phone.length == 10) {
                 const cookieJWT = req.headers.cookie.split("; ").find(cookie => cookie.startsWith("jwt=")).slice(4);
                 const decodificada = jsonwebtoken.verify(cookieJWT, process.env.JWT_SECRET);
     
