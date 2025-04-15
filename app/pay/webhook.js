@@ -61,7 +61,7 @@ const handleStripeWebhook = async (req, res) => {
             Hora: hora
         };
 
-        const mensaje = 
+        const mensaje =
 `✅ Hey *¡Compra completada!,* se acepto tu pedido en Bendita Burger y ya esta en preparación.
 
 Gracias por tu compra *BenditaLover*:
@@ -72,7 +72,16 @@ Gracias por tu compra *BenditaLover*:
 
 Esta pendiente a las actualizaciones en la aplicacion de Bendita Burger`;
 
+        const carCollection = db.collection('carrito')
+
         const numeroCliente = `57${revisarUsuario.Telefono}`;
+
+        products.forEach(async (p) => {
+            const resultado = await carCollection.deleteOne({
+                Nombre: (p.name).toLowerCase(),
+                Correo: customerEmail
+            });
+        })
 
         await ordersCollection.insertOne(newOrder);
         await sendWhatsAppMessage(numeroCliente, mensaje);
