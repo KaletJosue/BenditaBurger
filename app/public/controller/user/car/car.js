@@ -42,6 +42,7 @@ if (resJsonCar.status == "Data Car") {
                     "Content-Type": "application/json"
                 }
             })
+            
             const resProductJson = await resProduct.json()
 
             if (resProductJson.status == "Data Products") {

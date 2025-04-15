@@ -91,8 +91,13 @@
         </div>
     </div>
 
+    <div class="main2">
+        <img src="/assets/logoAmarillo.png" alt="">
+        <h1>No has realizado ningun pedido, ve a tu carrito y compralo ya</h1>
+    </div>
+
     <div class="search">
-        <input type="text" placeholder="Busca por Fecha, Monto, Estado...">
+        <input type="text" placeholder="Busca por Fecha, Monto, Estado..." id="search">
     </div>
 
     <div class="main">
@@ -108,72 +113,8 @@
                         <th>Monto Total</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <th>Cra 22 # 2 - 13 Sociego</th>
-                        <th>12 / 09 / 25</th>
-                        <th>12 : 54</th>
-                        <th>Tarjeta Debito</th>
-                        <th>
-                            <p class="enviado">Enviado</p>
-                        </th>
-                        <th>$29.000</th>
-                        <th>
-                            <button class="openModal">Detalles</button>
-                        </th>
-                    </tr>
-                    <tr>
-                        <th>Cra 22 # 2 - 13 Sociego</th>
-                        <th>12 / 09 / 25</th>
-                        <th>12 : 54</th>
-                        <th>Tarjeta Debito</th>
-                        <th>
-                            <p class="preparacion">Preparación</p>
-                        </th>
-                        <th>$29.000</th>
-                        <th>
-                            <button>Detalles</button>
-                        </th>
-                    </tr>
-                    <tr>
-                        <th>Cra 22 # 2 - 13 Sociego</th>
-                        <th>12 / 09 / 25</th>
-                        <th>12 : 54</th>
-                        <th>Tarjeta Debito</th>
-                        <th>
-                            <p class="cancelado">Cancelado</p>
-                        </th>
-                        <th>$29.000</th>
-                        <th>
-                            <button>Detalles</button>
-                        </th>
-                    </tr>
-                    <tr>
-                        <th>Cra 22 # 2 - 13 Sociego</th>
-                        <th>12 / 09 / 25</th>
-                        <th>12 : 54</th>
-                        <th>Tarjeta Debito</th>
-                        <th>
-                            <p class="entregado">Entregado</p>
-                        </th>
-                        <th>$29.000</th>
-                        <th>
-                            <button>Detalles</button>
-                        </th>
-                    </tr>
-                    <tr>
-                        <th>Cra 22 # 2 - 13 Sociego</th>
-                        <th>12 / 09 / 25</th>
-                        <th>12 : 54</th>
-                        <th>Tarjeta Debito</th>
-                        <th>
-                            <p class="cerca">Cerca</p>
-                        </th>
-                        <th>$29.000</th>
-                        <th>
-                            <button>Detalles</button>
-                        </th>
-                    </tr>
+                <tbody class="tbody">
+
                 </tbody>
             </table>
 
@@ -186,34 +127,7 @@
             <i class="ph ph-x" id="closeModalDetails"></i>
             <h3>Pedido:</h3>
             <div class="infoPedido">
-                <div class="campoPedido">
-                    <div class="imgCampoPedido">
-                        <img src="/assets/ham2.png" alt="">
-                        <p>Whopper</p>
-                    </div>
-                    <p>$20.000</p>
-                </div>
-                <div class="campoPedido">
-                    <div class="imgCampoPedido">
-                        <img src="/assets/ham2.png" alt="">
-                        <p>Whopper</p>
-                    </div>
-                    <p>$20.000</p>
-                </div>
-                <div class="campoPedido">
-                    <div class="imgCampoPedido">
-                        <img src="/assets/ham2.png" alt="">
-                        <p>Whopper</p>
-                    </div>
-                    <p>$20.000</p>
-                </div>
-                <div class="campoPedido">
-                    <div class="imgCampoPedido">
-                        <img src="/assets/ham2.png" alt="">
-                        <p>Whopper</p>
-                    </div>
-                    <p>$20.000</p>
-                </div>
+
             </div>
         </div>
     </div>
@@ -224,6 +138,13 @@
                 <i class="ph ph-x" id="closeModalUpdate"></i>
             </div>
             <div class="inModalUpdate">
+                <div class="cancel">
+                    <h1>Tu pedido se cancelo</h1>
+                    <p>Motivo de la cancelacion: </p>
+                    <h3 class="motivoCancel">
+                        No puedes realizar mas de 10 pedidos en 1 solo dia, sabemos las ganas que tienes, pero espera hasta mañana
+                    </h3>
+                </div>
                 <div class="progress">
                     <div class="conOne">
                         <div class="oneProgress">

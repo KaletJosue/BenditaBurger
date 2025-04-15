@@ -10,6 +10,7 @@ import { method as category} from "../modules/category/category.js"
 import { method as users} from "../modules/users/users.js"
 import { method as favorite} from "../modules/favorite/favorite.js"
 import { method as car} from "../modules/car/car.js"
+import { method as orders} from "../modules/orders/orders.js"
 
 import { createSession } from "../pay/payment.controller.js";
 
@@ -71,8 +72,16 @@ router.get('/admin/users', authorization.soloSuperAdmin, authorization.revisarVe
      res.sendFile(path.resolve(__dirname, '../views/admin/users/users.html')) 
 })
 
-router.get('/checker', authorization.revisarVerified, (req, res) => {
+router.get('/checker', authorization.soloChecker, authorization.revisarVerified, (req, res) => {
      res.sendFile(path.resolve(__dirname, '../views/checker/home/home.html')) 
+})
+
+router.get('/checker/delivery', authorization.soloChecker, authorization.revisarVerified, (req, res) => {
+     res.sendFile(path.resolve(__dirname, '../views/checker/delivery/delivery.html')) 
+})
+
+router.get('/checker/inventory', authorization.soloChecker, authorization.revisarVerified, (req, res) => {
+     res.sendFile(path.resolve(__dirname, '../views/checker/inventory/inventory.html')) 
 })
 
 router.get('/user', authorization.revisarVerified, authorization.soloUsers, (req, res) => {
@@ -110,6 +119,7 @@ router.get('/api/productData', products.productData)
 router.get('/api/categoryData', category.categoryData)
 router.get('/api/favoriteData', favorite.favoriteData)
 router.get('/api/carData', car.carData)
+router.get('/api/ordersData', orders.orderData)
 
 router.put('/api/updateUser', upload.single('profilePic'), updateUser.updateData)
 

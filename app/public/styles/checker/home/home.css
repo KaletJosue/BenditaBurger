@@ -164,7 +164,7 @@ body {
 }
 
 .sidebar.active .bottomSidebar ul li:first-child {
-    padding: 0;
+    padding: 1rem 0;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -227,7 +227,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: start;
-    padding: .7rem 1rem;
+    padding: 1rem;
     gap: 1rem;
     font-size: 12px;
     border-radius: 10px;
@@ -240,7 +240,6 @@ body {
 .sidebar .centerSidebar ul li:hover {
     background-color: var(--color-fondo);
 }
-
 
 .sidebar .bottomSidebar {
     border-top: solid 2px var(--color-fondo);
@@ -257,7 +256,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: start;
-    padding: .7rem 1rem;
+    padding: 1rem;
     gap: 1rem;
     font-size: 12px;
     border-radius: 10px;

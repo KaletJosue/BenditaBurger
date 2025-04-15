@@ -127,68 +127,12 @@ body {
     z-index: 2;
 }
 
-.sidebar .optionsMenu2,
-.sidebar .optionsFinanzas2 {
-    display: none;
-    box-shadow: var(--box-shadow-suave);
-}
-
-.sidebar.active .optionsMenu2 {
-    display: flex;
-    position: fixed;
-    flex-direction: column;
-    background-color: var(--color-blanco);
-    padding: 1rem;
-    border-radius: 10px;
-    gap: .5rem;
-    top: 200px;
-    left: -500vw;
-    transition: all .5s ease;
-    z-index: -10;
-}
-
-.sidebar.active .optionsFinanzas2 {
-    display: flex;
-    position: fixed;
-    flex-direction: column;
-    background-color: var(--color-blanco);
-    padding: 1rem;
-    border-radius: 10px;
-    gap: .5rem;
-    top: 250px;
-    left: -500vw;
-    transition: all .5s ease;
-    z-index: -1;
-}
-
-.sidebar.active .optionsMenu2.active,
-.sidebar.active .optionsFinanzas2.active {
-    left: 100px;
-}
-
-.sidebar.active .optionsMenu2 p,
-.sidebar.active .optionsFinanzas2 p {
-    font-size: 10px;
-    text-align: center;
-    width: 100%;
-    padding: .7rem;
-    border-radius: 10px;
-    transition: all .2s ease;
-    cursor: pointer;
-    color: var(--color-negro);
-}
-
-.sidebar.active .optionsMenu2 p:hover,
-.sidebar.active .optionsFinanzas2 p:hover {
-    background-color: var(--color-fondo);
-}
-
 .sidebar.active {
     width: 90px;
     padding: 2rem 1rem;
 }
 
-.sidebar .centerSidebar ul li:not(:nth-child(3), :nth-child(4)).active {
+.sidebar .centerSidebar ul li.active {
     background-color: var(--color-fondo);
 }
 
@@ -212,7 +156,7 @@ body {
 }
 
 .sidebar.active .bottomSidebar ul li:first-child {
-    padding: 0;
+    padding: 1rem 0;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -271,11 +215,11 @@ body {
     gap: .5rem;
 }
 
-.sidebar .centerSidebar ul li:not(:nth-child(3), :nth-child(4)) {
+.sidebar .centerSidebar ul li {
     display: flex;
     align-items: center;
     justify-content: start;
-    padding: .7rem 1rem;
+    padding: 1rem;
     gap: 1rem;
     font-size: 12px;
     border-radius: 10px;
@@ -285,77 +229,7 @@ body {
     position: relative;
 }
 
-.sidebar .centerSidebar ul li:not(:nth-child(3), :nth-child(4)):hover,
-.sidebar .centerSidebar ul li:nth-child(3) .btnOptions:hover,
-.sidebar .centerSidebar ul li:nth-child(4) .btnOptions2:hover {
-    background-color: var(--color-fondo);
-}
-
-.sidebar .centerSidebar ul li:nth-child(3),
-.sidebar .centerSidebar ul li:nth-child(4) {
-    display: flex;
-    flex-direction: column;
-    font-size: 12px;
-    border-radius: 10px;
-    color: var(--color-negro);
-    transition: all .2s ease;
-    justify-content: center;
-    position: relative;
-}
-
-.sidebar .centerSidebar ul li:nth-child(3) .btnOptions,
-.sidebar .centerSidebar ul li:nth-child(4) .btnOptions2 {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    position: relative;
-    width: 100%;
-    cursor: pointer;
-    padding: .7rem 1rem;
-    border-radius: 10px;
-    transition: all .2s ease;
-}
-
-.sidebar .centerSidebar ul li:nth-child(3) .btnOptions i:last-child,
-.sidebar .centerSidebar ul li:nth-child(4) .btnOptions2 i:last-child {
-    position: absolute;
-    right: 10px;
-    transition: all .2s ease;
-}
-
-.sidebar .centerSidebar ul li:nth-child(3).active .btnOptions i:last-child,
-.sidebar .centerSidebar ul li:nth-child(4).active .btnOptions2 i:last-child {
-    transform: rotate(180deg);
-}
-
-.sidebar .centerSidebar ul li:nth-child(3) .optionsMenu,
-.sidebar .centerSidebar ul li:nth-child(4) .optionsFinanzas {
-    display: flex;
-    flex-direction: column;
-    padding-left: 1.8rem;
-    gap: .2rem;
-    overflow: hidden;
-    max-height: 0;
-    transition: all .5s;
-}
-
-.sidebar .centerSidebar ul li:nth-child(3).active .optionsMenu,
-.sidebar .centerSidebar ul li:nth-child(4).active .optionsFinanzas {
-    max-height: 500px;
-    padding-right: 2rem;
-}
-
-.sidebar .centerSidebar ul li:nth-child(3) .optionsMenu p,
-.sidebar .centerSidebar ul li:nth-child(4) .optionsFinanzas p {
-    padding: .7rem;
-    border-radius: 10px;
-    cursor: pointer;
-    font-size: 11px;
-    transition: all .2s ease;
-}
-
-.sidebar .centerSidebar ul li:nth-child(3) .optionsMenu p:hover,
-.sidebar .centerSidebar ul li:nth-child(4) .optionsFinanzas p:hover {
+.sidebar .centerSidebar ul li:hover {
     background-color: var(--color-fondo);
 }
 
@@ -374,7 +248,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: start;
-    padding: .7rem 1rem;
+    padding: 1rem;
     gap: 1rem;
     font-size: 12px;
     border-radius: 10px;

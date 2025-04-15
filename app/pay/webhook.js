@@ -49,10 +49,12 @@ const handleStripeWebhook = async (req, res) => {
         const revisarUsuario = await usersCollection.findOne({ Correo: customerEmail })
 
         var direccion = revisarUsuario.Direccion
+        var barrio = revisarUsuario.Barrio
 
         const newOrder = {
             Correo: customerEmail,
             Direccion: direccion,
+            Barrio: barrio,
             Estado: "Preparacion",
             Total: amountTotal,
             MetodoPago: paymentMethod,
