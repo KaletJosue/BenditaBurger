@@ -1,4 +1,0 @@
-2025/04/15-00:09:28.068 209c Reusing MANIFEST C:\Users\kalet\OneDrive\Documentos\Progra\BenditaBurger\.wwebjs_auth\session\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
-2025/04/15-00:09:28.069 209c Recovering log #53
-2025/04/15-00:09:28.073 209c Reusing old log C:\Users\kalet\OneDrive\Documentos\Progra\BenditaBurger\.wwebjs_auth\session\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/000053.log 
-2025/04/15-00:09:30.914 3184 Manual compaction at level-0 from '\x00\x1b\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00\x1c\x00\x00\x00' @ 0 : 0; will stop at (end)
