@@ -472,6 +472,10 @@ body {
     white-space: nowrap;
 }
 
+.main .table tbody tr.filtro {
+    display: none;
+}
+
 .main .table tbody tr:not(:last-child) {
     border-bottom: solid 1px var(--color-linea);
 }
@@ -767,8 +771,8 @@ body {
     aspect-ratio: 1/1;
     object-fit: cover;
     object-position: center center;
-    width: 50px;
-    border-radius: 15px;
+    width: 20px;
+    border-radius: 5px;
 }
 
 .modalDetalis .conModalDetails h3 {
@@ -1047,6 +1051,30 @@ body {
     color: white;
 }
 
+.main2 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100dvh;
+    padding: 1rem;
+}
+
+.main2 img {
+    aspect-ratio: 1/1;
+    width: 70px;
+    border-radius: 20px;
+}
+
+.main2 h1 {
+    margin-top: 1rem;
+    width: 400px;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--color-negro);
+    text-align: center;
+}
+
 @media (width < 1000px) {
     .modal,
     .modal2 {
@@ -1077,6 +1105,10 @@ body {
 }
 
 @media (width < 450px) {
+    .main2 h1 {
+        width: 100%;
+    }
+    
     .modalDetalis .conModalDetails {
         border-radius: 0;
     }

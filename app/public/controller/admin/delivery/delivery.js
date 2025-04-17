@@ -46,85 +46,6 @@ btnProducts.forEach(btnProduct => {
     })
 })
 
-const openModalDetails = document.querySelector('.openModal');
-const modalDetails = document.querySelector('.modalDetalis');
-const modalContentDetails = document.querySelector('.conModalDetails');
-const closeModalDetails = document.getElementById('closeModalDetails')
-
-openModalDetails.addEventListener('click', () => {
-    modalDetails.style.display = 'flex'
-
-    gsap.fromTo(modalContentDetails,
-        { scale: 0, opacity: 0, filter: 'blur(10px)', x: 0 },
-        {
-            scale: 1,
-            opacity: 1,
-            filter: 'blur(0px)',
-            duration: .5,
-            ease: 'power1.out',
-        }
-    )
-})
-closeModalDetails.addEventListener('click', () => {
-    gsap.to(modalContentDetails, {
-        filter: 'blur(10px)',
-        opacity: 0,
-        x: 1000,
-        ease: 'power1.in',
-        onComplete: () => {
-            modalDetails.style.display = 'none';
-        }
-    });
-})
-window.addEventListener('click', event => {
-    if (event.target == modalDetails) {
-        gsap.to(modalContentDetails, {
-            filter: 'blur(10px)',
-            opacity: 0,
-            x: 1000,
-            ease: 'power1.in',
-            onComplete: () => {
-                modalDetails.style.display = 'none';
-            }
-        });
-    }
-})
-
-var btnSelectEstado = document.querySelector('.enviado')
-var selectEstado = document.querySelector('.selectEstado')
-
-btnSelectEstado.addEventListener('click', () => {
-    var isCollapsed = selectEstado.style.height === '' || selectEstado.style.height === '2px' || selectEstado.style.height === '0px';
-
-    if (isCollapsed == true) {
-        gsap.fromTo(selectEstado,
-            { height: 0, width: 0, opacity: 0, padding: 0 },
-            {
-                height: '190px',
-                width: '250px',
-                opacity: 1,
-                padding: '1rem',
-                duration: .5,
-                ease: 'elastic.out',
-            }
-        )
-    } else {
-        gsap.to(selectEstado, {
-            height: 0,
-            width: 0,
-            filter: 'blur(20px)',
-            opacity: 0,
-            padding: 0,
-            duration: .2,
-            ease: 'power1',
-            onComplete: () => {
-                gsap.set(selectEstado, { clearProps: "all" });
-                isCollapsed = true
-            }
-        });
-    }
-})
-
 var menu = document.querySelector('.menu')
 var conMenu = document.querySelector('.conMenu')
 
@@ -245,3 +166,350 @@ if (resJson.data.Photo == "") {
 } else {
     imgProfile.src = resJson.data.Photo
 }
+
+const resOrder = await fetch("http://localhost:4000/api/ordersDataAdmin", {
+    method: "GET",
+    headers: {
+        "Content-Type": "application/json"
+    }
+})
+
+const resJsonOrder = await resOrder.json()
+
+if (resJsonOrder.status == "Data Orders") {
+    const orderData = resJsonOrder.data;
+
+    const main2 = document.querySelector('.main2')
+    const main = document.querySelector('.main')
+    const search = document.querySelector('.search')
+
+    if (orderData != '') {
+        main2.style.display = 'none'
+
+        var tbody = document.querySelector('.tbody')
+
+        orderData.forEach(async (doc) => {
+            const res = await fetch("http://localhost:4000/api/userDataControl", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+
+            const resJson = await res.json()
+
+            var correoOrder = doc.Correo
+
+            var fotoOrder = ''
+            var nameOrder = ''
+            var numberPhoneOrder = ''
+
+            if (resJson.status == "Data User") {
+                const usersData = resJson.data;
+
+                usersData.forEach((doc2) => {
+                    if (correoOrder == doc2.Email) {
+                        if (doc2.Photo == "") {
+                            fotoOrder = "/assets/profile-5.jpg"
+                        } else {
+                            fotoOrder = doc2.Photo
+                        }
+
+                        nameOrder = doc2.Nombre
+                        numberPhoneOrder = doc2.Phone
+                    }
+                })
+            }
+
+            var imgDetails = document.querySelector('.imgDetails')
+            var nameDetails = document.querySelector('.nameDetails')
+            var phoneDetails = document.querySelector('.phoneDetails')
+            var methodDetails = document.querySelector('.methodDetails')
+            var gmailDetails = document.querySelector('.gmailDetails')
+            var directionDetails = document.querySelector('.directionDetails')
+            var dateDetails = document.querySelector('.dateDetails')
+            var hourDetails = document.querySelector('.hourDetails')
+            var statusDetails = document.querySelector('.statusDetails')
+
+            var tr = document.createElement('tr')
+            var thCLient = document.createElement('th')
+            var divClient = document.createElement('div')
+            var imgCLient = document.createElement('img')
+            var nameCLient = document.createElement('name')
+            var direccion = document.createElement('th')
+            var fecha = document.createElement('th')
+            var hora = document.createElement('th')
+            var metodoPago = document.createElement('th')
+            var estado = document.createElement('th')
+            var btnEstado = document.createElement('p')
+            var selectEstado = document.createElement('div')
+            var estadoEnviado = document.createElement('h3')
+            var estadoCancelado = document.createElement('h3')
+            var estadoPreparacion = document.createElement('h3')
+            var estadoEntregado = document.createElement('h3')
+            var estadoCerca = document.createElement('h3')
+            var montoTotal = document.createElement('th')
+            var thDetails = document.createElement('th')
+            var btnDetails = document.createElement('button')
+
+            estadoEnviado.textContent = "Enviado"
+            estadoCancelado.textContent = "Cancelado"
+            estadoPreparacion.textContent = "Preparacion"
+            estadoEntregado.textContent = "Entregado"
+            estadoCerca.textContent = "Cerca"
+
+            imgCLient.src = fotoOrder
+            nameCLient.textContent = nameOrder
+            direccion.textContent = doc.Direccion + " " + doc.Barrio
+            fecha.textContent = doc.Fecha
+            hora.textContent = doc.Hora
+            if (doc.MetodoPago == "card") {
+                metodoPago.textContent = "Tarjeta"
+            } else {
+                metodoPago.textContent = doc.MetodoPago
+            }
+            btnEstado.textContent = doc.Estado
+            montoTotal.textContent = `$${parseInt(doc.Total).toLocaleString('de-DE')}`
+            btnDetails.textContent = 'Detalles'
+
+            btnEstado.className = (doc.Estado).toLowerCase()
+            divClient.className = "divClient"
+            selectEstado.className = "selectEstado"
+
+            tbody.appendChild(tr)
+            tr.appendChild(thCLient)
+            thCLient.appendChild(divClient)
+            divClient.appendChild(imgCLient)
+            divClient.appendChild(nameCLient)
+            tr.appendChild(direccion)
+            tr.appendChild(fecha)
+            tr.appendChild(hora)
+            tr.appendChild(metodoPago)
+            tr.appendChild(estado)
+            estado.appendChild(btnEstado)
+            estado.appendChild(selectEstado)
+            selectEstado.appendChild(estadoEnviado)
+            selectEstado.appendChild(estadoCancelado)
+            selectEstado.appendChild(estadoPreparacion)
+            selectEstado.appendChild(estadoEntregado)
+            selectEstado.appendChild(estadoCerca)
+            tr.appendChild(montoTotal)
+            tr.appendChild(thDetails)
+            thDetails.appendChild(btnDetails)
+
+            const modalDetails = document.querySelector('.modalDetalis');
+            const modalContentDetails = document.querySelector('.conModalDetails');
+            const closeModalDetails = document.getElementById('closeModalDetails')
+
+            var infoPedidio = document.querySelector('.infoPedido')
+
+            btnDetails.addEventListener('click', () => {
+                modalDetails.style.display = 'flex'
+                sidebar.classList.remove('ocult')
+                menu.classList.remove('active')
+
+                imgDetails.src = fotoOrder
+                nameDetails.textContent = nameOrder
+                phoneDetails.textContent = numberPhoneOrder
+                if (doc.MetodoPago == "card") {
+                    methodDetails.textContent = "Tarjeta"
+                } else {
+                    methodDetails.textContent = doc.MetodoPago
+                }
+                gmailDetails.textContent = doc.Correo
+                directionDetails.textContent = doc.Direccion + " " + doc.Barrio
+                dateDetails.textContent = doc.Fecha
+                hourDetails.textContent = doc.Hora
+                statusDetails.textContent = doc.Estado
+
+                gsap.fromTo(modalContentDetails,
+                    { scale: 0, opacity: 0, filter: 'blur(10px)', x: 0 },
+                    {
+                        scale: 1,
+                        opacity: 1,
+                        filter: 'blur(0px)',
+                        duration: .5,
+                        ease: 'power1.out',
+                    }
+                )
+
+                var dataProducts = doc.Productos
+
+                dataProducts.forEach(async (product) => {
+                    if (product.name != "Manejo, Logistica y Envio") {
+                        const resProduct = await fetch("http://localhost:4000/api/productData", {
+                            method: "GET",
+                            headers: {
+                                "Content-Type": "application/json"
+                            }
+                        })
+
+                        const resProductJson = await resProduct.json()
+
+                        if (resProductJson.status == "Data Products") {
+                            const productData = resProductJson.data;
+
+                            if (product.quantity > 1) {
+                                for (var i = 0; i < product.quantity; i++) {
+                                    productData.forEach((docCar) => {
+                                        if ((docCar.Nombre).toLowerCase() == (product.name).toLowerCase()) {
+                                            var campoPedido = document.createElement('div')
+                                            var imgCampoPedido = document.createElement('div')
+                                            var img = document.createElement('img')
+                                            var name = document.createElement('p')
+                                            var price = document.createElement('p')
+
+                                            img.src = docCar.Foto
+                                            name.textContent = product.name
+
+                                            if (docCar.Descuento != '') {
+                                                var precioDescuento = docCar.Precio - (docCar.Precio * (docCar.Descuento / 100))
+                                                price.textContent = `$${parseInt(precioDescuento).toLocaleString('de-DE')}`
+                                            } else {
+                                                price.textContent = `$${parseInt(docCar.Precio).toLocaleString('de-DE')}`
+                                            }
+
+                                            campoPedido.className = "campoPedido"
+                                            imgCampoPedido.className = "imgCampoPedido"
+
+                                            infoPedidio.appendChild(campoPedido)
+                                            campoPedido.appendChild(imgCampoPedido)
+                                            imgCampoPedido.appendChild(img)
+                                            imgCampoPedido.appendChild(name)
+                                            campoPedido.appendChild(price)
+                                        }
+                                    })
+                                }
+                            } else {
+                                productData.forEach((docCar) => {
+                                    if ((docCar.Nombre).toLowerCase() == (product.name).toLowerCase()) {
+                                        var campoPedido = document.createElement('div')
+                                        var imgCampoPedido = document.createElement('div')
+                                        var img = document.createElement('img')
+                                        var name = document.createElement('p')
+                                        var price = document.createElement('p')
+
+                                        img.src = docCar.Foto
+                                        name.textContent = product.name
+
+                                        if (docCar.Descuento != '') {
+                                            var precioDescuento = docCar.Precio - (docCar.Precio * (docCar.Descuento / 100))
+                                            price.textContent = `$${parseInt(precioDescuento).toLocaleString('de-DE')}`
+                                        } else {
+                                            price.textContent = `$${parseInt(docCar.Precio).toLocaleString('de-DE')}`
+                                        }
+
+                                        campoPedido.className = "campoPedido"
+                                        imgCampoPedido.className = "imgCampoPedido"
+
+                                        infoPedidio.appendChild(campoPedido)
+                                        campoPedido.appendChild(imgCampoPedido)
+                                        imgCampoPedido.appendChild(img)
+                                        imgCampoPedido.appendChild(name)
+                                        campoPedido.appendChild(price)
+                                    }
+                                })
+                            }
+                        }
+                    } else {
+                        var campoPedido = document.createElement('div')
+                        var imgCampoPedido = document.createElement('div')
+                        var img = document.createElement('img')
+                        var name = document.createElement('p')
+                        var price = document.createElement('p')
+
+                        img.src = "/assets/logo.png"
+                        name.textContent = "Envio y Logistica"
+                        price.textContent = `$${parseInt(product.price).toLocaleString('de-DE')}`
+
+                        campoPedido.className = "campoPedido"
+                        imgCampoPedido.className = "imgCampoPedido"
+
+                        infoPedidio.appendChild(campoPedido)
+                        campoPedido.appendChild(imgCampoPedido)
+                        imgCampoPedido.appendChild(img)
+                        imgCampoPedido.appendChild(name)
+                        campoPedido.appendChild(price)
+                    }
+                })
+            })
+            closeModalDetails.addEventListener('click', () => {
+                gsap.to(modalContentDetails, {
+                    filter: 'blur(10px)',
+                    opacity: 0,
+                    x: 1000,
+                    ease: 'power1.in',
+                    onComplete: () => {
+                        modalDetails.style.display = 'none';
+                        infoPedidio.innerHTML = ''
+                    }
+                });
+            })
+            window.addEventListener('click', event => {
+                if (event.target == modalDetails) {
+                    gsap.to(modalContentDetails, {
+                        filter: 'blur(10px)',
+                        opacity: 0,
+                        x: 1000,
+                        ease: 'power1.in',
+                        onComplete: () => {
+                            modalDetails.style.display = 'none';
+                            infoPedidio.innerHTML = ''
+                        }
+                    });
+                }
+            })
+
+            btnEstado.addEventListener('click', () => {
+                var isCollapsed = selectEstado.style.height === '' || selectEstado.style.height === '2px' || selectEstado.style.height === '0px';
+
+                if (isCollapsed == true) {
+                    gsap.fromTo(selectEstado,
+                        { height: 0, width: 0, opacity: 0, padding: 0 },
+                        {
+                            height: '190px',
+                            width: '250px',
+                            opacity: 1,
+                            padding: '1rem',
+                            duration: .5,
+                            ease: 'elastic.out',
+                        }
+                    )
+                } else {
+                    gsap.to(selectEstado, {
+                        height: 0,
+                        width: 0,
+                        filter: 'blur(20px)',
+                        opacity: 0,
+                        padding: 0,
+                        duration: .2,
+                        ease: 'power1',
+                        onComplete: () => {
+                            gsap.set(selectEstado, { clearProps: "all" });
+                            isCollapsed = true
+                        }
+                    });
+                }
+            })
+        })
+
+    } else {
+        main.style.display = 'none'
+        search.style.display = 'none'
+    }
+}
+
+// Search
+
+var search = document.getElementById('search')
+
+search.addEventListener("input", e => {
+    document.querySelectorAll('.tbody tr').forEach(documento => {
+
+        let originalString = documento.textContent;
+
+        originalString.toLowerCase().includes(e.target.value.toLowerCase())
+            ? documento.classList.remove("filtro")
+            : documento.classList.add("filtro");
+    });
+});

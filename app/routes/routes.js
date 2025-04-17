@@ -120,6 +120,7 @@ router.get('/api/categoryData', category.categoryData)
 router.get('/api/favoriteData', favorite.favoriteData)
 router.get('/api/carData', car.carData)
 router.get('/api/ordersData', orders.orderData)
+router.get('/api/ordersDataAdmin', orders.orderDataAdmin)
 
 router.put('/api/updateUser', upload.single('profilePic'), updateUser.updateData)
 

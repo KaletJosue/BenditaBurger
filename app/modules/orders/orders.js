@@ -24,6 +24,24 @@ async function orderData(req, res) {
     }
 }
 
+async function orderDataAdmin(req, res) {
+    if (req.headers.cookie) {
+        const db = await conectarConMongoDB();
+        const orderCollection = db.collection('ventas');
+
+        const orderData = await orderCollection.find({}).toArray();
+
+        return res.status(200).send({
+            status: "Data Orders",
+            message: "Datos del carrito obtenidos correctamente",
+            data: orderData,
+        });
+    } else {
+        return res.status(400).send({ status: "Error Login", message: "No has iniciado sesión correctamente" });
+    }
+}
+
 export const method = {
-    orderData
+    orderData,
+    orderDataAdmin
 }

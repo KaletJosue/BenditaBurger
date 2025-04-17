@@ -50,6 +50,7 @@ const handleStripeWebhook = async (req, res) => {
 
         var direccion = revisarUsuario.Direccion
         var barrio = revisarUsuario.Barrio
+        var nombre = revisarUsuario.Nombre
 
         const newOrder = {
             Correo: customerEmail,
@@ -68,9 +69,10 @@ const handleStripeWebhook = async (req, res) => {
 
 Gracias por tu compra *BenditaLover*:
 
-    💰Total pagado: *$${parseInt(amountTotal).toLocaleString('de-DE')}*
-    💳Método de pago: *${paymentMethod}*
-    👨‍🍳Estado del pedido: *En Preparacion*
+  💰Total pagado: *$${parseInt(amountTotal).toLocaleString('de-DE')}*
+  💳Método de pago: *${paymentMethod}*
+  👨‍🍳Estado del pedido: *En Preparacion*
+  ✋Nombre: *${nombre}*
 
 Esta pendiente a las actualizaciones en la aplicacion de Bendita Burger`;
 

@@ -16,10 +16,6 @@ var conMenu = document.querySelector('.conMenu')
 conMenu.addEventListener('click', () => {
     menu.classList.toggle('active')
     sidebar.classList.toggle('ocult')
-    if (menu.classList == "menu") {
-        optionsFinanzas2.classList.remove('active')
-        optionsMenu2.classList.remove('active')
-    }
 })
 
 var sidebar = document.querySelector('.sidebar')
@@ -270,6 +266,8 @@ if (resJsonOrder.status == "Data Orders") {
 
             btnDetails.addEventListener('click', () => {
                 modalDetails.style.display = 'flex'
+                sidebar.classList.remove('ocult')
+                menu.classList.remove('active')
 
                 gsap.fromTo(modalContentDetails,
                     { scale: 0, opacity: 0, filter: 'blur(10px)', x: 0 },
