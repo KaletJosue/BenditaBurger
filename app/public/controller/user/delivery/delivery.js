@@ -212,6 +212,9 @@ if (resJsonOrder.status == "Data Orders") {
                 } else if ((doc.Estado).toLowerCase() == "cancelado") {
                     progress.style.display = "none"
                     cancel.style.display = "flex"
+
+                    var motivoCancel = document.querySelector('.motivoCancel')
+                    motivoCancel.textContent = doc.Motivo
                 }
 
                 gsap.fromTo(modalContentUpdate,

@@ -424,23 +424,6 @@ body {
     padding: 0 2rem 1rem 7rem;
 }
 
-.conTable {
-    overflow: hidden;
-    overflow-x: auto;
-}
-
-.conTable::-webkit-scrollbar {
-    height: 7px;
-    background-color: var(--color-linea);
-    border-radius: 50px;
-}
-
-.conTable::-webkit-scrollbar-thumb {
-    background-color: var(--color-gris);
-    border-radius: 50px;
-    cursor: pointer;
-}
-
 .conTable .espacio {
     display: block;
     height: 20px;
@@ -831,6 +814,97 @@ body {
     width: 30px;
 }
 
+.modalUpdate {
+    position: fixed;
+    width: 100vw;
+    height: 100dvh;
+    top: 0;
+    left: 0;
+    display: none;
+    align-items: end;
+    justify-content: center;
+    z-index: 1;
+}
+
+.modalUpdate .conModalUpdate {
+    backdrop-filter: blur(90px);
+    padding: 1rem 2rem;
+    width: 500px;
+    box-shadow: 1px 1px 1rem #0000008a;
+    border-radius: 20px 20px 0 0;
+}
+
+.modalUpdate .conModalUpdate .conInputs {
+    display: grid;
+    grid-template-columns: 1fr;
+}
+
+.modalUpdate .conModalUpdate .inputUpdate {
+    margin-top: 1rem;
+}
+
+.modalUpdate .conModalUpdate .inputUpdate p {
+    font-size: 12px;
+    margin-bottom: .2rem;
+    color: var(--color-negro);
+}
+
+.modalUpdate .conModalUpdate .inputUpdate input {
+    padding: .7rem;
+    width: 100%;
+    border-radius: 7px;
+    border: solid 1px var(--color-gris);
+    font-size: 12px;
+    outline: none;
+    background-color: transparent;
+    color: var(--color-negro);
+}
+
+.modalUpdate .conModalUpdate .buttons {
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+    font-size: 12px;
+}
+
+.modalUpdate .conModalUpdate .buttons button {
+    padding: .7rem;
+    width: 100%;
+    border-radius: 7px;
+    border: none;
+    cursor: pointer;
+    transition: all .2s ease;
+    font-size: 12px;
+}
+
+.modalUpdate .conModalUpdate .buttons button:first-child {
+    background-color: var(--color-gris);
+    color: var(--color-blanco);
+    opacity: .2;
+    cursor: no-drop;
+}
+
+.modalUpdate .conModalUpdate .buttons button:last-child {
+    background-color: #FF4A43;
+    color: var(--color-blanco);
+}
+
+.modalUpdate .conModalUpdate .buttons button:last-child:hover {
+    transform: translateY(-5px);
+}
+
+.modalUpdate .conModalUpdate .buttons button:first-child.active {
+    opacity: 1;
+    background-color: #6397bc;
+    cursor: pointer;
+}
+
+.modalUpdate .conModalUpdate .buttons button:first-child.active:hover {
+    transform: translateY(-5px);
+}
+
 /* Modal */
 
 .modal {
@@ -1073,6 +1147,14 @@ body {
     font-weight: 500;
     color: var(--color-negro);
     text-align: center;
+}
+
+@media (width < 1100px) {
+    .conTable {
+        overflow: hidden;
+        overflow-x: auto;
+        overflow-y: auto;
+    }
 }
 
 @media (width < 1000px) {

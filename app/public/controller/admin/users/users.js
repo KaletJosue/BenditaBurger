@@ -214,7 +214,6 @@ if (resJson.status == "Data User") {
     })
 }
 
-const openModalUpdate = document.querySelector('.openModalUpdate');
 const modalUpdate = document.querySelector('.modalUpdate');
 const modalContentUpdate = document.querySelector('.conModalUpdate');
 const closeModalUpdate = document.getElementById('closeModalUpdate')

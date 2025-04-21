@@ -4,6 +4,11 @@ window.onload = function () {
     loader.classList.add('active')
 }
 
+var modal = document.querySelector('.modal')
+var closeModal = document.querySelector('#closeModal')
+var tryAgain = document.querySelector('.tryAgain')
+var textErrorModal = document.querySelector('.textErrorModal')
+
 var btnSales = document.querySelectorAll('.btnSales')
 var btnStatistics = document.querySelectorAll('.btnStatistics')
 var btnBills = document.querySelectorAll('.btnBills')
@@ -189,38 +194,6 @@ if (resJsonOrder.status == "Data Orders") {
         var tbody = document.querySelector('.tbody')
 
         orderData.forEach(async (doc) => {
-            const res = await fetch("http://localhost:4000/api/userDataControl", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                }
-            })
-
-            const resJson = await res.json()
-
-            var correoOrder = doc.Correo
-
-            var fotoOrder = ''
-            var nameOrder = ''
-            var numberPhoneOrder = ''
-
-            if (resJson.status == "Data User") {
-                const usersData = resJson.data;
-
-                usersData.forEach((doc2) => {
-                    if (correoOrder == doc2.Email) {
-                        if (doc2.Photo == "") {
-                            fotoOrder = "/assets/profile-5.jpg"
-                        } else {
-                            fotoOrder = doc2.Photo
-                        }
-
-                        nameOrder = doc2.Nombre
-                        numberPhoneOrder = doc2.Phone
-                    }
-                })
-            }
-
             var imgDetails = document.querySelector('.imgDetails')
             var nameDetails = document.querySelector('.nameDetails')
             var phoneDetails = document.querySelector('.phoneDetails')
@@ -258,8 +231,8 @@ if (resJsonOrder.status == "Data Orders") {
             estadoEntregado.textContent = "Entregado"
             estadoCerca.textContent = "Cerca"
 
-            imgCLient.src = fotoOrder
-            nameCLient.textContent = nameOrder
+            imgCLient.src = doc.Foto ? doc.Foto : "/assets/profile-5.jpg"
+            nameCLient.textContent = doc.Nombre
             direccion.textContent = doc.Direccion + " " + doc.Barrio
             fecha.textContent = doc.Fecha
             hora.textContent = doc.Hora
@@ -297,6 +270,284 @@ if (resJsonOrder.status == "Data Orders") {
             tr.appendChild(thDetails)
             thDetails.appendChild(btnDetails)
 
+            estadoEnviado.addEventListener('click', async () => {
+                loader.classList.remove('active')
+
+                const resUpdateEstado = await fetch("http://localhost:4000/api/updateEstado", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        Correo: doc.Correo,
+                        Direccion: doc.Direccion,
+                        Barrio: doc.Barrio,
+                        Estado: doc.Estado,
+                        Total: doc.Total,
+                        MetodoPago: doc.MetodoPago,
+                        Productos: doc.Productos,
+                        Fecha: doc.Fecha,
+                        Hora: doc.Hora,
+                        NuevoEstado: "Enviado"
+                    })
+                })
+
+                const resUpdateEstadoJson = await resUpdateEstado.json()
+
+                if (resUpdateEstadoJson.status == "Update correct") {
+                    location.reload()
+                } else {
+                    loader.classList.add('active');
+                    textErrorModal.textContent = resJson.message;
+                    modal.classList.add('active');
+                    closeModal.addEventListener('click', () => {
+                        modal.classList.remove('active');
+                    });
+                    tryAgain.addEventListener('click', () => {
+                        modal.classList.remove('active');
+                    });
+                    window.addEventListener('click', event => {
+                        if (event.target == modal) {
+                            modal.classList.remove('active');
+                        }
+                    });
+                }
+            })
+
+            estadoCancelado.addEventListener('click', () => {
+                const modalUpdate = document.querySelector('.modalUpdate');
+                const modalContentUpdate = document.querySelector('.conModalUpdate');
+                const closeModalUpdate = document.getElementById('closeModalUpdate')
+
+                modalUpdate.style.display = 'flex';
+
+                gsap.fromTo(modalContentUpdate,
+                    { backdropFilter: 'blur(0px)', height: 0, opacity: 0 },
+                    {
+                        height: 'auto',
+                        opacity: 1,
+                        backdropFilter: 'blur(90px)',
+                        duration: .7,
+                        ease: 'expo.out',
+                    }
+                );
+
+                window.addEventListener('click', event => {
+                    if (event.target === modalUpdate) {
+                        gsap.to(modalContentUpdate, {
+                            height: '0px',
+                            duration: .2,
+                            ease: 'power1.in',
+                            onComplete: () => {
+                                modalUpdate.style.display = 'none';
+                            }
+                        });
+                    }
+                });
+
+                closeModalUpdate.addEventListener('click', () => {
+                    gsap.to(modalContentUpdate, {
+                        height: '0px',
+                        duration: .2,
+                        ease: 'power1.in',
+                        onComplete: () => {
+                            modalUpdate.style.display = 'none';
+                        }
+                    });
+                });
+
+                var inputNameUpdate = document.querySelector('.inputNameUpdate')
+
+                var btnUpdate = document.querySelector('.btnUpdate')
+
+                inputNameUpdate.addEventListener('input', () => {
+                    if (inputNameUpdate.value.length != 0) {
+                        btnUpdate.classList.add('active')
+                        btnUpdate.disabled = false
+                    } else {
+                        btnUpdate.classList.remove('active')
+                        btnUpdate.disabled = true
+                    }
+                })
+
+                btnUpdate.addEventListener('click', async () => {
+                    loader.classList.remove('active')
+
+                    const resUpdateEstado = await fetch("http://localhost:4000/api/updateEstado", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            Correo: doc.Correo,
+                            Direccion: doc.Direccion,
+                            Barrio: doc.Barrio,
+                            Estado: doc.Estado,
+                            Total: doc.Total,
+                            MetodoPago: doc.MetodoPago,
+                            Productos: doc.Productos,
+                            Fecha: doc.Fecha,
+                            Hora: doc.Hora,
+                            NuevoEstado: "Cancelado",
+                            Motivo: inputNameUpdate.value
+                        })
+                    })
+
+                    const resUpdateEstadoJson = await resUpdateEstado.json()
+
+                    if (resUpdateEstadoJson.status == "Update correct") {
+                        location.reload()
+                    } else {
+                        loader.classList.add('active');
+                        textErrorModal.textContent = resJson.message;
+                        modal.classList.add('active');
+                        closeModal.addEventListener('click', () => {
+                            modal.classList.remove('active');
+                        });
+                        tryAgain.addEventListener('click', () => {
+                            modal.classList.remove('active');
+                        });
+                        window.addEventListener('click', event => {
+                            if (event.target == modal) {
+                                modal.classList.remove('active');
+                            }
+                        });
+                    }
+                })
+            })
+
+            estadoPreparacion.addEventListener('click', async () => {
+                loader.classList.remove('active')
+
+                const resUpdateEstado = await fetch("http://localhost:4000/api/updateEstado", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        Correo: doc.Correo,
+                        Direccion: doc.Direccion,
+                        Barrio: doc.Barrio,
+                        Estado: doc.Estado,
+                        Total: doc.Total,
+                        MetodoPago: doc.MetodoPago,
+                        Productos: doc.Productos,
+                        Fecha: doc.Fecha,
+                        Hora: doc.Hora,
+                        NuevoEstado: "Preparacion"
+                    })
+                })
+
+                const resUpdateEstadoJson = await resUpdateEstado.json()
+
+                if (resUpdateEstadoJson.status == "Update correct") {
+                    location.reload()
+                } else {
+                    loader.classList.add('active');
+                    textErrorModal.textContent = resJson.message;
+                    modal.classList.add('active');
+                    closeModal.addEventListener('click', () => {
+                        modal.classList.remove('active');
+                    });
+                    tryAgain.addEventListener('click', () => {
+                        modal.classList.remove('active');
+                    });
+                    window.addEventListener('click', event => {
+                        if (event.target == modal) {
+                            modal.classList.remove('active');
+                        }
+                    });
+                }
+            })
+
+            estadoEntregado.addEventListener('click', async () => {
+                loader.classList.remove('active')
+
+                const resUpdateEstado = await fetch("http://localhost:4000/api/updateEstado", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        Correo: doc.Correo,
+                        Direccion: doc.Direccion,
+                        Barrio: doc.Barrio,
+                        Estado: doc.Estado,
+                        Total: doc.Total,
+                        MetodoPago: doc.MetodoPago,
+                        Productos: doc.Productos,
+                        Fecha: doc.Fecha,
+                        Hora: doc.Hora,
+                        NuevoEstado: "Entregado"
+                    })
+                })
+
+                const resUpdateEstadoJson = await resUpdateEstado.json()
+
+                if (resUpdateEstadoJson.status == "Update correct") {
+                    location.reload()
+                } else {
+                    loader.classList.add('active');
+                    textErrorModal.textContent = resJson.message;
+                    modal.classList.add('active');
+                    closeModal.addEventListener('click', () => {
+                        modal.classList.remove('active');
+                    });
+                    tryAgain.addEventListener('click', () => {
+                        modal.classList.remove('active');
+                    });
+                    window.addEventListener('click', event => {
+                        if (event.target == modal) {
+                            modal.classList.remove('active');
+                        }
+                    });
+                }
+            })
+
+            estadoCerca.addEventListener('click', async () => {
+                loader.classList.remove('active')
+
+                const resUpdateEstado = await fetch("http://localhost:4000/api/updateEstado", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        Correo: doc.Correo,
+                        Direccion: doc.Direccion,
+                        Barrio: doc.Barrio,
+                        Estado: doc.Estado,
+                        Total: doc.Total,
+                        MetodoPago: doc.MetodoPago,
+                        Productos: doc.Productos,
+                        Fecha: doc.Fecha,
+                        Hora: doc.Hora,
+                        NuevoEstado: "Cerca"
+                    })
+                })
+
+                const resUpdateEstadoJson = await resUpdateEstado.json()
+
+                if (resUpdateEstadoJson.status == "Update correct") {
+                    location.reload()
+                } else {
+                    loader.classList.add('active');
+                    textErrorModal.textContent = resJson.message;
+                    modal.classList.add('active');
+                    closeModal.addEventListener('click', () => {
+                        modal.classList.remove('active');
+                    });
+                    tryAgain.addEventListener('click', () => {
+                        modal.classList.remove('active');
+                    });
+                    window.addEventListener('click', event => {
+                        if (event.target == modal) {
+                            modal.classList.remove('active');
+                        }
+                    });
+                }
+            })
+
             const modalDetails = document.querySelector('.modalDetalis');
             const modalContentDetails = document.querySelector('.conModalDetails');
             const closeModalDetails = document.getElementById('closeModalDetails')
@@ -305,6 +556,34 @@ if (resJsonOrder.status == "Data Orders") {
 
             btnDetails.addEventListener('click', () => {
                 modalDetails.style.display = 'flex'
+
+                closeModalDetails.addEventListener('click', () => {
+                    gsap.to(modalContentDetails, {
+                        filter: 'blur(10px)',
+                        opacity: 0,
+                        x: 1000,
+                        ease: 'power1.in',
+                        onComplete: () => {
+                            modalDetails.style.display = 'none';
+                            infoPedidio.innerHTML = ''
+                        }
+                    });
+                })
+                window.addEventListener('click', event => {
+                    if (event.target == modalDetails) {
+                        gsap.to(modalContentDetails, {
+                            filter: 'blur(10px)',
+                            opacity: 0,
+                            x: 1000,
+                            ease: 'power1.in',
+                            onComplete: () => {
+                                modalDetails.style.display = 'none';
+                                infoPedidio.innerHTML = ''
+                            }
+                        });
+                    }
+                })
+                
                 sidebar.classList.remove('ocult')
                 menu.classList.remove('active')
 
@@ -433,32 +712,6 @@ if (resJsonOrder.status == "Data Orders") {
                     }
                 })
             })
-            closeModalDetails.addEventListener('click', () => {
-                gsap.to(modalContentDetails, {
-                    filter: 'blur(10px)',
-                    opacity: 0,
-                    x: 1000,
-                    ease: 'power1.in',
-                    onComplete: () => {
-                        modalDetails.style.display = 'none';
-                        infoPedidio.innerHTML = ''
-                    }
-                });
-            })
-            window.addEventListener('click', event => {
-                if (event.target == modalDetails) {
-                    gsap.to(modalContentDetails, {
-                        filter: 'blur(10px)',
-                        opacity: 0,
-                        x: 1000,
-                        ease: 'power1.in',
-                        onComplete: () => {
-                            modalDetails.style.display = 'none';
-                            infoPedidio.innerHTML = ''
-                        }
-                    });
-                }
-            })
 
             btnEstado.addEventListener('click', () => {
                 var isCollapsed = selectEstado.style.height === '' || selectEstado.style.height === '2px' || selectEstado.style.height === '0px';
@@ -511,5 +764,7 @@ search.addEventListener("input", e => {
         originalString.toLowerCase().includes(e.target.value.toLowerCase())
             ? documento.classList.remove("filtro")
             : documento.classList.add("filtro");
+
+        console.log(originalString)
     });
 });
