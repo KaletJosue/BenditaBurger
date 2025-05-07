@@ -98,7 +98,7 @@ Estamos *preparando y cocinando tu pedido*, sabemos que tienes hambre pero esper
             mensaje = 
 `📍 Hey *¡Se actualizo tu pedido!*
                     
-Estamos *muy cerca*, de tu ubicacion, espera nuevas actualizaciones en la aplicacion`;
+Estamos *muy cerca* de tu ubicacion, espera nuevas actualizaciones en la aplicacion`;
         } else if (nuevoEstado == "Cancelado") {
             mensaje = 
 `❌ Hey *¡Se actualizo tu pedido!*

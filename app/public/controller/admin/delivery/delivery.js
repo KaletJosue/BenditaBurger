@@ -587,9 +587,8 @@ if (resJsonOrder.status == "Data Orders") {
                 sidebar.classList.remove('ocult')
                 menu.classList.remove('active')
 
-                imgDetails.src = fotoOrder
-                nameDetails.textContent = nameOrder
-                phoneDetails.textContent = numberPhoneOrder
+                imgDetails.src = doc.Foto ? doc.Foto : "/assets/profile-5.jpg"
+                nameDetails.textContent = doc.Nombre
                 if (doc.MetodoPago == "card") {
                     methodDetails.textContent = "Tarjeta"
                 } else {
