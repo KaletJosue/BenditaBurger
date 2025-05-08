@@ -180,7 +180,7 @@ if (resJson.status == "Data User") {
                         "Content-Type": "application/json"
                     },
                     body: JSON.stringify({
-                        Gmail: doc.Correo,
+                        Gmail: doc.Email,
                         Rol: inputNameUpdate.value
                     })
                 });
@@ -193,6 +193,17 @@ if (resJson.status == "Data User") {
                     loader.classList.add('active');
                     textErrorModal.textContent = resJsonUpdate.message;
                     modal.classList.add('active');
+                    closeModal.addEventListener('click', () => {
+                        modal.classList.remove('active')
+                    })
+                    tryAgain.addEventListener('click', () => {
+                        modal.classList.remove('active')
+                    })
+                    window.addEventListener('click', event => {
+                        if (event.target == modal) {
+                            modal.classList.remove('active')
+                        }
+                    })
                 }
             });
         });
