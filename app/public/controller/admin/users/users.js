@@ -79,7 +79,7 @@ if (resJson.status == "Data User") {
         divActions.appendChild(editAction);
 
         divStatus.addEventListener('click', async () => {
-            if (doc.Status == true) {
+            if (divStatus.classList == "btnEstatus") {
                 const resStatus = await fetch("http://localhost:4000/api/userDataControl/updateStatus", {
                     method: "POST",
                     headers: {
