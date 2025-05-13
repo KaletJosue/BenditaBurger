@@ -1,6 +1,7 @@
 import Stripe from 'stripe';
 import conectarConMongoDB from "../db/db.js"
 import { sendWhatsAppMessage } from '../services/whatsapp.js';
+import { getSocket } from "../socket/socket.js";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
@@ -19,6 +20,8 @@ const handleStripeWebhook = async (req, res) => {
     }
 
     if (event.type === 'checkout.session.completed') {
+        const io = getSocket();
+
         const session = event.data.object;
 
         const customerEmail = session.customer_details?.email;
@@ -70,7 +73,7 @@ const handleStripeWebhook = async (req, res) => {
         };
 
         const mensaje =
-`✅ Hey *¡Compra completada!,* se acepto tu pedido en Bendita Burger y ya esta en preparación.
+            `✅ Hey *¡Compra completada!,* se acepto tu pedido en Bendita Burger y ya esta en preparación.
 
 Gracias por tu compra *BenditaLover*:
 
@@ -93,6 +96,25 @@ Esta pendiente a las actualizaciones en la aplicacion de Bendita Burger`;
         })
 
         await ordersCollection.insertOne(newOrder);
+
+        io.to("administradores").emit("notificacion-nuevo-pedido", {
+            customerEmail,
+            nombre,
+            amountTotal
+        });
+
+        io.to("cajeros").emit("notificacion-nuevo-pedido", {
+            customerEmail,
+            nombre,
+            amountTotal
+        });
+
+        io.to("superadministradores").emit("notificacion-nuevo-pedido", {
+            customerEmail,
+            nombre,
+            amountTotal
+        });
+
         await sendWhatsAppMessage(numeroCliente, mensaje);
 
     } else {

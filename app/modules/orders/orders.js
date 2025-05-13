@@ -2,6 +2,7 @@ import dotenv from "dotenv"
 import conectarConMongoDB from "../../db/db.js"
 import jsonwebtoken from "jsonwebtoken"
 import { sendWhatsAppMessage } from '../../services/whatsapp.js';
+import { getSocket } from "../../socket/socket.js";
 
 dotenv.config()
 
@@ -44,6 +45,8 @@ async function orderDataAdmin(req, res) {
 
 async function updateStatus(req, res) {
     if (req.headers.cookie) {
+        const io = getSocket();
+
         const correo = req.body.Correo;
         const direccion = req.body.Direccion;
         const barrio = req.body.Barrio;
@@ -56,11 +59,15 @@ async function updateStatus(req, res) {
         const nuevoEstado = req.body.NuevoEstado
         const motivo = req.body.Motivo ? req.body.Motivo : "";
 
+        const cookieJWT = req.headers.cookie.split("; ").find(cookie => cookie.startsWith("jwt=")).slice(4);
+        const decodificada = jsonwebtoken.verify(cookieJWT, process.env.JWT_SECRET);
+
         const db = await conectarConMongoDB();
         const orderCollection = db.collection('ventas');
 
         const usersCollection = db.collection('usuarios');
         const revisarUsuario = await usersCollection.findOne({ Correo: correo })
+        const revisarUsuario2 = await usersCollection.findOne({ Correo: decodificada.user })
 
         const filtro = {
             Correo: correo,
@@ -82,33 +89,61 @@ async function updateStatus(req, res) {
 
         const resultado = await orderCollection.updateOne(filtro, nuevosDatos);
 
+        io.to(correo).emit("notificacion-estado-pedido", {
+            nuevoEstado,
+            motivo,
+            correo,
+            mensaje
+        });
+
+        io.to("administradores").emit("notificacion-estado-pedido-staff", {
+            nuevoEstado,
+            motivo,
+            correo,
+            mensaje
+        });
+
+        io.to("cajeros").emit("notificacion-estado-pedido-staff", {
+            nuevoEstado,
+            motivo,
+            correo,
+            mensaje
+        });
+
+        io.to("superadministradores").emit("notificacion-estado-pedido-staff", {
+            nuevoEstado,
+            motivo,
+            correo,
+            mensaje
+        });
+
         var mensaje = ''
 
         if (nuevoEstado == "Enviado") {
-            mensaje = 
-`🛵 Hey *¡Se actualizo tu pedido!*
+            mensaje =
+                `🛵 Hey *¡Se actualizo tu pedido!*
         
 Uno de nuestros repartidores *ya salio* con tu pedido, espera nuevas actualizaciones en la aplicacion`;
         } else if (nuevoEstado == "Preparacion") {
-            mensaje = 
-`👨‍🍳 Hey *¡Se actualizo tu pedido!*
+            mensaje =
+                `👨‍🍳 Hey *¡Se actualizo tu pedido!*
                     
 Estamos *preparando y cocinando tu pedido*, sabemos que tienes hambre pero espera un poco, espera nuevas actualizaciones en la aplicacion`;
         } else if (nuevoEstado == "Cerca") {
-            mensaje = 
-`📍 Hey *¡Se actualizo tu pedido!*
+            mensaje =
+                `📍 Hey *¡Se actualizo tu pedido!*
                     
 Estamos *muy cerca* de tu ubicacion, espera nuevas actualizaciones en la aplicacion`;
         } else if (nuevoEstado == "Cancelado") {
-            mensaje = 
-`❌ Hey *¡Se actualizo tu pedido!*
+            mensaje =
+                `❌ Hey *¡Se actualizo tu pedido!*
                     
 Ooops lamentamos informarte que tu pedido *se cancelo*
 
 *Motivo*: ${motivo}`;
         } else if (nuevoEstado == "Entregado") {
-            mensaje = 
-`✅ Hey *¡Ya entregamos tu pedidio!*
+            mensaje =
+                `✅ Hey *¡Ya entregamos tu pedidio!*
                     
 Esperamos que sea de tu agrado y muy pronto vuelvas a realizar un pedido, *¡Disfrutalo!*`;
         }
