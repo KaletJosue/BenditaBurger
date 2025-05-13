@@ -742,23 +742,28 @@ body {
     color: var(--color-blanco);
 }
 
+
 .modalDetalis .conModalDetails .infoUser {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    gap: 1rem;
+    margin-top: 2rem;
 }
 
 .modalDetalis .conModalDetails .infoUser .campo {
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    align-items: start;
     justify-content: space-between;
     width: 100%;
+    gap: .2rem;
 }
 
 .modalDetalis .conModalDetails .infoUser .campo p:first-child {
-    font-size: 13px;
-    font-weight: 700;
+    font-size: 12px;
+    font-weight: 500;
     color: var(--color-gris);
 }
 
@@ -778,8 +783,8 @@ body {
     aspect-ratio: 1/1;
     object-fit: cover;
     object-position: center center;
-    width: 50px;
-    border-radius: 15px;
+    width: 20px;
+    border-radius: 5px;
 }
 
 .modalDetalis .conModalDetails h3 {

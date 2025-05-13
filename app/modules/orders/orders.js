@@ -59,15 +59,11 @@ async function updateStatus(req, res) {
         const nuevoEstado = req.body.NuevoEstado
         const motivo = req.body.Motivo ? req.body.Motivo : "";
 
-        const cookieJWT = req.headers.cookie.split("; ").find(cookie => cookie.startsWith("jwt=")).slice(4);
-        const decodificada = jsonwebtoken.verify(cookieJWT, process.env.JWT_SECRET);
-
         const db = await conectarConMongoDB();
         const orderCollection = db.collection('ventas');
 
         const usersCollection = db.collection('usuarios');
         const revisarUsuario = await usersCollection.findOne({ Correo: correo })
-        const revisarUsuario2 = await usersCollection.findOne({ Correo: decodificada.user })
 
         const filtro = {
             Correo: correo,
@@ -90,31 +86,59 @@ async function updateStatus(req, res) {
         const resultado = await orderCollection.updateOne(filtro, nuevosDatos);
 
         io.to(correo).emit("notificacion-estado-pedido", {
-            nuevoEstado,
-            motivo,
             correo,
-            mensaje
+            direccion,
+            barrio,
+            estado,
+            total,
+            metodoPago,
+            productos,
+            fecha,
+            hora,
+            nuevoEstado,
+            nombre: revisarUsuario.Nombre
         });
 
         io.to("administradores").emit("notificacion-estado-pedido-staff", {
-            nuevoEstado,
-            motivo,
             correo,
-            mensaje
+            direccion,
+            barrio,
+            estado,
+            total,
+            metodoPago,
+            productos,
+            fecha,
+            hora,
+            nuevoEstado,
+            nombre: revisarUsuario.Nombre
         });
 
         io.to("cajeros").emit("notificacion-estado-pedido-staff", {
-            nuevoEstado,
-            motivo,
             correo,
-            mensaje
+            direccion,
+            barrio,
+            estado,
+            total,
+            metodoPago,
+            productos,
+            fecha,
+            hora,
+            nuevoEstado,
+            nombre: revisarUsuario.Nombre
         });
 
         io.to("superadministradores").emit("notificacion-estado-pedido-staff", {
-            nuevoEstado,
-            motivo,
             correo,
-            mensaje
+            direccion,
+            barrio,
+            estado,
+            total,
+            metodoPago,
+            productos,
+            fecha,
+            hora,
+            nuevoEstado,
+            nombre: revisarUsuario.Nombre
         });
 
         var mensaje = ''

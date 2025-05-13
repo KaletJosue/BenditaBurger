@@ -171,12 +171,12 @@ if (resJsonOrder.status == "Data Orders") {
 
                 cancel.style.display = "none"
 
-                if ((doc.Estado).toLowerCase() == "preparacion") {
+                if ((btnEstado.textContent).toLowerCase() == "preparacion") {
                     progress.style.display = "flex"
                     setTimeout(() => {
                         conOne.classList.add('active')
                     }, 200)
-                } else if ((doc.Estado).toLowerCase() == "enviado") {
+                } else if ((btnEstado.textContent).toLowerCase() == "enviado") {
                     progress.style.display = "flex"
                     setTimeout(() => {
                         conOne.classList.add('active')
@@ -184,7 +184,7 @@ if (resJsonOrder.status == "Data Orders") {
                     setTimeout(() => {
                         conTwo.classList.add('active')
                     }, 250)
-                } else if ((doc.Estado).toLowerCase() == "cerca") {
+                } else if ((btnEstado.textContent).toLowerCase() == "cerca") {
                     progress.style.display = "flex"
                     setTimeout(() => {
                         conOne.classList.add('active')
@@ -195,7 +195,7 @@ if (resJsonOrder.status == "Data Orders") {
                     setTimeout(() => {
                         conThree.classList.add('active')
                     }, 300)
-                } else if ((doc.Estado).toLowerCase() == "entregado") {
+                } else if ((btnEstado.textContent).toLowerCase() == "entregado") {
                     progress.style.display = "flex"
                     setTimeout(() => {
                         conOne.classList.add('active')
@@ -209,7 +209,7 @@ if (resJsonOrder.status == "Data Orders") {
                     setTimeout(() => {
                         conFourth.classList.add('active')
                     }, 350)
-                } else if ((doc.Estado).toLowerCase() == "cancelado") {
+                } else if ((btnEstado.textContent).toLowerCase() == "cancelado") {
                     progress.style.display = "none"
                     cancel.style.display = "flex"
 

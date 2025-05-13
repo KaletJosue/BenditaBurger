@@ -27,7 +27,7 @@ if (resJsonExpense.status === "Data Expenses") {
 
     let fecha = new Date();
     let dia = String(fecha.getDate()).padStart(2, '0');
-    const mes = String(fecha.getMonth() + 1).padStart(2, '0'); // Los meses en JS empiezan desde 0
+    const mes = String(fecha.getMonth() + 1).padStart(2, '0'); 
     let anio = String(fecha.getFullYear()).slice(-2);
 
     let fechaActual = `${dia} / ${mes} / ${anio}`;
