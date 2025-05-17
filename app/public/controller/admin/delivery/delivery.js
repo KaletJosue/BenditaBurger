@@ -202,6 +202,7 @@ if (resJsonOrder.status == "Data Orders") {
         var dateDetails = document.querySelector('.dateDetails')
         var hourDetails = document.querySelector('.hourDetails')
         var statusDetails = document.querySelector('.statusDetails')
+        var descriptionDetails = document.querySelector('.descriptionDetails')
 
         let fecha = new Date();
         let dia = String(fecha.getDate()).padStart(2, '0');
@@ -210,9 +211,13 @@ if (resJsonOrder.status == "Data Orders") {
 
         let fechaActual = `${dia} / ${mes} / ${anio}`;
 
+        var band
+
         orderData.forEach(async (doc) => {
 
             if (fechaActual == doc.Fecha) {
+                band = true
+
                 var tr = document.createElement('tr')
                 var thCLient = document.createElement('th')
                 var divClient = document.createElement('div')
@@ -609,6 +614,7 @@ if (resJsonOrder.status == "Data Orders") {
                     dateDetails.textContent = doc.Fecha
                     hourDetails.textContent = doc.Hora
                     statusDetails.textContent = doc.Estado
+                    descriptionDetails.textContent = doc.Descripcion
 
                     gsap.fromTo(modalContentDetails,
                         { scale: 0, opacity: 0, filter: 'blur(10px)', x: 0 },
@@ -753,9 +759,21 @@ if (resJsonOrder.status == "Data Orders") {
                         });
                     }
                 })
+            } else {
+                band = false
             }
 
         })
+
+        if (band == false) {
+            var textMain2 = document.querySelector('.textMain2')
+
+            main.style.display = 'none'
+            search.style.display = 'none'
+
+            main2.style.disabled = "flex"
+            textMain2.textContent = "Ningun usuario ha realizado un pedido el dia de hoy, espera un poco"
+        }
 
     } else {
         main.style.display = 'none'

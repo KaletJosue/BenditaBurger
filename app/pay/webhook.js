@@ -56,6 +56,7 @@ const handleStripeWebhook = async (req, res) => {
         var nombre = revisarUsuario.Nombre
         var foto = revisarUsuario.Foto ? revisarUsuario.Foto : '';
         var numero = revisarUsuario.Telefono
+        var descripcion = revisarUsuario.Descripcion
 
         const newOrder = {
             Correo: customerEmail,
@@ -69,7 +70,8 @@ const handleStripeWebhook = async (req, res) => {
             MetodoPago: paymentMethod,
             Productos: products,
             Fecha: fecha,
-            Hora: hora
+            Hora: hora,
+            Descripcion: descripcion
         };
 
         const mensaje =

@@ -58,124 +58,142 @@ if (resJsonCategory.status === "Data Category") {
 
     const categoryData = resJsonCategory.data;
 
-    categoryData.forEach((doc) => {
-        var tr = document.createElement('tr')
-        var nombre = document.createElement('th')
-        var prioridad = document.createElement('th')
-        var fecha = document.createElement('th')
-        var thActions = document.createElement('th')
-        var divActions = document.createElement('div')
-        var editAction = document.createElement('button')
-        var deleteAction = document.createElement('button')
+    const main2 = document.querySelector('.main2')
+    const main = document.querySelector('.table')
 
-        nombre.textContent = (doc.Nombre).charAt(0).toUpperCase() + (doc.Nombre).slice(1)
-        prioridad.textContent = doc.Prioridad
-        fecha.textContent = doc.Fecha
-        editAction.textContent = "Editar"
-        deleteAction.textContent = "Eliminar"
+    if (categoryData != '') {
+        main.style.display = ""
+        main2.style.display = "none"
 
-        divActions.className = "actions"
+        categoryData.forEach((doc) => {
+            var tr = document.createElement('tr')
+            var nombre = document.createElement('th')
+            var prioridad = document.createElement('th')
+            var fecha = document.createElement('th')
+            var thActions = document.createElement('th')
+            var divActions = document.createElement('div')
+            var editAction = document.createElement('button')
+            var deleteAction = document.createElement('button')
 
-        tbody.appendChild(tr)
-        tr.appendChild(nombre)
-        tr.appendChild(prioridad)
-        tr.appendChild(fecha)
-        tr.appendChild(thActions)
-        thActions.appendChild(divActions)
-        divActions.appendChild(editAction)
-        divActions.appendChild(deleteAction)
+            nombre.textContent = (doc.Nombre).charAt(0).toUpperCase() + (doc.Nombre).slice(1)
+            prioridad.textContent = doc.Prioridad
+            fecha.textContent = doc.Fecha
+            editAction.textContent = "Editar"
+            deleteAction.textContent = "Eliminar"
 
-        deleteAction.addEventListener('click', () => {
-            modalDelete.style.display = 'flex'
+            divActions.className = "actions"
 
-            gsap.fromTo(modalContentDelete,
-                { backdropFilter: 'blur(0px)', height: 0, opacity: 0 },
-                {
-                    height: 'auto',
-                    opacity: 1,
-                    backdropFilter: 'blur(90px)',
-                    duration: .7,
-                    ease: 'expo.out',
-                }
-            )
+            tbody.appendChild(tr)
+            tr.appendChild(nombre)
+            tr.appendChild(prioridad)
+            tr.appendChild(fecha)
+            tr.appendChild(thActions)
+            thActions.appendChild(divActions)
+            divActions.appendChild(editAction)
+            divActions.appendChild(deleteAction)
 
-            window.addEventListener('click', event => {
-                if (event.target == modalDelete) {
-                    gsap.to(modalContentDelete, {
-                        height: '0px',
-                        duration: .2,
-                        ease: 'power1.in',
-                        onComplete: () => {
-                            modalDelete.style.display = 'none';
-                        }
-                    });
-                }
-            })
+            deleteAction.addEventListener('click', () => {
+                modalDelete.style.display = 'flex'
 
-            let deleteName = document.querySelector('.deleteName')
-            let deletePriority = document.querySelector('.deletePriority')
-            let deleteFecha = document.querySelector('.deleteFecha')
+                gsap.fromTo(modalContentDelete,
+                    { backdropFilter: 'blur(0px)', height: 0, opacity: 0 },
+                    {
+                        height: 'auto',
+                        opacity: 1,
+                        backdropFilter: 'blur(90px)',
+                        duration: .7,
+                        ease: 'expo.out',
+                    }
+                )
 
-            let sendDelete = document.querySelector('.sendDelete')
-
-            deleteName.textContent = (doc.Nombre).charAt(0).toUpperCase() + (doc.Nombre).slice(1)
-            deletePriority.textContent = doc.Prioridad
-            deleteFecha.textContent = doc.Fecha
-
-            sendDelete.addEventListener('click', async () => {
-                loader.classList.remove('active')
-
-                const resDeleteCategory = await fetch("http://localhost:4000/api/deleteCategory", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        Name: doc.Nombre,
-                        Priority: doc.Prioridad,
-                        Fecha: doc.Fecha,
-                    })
+                window.addEventListener('click', event => {
+                    if (event.target == modalDelete) {
+                        gsap.to(modalContentDelete, {
+                            height: '0px',
+                            duration: .2,
+                            ease: 'power1.in',
+                            onComplete: () => {
+                                modalDelete.style.display = 'none';
+                            }
+                        });
+                    }
                 })
 
-                const resJsonDeleteCategory = await resDeleteCategory.json()
+                let deleteName = document.querySelector('.deleteName')
+                let deletePriority = document.querySelector('.deletePriority')
+                let deleteFecha = document.querySelector('.deleteFecha')
 
-                if (resJsonDeleteCategory.status == "Product Delete") {
-                    location.reload()
-                } else {
-                    loader.classList.add('active')
-                    textErrorModal.textContent = resJsonDeleteCategory.message
-                    modal.classList.add('active')
-                    closeModal.addEventListener('click', () => {
-                        modal.classList.remove('active')
+                let sendDelete = document.querySelector('.sendDelete')
+
+                deleteName.textContent = (doc.Nombre).charAt(0).toUpperCase() + (doc.Nombre).slice(1)
+                deletePriority.textContent = doc.Prioridad
+                deleteFecha.textContent = doc.Fecha
+
+                sendDelete.addEventListener('click', async () => {
+                    loader.classList.remove('active')
+
+                    const resDeleteCategory = await fetch("http://localhost:4000/api/deleteCategory", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            Name: doc.Nombre,
+                            Priority: doc.Prioridad,
+                            Fecha: doc.Fecha,
+                        })
                     })
-                    tryAgain.addEventListener('click', () => {
-                        modal.classList.remove('active')
-                    })
-                    window.addEventListener('click', event => {
-                        if (event.target == modal) {
+
+                    const resJsonDeleteCategory = await resDeleteCategory.json()
+
+                    if (resJsonDeleteCategory.status == "Product Delete") {
+                        location.reload()
+                    } else {
+                        loader.classList.add('active')
+                        textErrorModal.textContent = resJsonDeleteCategory.message
+                        modal.classList.add('active')
+                        closeModal.addEventListener('click', () => {
                             modal.classList.remove('active')
-                        }
-                    })
-                }
+                        })
+                        tryAgain.addEventListener('click', () => {
+                            modal.classList.remove('active')
+                        })
+                        window.addEventListener('click', event => {
+                            if (event.target == modal) {
+                                modal.classList.remove('active')
+                            }
+                        })
+                    }
+                })
+
             })
 
-        })
+            editAction.addEventListener('click', () => {
+                modalUpdate.style.display = 'flex'
 
-        editAction.addEventListener('click', () => {
-            modalUpdate.style.display = 'flex'
-
-            gsap.fromTo(modalContentUpdate,
-                { backdropFilter: 'blur(0px)', height: 0, opacity: 0 },
-                {
-                    height: 'auto',
-                    opacity: 1,
-                    backdropFilter: 'blur(90px)',
-                    duration: .7,
-                    ease: 'expo.out',
-                }
-            )
-            window.addEventListener('click', event => {
-                if (event.target == modalUpdate) {
+                gsap.fromTo(modalContentUpdate,
+                    { backdropFilter: 'blur(0px)', height: 0, opacity: 0 },
+                    {
+                        height: 'auto',
+                        opacity: 1,
+                        backdropFilter: 'blur(90px)',
+                        duration: .7,
+                        ease: 'expo.out',
+                    }
+                )
+                window.addEventListener('click', event => {
+                    if (event.target == modalUpdate) {
+                        gsap.to(modalContentUpdate, {
+                            height: '0px',
+                            duration: .2,
+                            ease: 'power1.in',
+                            onComplete: () => {
+                                modalUpdate.style.display = 'none';
+                            }
+                        });
+                    }
+                })
+                closeModalUpdate.addEventListener('click', () => {
                     gsap.to(modalContentUpdate, {
                         height: '0px',
                         duration: .2,
@@ -184,74 +202,69 @@ if (resJsonCategory.status === "Data Category") {
                             modalUpdate.style.display = 'none';
                         }
                     });
-                }
-            })
-            closeModalUpdate.addEventListener('click', () => {
-                gsap.to(modalContentUpdate, {
-                    height: '0px',
-                    duration: .2,
-                    ease: 'power1.in',
-                    onComplete: () => {
-                        modalUpdate.style.display = 'none';
-                    }
-                });
-            })
-
-            let inputNameUpdate = document.querySelector('.inputNameUpdate')
-            let inputCategoryUpdate = document.querySelector('.inputCategoryUpdate')
-
-            let btnUpdate = document.querySelector('.btnUpdate')
-
-            inputNameUpdate.value = (doc.Nombre).charAt(0).toUpperCase() + (doc.Nombre).slice(1)
-            inputCategoryUpdate.value = doc.Prioridad
-
-            btnUpdate.addEventListener('click', async () => {
-                loader.classList.remove('active')
-
-                let fecha = new Date();
-                let dia = String(fecha.getDate()).padStart(2, '0');
-                const mes = String(fecha.getMonth() + 1).padStart(2, '0');
-                let anio = String(fecha.getFullYear()).slice(-2);
-
-                let fechaActual = `${dia} / ${mes} / ${anio}`;
-
-                const resUpdateCategory = await fetch("http://localhost:4000/api/updateCategory", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        Name: inputNameUpdate.value,
-                        Priority: inputCategoryUpdate.value,
-                        NameRefe: doc.Nombre,
-                        PriorityRefe: doc.Prioridad,
-                        Fecha: fechaActual,
-                    })
                 })
 
-                const resJsonCategory = await resUpdateCategory.json()
+                let inputNameUpdate = document.querySelector('.inputNameUpdate')
+                let inputCategoryUpdate = document.querySelector('.inputCategoryUpdate')
 
-                if (resJsonCategory.status == "Update Correct") {
-                    location.reload()
-                } else {
-                    loader.classList.add('active')
-                    textErrorModal.textContent = resJsonCategory.message
-                    modal.classList.add('active')
-                    closeModal.addEventListener('click', () => {
-                        modal.classList.remove('active')
+                let btnUpdate = document.querySelector('.btnUpdate')
+
+                inputNameUpdate.value = (doc.Nombre).charAt(0).toUpperCase() + (doc.Nombre).slice(1)
+                inputCategoryUpdate.value = doc.Prioridad
+
+                btnUpdate.addEventListener('click', async () => {
+                    loader.classList.remove('active')
+
+                    let fecha = new Date();
+                    let dia = String(fecha.getDate()).padStart(2, '0');
+                    const mes = String(fecha.getMonth() + 1).padStart(2, '0');
+                    let anio = String(fecha.getFullYear()).slice(-2);
+
+                    let fechaActual = `${dia} / ${mes} / ${anio}`;
+
+                    const resUpdateCategory = await fetch("http://localhost:4000/api/updateCategory", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            Name: inputNameUpdate.value,
+                            Priority: inputCategoryUpdate.value,
+                            NameRefe: doc.Nombre,
+                            PriorityRefe: doc.Prioridad,
+                            Fecha: fechaActual,
+                        })
                     })
-                    tryAgain.addEventListener('click', () => {
-                        modal.classList.remove('active')
-                    })
-                    window.addEventListener('click', event => {
-                        if (event.target == modal) {
+
+                    const resJsonCategory = await resUpdateCategory.json()
+
+                    if (resJsonCategory.status == "Update Correct") {
+                        location.reload()
+                    } else {
+                        loader.classList.add('active')
+                        textErrorModal.textContent = resJsonCategory.message
+                        modal.classList.add('active')
+                        closeModal.addEventListener('click', () => {
                             modal.classList.remove('active')
-                        }
-                    })
-                }
+                        })
+                        tryAgain.addEventListener('click', () => {
+                            modal.classList.remove('active')
+                        })
+                        window.addEventListener('click', event => {
+                            if (event.target == modal) {
+                                modal.classList.remove('active')
+                            }
+                        })
+                    }
+                })
             })
         })
-    })
+
+    } else {
+        main.style.display = "none"
+        main2.style.display = "flex"
+    }
+
 } else {
     textErrorModal.textContent = resJsonExpense.message
     modal.classList.add('active')

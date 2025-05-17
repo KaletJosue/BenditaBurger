@@ -31,7 +31,7 @@ async function addProduct(req, res) {
 
                     const newProduct = {
                         Nombre: name.toLowerCase(),
-                        Categoria: category,
+                        Categoria: category.toLowerCase(),
                         Precio: price,
                         Descuento: discount || '',
                         Descripcion: description,

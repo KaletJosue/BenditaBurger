@@ -59,306 +59,317 @@ if (resProductJson.status == "Data Products") {
 
     const productData = resProductJson.data;
 
-    productData.forEach((doc) => {
-        var tr = document.createElement('tr')
-        var thImg = document.createElement('th')
-        var img = document.createElement('img')
-        var nombre = document.createElement('th')
-        var categoria = document.createElement('th')
-        var precio = document.createElement('th')
-        var descuento = document.createElement('th')
-        var thStatus = document.createElement('th')
-        var divStatus = document.createElement('div')
-        var activeStatus = document.createElement('p')
-        var desactiveStatus = document.createElement('p')
-        var thActions = document.createElement('th')
-        var divActions = document.createElement('div')
-        var editActions = document.createElement('button')
-        var deleteActions = document.createElement('button')
+    const main2 = document.querySelector('.main2')
+    const main = document.querySelector('.table')
 
-        img.src = doc.Foto
-        nombre.textContent = (doc.Nombre).charAt(0).toUpperCase() + (doc.Nombre).slice(1)
-        categoria.textContent = doc.Categoria
-        precio.textContent = `$${parseInt(doc.Precio).toLocaleString('de-DE')}`
+    if (productData != '') {
+        main.style.display = ""
+        main2.style.display = "none"
 
-        if (doc.Descuento == '') {
-            descuento.textContent = "Sin Descuento"
-        } else {
-            descuento.textContent = `${doc.Descuento}%`
-        }
+        productData.forEach((doc) => {
+            var tr = document.createElement('tr')
+            var thImg = document.createElement('th')
+            var img = document.createElement('img')
+            var nombre = document.createElement('th')
+            var categoria = document.createElement('th')
+            var precio = document.createElement('th')
+            var descuento = document.createElement('th')
+            var thStatus = document.createElement('th')
+            var divStatus = document.createElement('div')
+            var activeStatus = document.createElement('p')
+            var desactiveStatus = document.createElement('p')
+            var thActions = document.createElement('th')
+            var divActions = document.createElement('div')
+            var editActions = document.createElement('button')
+            var deleteActions = document.createElement('button')
 
-        divStatus.className = "btnEstatus"
+            img.src = doc.Foto
+            nombre.textContent = (doc.Nombre).charAt(0).toUpperCase() + (doc.Nombre).slice(1)
+            categoria.textContent = (doc.Categoria).charAt(0).toUpperCase() + (doc.Categoria).slice(1)
+            precio.textContent = `$${parseInt(doc.Precio).toLocaleString('de-DE')}`
 
-        if (doc.Estado == true) {
-            divStatus.classList.remove('active')
-        } else {
-            divStatus.classList.add('active')
-        }
-
-        activeStatus.textContent = 'Activo'
-        desactiveStatus.textContent = 'Inactivo'
-        editActions.textContent = "Editar"
-        deleteActions.textContent = "Eliminar"
-
-        divActions.className = "actions"
-
-        tbody.appendChild(tr)
-        tr.appendChild(thImg)
-        thImg.appendChild(img)
-        tr.appendChild(nombre)
-        tr.appendChild(categoria)
-        tr.appendChild(precio)
-        tr.appendChild(descuento)
-        tr.appendChild(thStatus)
-        thStatus.appendChild(divStatus)
-        divStatus.appendChild(activeStatus)
-        divStatus.appendChild(desactiveStatus)
-        tr.appendChild(thActions)
-        thActions.appendChild(divActions)
-        divActions.appendChild(editActions)
-        divActions.appendChild(deleteActions)
-
-        divStatus.addEventListener('click', async () => {
-            divStatus.classList.toggle('active')
-
-            if (divStatus.classList == "btnEstatus active") {
-                const resStatus = await fetch("http://localhost:4000/api/products/updateStatus", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        Status: false,
-                        Nombre: doc.Nombre
-                    })
-                })
-
-                const resJsonStatus = await resStatus.json()
-
-                if (resJsonStatus.status == "Update Correct") {
-                    location.reload()
-                } else {
-                    loader.classList.add('active')
-                    textErrorModal.textContent = resJsonStatus.message;
-                    modal.classList.add('active');
-                    closeModal.addEventListener('click', () => {
-                        modal.classList.remove('active');
-                    });
-                    tryAgain.addEventListener('click', () => {
-                        modal.classList.remove('active');
-                    });
-                    window.addEventListener('click', event => {
-                        if (event.target == modal) {
-                            modal.classList.remove('active');
-                        }
-                    });
-                }
+            if (doc.Descuento == '') {
+                descuento.textContent = "Sin Descuento"
             } else {
-                const resStatus = await fetch("http://localhost:4000/api/products/updateStatus", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        Status: true,
-                        Nombre: doc.Nombre
-                    })
-                })
-
-                const resJsonStatus = await resStatus.json()
-
-                if (resJsonStatus.status == "Update Correct") {
-                    location.reload()
-                } else {
-                    loader.classList.add('active')
-                    textErrorModal.textContent = resJsonStatus.message;
-                    modal.classList.add('active');
-                    closeModal.addEventListener('click', () => {
-                        modal.classList.remove('active');
-                    });
-                    tryAgain.addEventListener('click', () => {
-                        modal.classList.remove('active');
-                    });
-                    window.addEventListener('click', event => {
-                        if (event.target == modal) {
-                            modal.classList.remove('active');
-                        }
-                    });
-                }
+                descuento.textContent = `${doc.Descuento}%`
             }
-        })
 
-        editActions.addEventListener('click', () => {
-            modalUpdate.style.display = 'flex'
+            divStatus.className = "btnEstatus"
 
-            gsap.fromTo(modalContentUpdate,
-                { backdropFilter: 'blur(0px)', height: 0, opacity: 0 },
-                {
-                    height: '100%',
-                    opacity: 1,
-                    backdropFilter: 'blur(90px)',
-                    duration: .7,
-                    ease: 'expo.out',
-                }
-            )
-            window.addEventListener('click', event => {
-                if (event.target == modalUpdate) {
-                    gsap.to(modalContentUpdate, {
-                        height: '0px',
-                        duration: .2,
-                        ease: 'power1.in',
-                        onComplete: () => {
-                            modalUpdate.style.display = 'none';
-                        }
-                    });
+            if (doc.Estado == true) {
+                divStatus.classList.remove('active')
+            } else {
+                divStatus.classList.add('active')
+            }
+
+            activeStatus.textContent = 'Activo'
+            desactiveStatus.textContent = 'Inactivo'
+            editActions.textContent = "Editar"
+            deleteActions.textContent = "Eliminar"
+
+            divActions.className = "actions"
+
+            tbody.appendChild(tr)
+            tr.appendChild(thImg)
+            thImg.appendChild(img)
+            tr.appendChild(nombre)
+            tr.appendChild(categoria)
+            tr.appendChild(precio)
+            tr.appendChild(descuento)
+            tr.appendChild(thStatus)
+            thStatus.appendChild(divStatus)
+            divStatus.appendChild(activeStatus)
+            divStatus.appendChild(desactiveStatus)
+            tr.appendChild(thActions)
+            thActions.appendChild(divActions)
+            divActions.appendChild(editActions)
+            divActions.appendChild(deleteActions)
+
+            divStatus.addEventListener('click', async () => {
+                divStatus.classList.toggle('active')
+
+                if (divStatus.classList == "btnEstatus active") {
+                    const resStatus = await fetch("http://localhost:4000/api/products/updateStatus", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            Status: false,
+                            Nombre: doc.Nombre
+                        })
+                    })
+
+                    const resJsonStatus = await resStatus.json()
+
+                    if (resJsonStatus.status == "Update Correct") {
+                        location.reload()
+                    } else {
+                        loader.classList.add('active')
+                        textErrorModal.textContent = resJsonStatus.message;
+                        modal.classList.add('active');
+                        closeModal.addEventListener('click', () => {
+                            modal.classList.remove('active');
+                        });
+                        tryAgain.addEventListener('click', () => {
+                            modal.classList.remove('active');
+                        });
+                        window.addEventListener('click', event => {
+                            if (event.target == modal) {
+                                modal.classList.remove('active');
+                            }
+                        });
+                    }
+                } else {
+                    const resStatus = await fetch("http://localhost:4000/api/products/updateStatus", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            Status: true,
+                            Nombre: doc.Nombre
+                        })
+                    })
+
+                    const resJsonStatus = await resStatus.json()
+
+                    if (resJsonStatus.status == "Update Correct") {
+                        location.reload()
+                    } else {
+                        loader.classList.add('active')
+                        textErrorModal.textContent = resJsonStatus.message;
+                        modal.classList.add('active');
+                        closeModal.addEventListener('click', () => {
+                            modal.classList.remove('active');
+                        });
+                        tryAgain.addEventListener('click', () => {
+                            modal.classList.remove('active');
+                        });
+                        window.addEventListener('click', event => {
+                            if (event.target == modal) {
+                                modal.classList.remove('active');
+                            }
+                        });
+                    }
                 }
             })
-            closeModalUpdate.forEach((closeModalUpdateBtn) => {
-                closeModalUpdateBtn.addEventListener('click', () => {
-                    gsap.to(modalContentUpdate, {
-                        height: '0px',
-                        duration: .2,
-                        ease: 'power1.in',
-                        onComplete: () => {
-                            modalUpdate.style.display = 'none';
-                        }
-                    });
+
+            editActions.addEventListener('click', () => {
+                modalUpdate.style.display = 'flex'
+
+                gsap.fromTo(modalContentUpdate,
+                    { backdropFilter: 'blur(0px)', height: 0, opacity: 0 },
+                    {
+                        height: '100%',
+                        opacity: 1,
+                        backdropFilter: 'blur(90px)',
+                        duration: .7,
+                        ease: 'expo.out',
+                    }
+                )
+                window.addEventListener('click', event => {
+                    if (event.target == modalUpdate) {
+                        gsap.to(modalContentUpdate, {
+                            height: '0px',
+                            duration: .2,
+                            ease: 'power1.in',
+                            onComplete: () => {
+                                modalUpdate.style.display = 'none';
+                            }
+                        });
+                    }
                 })
-            })
-
-            let inputNameUpdate = document.querySelector('.inputNameUpdate')
-            let inputCategoryUpdate = document.querySelector('.inputCategoryUpdate')
-            let inputPriceUpdate = document.querySelector('.inputPriceUpdate')
-            let inputDescriptionUpdate = document.querySelector('.inputDescriptionUpdate')
-            let inputDiscountUpdate = document.querySelector('.inputDiscountUpdate')
-
-            let btnUpdate = document.querySelector('.btnUpdate')
-
-            inputNameUpdate.value = doc.Nombre
-            inputCategoryUpdate.value = doc.Categoria
-            inputPriceUpdate.value = doc.Precio
-            inputDescriptionUpdate.value = doc.Descripcion
-            inputDiscountUpdate.value = doc.Descuento
-
-            btnUpdate.addEventListener('click', async () => {
-                loader.classList.remove('active')
-
-                const resUpdate = await fetch("http://localhost:4000/api/updateProduct", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        Name: inputNameUpdate.value,
-                        Category: inputCategoryUpdate.value,
-                        Price: inputPriceUpdate.value,
-                        Description: inputDescriptionUpdate.value,
-                        Discount: inputDiscountUpdate.value,
-                        NameRefe: doc.Nombre
+                closeModalUpdate.forEach((closeModalUpdateBtn) => {
+                    closeModalUpdateBtn.addEventListener('click', () => {
+                        gsap.to(modalContentUpdate, {
+                            height: '0px',
+                            duration: .2,
+                            ease: 'power1.in',
+                            onComplete: () => {
+                                modalUpdate.style.display = 'none';
+                            }
+                        });
                     })
                 })
 
-                const resJsonUpdate = await resUpdate.json()
+                let inputNameUpdate = document.querySelector('.inputNameUpdate')
+                let inputCategoryUpdate = document.querySelector('.inputCategoryUpdate')
+                let inputPriceUpdate = document.querySelector('.inputPriceUpdate')
+                let inputDescriptionUpdate = document.querySelector('.inputDescriptionUpdate')
+                let inputDiscountUpdate = document.querySelector('.inputDiscountUpdate')
 
-                if (resJsonUpdate.status == "Update Correct") {
-                    location.reload()
-                } else {
-                    loader.classList.add('active')
-                    textErrorModal.textContent = resJsonUpdate.message;
-                    modal.classList.add('active');
-                    closeModal.addEventListener('click', () => {
-                        modal.classList.remove('active');
-                    });
-                    tryAgain.addEventListener('click', () => {
-                        modal.classList.remove('active');
-                    });
-                    window.addEventListener('click', event => {
-                        if (event.target == modal) {
-                            modal.classList.remove('active');
-                        }
-                    });
-                }
-            })
-        })
+                let btnUpdate = document.querySelector('.btnUpdate')
 
-        deleteActions.addEventListener('click', () => {
-            modalDelete.style.display = 'flex'
+                inputNameUpdate.value = doc.Nombre
+                inputCategoryUpdate.value = doc.Categoria
+                inputPriceUpdate.value = doc.Precio
+                inputDescriptionUpdate.value = doc.Descripcion
+                inputDiscountUpdate.value = doc.Descuento
 
-            gsap.fromTo(modalContentDelete,
-                { backdropFilter: 'blur(0px)', height: 0, opacity: 0 },
-                {
-                    height: 'auto',
-                    opacity: 1,
-                    backdropFilter: 'blur(90px)',
-                    duration: .7,
-                    ease: 'expo.out',
-                }
-            )
+                btnUpdate.addEventListener('click', async () => {
+                    loader.classList.remove('active')
 
-            window.addEventListener('click', event => {
-                if (event.target == modalDelete) {
-                    gsap.to(modalContentDelete, {
-                        height: '0px',
-                        duration: .2,
-                        ease: 'power1.in',
-                        onComplete: () => {
-                            modalDelete.style.display = 'none';
-                        }
-                    });
-                }
-            })
-
-            let deleteImg = document.querySelector('.deleteImg')
-            let deleteName = document.querySelector('.deleteName')
-            let deleteCategory = document.querySelector('.deleteCategory')
-            let deletePrice = document.querySelector('.deletePrice')
-
-            deleteImg.src = doc.Foto
-            deleteName.textContent = doc.Nombre
-            deleteCategory.textContent = doc.Categoria
-            deletePrice.textContent = doc.Precio
-
-            let deleteButton = document.querySelector('.deleteButton')
-
-            deleteButton.addEventListener('click', async () => {
-                loader.classList.remove('active')
-
-                const resDelete = await fetch("http://localhost:4000/api/deleteProduct", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        Nombre: deleteName.textContent,
-                        Categoria: deleteCategory.textContent,
-                        Precio: deletePrice.textContent,
-                        Foto: doc.Foto
+                    const resUpdate = await fetch("http://localhost:4000/api/updateProduct", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            Name: inputNameUpdate.value,
+                            Category: inputCategoryUpdate.value,
+                            Price: inputPriceUpdate.value,
+                            Description: inputDescriptionUpdate.value,
+                            Discount: inputDiscountUpdate.value,
+                            NameRefe: doc.Nombre
+                        })
                     })
+
+                    const resJsonUpdate = await resUpdate.json()
+
+                    if (resJsonUpdate.status == "Update Correct") {
+                        location.reload()
+                    } else {
+                        loader.classList.add('active')
+                        textErrorModal.textContent = resJsonUpdate.message;
+                        modal.classList.add('active');
+                        closeModal.addEventListener('click', () => {
+                            modal.classList.remove('active');
+                        });
+                        tryAgain.addEventListener('click', () => {
+                            modal.classList.remove('active');
+                        });
+                        window.addEventListener('click', event => {
+                            if (event.target == modal) {
+                                modal.classList.remove('active');
+                            }
+                        });
+                    }
+                })
+            })
+
+            deleteActions.addEventListener('click', () => {
+                modalDelete.style.display = 'flex'
+
+                gsap.fromTo(modalContentDelete,
+                    { backdropFilter: 'blur(0px)', height: 0, opacity: 0 },
+                    {
+                        height: 'auto',
+                        opacity: 1,
+                        backdropFilter: 'blur(90px)',
+                        duration: .7,
+                        ease: 'expo.out',
+                    }
+                )
+
+                window.addEventListener('click', event => {
+                    if (event.target == modalDelete) {
+                        gsap.to(modalContentDelete, {
+                            height: '0px',
+                            duration: .2,
+                            ease: 'power1.in',
+                            onComplete: () => {
+                                modalDelete.style.display = 'none';
+                            }
+                        });
+                    }
                 })
 
-                const resJsonDelete = await resDelete.json()
+                let deleteImg = document.querySelector('.deleteImg')
+                let deleteName = document.querySelector('.deleteName')
+                let deleteCategory = document.querySelector('.deleteCategory')
+                let deletePrice = document.querySelector('.deletePrice')
 
-                if (resJsonDelete.status == "Product Delete") {
-                    location.reload()
-                } else {
-                    loader.classList.add('active')
-                    textErrorModal.textContent = resJsonDelete.message;
-                    modal.classList.add('active');
-                    closeModal.addEventListener('click', () => {
-                        modal.classList.remove('active');
-                    });
-                    tryAgain.addEventListener('click', () => {
-                        modal.classList.remove('active');
-                    });
-                    window.addEventListener('click', event => {
-                        if (event.target == modal) {
+                deleteImg.src = doc.Foto
+                deleteName.textContent = doc.Nombre
+                deleteCategory.textContent = doc.Categoria
+                deletePrice.textContent = doc.Precio
+
+                let deleteButton = document.querySelector('.deleteButton')
+
+                deleteButton.addEventListener('click', async () => {
+                    loader.classList.remove('active')
+
+                    const resDelete = await fetch("http://localhost:4000/api/deleteProduct", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            Nombre: deleteName.textContent,
+                            Categoria: deleteCategory.textContent,
+                            Precio: deletePrice.textContent,
+                            Foto: doc.Foto
+                        })
+                    })
+
+                    const resJsonDelete = await resDelete.json()
+
+                    if (resJsonDelete.status == "Product Delete") {
+                        location.reload()
+                    } else {
+                        loader.classList.add('active')
+                        textErrorModal.textContent = resJsonDelete.message;
+                        modal.classList.add('active');
+                        closeModal.addEventListener('click', () => {
                             modal.classList.remove('active');
-                        }
-                    });
-                }
+                        });
+                        tryAgain.addEventListener('click', () => {
+                            modal.classList.remove('active');
+                        });
+                        window.addEventListener('click', event => {
+                            if (event.target == modal) {
+                                modal.classList.remove('active');
+                            }
+                        });
+                    }
+                })
             })
         })
-    })
+    } else {
+        main.style.display = "none"
+        main2.style.display = "flex"
+    }
 
 } else {
     textErrorModal.textContent = resProductJson.message;

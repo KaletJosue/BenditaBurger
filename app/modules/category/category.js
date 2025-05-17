@@ -110,11 +110,16 @@ async function deleteCategory(req, res) {
 
         const db = await conectarConMongoDB()
         const categoryCollection = db.collection('categorias')
+        const productsCollection = db.collection('productos')
 
         const resultado = await categoryCollection.deleteOne({
             Nombre: name.toLowerCase(),
             Prioridad: priority,
             Fecha: fecha
+        });
+
+        const resultado2 = await productsCollection.deleteMany({
+            Categoria: name.toLowerCase(),
         });
 
         return res.status(200).send({ status: "Product Delete", message: "Producto Eliminado correctamente" })
