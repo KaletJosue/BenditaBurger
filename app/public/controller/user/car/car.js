@@ -42,7 +42,7 @@ if (resJsonCar.status == "Data Car") {
                     "Content-Type": "application/json"
                 }
             })
-            
+
             const resProductJson = await resProduct.json()
 
             if (resProductJson.status == "Data Products") {
@@ -402,6 +402,8 @@ var nombre = document.querySelector('.name')
 nombre.textContent = resJson.data.Nombre.split(' ').slice(0, 2).join(' ')
 gmail.textContent = resJson.data.Rol
 
+const correoElectronico = resJson.data.Email
+
 if (resJson.data.Photo == "") {
     imgProfile.src = "/assets/profile-5.jpg"
 } else {
@@ -410,12 +412,43 @@ if (resJson.data.Photo == "") {
 
 var btnPay = document.querySelector('.btnPay')
 
+const modalSelectModo = document.querySelector('.modalSelectModo');
+const modalContentSelectModo = document.querySelector('.conModalSelectModo');
+
 btnPay.addEventListener('click', async () => {
     if (resJson.data.Barrio != "") {
         if (resJson.data.Direccion != "") {
             if (resJson.data.Telefono != "") {
-                loader.classList.remove('active')
+                modalSelectModo.style.display = 'flex'
+
+                gsap.fromTo(modalContentSelectModo,
+                    { backdropFilter: 'blur(0px)', height: 0, opacity: 0 },
+                    {
+                        padding: '1rem',
+                        height: '200px',
+                        opacity: 1,
+                        backdropFilter: 'blur(90px)',
+                        duration: .2,
+                        ease: 'expo.out',
+                    }
+                )
+
+                window.addEventListener('click', event => {
+                    if (event.target == modalSelectModo) {
+                        gsap.to(modalContentSelectModo, {
+                            height: '0px',
+                            padding: '0rem',
+                            duration: .2,
+                            ease: 'power1.in',
+                            onComplete: () => {
+                                modalSelectModo.style.display = 'none';
+                            }
+                        });
+                    }
+                })
+
                 var product = []
+                var productNoTarget = []
 
                 const resCar = await fetch("http://localhost:4000/api/carData", {
                     method: "GET",
@@ -426,6 +459,8 @@ btnPay.addEventListener('click', async () => {
 
                 const resJsonCar = await resCar.json()
                 const carData = resJsonCar.data
+
+                var montoTotal = 5000
 
                 for (const doc of carData) {
                     var nombreCar = doc.Nombre
@@ -460,26 +495,139 @@ btnPay.addEventListener('click', async () => {
                                         precio: precio,
                                         cantidad: cant
                                     })
+
+                                    productNoTarget.push({
+                                        name: doc.Nombre,
+                                        quantity: cant,
+                                        price: (precio * cant),
+                                    })
+
+                                    montoTotal += (parseInt(precio) * parseInt(cant))
                                 }
                             }
                         })
                     }
                 }
 
-                const resPay = await fetch('/api/payment', {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        products: product
+                var carry = document.querySelector('.carry')
+                var noTarget = document.querySelectorAll('.noTarget')
+
+                carry.addEventListener('click', async () => {
+                    loader.classList.remove('active')
+
+                    const resPay = await fetch('/api/payment', {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            products: product
+                        })
+                    })
+                    const dataPay = await resPay.json()
+
+                    if (dataPay?.url) {
+                        window.location.href = dataPay.url;
+                    } else if (dataPay?.error) {
+                        loader.classList.add('active')
+
+                        gsap.to(modalContentSelectModo, {
+                            height: '0px',
+                            padding: '0rem',
+                            duration: .2,
+                            ease: 'power1.in',
+                            onComplete: () => {
+                                modalSelectModo.style.display = 'none';
+                            }
+                        });
+
+                        textErrorModal.textContent = dataPay.error
+                        modal.classList.add('active')
+                        closeModal.addEventListener('click', () => {
+                            modal.classList.remove('active')
+                        })
+                        tryAgain.addEventListener('click', () => {
+                            modal.classList.remove('active')
+                        })
+                        window.addEventListener('click', event => {
+                            if (event.target == modal) {
+                                modal.classList.remove('active')
+                            }
+                        })
+                    }
+
+                })
+
+                var metodoDePago = ''
+
+                noTarget.forEach((noTarget) => {
+
+                    var pNoTarget = noTarget.querySelector('p')
+
+                    noTarget.addEventListener('click', async () => {
+                        loader.classList.remove('active')
+
+                        productNoTarget.push({
+                            name: "Manejo, Logistica y Envio",
+                            quantity: 1,
+                            price: 5000,
+                        })
+
+                        if (pNoTarget.textContent == "Pago con Nequi") {
+                            metodoDePago = "Nequi"
+                        } else if (pNoTarget.textContent == "Pago con Daviplata") {
+                            metodoDePago = "Daviplata"
+                        } else if (pNoTarget.textContent == "Pago en Efectivo") {
+                            metodoDePago = "Efectivo"
+                        }
+
+                        const resPay = await fetch('/api/paymentNoTarget', {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json"
+                            },
+                            body: JSON.stringify({
+                                products: productNoTarget,
+                                metodoPago: metodoDePago,
+                                Correo: correoElectronico,
+                                Monto: montoTotal
+                            })
+                        })
+
+                        const dataPay = await resPay.json()
+
+                        if (dataPay.status == "New Order correct") {
+                            window.location.href = "/user/delivery"
+                        } else {
+                            loader.classList.add('active')
+
+                            gsap.to(modalContentSelectModo, {
+                                height: '0px',
+                                padding: '0rem',
+                                duration: .2,
+                                ease: 'power1.in',
+                                onComplete: () => {
+                                    modalSelectModo.style.display = 'none';
+                                }
+                            });
+
+                            textErrorModal.textContent = dataPay.message
+                            modal.classList.add('active')
+                            closeModal.addEventListener('click', () => {
+                                modal.classList.remove('active')
+                            })
+                            tryAgain.addEventListener('click', () => {
+                                modal.classList.remove('active')
+                            })
+                            window.addEventListener('click', event => {
+                                if (event.target == modal) {
+                                    modal.classList.remove('active')
+                                }
+                            })
+                        }
                     })
                 })
-                const dataPay = await resPay.json()
 
-                if (dataPay) {
-                    window.location.href = dataPay.url
-                }
             } else {
                 textErrorModal.textContent = "Para poder enviar tu pedido, necesitamos saber tu numero de telefono, actualiza la informacion en tu perfil"
                 modal.classList.add('active')

@@ -58,6 +58,11 @@ const handleStripeWebhook = async (req, res) => {
         var numero = revisarUsuario.Telefono
         var descripcion = revisarUsuario.Descripcion
 
+        const revisarHora = await ordersCollection.findOne({
+            Fecha: fecha,
+            Hora: hora
+        })
+
         const newOrder = {
             Correo: customerEmail,
             Nombre: nombre,
@@ -100,19 +105,19 @@ Esta pendiente a las actualizaciones en la aplicacion de Bendita Burger`;
         await ordersCollection.insertOne(newOrder);
 
         io.to("administradores").emit("notificacion-nuevo-pedido", {
-            customerEmail,
+            correo: customerEmail,
             nombre,
             amountTotal
         });
 
         io.to("cajeros").emit("notificacion-nuevo-pedido", {
-            customerEmail,
+            correo: customerEmail,
             nombre,
             amountTotal
         });
 
         io.to("superadministradores").emit("notificacion-nuevo-pedido", {
-            customerEmail,
+            correo: customerEmail,
             nombre,
             amountTotal
         });

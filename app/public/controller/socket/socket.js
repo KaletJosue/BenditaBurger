@@ -56,5 +56,5 @@ socket.on("notificacion-estado-pedido-staff", (data) => {
 });
 
 socket.on("notificacion-nuevo-pedido", (data) => {
-    alert(`El usuario ${data.customerEmail} realizo un nuevo pedido`);
+    alert(`El usuario ${data.correo} realizo un nuevo pedido`);
 });

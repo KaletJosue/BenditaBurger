@@ -771,7 +771,7 @@ if (resJsonOrder.status == "Data Orders") {
             main.style.display = 'none'
             search.style.display = 'none'
 
-            main2.style.disabled = "flex"
+            main2.style.display = "flex"
             textMain2.textContent = "Ningun usuario ha realizado un pedido el dia de hoy, espera un poco"
         }
 

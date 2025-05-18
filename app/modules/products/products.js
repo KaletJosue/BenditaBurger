@@ -111,12 +111,12 @@ async function updateProduct(req, res) {
         const productsCollection = db.collection('productos');
         const categoryCollection = db.collection('categorias');
 
-        const revisarProduct = await productsCollection.findOne({ Nombre: name.toLowerCase() });
+        const revisarProduct = await productsCollection.findOne({ Nombre: nameRefe.toLowerCase() });
         const revisarCategory = await categoryCollection.findOne({ Nombre: (category).toLowerCase() });
 
         if (description.length <= 200) {
             if (revisarCategory) {
-                if (revisarProduct && revisarProduct.Nombre.toLowerCase() == nameRefe.toLowerCase()) {
+                if (revisarProduct && (revisarProduct.Nombre.toLowerCase() == nameRefe.toLowerCase())) {
                     const filtro = {
                         Nombre: nameRefe,
                     };
@@ -134,7 +134,6 @@ async function updateProduct(req, res) {
     
                     return res.status(200).send({ status: "Update Correct", message: "Producto Actualizado corretamente" });
                 } else {
-    
                     return res.status(400).send({ status: "Error Product", message: "Este producto ya esta agregado" });
     
                 }

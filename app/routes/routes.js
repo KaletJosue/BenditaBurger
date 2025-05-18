@@ -161,5 +161,6 @@ router.post('/api/deleteCar', car.deleteCar)
 router.post('/api/payment', createSession)
 
 router.post('/api/updateEstado', orders.updateStatus)
+router.post('/api/paymentNoTarget', orders.newOrder)
 
 export default router;

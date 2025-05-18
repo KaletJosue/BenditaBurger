@@ -43,6 +43,112 @@ async function orderDataAdmin(req, res) {
     }
 }
 
+async function newOrder(req, res) {
+    if (req.headers.cookie) {
+        const io = getSocket();
+
+        const products = req.body.products;
+        const metodoPago = req.body.metodoPago;
+        const correo = req.body.Correo;
+        const monto = req.body.Monto;
+
+        const db = await conectarConMongoDB();
+        const ordersCollection = db.collection('ventas');
+        const usersCollection = db.collection('usuarios');
+
+        const revisarUsuario = await usersCollection.findOne({ Correo: correo })
+
+        if (revisarUsuario) {
+            const nombre = revisarUsuario.Nombre
+            const foto = revisarUsuario.Foto
+            const direccion = revisarUsuario.Direccion
+            const barrio = revisarUsuario.Barrio
+            const telefono = revisarUsuario.Telefono
+            const descripcion = revisarUsuario.Descripcion
+
+            const now = new Date();
+            const formatNumber = (n) => String(n).padStart(2, '0');
+            const fecha = `${formatNumber(now.getDate())} / ${formatNumber(now.getMonth() + 1)} / ${String(now.getFullYear()).slice(-2)}`;
+            const hora = `${formatNumber(now.getHours())} : ${formatNumber(now.getMinutes())}`;
+
+            const revisarHora = await ordersCollection.findOne({
+                Fecha: fecha,
+                Hora: hora,
+                Correo: correo
+            })
+
+            if (!revisarHora) {
+                const newOrder = {
+                    Correo: correo,
+                    Nombre: nombre,
+                    Foto: foto,
+                    Direccion: direccion,
+                    Barrio: barrio,
+                    Telefono: telefono,
+                    Estado: "Preparacion",
+                    Total: monto,
+                    MetodoPago: metodoPago,
+                    Productos: products,
+                    Fecha: fecha,
+                    Hora: hora,
+                    Descripcion: descripcion
+                };
+
+                const mensaje =
+                    `✅ Hey *¡Compra completada!,* se acepto tu pedido en Bendita Burger y ya esta en preparación.
+
+Gracias por tu compra *BenditaLover*:
+
+  💰Total pagado: *$${parseInt(monto).toLocaleString('de-DE')}*
+  💳Método de pago: *${metodoPago}*
+  👨‍🍳Estado del pedido: *En Preparacion*
+  ✋Nombre: *${nombre}*
+
+Esta pendiente a las actualizaciones en la aplicacion de Bendita Burger`;
+
+                const carCollection = db.collection('carrito')
+
+                const numeroCliente = `57${revisarUsuario.Telefono}`;
+
+                products.forEach(async (p) => {
+                    const resultado = await carCollection.deleteOne({
+                        Nombre: (p.name).toLowerCase(),
+                        Correo: correo
+                    });
+                })
+
+                await ordersCollection.insertOne(newOrder);
+
+                io.to("administradores").emit("notificacion-nuevo-pedido", {
+                    correo,
+                    nombre,
+                    monto
+                });
+
+                io.to("cajeros").emit("notificacion-nuevo-pedido", {
+                    correo,
+                    nombre,
+                    monto
+                });
+
+                io.to("superadministradores").emit("notificacion-nuevo-pedido", {
+                    correo,
+                    nombre,
+                    monto
+                });
+
+                await sendWhatsAppMessage(numeroCliente, mensaje);
+
+                return res.status(200).send({ status: "New Order correct", message: "Se ha agregado el nuevo pedido" });
+            } else {
+                return res.status(400).send({ status: "Error Orders", message: "No puedes realizar pedidos tan seguido" });
+            }
+        } else {
+            return res.status(400).send({ status: "Error Gmail", message: "Correo electronico no encontrado" });
+        }
+    }
+}
+
 async function updateStatus(req, res) {
     if (req.headers.cookie) {
         const io = getSocket();
@@ -185,5 +291,6 @@ Esperamos que sea de tu agrado y muy pronto vuelvas a realizar un pedido, *¡Dis
 export const method = {
     orderData,
     orderDataAdmin,
-    updateStatus
+    updateStatus,
+    newOrder
 }
