@@ -7,7 +7,7 @@
 
     --color-fondo: #f0f0f0;
     --color-linea: #ccc;
-    
+
     --color-naranja: #FF8B43;
     --color-texto-naranja: #FFF2E9;
 
@@ -853,6 +853,25 @@ body {
     color: white;
 }
 
+.toast {
+    position: fixed;
+    right: -200vw;
+    top: 30px;
+    z-index: 2;
+    background-color: var(--color-verde);
+    padding: 1rem 2rem;
+    border-radius: 10px 0 0 10px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--color-texto-verde);
+    transition: all .5s ease;
+    width: 400px;
+}
+
+.toast.active {
+    right: 0;
+}
+
 /* Modal */
 
 .modal {
@@ -1090,6 +1109,25 @@ body {
 }
 
 @media (width < 650px) {
+    .toast {
+        position: fixed;
+        right: 0;
+        top: -200vw;
+        z-index: 2;
+        background-color: var(--color-verde);
+        padding: 1rem 2rem;
+        border-radius: 0 0 10px 10px;
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--color-texto-verde);
+        transition: all .5s ease;
+        width: 100vw;
+    }
+
+    .toast.active {
+        top: 0;
+    }
+
     .conMenu {
         display: flex;
     }
@@ -1126,7 +1164,7 @@ body {
     .main2 h1 {
         width: 100%;
     }
-    
+
     .modalDetalis .conModalDetails {
         border-radius: 0;
     }
