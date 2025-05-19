@@ -70,11 +70,9 @@ var salesTotal = 0
 if (resJsonOrder.status == "Data Orders") {
     const orderData = resJsonOrder.data;
 
-    const main2 = document.querySelector('.main2')
-    const main = document.querySelector('.main')
-    const search = document.querySelector('.search')
-
     if (orderData != '') {
+
+        var lastFourOrders = orderData.slice(0, 4);
 
         let fecha = new Date();
         let dia = String(fecha.getDate()).padStart(2, '0');
@@ -82,8 +80,6 @@ if (resJsonOrder.status == "Data Orders") {
         let anio = String(fecha.getFullYear()).slice(-2);
 
         let fechaActual = `${dia} / ${mes} / ${anio}`;
-
-        var band
 
         orderData.forEach(async (doc) => {
 
@@ -262,60 +258,6 @@ palanca.addEventListener('click', () => {
         localStorage.setItem('darkMode', 'desactive');
     }
 });
-
-var formulaGastos = parseInt(salesTotal > 0 ? (expensesTotal / salesTotal) * 100 : 0)
-var formulaGanancias = parseInt(salesTotal > 0 ? ((salesTotal - expensesTotal) / salesTotal) * 100 : 0)
-
-alert(`${formulaGanancias} ${formulaGastos}`)
-
-let circularProgress = document.querySelector('.circular-progress'),
-    progressValue = document.querySelector('.progress-value'),
-    circularProgress2 = document.querySelector('.circular-progress2'),
-    progressValue2 = document.querySelector('.progress-value2'),
-    circularProgress3 = document.querySelector('.circular-progress3'),
-    progressValue3 = document.querySelector('.progress-value3')
-
-let speed = 10,
-    progressStartValue = 0,
-    progressStartValue2 = 0,
-    progressStartValue3 = 0,
-    progressEndValue = 100,
-    progressEndValue2 = formulaGastos <= 0 ? 1 : formulaGastos > 100 ? 100 : formulaGastos,
-    progressEndValue3 = formulaGanancias <= 0 ? 1 : formulaGanancias > 100 ? 100 : formulaGanancias;
-
-let progress3 = setInterval(() => {
-    progressStartValue3++
-
-    progressValue3.textContent = `${progressStartValue3}%`
-    circularProgress3.style.background = `conic-gradient(#00be59 ${progressStartValue3 * 3.6}deg, var(--color-fondo) 0deg)`
-
-    if (progressStartValue3 == progressEndValue3) {
-        clearInterval(progress3)
-    }
-}, speed)
-
-let progress2 = setInterval(() => {
-    progressStartValue2++
-
-    progressValue2.textContent = `${progressStartValue2}%`
-    circularProgress2.style.background = `conic-gradient(#ff7777 ${progressStartValue2 * 3.6}deg, var(--color-fondo) 0deg)`
-
-    if (progressStartValue2 == progressEndValue2) {
-        clearInterval(progress2)
-    }
-}, speed)
-
-let progress = setInterval(() => {
-    progressStartValue++
-
-    progressValue.textContent = `${progressStartValue}%`
-    circularProgress.style.background = `conic-gradient(#7d2ae8 ${progressStartValue * 3.6}deg, var(--color-fondo) 0deg)`
-
-    if (progressStartValue == progressEndValue) {
-        clearInterval(progress)
-    }
-}, speed)
-
 var logOut = document.querySelector('.close')
 
 var modal2 = document.querySelector('.modal2')

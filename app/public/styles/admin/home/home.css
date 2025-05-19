@@ -422,7 +422,6 @@ body {
 .main .charts .ganancias {
     background-color: var(--color-blanco);
     display: flex;
-    flex-direction: row-reverse;
     align-items: center;
     justify-content: center;
     gap: 1rem;
@@ -435,7 +434,7 @@ body {
 .main .charts .ingresos .textIngresos,
 .main .charts .gastos .textGastos,
 .main .charts .ganancias .textGanancias {
-    min-width: 130px;
+    width: 100%;
 }
 
 .main .charts .ingresos i,
@@ -450,6 +449,7 @@ body {
     align-items: center;
     justify-content: center;
     color: white;
+    flex: 0 0 auto;
 }
 
 .main .charts .gastos i {
@@ -474,55 +474,6 @@ body {
     font-size: 20px;
     font-weight: 900;
     color: var(--color-negro);
-}
-
-.main .charts .ingresos .circular-progress,
-.main .charts .gastos .circular-progress2,
-.main .charts .ganancias .circular-progress3 {
-    position: relative;
-    aspect-ratio: 1/1;
-    width: 100%;
-    border-radius: 50%;
-    background: conic-gradient(#7d2ae8 3.6deg, var(--color-fondo) 0deg);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.main .charts .gastos .circular-progress2 {
-    background: conic-gradient(#ff7777 3.6deg, var(--color-fondo) 0deg);
-}
-
-.main .charts .ganancias .circular-progress3 {
-    background: conic-gradient(#00be59 3.6deg, var(--color-fondo) 0deg);
-}
-
-.main .charts .ingresos .circular-progress::before,
-.main .charts .gastos .circular-progress2::before,
-.main .charts .ganancias .circular-progress3::before {
-    content: '';
-    position: absolute;
-    height: 80%;
-    width: 80%;
-    border-radius: 50%;
-    background-color: var(--color-blanco);
-}
-
-.main .charts .ingresos .circular-progress .progress-value,
-.main .charts .gastos .circular-progress2 .progress-value2,
-.main .charts .ganancias .circular-progress3 .progress-value3 {
-    position: relative;
-    font-size: 15px;
-    font-weight: 900;
-    color: #7d2ae8;
-}
-
-.main .charts .gastos .circular-progress2 .progress-value2 {
-    color: #ff7777;
-}
-
-.main .charts .ganancias .circular-progress3 .progress-value3 {
-    color: #00be59;
 }
 
 .main .deliveries h1 {

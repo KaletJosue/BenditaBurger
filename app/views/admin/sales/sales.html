@@ -49,7 +49,7 @@
                         <p>Inicio</p>
                     </li>
                 </a>
-                <a href="/admin/delivery">
+                <a>
                     <li>
                         <i class="ph ph-truck"></i>
                         <p>Entregas</p>
@@ -116,7 +116,7 @@
     </div>
 
     <div class="search">
-        <input type="text" placeholder="Busca por Cliente, Monto, Direccion...">
+        <input type="text" placeholder="Busca por Cliente, Monto, Estado..." id="search">
     </div>
 
     <div class="main">
@@ -129,78 +129,31 @@
                         <th>Fecha</th>
                         <th>Hora</th>
                         <th>Metodo de Pago</th>
+                        <th>Estado</th>
                         <th>Monto</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <th>
-                            <div class="divClient">
-                                <img src="/assets/profile-0.jpg" alt="">
-                                <p>Kalet Josue</p>
-                            </div>
-                        </th>
-                        <th>Cra 22 # 2 - 13</th>
-                        <th>12 / 09 / 25</th>
-                        <th>12 : 54</th>
-                        <th>Tarjeta</th>
-                        <th>$29.000</th>
-                        <th>
-                            <button class="openModal">Detalles</button>
-                        </th>
-                    </tr>
-                    <tr>
-                        <th>
-                            <div class="divClient">
-                                <img src="/assets/profile-1.jpg" alt="">
-                                <p>Kalet Josue</p>
-                            </div>
-                        </th>
-                        <th>Cra 22 # 2 - 13</th>
-                        <th>12 / 09 / 25</th>
-                        <th>12 : 54</th>
-                        <th>Tarjeta</th>
-                        <th>$29.000</th>
-                        <th>
-                            <button>Detalles</button>
-                        </th>
-                    </tr>
-                    <tr>
-                        <th>
-                            <div class="divClient">
-                                <img src="/assets/profile-1.jpg" alt="">
-                                <p>Kalet Josue</p>
-                            </div>
-                        </th>
-                        <th>Cra 22 # 2 - 13</th>
-                        <th>12 / 09 / 25</th>
-                        <th>12 : 54</th>
-                        <th>Tarjeta</th>
-                        <th>$29.000</th>
-                        <th>
-                            <button>Detalles</button>
-                        </th>
-                    </tr>
-                    <tr>
-                        <th>
-                            <div class="divClient">
-                                <img src="/assets/profile-1.jpg" alt="">
-                                <p>Kalet Josue</p>
-                            </div>
-                        </th>
-                        <th>Cra 22 # 2 - 13</th>
-                        <th>12 / 09 / 25</th>
-                        <th>12 : 54</th>
-                        <th>Tarjeta</th>
-                        <th>$29.000</th>
-                        <th>
-                            <button>Detalles</button>
-                        </th>
-                    </tr>
+                <tbody class="tbody">
+
                 </tbody>
             </table>
 
             <div class="espacio"></div>
+        </div>
+    </div>
+
+    <div class="modalUpdate">
+        <div class="conModalUpdate">
+            <div class="conInputs">
+                <div class="inputUpdate">
+                    <p>Motivo Cancelacion</p>
+                    <input type="text" class="inputNameUpdate">
+                </div>
+            </div>
+            <div class="buttons">
+                <button class="btnUpdate" disabled>Guardar</button>
+                <button id="closeModalUpdate">Cancelar</button>
+            </div>
         </div>
     </div>
 
@@ -211,69 +164,46 @@
                 <div class="campo">
                     <p>Cliente:</p>
                     <div class="imgCampo">
-                        <img src="/assets/profile-4.jpg" alt="">
-                        <p>Kalet Josue</p>
+                        <img src="" alt="" class="imgDetails">
+                        <p class="nameDetails">Kalet Josue</p>
                     </div>
                 </div>
                 <div class="campo">
                     <p>Teléfono:</p>
-                    <p>3125704048</p>
+                    <p class="phoneDetails"></p>
                 </div>
                 <div class="campo">
                     <p>Metodo de Pago:</p>
-                    <p>Efectivo</p>
+                    <p class="methodDetails">Efectivo</p>
                 </div>
                 <div class="campo">
                     <p>Correo Electronico:</p>
-                    <p>kalet.jo28@gmail.com</p>
+                    <p class="gmailDetails">kalet.jo28@gmail.com</p>
                 </div>
                 <div class="campo">
                     <p>Dirección:</p>
-                    <p>Cra 22 # 2 - 13</p>
+                    <p class="directionDetails">Cra 22 # 2 - 13</p>
+                </div>
+                <div class="campo">
+                    <p>Descripcion:</p>
+                    <p class="descriptionDetails">Enviado</p>
                 </div>
                 <div class="campo">
                     <p>Fecha:</p>
-                    <p>12 / 04 / 25</p>
+                    <p class="dateDetails">12 / 04 / 25</p>
                 </div>
                 <div class="campo">
                     <p>Hora:</p>
-                    <p>12 : 54</p>
+                    <p class="hourDetails">12 : 54</p>
                 </div>
                 <div class="campo">
                     <p>Estado:</p>
-                    <p>Enviado</p>
+                    <p class="statusDetails">Enviado</p>
                 </div>
             </div>
             <h3>Pedido:</h3>
             <div class="infoPedido">
-                <div class="campoPedido">
-                    <div class="imgCampoPedido">
-                        <img src="/assets/ham2.png" alt="">
-                        <p>Whopper</p>
-                    </div>
-                    <p>$20.000</p>
-                </div>
-                <div class="campoPedido">
-                    <div class="imgCampoPedido">
-                        <img src="/assets/ham2.png" alt="">
-                        <p>Whopper</p>
-                    </div>
-                    <p>$20.000</p>
-                </div>
-                <div class="campoPedido">
-                    <div class="imgCampoPedido">
-                        <img src="/assets/ham2.png" alt="">
-                        <p>Whopper</p>
-                    </div>
-                    <p>$20.000</p>
-                </div>
-                <div class="campoPedido">
-                    <div class="imgCampoPedido">
-                        <img src="/assets/ham2.png" alt="">
-                        <p>Whopper</p>
-                    </div>
-                    <p>$20.000</p>
-                </div>
+
             </div>
         </div>
     </div>
@@ -304,6 +234,11 @@
             <button class="logOut2">Salir</button>
             <button class="tryAgain2">Cerrar</button>
         </div>
+    </div>
+
+    <div class="main2">
+        <img src="/assets/logoAmarillo.png" alt="">
+        <h1 class="textMain2">Ningun usuario ha realizado un pedido, espera un poco</h1>
     </div>
 
     <div class="toast">

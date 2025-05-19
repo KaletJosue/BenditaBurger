@@ -360,7 +360,7 @@ socket.on("notificacion-estado-pedido", async (data) => {
 socket.on("notificacion-estado-pedido-staff", async (data) => {
     if (location.href == 'http://localhost:4000/admin/delivery' || location.href == 'http://localhost:4000/checker/delivery') {
         toast.classList.add('active')
-        textToast.textContent = "Tu pedido recibio nuevas actualizaciones, ya puedes verlas"
+        textToast.textContent = `El pedido del usuario ${data.nombre} ha recibido actualizaciones`
 
         setTimeout(() => {
             toast.classList.remove('active')
@@ -1005,7 +1005,7 @@ socket.on("notificacion-estado-pedido-staff", async (data) => {
 socket.on("notificacion-nuevo-pedido", async (data) => {
     if (location.href == 'http://localhost:4000/admin/delivery' || location.href == 'http://localhost:4000/checker/delivery') {
         toast.classList.add('active')
-        textToast.textContent = "Tu pedido recibio nuevas actualizaciones, ya puedes verlas"
+        textToast.textContent = `El usuario ${data.nombre} ha realizado un pedido`
 
         setTimeout(() => {
             toast.classList.remove('active')
