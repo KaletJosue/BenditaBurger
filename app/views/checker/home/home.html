@@ -34,16 +34,16 @@
     <div class="sidebar">
         <div class="topSidebar">
             <div class="user">
-                <img class="profile" src="/assets/profileYo.jpg" alt="">
+                <img class="profile" src="" alt="">
                 <div class="textUser">
-                    <p class="name">Kalet Josue</p>
-                    <h1 class="correo">Cajero</h1>
+                    <p class="name"></p>
+                    <h1 class="correo"></h1>
                 </div>
             </div>
         </div>
         <div class="centerSidebar">
             <ul>
-                <a href="">
+                <a>
                     <li class="active">
                         <i class="ph ph-house-simple"></i>
                         <p>Inicio</p>
@@ -87,6 +87,7 @@
         <input type="text" placeholder="Busca por Cliente, Monto, Direccion...">
         <button class="openModalAdd"><i class="ph ph-plus"></i> Agregar</button>
     </div>
+
     <div class="main">
         <div class="conTable">
             <table class="table">
@@ -100,45 +101,8 @@
                         <th>Monto</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <th>
-                            <div class="divClient">
-                                <img src="/assets/logoAmarillo.png" alt="">
-                                <p>Mesa 6</p>
-                            </div>
-                        </th>
-                        <th>Cll 10 # 6 - 33</th>
-                        <th>12 / 09 / 25</th>
-                        <th>12 : 54</th>
-                        <th>Sin Pagar</th>
-                        <th>$29.000</th>
-                        <th>
-                            <div class="buttons">
-                                <button class="openModal">Detalles</button>
-                                <button class="pago">Pagar</button>
-                            </div>
-                        </th>
-                    </tr>
-                    <tr>
-                        <th>
-                            <div class="divClient">
-                                <img src="/assets/logoAmarillo.png" alt="">
-                                <p>Mesa 1</p>
-                            </div>
-                        </th>
-                        <th>Cll 10 # 6 - 33</th>
-                        <th>12 / 09 / 25</th>
-                        <th>12 : 54</th>
-                        <th>Tarjeta</th>
-                        <th>$29.000</th>
-                        <th>
-                            <div class="buttons">
-                                <button class="openModal">Detalles</button>
-                                <button class="openModalFactura factura">Ver Factura</button>
-                            </div>
-                        </th>
-                    </tr>
+                <tbody class="tbody">
+                    
                 </tbody>
             </table>
 
@@ -177,118 +141,24 @@
 
     <div class="modalAdd">
         <div class="topAdd">
-            <input type="text" placeholder="Busca por Nombre" class="inputName">
+            <input type="text" placeholder="Busca por Nombre" class="inputName" id="search">
             <i class="ph ph-x" id="closeModalAdd"></i>
         </div>
         <div class="conModalAdd">
             <div class="leftModalAdd">
-                <div class="product">
-                    <img src="/assets/ham2.png" alt="">
-                    <h1>La Zunga</h1>
-                    <p>Hamburguesas</p>
-                    <h3>$23.000</h3>
-                </div>
-                <div class="product">
-                    <img src="/assets/cocacola.png" alt="">
-                    <h1>CocaCola</h1>
-                    <p>Hamburguesas</p>
-                    <h3>$23.000</h3>
-                </div>
-                <div class="product">
-                    <img src="/assets/ham2.png" alt="">
-                    <h1>La Zunga</h1>
-                    <p>Hamburguesas</p>
-                    <h3>$23.000</h3>
-                </div>
-                <div class="product">
-                    <img src="/assets/cocacola.png" alt="">
-                    <h1>CocaCola</h1>
-                    <p>Hamburguesas</p>
-                    <h3>$23.000</h3>
-                </div>
-                <div class="product">
-                    <img src="/assets/ham2.png" alt="">
-                    <h1>La Zunga</h1>
-                    <p>Hamburguesas</p>
-                    <h3>$23.000</h3>
-                </div>
-                <div class="product">
-                    <img src="/assets/cocacola.png" alt="">
-                    <h1>CocaCola</h1>
-                    <p>Hamburguesas</p>
-                    <h3>$23.000</h3>
-                </div>
+
             </div>
             <div class="rightModalAdd">
                 <div class="topRightModalAdd">
                     <p>Resumen del Pedido</p>
                 </div>
                 <div class="conRightModalAdd">
-                    <div class="productPedido">
-                        <div class="leftProductPedido">
-                            <img src="/assets/ham2.png" alt="">
-                            <div class="textLeftProductPedido">
-                                <h3>La Zunga</h3>
-                                <p>$15.000</p>
-                                <div class="plusMinus">
-                                    <i class="fa-solid fa-plus"></i>
-                                    <input type="number" value="1">
-                                    <i class="fa-solid fa-minus"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <i class="fa-solid fa-trash"></i>
-                    </div>
-                    <div class="productPedido">
-                        <div class="leftProductPedido">
-                            <img src="/assets/ham2.png" alt="">
-                            <div class="textLeftProductPedido">
-                                <h3>La Zunga</h3>
-                                <p>$15.000</p>
-                                <div class="plusMinus">
-                                    <i class="fa-solid fa-plus"></i>
-                                    <input type="number" value="1">
-                                    <i class="fa-solid fa-minus"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <i class="fa-solid fa-trash"></i>
-                    </div>
-                    <div class="productPedido">
-                        <div class="leftProductPedido">
-                            <img src="/assets/ham2.png" alt="">
-                            <div class="textLeftProductPedido">
-                                <h3>La Zunga</h3>
-                                <p>$15.000</p>
-                                <div class="plusMinus">
-                                    <i class="fa-solid fa-plus"></i>
-                                    <input type="number" value="1">
-                                    <i class="fa-solid fa-minus"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <i class="fa-solid fa-trash"></i>
-                    </div>
-                    <div class="productPedido">
-                        <div class="leftProductPedido">
-                            <img src="/assets/ham2.png" alt="">
-                            <div class="textLeftProductPedido">
-                                <h3>La Zunga</h3>
-                                <p>$15.000</p>
-                                <div class="plusMinus">
-                                    <i class="fa-solid fa-plus"></i>
-                                    <input type="number" value="1">
-                                    <i class="fa-solid fa-minus"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <i class="fa-solid fa-trash"></i>
-                    </div>
+
                 </div>
                 <div class="bottomRightModalAdd">
                     <div class="total">
                         <p>Total a Pagar:</p>
-                        <p>$15.000</p>
+                        <p class="totalPago">$15.000</p>
                     </div>
                     <div class="buttonsRightModalAdd">
                         <button class="confir">Confirmar</button>
@@ -454,16 +324,26 @@
         </div>
     </div>
 
+    <div class="main2">
+        <img src="/assets/logoAmarillo.png" alt="">
+        <h1 class="textMain2">Ningun usuario ha realizado un pedido, espera un poco</h1>
+    </div>
+
+    <div class="toast">
+        <p class="textToast"></p>
+    </div>
+
     <div class="modal">
         <div class="modalContent">
+            <i class="fa-solid fa-x" id="closeModal"></i>
             <div class="centerModal">
                 <i class="fa-solid fa-triangle-exclamation"></i>
                 <div class="textModal">
                     <h1>Ooops!</h1>
-                    <p class="textErrorModal">No has iniciado sesión de manera correcta</p>
+                    <p class="textErrorModal"></p>
                 </div>
             </div>
-            <button class="tryAgain">Iniciar Sesión</button>
+            <button class="tryAgain">Intentar de Nuevo</button>
         </div>
     </div>
 

@@ -84,6 +84,10 @@ router.get('/checker/inventory', authorization.soloChecker, authorization.revisa
      res.sendFile(path.resolve(__dirname, '../views/checker/inventory/inventory.html')) 
 })
 
+router.get('/checker/config', authorization.soloChecker, authorization.revisarVerified, (req, res) => {
+     res.sendFile(path.resolve(__dirname, '../views/checker/config/config.html')) 
+})
+
 router.get('/user', authorization.revisarVerified, authorization.soloUsers, (req, res) => {
      res.sendFile(path.resolve(__dirname, '../views/user/home/home.html')) 
 })
@@ -162,5 +166,7 @@ router.post('/api/payment', createSession)
 
 router.post('/api/updateEstado', orders.updateStatus)
 router.post('/api/paymentNoTarget', orders.newOrder)
+
+router.post('/api/newOrderChecker', orders.newOrderChecker)
 
 export default router;

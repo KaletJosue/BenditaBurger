@@ -43,6 +43,50 @@ async function orderDataAdmin(req, res) {
     }
 }
 
+async function newOrderChecker(req, res) {
+    if (req.headers.cookie) {
+
+        const correo = req.body.Correo;
+        const nombre = req.body.Nombre;
+        const foto = req.body.Foto;
+        const direccion = req.body.Direccion;
+        const barrio = req.body.Barrio;
+        const telefono = req.body.Telefono;
+        const estado = req.body.Estado;
+        const total = req.body.Total;
+        const metodoPago = req.body.MetodoPago;
+        const productos = req.body.Productos;
+        const fecha = req.body.Fecha;
+        const hora = req.body.Hora;
+        const descripcion = req.body.Descripcion;
+        const pago = req.body.Pago
+
+        const db = await conectarConMongoDB();
+        const ordersCollection = db.collection('ventas');
+
+        const newOrder = {
+            Correo: correo,
+            Nombre: nombre,
+            Foto: foto,
+            Direccion: direccion,
+            Barrio: barrio,
+            Telefono: telefono,
+            Estado: estado,
+            Total: total,
+            MetodoPago: metodoPago,
+            Productos: productos,
+            Fecha: fecha,
+            Hora: hora,
+            Descripcion: descripcion,
+            Pago: pago
+        };
+
+        await ordersCollection.insertOne(newOrder);
+        return res.status(200).send({ status: "New Order correct", message: "Se ha agregado el nuevo pedido" });
+
+    }
+}
+
 async function newOrder(req, res) {
     if (req.headers.cookie) {
         const io = getSocket();
@@ -292,5 +336,6 @@ export const method = {
     orderData,
     orderDataAdmin,
     updateStatus,
-    newOrder
+    newOrder,
+    newOrderChecker
 }

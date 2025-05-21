@@ -144,7 +144,7 @@ body {
     padding: 2rem 1rem;
 }
 
-.sidebar .centerSidebar ul li.active {
+.sidebar .centerSidebar ul li:not(:nth-child(3), :nth-child(4)).active {
     background-color: var(--color-fondo);
 }
 
@@ -168,7 +168,7 @@ body {
 }
 
 .sidebar.active .bottomSidebar ul li:first-child {
-    padding: 1rem 0;
+    padding: 0;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -227,11 +227,11 @@ body {
     gap: .5rem;
 }
 
-.sidebar .centerSidebar ul li {
+.sidebar .centerSidebar ul li:not(:nth-child(3), :nth-child(4)) {
     display: flex;
     align-items: center;
     justify-content: start;
-    padding: 1rem;
+    padding: 1rem 1rem;
     gap: 1rem;
     font-size: 12px;
     border-radius: 10px;
@@ -241,7 +241,77 @@ body {
     position: relative;
 }
 
-.sidebar .centerSidebar ul li:hover {
+.sidebar .centerSidebar ul li:not(:nth-child(3), :nth-child(4)):hover,
+.sidebar .centerSidebar ul li:nth-child(3) .btnOptions:hover,
+.sidebar .centerSidebar ul li:nth-child(4) .btnOptions2:hover {
+    background-color: var(--color-fondo);
+}
+
+.sidebar .centerSidebar ul li:nth-child(3),
+.sidebar .centerSidebar ul li:nth-child(4) {
+    display: flex;
+    flex-direction: column;
+    font-size: 12px;
+    border-radius: 10px;
+    color: var(--color-negro);
+    transition: all .2s ease;
+    justify-content: center;
+    position: relative;
+}
+
+.sidebar .centerSidebar ul li:nth-child(3) .btnOptions,
+.sidebar .centerSidebar ul li:nth-child(4) .btnOptions2 {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    position: relative;
+    width: 100%;
+    cursor: pointer;
+    padding: .7rem 1rem;
+    border-radius: 10px;
+    transition: all .2s ease;
+}
+
+.sidebar .centerSidebar ul li:nth-child(3) .btnOptions i:last-child,
+.sidebar .centerSidebar ul li:nth-child(4) .btnOptions2 i:last-child {
+    position: absolute;
+    right: 10px;
+    transition: all .2s ease;
+}
+
+.sidebar .centerSidebar ul li:nth-child(3).active .btnOptions i:last-child,
+.sidebar .centerSidebar ul li:nth-child(4).active .btnOptions2 i:last-child {
+    transform: rotate(180deg);
+}
+
+.sidebar .centerSidebar ul li:nth-child(3) .optionsMenu,
+.sidebar .centerSidebar ul li:nth-child(4) .optionsFinanzas {
+    display: flex;
+    flex-direction: column;
+    padding-left: 1.8rem;
+    gap: .2rem;
+    overflow: hidden;
+    max-height: 0;
+    transition: all .5s;
+}
+
+.sidebar .centerSidebar ul li:nth-child(3).active .optionsMenu,
+.sidebar .centerSidebar ul li:nth-child(4).active .optionsFinanzas {
+    max-height: 500px;
+    padding-right: 2rem;
+}
+
+.sidebar .centerSidebar ul li:nth-child(3) .optionsMenu p,
+.sidebar .centerSidebar ul li:nth-child(4) .optionsFinanzas p {
+    padding: .7rem;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 11px;
+    transition: all .2s ease;
+}
+
+.sidebar .centerSidebar ul li:nth-child(3) .optionsMenu p:hover,
+.sidebar .centerSidebar ul li:nth-child(4) .optionsFinanzas p:hover {
     background-color: var(--color-fondo);
 }
 
@@ -260,7 +330,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: start;
-    padding: 1rem;
+    padding: 1rem 1rem;
     gap: 1rem;
     font-size: 12px;
     border-radius: 10px;
@@ -298,23 +368,6 @@ body {
     padding: 0 2rem 1rem 7rem;
 }
 
-.conTable {
-    overflow: hidden;
-    overflow-x: auto;
-}
-
-.conTable::-webkit-scrollbar {
-    height: 7px;
-    background-color: var(--color-linea);
-    border-radius: 50px;
-}
-
-.conTable::-webkit-scrollbar-thumb {
-    background-color: var(--color-gris);
-    border-radius: 50px;
-    cursor: pointer;
-}
-
 .conTable .espacio {
     display: block;
     height: 20px;
@@ -344,6 +397,10 @@ body {
     font-weight: 400;
     color: var(--color-negro);
     white-space: nowrap;
+}
+
+.main .table tbody tr.filtro {
+    display: none;
 }
 
 .main .table tbody tr:not(:last-child) {
@@ -413,9 +470,14 @@ body {
     color: var(--color-texto-naranja);
 }
 
-.main .table tbody tr th:nth-child(6) .selectEstado h3:last-child {
+.main .table tbody tr th:nth-child(6) .selectEstado h3:nth-child(4) {
     background-color: var(--color-verde);
     color: var(--color-texto-verde);
+}
+
+.main .table tbody tr th:nth-child(6) .selectEstado h3:last-child {
+    background-color: var(--color-lila);
+    color: var(--color-texto-lila);
 }
 
 .main .table tbody tr th:nth-child(6) p {
@@ -447,6 +509,11 @@ body {
 .main .table tbody tr th:nth-child(6) p.entregado {
     background-color: var(--color-verde);
     color: var(--color-texto-verde);
+}
+
+.main .table tbody tr th:nth-child(6) p.cerca {
+    background-color: var(--color-lila);
+    color: var(--color-texto-lila);
 }
 
 .main .table tbody tr th button {
@@ -695,6 +762,97 @@ body {
     width: 30px;
 }
 
+.modalUpdate {
+    position: fixed;
+    width: 100vw;
+    height: 100dvh;
+    top: 0;
+    left: 0;
+    display: none;
+    align-items: end;
+    justify-content: center;
+    z-index: 1;
+}
+
+.modalUpdate .conModalUpdate {
+    backdrop-filter: blur(90px);
+    padding: 1rem 2rem;
+    width: 500px;
+    box-shadow: 1px 1px 1rem #0000008a;
+    border-radius: 20px 20px 0 0;
+}
+
+.modalUpdate .conModalUpdate .conInputs {
+    display: grid;
+    grid-template-columns: 1fr;
+}
+
+.modalUpdate .conModalUpdate .inputUpdate {
+    margin-top: 1rem;
+}
+
+.modalUpdate .conModalUpdate .inputUpdate p {
+    font-size: 12px;
+    margin-bottom: .2rem;
+    color: var(--color-negro);
+}
+
+.modalUpdate .conModalUpdate .inputUpdate input {
+    padding: .7rem;
+    width: 100%;
+    border-radius: 7px;
+    border: solid 1px var(--color-gris);
+    font-size: 12px;
+    outline: none;
+    background-color: transparent;
+    color: var(--color-negro);
+}
+
+.modalUpdate .conModalUpdate .buttons {
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+    font-size: 12px;
+}
+
+.modalUpdate .conModalUpdate .buttons button {
+    padding: .7rem;
+    width: 100%;
+    border-radius: 7px;
+    border: none;
+    cursor: pointer;
+    transition: all .2s ease;
+    font-size: 12px;
+}
+
+.modalUpdate .conModalUpdate .buttons button:first-child {
+    background-color: var(--color-gris);
+    color: var(--color-blanco);
+    opacity: .2;
+    cursor: no-drop;
+}
+
+.modalUpdate .conModalUpdate .buttons button:last-child {
+    background-color: #FF4A43;
+    color: var(--color-blanco);
+}
+
+.modalUpdate .conModalUpdate .buttons button:last-child:hover {
+    transform: translateY(-5px);
+}
+
+.modalUpdate .conModalUpdate .buttons button:first-child.active {
+    opacity: 1;
+    background-color: #6397bc;
+    cursor: pointer;
+}
+
+.modalUpdate .conModalUpdate .buttons button:first-child.active:hover {
+    transform: translateY(-5px);
+}
+
 .toast {
     position: fixed;
     right: -200vw;
@@ -934,6 +1092,38 @@ body {
     color: white;
 }
 
+.main2 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100dvh;
+    padding: 1rem;
+}
+
+.main2 img {
+    aspect-ratio: 1/1;
+    width: 70px;
+    border-radius: 20px;
+}
+
+.main2 h1 {
+    margin-top: 1rem;
+    width: 400px;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--color-negro);
+    text-align: center;
+}
+
+@media (width < 1100px) {
+    .conTable {
+        overflow: hidden;
+        overflow-x: auto;
+        overflow-y: auto;
+    }
+}
+
 @media (width < 1000px) {
 
     .modal,
@@ -984,6 +1174,10 @@ body {
 }
 
 @media (width < 450px) {
+    .main2 h1 {
+        width: 100%;
+    }
+
     .modalDetalis .conModalDetails {
         border-radius: 0;
     }

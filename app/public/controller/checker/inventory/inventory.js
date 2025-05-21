@@ -3,6 +3,11 @@ var loader = document.querySelector('.loader')
 window.onload = function () {
     loader.classList.add('active')
 }
+var btnConfig = document.querySelector('.btnConfig')
+
+btnConfig.addEventListener('click', () => {
+    window.location.href = "/checker/config"
+})
 
 const openModalDelete = document.querySelector('.openModalDelete');
 const modalDelete = document.querySelector('.modalDetele');
@@ -17,33 +22,6 @@ if (isSmallScreen) {
 } else {
     heightModal = "auto"
 }
-
-openModalDelete.addEventListener('click', () => {
-    modalDelete.style.display = 'flex'
-
-    gsap.fromTo(modalContentDelete,
-        { backdropFilter: 'blur(0px)', height: 0, opacity: 0 },
-        {
-            height: heightModal,
-            opacity: 1,
-            backdropFilter: 'blur(90px)',
-            duration: .7,
-            ease: 'expo.out',
-        }
-    )
-})
-window.addEventListener('click', event => {
-    if (event.target == modalDelete) {
-        gsap.to(modalContentDelete, {
-            height: '0px',
-            duration: .2,
-            ease: 'power1.in',
-            onComplete: () => {
-                modalDelete.style.display = 'none';
-            }
-        });
-    }
-})
 
 const openModalUpdate = document.querySelector('.openModalUpdate');
 const modalUpdate = document.querySelector('.modalUpdate');
@@ -95,43 +73,6 @@ inputPriceUpdate.addEventListener('input', () => {
         btnUpdate.classList.remove('active')
         btnUpdate.disabled = true
     }
-})
-
-openModalUpdate.addEventListener('click', () => {
-    modalUpdate.style.display = 'flex'
-
-    gsap.fromTo(modalContentUpdate,
-        { backdropFilter: 'blur(0px)', height: 0, opacity: 0 },
-        {
-            height: 'auto',
-            opacity: 1,
-            backdropFilter: 'blur(90px)',
-            duration: .7,
-            ease: 'expo.out',
-        }
-    )
-    window.addEventListener('click', event => {
-        if (event.target == modalUpdate) {
-            gsap.to(modalContentUpdate, {
-                height: '0px',
-                duration: .2,
-                ease: 'power1.in',
-                onComplete: () => {
-                    modalUpdate.style.display = 'none';
-                }
-            });
-        }
-    })
-    closeModalUpdate.addEventListener('click', () => {
-        gsap.to(modalContentUpdate, {
-            height: '0px',
-            duration: .2,
-            ease: 'power1.in',
-            onComplete: () => {
-                modalUpdate.style.display = 'none';
-            }
-        });
-    })
 })
 
 var inputName = document.querySelector('.inputName')
@@ -355,3 +296,375 @@ palanca.addEventListener('click', () => {
         localStorage.setItem('darkMode', 'desactive');
     }
 });
+
+var logOut = document.querySelector('.close')
+
+var modal2 = document.querySelector('.modal2')
+var closeModal2 = document.querySelector('#closeModal2')
+var logOut2 = document.querySelector('.logOut2')
+var tryAgain2 = document.querySelector('.tryAgain2')
+
+logOut.addEventListener('click', () => {
+    modal2.classList.add('active')
+    closeModal2.addEventListener('click', () => {
+        modal2.classList.remove('active')
+    })
+    logOut2.addEventListener('click', () => {
+        document.cookie = "jwt=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT"
+        document.location.href = "/"
+    })
+    tryAgain2.addEventListener('click', () => {
+        modal2.classList.remove('active')
+    })
+    window.addEventListener('click', event => {
+        if (event.target == modal2) {
+            modal2.classList.remove('active')
+        }
+    })
+})
+
+const res = await fetch("http://localhost:4000/api/userData", {
+    method: "GET",
+    headers: {
+        "Content-Type": "application/json"
+    }
+})
+
+const resJson = await res.json()
+
+var imgProfile = document.querySelector('.profile')
+var gmail = document.querySelector('.correo')
+var nombre = document.querySelector('.name')
+
+nombre.textContent = resJson.data.Nombre.split(' ').slice(0, 2).join(' ')
+gmail.textContent = resJson.data.Rol
+
+if (resJson.data.Photo == "") {
+    imgProfile.src = "/assets/profile-5.jpg"
+} else {
+    imgProfile.src = resJson.data.Photo
+}
+
+var btnAdd = document.querySelector('.saveAdd')
+
+var inputPhoto = document.querySelector('#inputPhoto')
+var inputName = document.querySelector('.inputName')
+var inputCategory = document.querySelector('.inputCategory')
+var inputStock = document.querySelector('.inputStock')
+var inputPrice = document.querySelector('.inputPrice')
+
+var modal = document.querySelector('.modal')
+var closeModal = document.querySelector('#closeModal')
+var tryAgain = document.querySelector('.tryAgain')
+var textErrorModal = document.querySelector('.textErrorModal')
+
+const today = new Date();
+
+const day = String(today.getDate()).padStart(2, '0');
+const month = String(today.getMonth() + 1).padStart(2, '0');
+const year = String(today.getFullYear()).slice(-2);
+
+var fecha = `${day} / ${month} / ${year}`;
+
+btnAdd.addEventListener('click', async () => {
+    const formData = new FormData();
+    formData.append('inventoryPic', inputPhoto.files[0]);
+    formData.append('Name', inputName.value);
+    formData.append('Category', inputCategory.value);
+    formData.append('Stock', inputStock.value);
+    formData.append('Price', inputPrice.value);
+    formData.append('Fecha', fecha);
+
+    loader.classList.remove('active');
+
+    const res = await fetch("http://localhost:4000/api/addInventory", {
+        method: "POST",
+        body: formData,
+    });
+
+    const resJson = await res.json();
+
+    if (resJson.status == "Update correct") {
+        location.reload();
+    } else {
+        loader.classList.add('active');
+        textErrorModal.textContent = resJson.message;
+        modal.classList.add('active');
+        closeModal.addEventListener('click', () => {
+            modal.classList.remove('active');
+        });
+        tryAgain.addEventListener('click', () => {
+            modal.classList.remove('active');
+        });
+        window.addEventListener('click', event => {
+            if (event.target == modal) {
+                modal.classList.remove('active');
+            }
+        });
+    }
+});
+
+const resInventory = await fetch("http://localhost:4000/api/inventoryData", {
+    method: "GET",
+    headers: {
+        "Content-Type": "application/json"
+    }
+})
+
+const resJsonInventory = await resInventory.json()
+
+if (resJsonInventory.status === "Data Inventory") {
+    const inventoryData = resJsonInventory.data;
+
+    const main2 = document.querySelector('.main2')
+    const main = document.querySelector('.table')
+
+    var tbody = document.querySelector('.tbody')
+
+    if (inventoryData != '') {
+        main.style.display = ""
+        main2.style.display = "none"
+
+        inventoryData.forEach((doc) => {
+
+            var tr = document.createElement('tr')
+            var thImg = document.createElement('th')
+            var img = document.createElement('img')
+            var name = document.createElement('th')
+            var category = document.createElement('th')
+            var stock = document.createElement('th')
+            var price = document.createElement('th')
+            var fecha = document.createElement('th')
+            var thAction = document.createElement('th')
+            var divAction = document.createElement('div')
+            var editAction = document.createElement('button')
+            var deleteAction = document.createElement('button')
+
+            img.src = doc.Foto
+            name.textContent = doc.Nombre
+            category.textContent = doc.Categoria
+            stock.textContent = doc.Stock
+            price.textContent = `$${parseInt(doc.Precio).toLocaleString('de-DE')}`
+            fecha.textContent = doc.Fecha
+            editAction.textContent = "Editar"
+            deleteAction.textContent = "Eliminar"
+
+            divAction.className = "actions"
+
+            tbody.appendChild(tr)
+            tr.appendChild(thImg)
+            thImg.appendChild(img)
+            tr.appendChild(name)
+            tr.appendChild(category)
+            tr.appendChild(stock)
+            tr.appendChild(price)
+            tr.appendChild(fecha)
+            tr.appendChild(thAction)
+            thAction.appendChild(divAction)
+            divAction.appendChild(editAction)
+            divAction.appendChild(deleteAction)
+
+            deleteAction.addEventListener('click', () => {
+                modalDelete.style.display = 'flex'
+
+                gsap.fromTo(modalContentDelete,
+                    { backdropFilter: 'blur(0px)', height: 0, opacity: 0 },
+                    {
+                        height: heightModal,
+                        opacity: 1,
+                        backdropFilter: 'blur(90px)',
+                        duration: .7,
+                        ease: 'expo.out',
+                    }
+                )
+
+                window.addEventListener('click', event => {
+                    if (event.target == modalDelete) {
+                        gsap.to(modalContentDelete, {
+                            height: '0px',
+                            duration: .2,
+                            ease: 'power1.in',
+                            onComplete: () => {
+                                modalDelete.style.display = 'none';
+                            }
+                        });
+                    }
+                })
+
+                var imgDelete = document.querySelector('.imgDelete')
+                var nameDelete = document.querySelector('.nameDelete')
+                var categoryDelete = document.querySelector('.categoryDelete')
+                var stockDelete = document.querySelector('.stockDelete')
+                var priceDelete = document.querySelector('.priceDelete')
+
+                imgDelete.src = doc.Foto
+                nameDelete.textContent = doc.Nombre
+                categoryDelete.textContent = doc.Categoria
+                stockDelete.textContent = doc.Stock
+                priceDelete.textContent = `$${parseInt(doc.Precio).toLocaleString('de-DE')}`
+
+                var deleteProduct = document.querySelector('.deleteProduct')
+
+                deleteProduct.addEventListener('click', async () => {
+                    loader.classList.remove('active');
+
+                    const resDelete = await fetch("http://localhost:4000/api/deleteInventory", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            Nombre: doc.Nombre,
+                            Foto: doc.Foto
+                        })
+                    })
+
+                    const resJsonDelete = await resDelete.json()
+
+                    if (resJsonDelete.status == "Product Delete") {
+                        location.reload()
+                    } else {
+                        loader.classList.add('active');
+                        textErrorModal.textContent = resJson.message;
+                        modal.classList.add('active');
+                        closeModal.addEventListener('click', () => {
+                            modal.classList.remove('active');
+                        });
+                        tryAgain.addEventListener('click', () => {
+                            modal.classList.remove('active');
+                        });
+                        window.addEventListener('click', event => {
+                            if (event.target == modal) {
+                                modal.classList.remove('active');
+                            }
+                        });
+                    }
+                })
+            })
+
+            editAction.addEventListener('click', () => {
+                modalUpdate.style.display = 'flex'
+
+                gsap.fromTo(modalContentUpdate,
+                    { backdropFilter: 'blur(0px)', height: 0, opacity: 0 },
+                    {
+                        height: 'auto',
+                        opacity: 1,
+                        backdropFilter: 'blur(90px)',
+                        duration: .7,
+                        ease: 'expo.out',
+                    }
+                )
+                window.addEventListener('click', event => {
+                    if (event.target == modalUpdate) {
+                        gsap.to(modalContentUpdate, {
+                            height: '0px',
+                            duration: .2,
+                            ease: 'power1.in',
+                            onComplete: () => {
+                                modalUpdate.style.display = 'none';
+                            }
+                        });
+                    }
+                })
+                closeModalUpdate.addEventListener('click', () => {
+                    gsap.to(modalContentUpdate, {
+                        height: '0px',
+                        duration: .2,
+                        ease: 'power1.in',
+                        onComplete: () => {
+                            modalUpdate.style.display = 'none';
+                        }
+                    });
+                })
+
+                let inputNameUpdate = document.querySelector('.inputNameUpdate')
+                let inputCategoryUpdate = document.querySelector('.inputCategoryUpdate')
+                let inputStockUpdate = document.querySelector('.inputStockUpdate')
+                let inputPriceUpdate = document.querySelector('.inputPriceUpdate')
+
+                let btnUpdate = document.querySelector('.btnUpdate')
+
+                inputNameUpdate.value = doc.Nombre
+                inputCategoryUpdate.value = doc.Categoria
+                inputStockUpdate.value = doc.Stock
+                inputPriceUpdate.value = doc.Precio
+
+                btnUpdate.addEventListener('click', async () => {
+
+                    let fecha = new Date();
+                    let dia = String(fecha.getDate()).padStart(2, '0');
+                    const mes = String(fecha.getMonth() + 1).padStart(2, '0'); // Los meses en JS empiezan desde 0
+                    let anio = String(fecha.getFullYear()).slice(-2);
+
+                    let fechaActual = `${dia} / ${mes} / ${anio}`;
+
+                    if (inputNameUpdate.value == doc.Nombre && inputCategoryUpdate.value == doc.Categoria && inputStockUpdate.value == doc.Stock && inputPriceUpdate.value == doc.Precio) {
+                        btnUpdate.classList.remove('active')
+                        btnUpdate.disabled = true
+
+                        textErrorModal.textContent = "No hay datos para actualizar";
+                        modal.classList.add('active');
+                        closeModal.addEventListener('click', () => {
+                            modal.classList.remove('active');
+                        });
+                        tryAgain.addEventListener('click', () => {
+                            modal.classList.remove('active');
+                        });
+                        window.addEventListener('click', event => {
+                            if (event.target == modal) {
+                                modal.classList.remove('active');
+                            }
+                        });
+                    } else {
+                        loader.classList.remove('active');
+
+                        const resUpdate = await fetch("http://localhost:4000/api/updateInventory", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json"
+                            },
+                            body: JSON.stringify({
+                                Nombre: inputNameUpdate.value,
+                                Categoria: inputCategoryUpdate.value,
+                                Stock: inputStockUpdate.value,
+                                Precio: inputPriceUpdate.value,
+                                Fecha: fechaActual,
+                                NombreReferencia: doc.Nombre,
+                                precioReferencia: doc.Precio
+                            })
+                        })
+
+                        const resJsonUpdate = await resUpdate.json()
+
+                        if (resJsonUpdate.status == "Update correct") {
+                            location.reload()
+                        } else {
+                            loader.classList.add('active')
+                            textErrorModal.textContent = resJsonUpdate.message;
+                            modal.classList.add('active');
+                            closeModal.addEventListener('click', () => {
+                                modal.classList.remove('active');
+                            });
+                            tryAgain.addEventListener('click', () => {
+                                modal.classList.remove('active');
+                            });
+                            window.addEventListener('click', event => {
+                                if (event.target == modal) {
+                                    modal.classList.remove('active');
+                                }
+                            });
+                        }
+                    }
+                })
+            })
+
+        });
+    } else {
+        main.style.display = "none"
+        main2.style.display = "flex"
+    }
+
+} else {
+    console.error("Error al obtener los datos del inventario:", resJsonInventory.message);
+}

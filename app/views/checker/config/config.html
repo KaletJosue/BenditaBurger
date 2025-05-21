@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script src="https://unpkg.com/scrollreveal"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/styles/checker/config/config.css" />
+    <!-- Loader -->
+    <link rel="stylesheet" href="/styles/loader/loader.css">
+    <link rel="shortcut icon" href="/assets/logo.png" type="image/x-icon">
+    <title>Cajero | Bendita Burger</title>
+    <!-- Iconos -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css"
+        href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css" />
+    <link rel="stylesheet" type="text/css"
+        href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/fill/style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css"
+        integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+
+    <div class="main">
+        <div class="topMain">
+            <img src="" alt="" class="profile">
+            <div class="textTopMain">
+                <h3 class="correo">kalet.jo28@gmail.com</h3>
+                <p class="name">Kalet Josue Victor Robayo</p>
+            </div>
+        </div>
+
+        <div class="conMain">
+            <div class="info">
+                <div class="leftInfo">
+                    <i class="ph-fill ph-identification-badge"></i>
+                    <div class="textLeftInfo">
+                        <h3>Información Personal</h3>
+                        <p>En este apartado podras actualizar tus datos personales</p>
+                    </div>
+                </div>
+                <i class="ph ph-caret-right"></i>
+            </div>
+            <div class="security">
+                <div class="leftSecurity">
+                    <i class="ph-fill ph-lock-key-open"></i>
+                    <div class="textLeftSecurity">
+                        <h3>Seguridad</h3>
+                        <p>En este apartado podrás actualizar tu contraseña</p>
+                    </div>
+                </div>
+                <i class="ph ph-caret-right"></i>
+            </div>
+            <div class="delete">
+                <div class="leftDelete">
+                    <i class="ph-fill ph-trash"></i>
+                    <div class="textLeftDelete">
+                        <h3>Eliminar mi cuenta</h3>
+                        <p>En este apartado podras eliminar tu cuenta de bendita burger :(</p>
+                    </div>
+                </div>
+                <i class="ph ph-caret-right"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="modalAdd">
+        <div class="conModalAdd">
+            <i class="ph ph-x" id="closeModalAdd"></i>
+            <div class="conInputs">
+                <div class="inputAdd">
+                    <p>Contraseña</p>
+                    <input type="password" class="inputNameAdd">
+                </div>
+                <div class="inputAdd">
+                    <p>Confirmar Contraseña</p>
+                    <input type="password" class="inputCategoryAdd">
+                </div>
+            </div>
+            <div class="buttons">
+                <button class="btnAdd" disabled>Guardar</button>
+                <button class="cancelModalAdd">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modalUpdate">
+        <div class="conModalUpdate">
+            <i class="ph ph-x" id="closeModalUpdate"></i>
+            <div class="conInputs">
+                <div class="img">
+                    <label for="inputPhoto">
+                        <img src="" alt="" class="photoProfile">
+                    </label>
+                    <input type="file" id="inputPhoto" hidden accept="image/*">
+                </div>
+                <div class="inputUpdate">
+                    <p>Nombre Completo</p>
+                    <input type="text" class="inputNameUpdate">
+                </div>
+                <div class="inputUpdate">
+                    <p>Correo Electronico</p>
+                    <input type="text" class="inputCategoryUpdate" disabled>
+                </div>
+                <div class="inputUpdate">
+                    <p>Telefono</p>
+                    <input type="number" class="inputPhoneUpdate">
+                </div>
+                <div class="inputUpdate">
+                    <p>Direccion</p>
+                    <input type="text" class="inputDirectionUpdate">
+                </div>
+                <div class="inputUpdate">
+                    <p>Barrio</p>
+                    <input type="text" class="inputBarrioUpdate">
+                </div>
+                <div class="inputUpdate">
+                    <p>Descripcion de tu casa</p>
+                    <input type="text" class="inputDescriptionUpdate">
+                </div>
+            </div>
+            <div class="buttons">
+                <button class="btnUpdate" disabled>Guardar</button>
+                <button id="closeModalUpdate">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal">
+        <div class="modalContent">
+            <i class="fa-solid fa-x" id="closeModal"></i>
+            <div class="centerModal">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+                <div class="textModal">
+                    <h1>Ooops!</h1>
+                    <p class="textErrorModal"></p>
+                </div>
+            </div>
+            <button class="tryAgain">Intentar de Nuevo</button>
+        </div>
+    </div>
+
+    <div class="modal2">
+        <div class="modalContent2">
+            <i class="fa-solid fa-x" id="closeModal2"></i>
+            <div class="centerModal2">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+                <div class="textModal2">
+                    <h1>Atencion!</h1>
+                    <p class="textErrorModal2">Estas a punto de eliminar tu cuenta de Bendita Burger, una vez aceptes no
+                        abra marcha atras :(</p>
+                </div>
+            </div>
+            <button class="logOut2">Aceptar</button>
+            <button class="tryAgain2">Cancelar</button>
+        </div>
+    </div>
+
+    <div class="toast">
+        <p class="textToast"></p>
+    </div>
+
+    <div class="loader">
+        <div class="icon">
+            <div class="comidaSarten"></div>
+            <div class="sartenCompleto">
+                <div class="sarten"></div>
+                <div class="mangoSarten"></div>
+            </div>
+            <div class="placaSarten"></div>
+        </div>
+        <div class="textLoader">
+            <img src="/assets/logo.png" alt="">
+            <h1>¡BENDITA BURGER!</h1>
+            <p>¡Aguanta el hambre! Ya casi está todo listo...</p>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/gsap.min.js"></script>
+    <script src="/controller/socket/socket.js" type="module"></script>
+    <script src="/controller/checker/config/config.js" type="module"></script>
+</body>
+
+</html>
