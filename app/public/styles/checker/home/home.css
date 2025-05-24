@@ -441,6 +441,10 @@ body {
     cursor: pointer;
 }
 
+.main .table tbody tr.filtro {
+    display: none;
+}
+
 .main2 {
     display: flex;
     flex-direction: column;
@@ -558,7 +562,6 @@ body {
     grid-template-columns: 1fr 1fr 1fr;
     background-color: var(--color-blanco);
     box-shadow: var(--box-shadow-suave);
-    width: 250px;
     height: auto;
     border-radius: 20px;
     padding: 1rem;
@@ -569,15 +572,17 @@ body {
 
 .modalSeletTable .conModalSeletTable p {
     display: flex;
-    flex-direction: row-reverse;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: .3rem;
+    font-size: 12px;
     font-weight: 700;
     border-radius: 50%;
     aspect-ratio: 1/1;
     border: solid 1px var(--color-gris);
     transition: all .2s ease;
+    padding: 1rem;
 }
 
 .modalSeletTable .conModalSeletTable p:hover {
@@ -1003,6 +1008,98 @@ input[type="number"]::-webkit-outer-spin-button {
     color: var(--color-blanco);
 }
 
+.modalUpdate {
+    position: fixed;
+    width: 100vw;
+    height: 100dvh;
+    top: 0;
+    left: 0;
+    display: none;
+    align-items: end;
+    justify-content: center;
+    z-index: 2;
+}
+
+.modalUpdate .conModalUpdate {
+    backdrop-filter: blur(90px);
+    padding: 1rem 2rem;
+    width: 500px;
+    box-shadow: 1px 1px 1rem #0000008a;
+    border-radius: 20px 20px 0 0;
+}
+
+.modalUpdate .conModalUpdate .conInputs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 .5rem;
+}
+
+.modalUpdate .conModalUpdate .inputUpdate {
+    margin-top: 1rem;
+}
+
+.modalUpdate .conModalUpdate .inputUpdate p {
+    font-size: 12px;
+    margin-bottom: .2rem;
+    color: var(--color-negro);
+}
+
+.modalUpdate .conModalUpdate .inputUpdate input {
+    padding: .7rem;
+    width: 100%;
+    border-radius: 7px;
+    border: solid 1px var(--color-gris);
+    font-size: 12px;
+    outline: none;
+    background-color: transparent;
+    color: var(--color-negro);
+}
+
+.modalUpdate .conModalUpdate .buttons {
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+    font-size: 12px;
+}
+
+.modalUpdate .conModalUpdate .buttons button {
+    padding: .7rem;
+    width: 100%;
+    border-radius: 7px;
+    border: none;
+    cursor: pointer;
+    transition: all .2s ease;
+    font-size: 12px;
+}
+
+.modalUpdate .conModalUpdate .buttons button:first-child {
+    background-color: var(--color-gris);
+    color: var(--color-blanco);
+    opacity: .2;
+    cursor: no-drop;
+}
+
+.modalUpdate .conModalUpdate .buttons button:last-child {
+    background-color: #FF4A43;
+    color: var(--color-blanco);
+}
+
+.modalUpdate .conModalUpdate .buttons button:last-child:hover {
+    transform: translateY(-5px);
+}
+
+.modalUpdate .conModalUpdate .buttons button:first-child.active {
+    opacity: 1;
+    background-color: #6397bc;
+    cursor: pointer;
+}
+
+.modalUpdate .conModalUpdate .buttons button:first-child.active:hover {
+    transform: translateY(-5px);
+}
+
 .modalFactura {
     position: fixed;
     top: 0;
@@ -1211,7 +1308,7 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 .modalDetalis .conModalDetails {
-    height: 100dvh;
+    height: 100vh;
     width: 400px;
     backdrop-filter: blur(100px);
     box-shadow: 1px 1px 1rem black;
@@ -1251,8 +1348,52 @@ input[type="number"]::-webkit-outer-spin-button {
     color: var(--color-blanco);
 }
 
+.modalDetalis .conModalDetails .infoUser {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.modalDetalis .conModalDetails .infoUser .campo {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: space-between;
+    width: 100%;
+    gap: .2rem;
+}
+
+.modalDetalis .conModalDetails .infoUser .campo p:first-child {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--color-gris);
+}
+
+.modalDetalis .conModalDetails .infoUser .campo p:not(:first-child) {
+    font-size: 12px;
+    color: var(--color-negro);
+}
+
+.modalDetalis .conModalDetails .infoUser .campo .imgCampo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+}
+
+.modalDetalis .conModalDetails .infoUser .campo .imgCampo img {
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    object-position: center center;
+    width: 20px;
+    border-radius: 5px;
+}
+
 .modalDetalis .conModalDetails h3 {
-    margin-top: 1rem;
+    margin-top: 2rem;
     margin-left: 1rem;
     font-size: 15px;
     font-weight: 900;
@@ -1264,7 +1405,7 @@ input[type="number"]::-webkit-outer-spin-button {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin-top: 1rem;
+    margin-top: 2rem;
 }
 
 .modalDetalis .conModalDetails .infoPedido .campoPedido {

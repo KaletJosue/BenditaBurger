@@ -115,31 +115,24 @@ async function newOrder(req, res) {
             const fecha = `${formatNumber(now.getDate())} / ${formatNumber(now.getMonth() + 1)} / ${String(now.getFullYear()).slice(-2)}`;
             const hora = `${formatNumber(now.getHours())} : ${formatNumber(now.getMinutes())}`;
 
-            const revisarHora = await ordersCollection.findOne({
+            const newOrder = {
+                Correo: correo,
+                Nombre: nombre,
+                Foto: foto,
+                Direccion: direccion,
+                Barrio: barrio,
+                Telefono: telefono,
+                Estado: "Preparacion",
+                Total: monto,
+                MetodoPago: metodoPago,
+                Productos: products,
                 Fecha: fecha,
                 Hora: hora,
-                Correo: correo
-            })
+                Descripcion: descripcion
+            };
 
-            if (!revisarHora) {
-                const newOrder = {
-                    Correo: correo,
-                    Nombre: nombre,
-                    Foto: foto,
-                    Direccion: direccion,
-                    Barrio: barrio,
-                    Telefono: telefono,
-                    Estado: "Preparacion",
-                    Total: monto,
-                    MetodoPago: metodoPago,
-                    Productos: products,
-                    Fecha: fecha,
-                    Hora: hora,
-                    Descripcion: descripcion
-                };
-
-                const mensaje =
-                    `✅ Hey *¡Compra completada!,* se acepto tu pedido en Bendita Burger y ya esta en preparación.
+            const mensaje =
+                `✅ Hey *¡Compra completada!,* se acepto tu pedido en Bendita Burger y ya esta en preparación.
 
 Gracias por tu compra *BenditaLover*:
 
@@ -150,43 +143,40 @@ Gracias por tu compra *BenditaLover*:
 
 Esta pendiente a las actualizaciones en la aplicacion de Bendita Burger`;
 
-                const carCollection = db.collection('carrito')
+            const carCollection = db.collection('carrito')
 
-                const numeroCliente = `57${revisarUsuario.Telefono}`;
+            const numeroCliente = `57${revisarUsuario.Telefono}`;
 
-                products.forEach(async (p) => {
-                    const resultado = await carCollection.deleteOne({
-                        Nombre: (p.name).toLowerCase(),
-                        Correo: correo
-                    });
-                })
-
-                await ordersCollection.insertOne(newOrder);
-
-                io.to("administradores").emit("notificacion-nuevo-pedido", {
-                    correo,
-                    nombre,
-                    monto
+            products.forEach(async (p) => {
+                const resultado = await carCollection.deleteOne({
+                    Nombre: (p.name).toLowerCase(),
+                    Correo: correo
                 });
+            })
 
-                io.to("cajeros").emit("notificacion-nuevo-pedido", {
-                    correo,
-                    nombre,
-                    monto
-                });
+            await ordersCollection.insertOne(newOrder);
 
-                io.to("superadministradores").emit("notificacion-nuevo-pedido", {
-                    correo,
-                    nombre,
-                    monto
-                });
+            io.to("administradores").emit("notificacion-nuevo-pedido", {
+                correo,
+                nombre,
+                monto
+            });
 
-                await sendWhatsAppMessage(numeroCliente, mensaje);
+            io.to("cajeros").emit("notificacion-nuevo-pedido", {
+                correo,
+                nombre,
+                monto
+            });
 
-                return res.status(200).send({ status: "New Order correct", message: "Se ha agregado el nuevo pedido" });
-            } else {
-                return res.status(400).send({ status: "Error Orders", message: "No puedes realizar pedidos tan seguido" });
-            }
+            io.to("superadministradores").emit("notificacion-nuevo-pedido", {
+                correo,
+                nombre,
+                monto
+            });
+
+            await sendWhatsAppMessage(numeroCliente, mensaje);
+
+            return res.status(200).send({ status: "New Order correct", message: "Se ha agregado el nuevo pedido" });
         } else {
             return res.status(400).send({ status: "Error Gmail", message: "Correo electronico no encontrado" });
         }

@@ -84,7 +84,7 @@
     </div>
 
     <div class="search">
-        <input type="text" placeholder="Busca por Cliente, Monto, Direccion...">
+        <input type="text" id="search2" placeholder="Busca por Cliente, Monto, Direccion...">
         <button class="openModalAdd"><i class="ph ph-plus"></i> Agregar</button>
     </div>
 
@@ -102,7 +102,7 @@
                     </tr>
                 </thead>
                 <tbody class="tbody">
-                    
+
                 </tbody>
             </table>
 
@@ -112,15 +112,15 @@
 
     <div class="modalSeletTable">
         <div class="conModalSeletTable">
-            <p class="mesas"><i class="ph-fill ph-armchair"></i>1</p>
-            <p class="mesas"><i class="ph-fill ph-armchair"></i>2</p>
-            <p class="mesas"><i class="ph-fill ph-armchair"></i>3</p>
-            <p class="mesas"><i class="ph-fill ph-armchair"></i>4</p>
-            <p class="mesas"><i class="ph-fill ph-armchair"></i>5</p>
-            <p class="mesas"><i class="ph-fill ph-armchair"></i>6</p>
-            <p class="mesas"><i class="ph-fill ph-armchair"></i>7</p>
-            <p class="mesas"><i class="ph-fill ph-armchair"></i>8</p>
-            <p class="mesas"><i class="ph-fill ph-armchair"></i>9</p>
+            <p class="mesas">Mesa 1<i class="ph ph-stool"></i></p>
+            <p class="mesas">Mesa 2<i class="ph ph-stool"></i></p>
+            <p class="mesas">Mesa 3<i class="ph ph-stool"></i></p>
+            <p class="mesas">Mesa 4<i class="ph ph-stool"></i></p>
+            <p class="mesas">Mesa 5<i class="ph ph-stool"></i></p>
+            <p class="mesas">Mesa 6<i class="ph ph-stool"></i></p>
+            <p class="mesas">Mesa 7<i class="ph ph-stool"></i></p>
+            <p class="mesas">Mesa 8<i class="ph ph-stool"></i></p>
+            <p class="mesas">Mesa 9<i class="ph ph-stool"></i></p>
         </div>
     </div>
 
@@ -158,7 +158,7 @@
                 <div class="bottomRightModalAdd">
                     <div class="total">
                         <p>Total a Pagar:</p>
-                        <p class="totalPago">$15.000</p>
+                        <p class="montoTotal"></p>
                     </div>
                     <div class="buttonsRightModalAdd">
                         <button class="confir">Confirmar</button>
@@ -262,71 +262,57 @@
     <div class="modalDetalis">
         <div class="conModalDetails">
             <i class="ph ph-x" id="closeModalDetails"></i>
+            <div class="infoUser">
+                <div class="campo">
+                    <p>Cliente:</p>
+                    <div class="imgCampo">
+                        <img src="" alt="" class="imgDetails">
+                        <p class="nameDetails">Kalet Josue</p>
+                    </div>
+                </div>
+                <div class="campo">
+                    <p>Teléfono:</p>
+                    <p class="phoneDetails"></p>
+                </div>
+                <div class="campo">
+                    <p>Metodo de Pago:</p>
+                    <p class="methodDetails">Efectivo</p>
+                </div>
+                <div class="campo">
+                    <p>Correo Electronico:</p>
+                    <p class="gmailDetails">kalet.jo28@gmail.com</p>
+                </div>
+                <div class="campo">
+                    <p>Dirección:</p>
+                    <p class="directionDetails">Cra 22 # 2 - 13</p>
+                </div>
+                <div class="campo">
+                    <p>Descripcion:</p>
+                    <p class="descriptionDetails">Enviado</p>
+                </div>
+                <div class="campo">
+                    <p>Fecha:</p>
+                    <p class="dateDetails">12 / 04 / 25</p>
+                </div>
+                <div class="campo">
+                    <p>Hora:</p>
+                    <p class="hourDetails">12 : 54</p>
+                </div>
+                <div class="campo">
+                    <p>Estado:</p>
+                    <p class="statusDetails">Enviado</p>
+                </div>
+            </div>
             <h3>Pedido:</h3>
             <div class="infoPedido">
-                <div class="campoPedido">
-                    <div class="imgCampoPedido">
-                        <img src="/assets/cocacola.png" alt="">
-                        <p>CocaCola</p>
-                    </div>
-                    <p>$20.000</p>
-                </div>
-                <div class="campoPedido">
-                    <div class="imgCampoPedido">
-                        <img src="/assets/ham2.png" alt="">
-                        <p>Whopper</p>
-                    </div>
-                    <p>$20.000</p>
-                </div>
-                <div class="campoPedido">
-                    <div class="imgCampoPedido">
-                        <img src="/assets/ham2.png" alt="">
-                        <p>Whopper</p>
-                    </div>
-                    <p>$20.000</p>
-                </div>
-                <div class="campoPedido">
-                    <div class="imgCampoPedido">
-                        <img src="/assets/ham2.png" alt="">
-                        <p>Whopper</p>
-                    </div>
-                    <p>$20.000</p>
-                </div>
-                <div class="campoPedido">
-                    <div class="imgCampoPedido">
-                        <img src="/assets/ham2.png" alt="">
-                        <p>Whopper</p>
-                    </div>
-                    <p>$20.000</p>
-                </div>
-                <div class="campoPedido">
-                    <div class="imgCampoPedido">
-                        <img src="/assets/ham2.png" alt="">
-                        <p>Whopper</p>
-                    </div>
-                    <p>$20.000</p>
-                </div>
-                <div class="campoPedido">
-                    <div class="imgCampoPedido">
-                        <img src="/assets/ham2.png" alt="">
-                        <p>Whopper</p>
-                    </div>
-                    <p>$20.000</p>
-                </div>
-                <div class="campoPedido">
-                    <div class="imgCampoPedido">
-                        <img src="/assets/ham2.png" alt="">
-                        <p>Whopper</p>
-                    </div>
-                    <p>$20.000</p>
-                </div>
+
             </div>
         </div>
     </div>
 
     <div class="main2">
         <img src="/assets/logoAmarillo.png" alt="">
-        <h1 class="textMain2">Ningun usuario ha realizado un pedido, espera un poco</h1>
+        <h1 class="textMain2">No has registrado ningun pedido el dia de hoy</h1>
     </div>
 
     <div class="toast">
@@ -362,8 +348,35 @@
         </div>
     </div>
 
-    <div class="toast">
-        <p class="textToast"></p>
+    <div class="modalUpdate">
+        <div class="conModalUpdate">
+            <div class="conInputs">
+                <div class="inputUpdate">
+                    <p>Nombre del usuario</p>
+                    <input type="text" class="inputNameUpdate">
+                </div>
+                <div class="inputUpdate">
+                    <p>Direccion</p>
+                    <input type="text" class="inputDirectionUpdate">
+                </div>
+                <div class="inputUpdate">
+                    <p>Barrio</p>
+                    <input type="text" class="inputBarrioUpdate">
+                </div>
+                <div class="inputUpdate">
+                    <p>Telefono</p>
+                    <input type="text" class="inputPhomeUpdate">
+                </div>
+                <div class="inputUpdate">
+                    <p>Descripcion</p>
+                    <input type="text" class="inputDescriptionUpdate">
+                </div>
+            </div>
+            <div class="buttons">
+                <button class="btnUpdate" disabled>Guardar</button>
+                <button id="closeModalUpdate">Cancelar</button>
+            </div>
+        </div>
     </div>
 
     <div class="loader">

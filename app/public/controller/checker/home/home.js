@@ -31,9 +31,9 @@ var leftModalAdd = document.querySelector('.leftModalAdd')
 var cancelPedido = document.querySelector('.cancel')
 
 cancelPedido.addEventListener('click', () => {
-    containerResumen.classList.remove('active')
     productosAgregados = []
-    precioTotal = 0
+    productosAgregadosBase = []
+    containerResumen.classList.remove('active')
 })
 
 openModalAdd.addEventListener('click', () => {
@@ -78,43 +78,147 @@ btnOrder.addEventListener('click', async () => {
             modalSelectModo.style.display = 'none';
         }
     });
-    gsap.to(modalAdd, {
-        height: '0px',
-        padding: '0rem 1rem',
-        duration: .2,
-        ease: 'power1.in',
+
+    const modalUpdate = document.querySelector('.modalUpdate');
+    const modalContentUpdate = document.querySelector('.conModalUpdate');
+    const closeModalUpdate = document.getElementById('closeModalUpdate')
+
+    modalUpdate.style.display = 'flex';
+
+    gsap.fromTo(modalContentUpdate,
+        { backdropFilter: 'blur(0px)', height: 0, opacity: 0 },
+        {
+            height: 'auto',
+            opacity: 1,
+            backdropFilter: 'blur(90px)',
+            duration: .7,
+            ease: 'expo.out',
+        }
+    );
+
+    window.addEventListener('click', event => {
+        if (event.target === modalUpdate) {
+            gsap.to(modalContentUpdate, {
+                height: '0px',
+                duration: .2,
+                ease: 'power1.in',
+                onComplete: () => {
+                    modalUpdate.style.display = 'none';
+                }
+            });
+        }
     });
 
-    loader.classList.remove('active')
+    closeModalUpdate.addEventListener('click', () => {
+        gsap.to(modalContentUpdate, {
+            height: '0px',
+            duration: .2,
+            ease: 'power1.in',
+            onComplete: () => {
+                modalUpdate.style.display = 'none';
 
-    const resNewOrder = await fetch("http://localhost:4000/api/newOrderChecker", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            Correo: "benditaburger54@gmail.com",
-            Nombre: "Domicilio",
-            Foto: 'https://res-console.cloudinary.com/dtfzougp0/media_explorer_thumbnails/ce9c26e1af183381032a956729babf4d/detailed',
-            Direccion: 'Cll 10 # 6 - 33',
-            Barrio: 'Madrid',
-            Telefono: '3229645600',
-            Estado: 'Entregado',
-            Total: total,
-            MetodoPago: '',
-            Productos: productosAgregados,
-            Fecha: fecha,
-            Hora: hora,
-            Descripcion: "Restaurante con las mejores hamburguesas de Madrid",
-            Pago: "No pago"
-        })
+                inputNameUpdate.value = ''
+                inputDirectionUpdate.value = ''
+                inputPhomeUpdate.value = ''
+                inputDescriptionUpdate.value = ''
+
+                btnUpdate.classList.remove('active')
+                btnUpdate.disabled = true
+            }
+        });
+    });
+
+    var inputNameUpdate = document.querySelector('.inputNameUpdate')
+    var inputDirectionUpdate = document.querySelector('.inputDirectionUpdate')
+    var inputPhomeUpdate = document.querySelector('.inputPhomeUpdate')
+    var inputDescriptionUpdate = document.querySelector('.inputDescriptionUpdate')
+    var inputBarrioUpdate = document.querySelector('.inputBarrioUpdate')
+
+    var btnUpdate = document.querySelector('.btnUpdate')
+
+    inputNameUpdate.addEventListener('input', () => {
+        if (inputBarrioUpdate.value.length != 0 && inputNameUpdate.value.length != 0 && inputDirectionUpdate.value.length != 0 && inputPhomeUpdate.value.length != 0 && inputDescriptionUpdate.value.length != 0) {
+            btnUpdate.classList.add('active')
+            btnUpdate.disabled = false
+        } else {
+            btnUpdate.classList.remove('active')
+            btnUpdate.disabled = true
+        }
     })
 
-    const resJsonNewOrder = await resNewOrder.json()
+    inputDirectionUpdate.addEventListener('input', () => {
+        if (inputBarrioUpdate.value.length != 0 && inputNameUpdate.value.length != 0 && inputDirectionUpdate.value.length != 0 && inputPhomeUpdate.value.length != 0 && inputDescriptionUpdate.value.length != 0) {
+            btnUpdate.classList.add('active')
+            btnUpdate.disabled = false
+        } else {
+            btnUpdate.classList.remove('active')
+            btnUpdate.disabled = true
+        }
+    })
 
-    if (resJsonNewOrder.status == "New Order correct") {
-        location.reload()
-    }
+    inputPhomeUpdate.addEventListener('input', () => {
+        if (inputBarrioUpdate.value.length != 0 && inputNameUpdate.value.length != 0 && inputDirectionUpdate.value.length != 0 && inputPhomeUpdate.value.length != 0 && inputDescriptionUpdate.value.length != 0) {
+            btnUpdate.classList.add('active')
+            btnUpdate.disabled = false
+        } else {
+            btnUpdate.classList.remove('active')
+            btnUpdate.disabled = true
+        }
+    })
+
+    inputDescriptionUpdate.addEventListener('input', () => {
+        if (inputBarrioUpdate.value.length != 0 && inputNameUpdate.value.length != 0 && inputDirectionUpdate.value.length != 0 && inputPhomeUpdate.value.length != 0 && inputDescriptionUpdate.value.length != 0) {
+            btnUpdate.classList.add('active')
+            btnUpdate.disabled = false
+        } else {
+            btnUpdate.classList.remove('active')
+            btnUpdate.disabled = true
+        }
+    })
+
+    inputBarrioUpdate.addEventListener('input', () => {
+        if (inputBarrioUpdate.value.length != 0 && inputNameUpdate.value.length != 0 && inputDirectionUpdate.value.length != 0 && inputPhomeUpdate.value.length != 0 && inputDescriptionUpdate.value.length != 0) {
+            btnUpdate.classList.add('active')
+            btnUpdate.disabled = false
+        } else {
+            btnUpdate.classList.remove('active')
+            btnUpdate.disabled = true
+        }
+    })
+
+    btnUpdate.addEventListener('click', async () => {
+        loader.classList.remove('active')
+
+        const resNewOrder = await fetch("http://localhost:4000/api/newOrderChecker", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                Correo: "benditaburger54@gmail.com",
+                Nombre: inputNameUpdate.value,
+                Foto: 'https://firebasestorage.googleapis.com/v0/b/oasiscol.appspot.com/o/logoAmarillo.png?alt=media&token=ef53c12b-64fe-4004-b4dd-a2840b2106fb',
+                Direccion: inputDirectionUpdate.value,
+                Barrio: inputBarrioUpdate.value,
+                Telefono: inputPhomeUpdate.value,
+                Estado: 'Preparacion',
+                Total: calcularPrecio(),
+                MetodoPago: '',
+                Productos: productosAgregadosBase,
+                Fecha: fecha,
+                Hora: hora,
+                Descripcion: inputDescriptionUpdate.value,
+                Pago: "No pago"
+            })
+        })
+
+        const resJsonNewOrder = await resNewOrder.json()
+
+        if (resJsonNewOrder.status == "New Order correct") {
+            location.reload()
+        }
+    })
+
 })
 
 btnCarry.addEventListener('click', async () => {
@@ -144,14 +248,14 @@ btnCarry.addEventListener('click', async () => {
         body: JSON.stringify({
             Correo: "benditaburger54@gmail.com",
             Nombre: "Para Llevar",
-            Foto: 'https://res-console.cloudinary.com/dtfzougp0/media_explorer_thumbnails/ce9c26e1af183381032a956729babf4d/detailed',
+            Foto: 'https://firebasestorage.googleapis.com/v0/b/oasiscol.appspot.com/o/logoAmarillo.png?alt=media&token=ef53c12b-64fe-4004-b4dd-a2840b2106fb',
             Direccion: 'Cll 10 # 6 - 33',
             Barrio: 'Madrid',
             Telefono: '3229645600',
-            Estado: 'Entregado',
-            Total: total,
+            Estado: 'En preparacion',
+            Total: calcularPrecio(),
             MetodoPago: '',
-            Productos: productosAgregados,
+            Productos: productosAgregadosBase,
             Fecha: fecha,
             Hora: hora,
             Descripcion: "Restaurante con las mejores hamburguesas de Madrid",
@@ -199,14 +303,14 @@ mesas.forEach(mesa => {
             body: JSON.stringify({
                 Correo: "benditaburger54@gmail.com",
                 Nombre: mesa.textContent,
-                Foto: 'https://res-console.cloudinary.com/dtfzougp0/media_explorer_thumbnails/ce9c26e1af183381032a956729babf4d/detailed',
+                Foto: 'https://firebasestorage.googleapis.com/v0/b/oasiscol.appspot.com/o/logoAmarillo.png?alt=media&token=ef53c12b-64fe-4004-b4dd-a2840b2106fb',
                 Direccion: 'Cll 10 # 6 - 33',
                 Barrio: 'Madrid',
                 Telefono: '3229645600',
-                Estado: 'Entregado',
-                Total: total,
+                Estado: 'En preparacion',
+                Total: calcularPrecio(),
                 MetodoPago: '',
-                Productos: productosAgregados,
+                Productos: productosAgregadosBase,
                 Fecha: fecha,
                 Hora: hora,
                 Descripcion: "Restaurante con las mejores hamburguesas de Madrid",
@@ -381,8 +485,9 @@ if (resJson.data.Photo == "") {
     imgProfile.src = resJson.data.Photo
 }
 
-var totalPago = document.querySelector('.totalPago');
-var productosAgregados = [];
+var productosAgregados = []
+var productosAgregadosBase = []
+var conRightModalAdd = document.querySelector('.conRightModalAdd')
 
 const resProduct = await fetch("http://localhost:4000/api/productData", {
     method: "GET",
@@ -391,29 +496,25 @@ const resProduct = await fetch("http://localhost:4000/api/productData", {
     }
 });
 
-const resProductJson = await resProduct.json();
+var montoTotal = document.querySelector('.montoTotal')
 
-if (resProductJson.status == "Data Products") {
-    const productData = resProductJson.data;
-    const leftModalAdd = document.querySelector('.leftModalAdd');
-    const conRightModalAdd = document.querySelector('.conRightModalAdd');
+function calcularPrecio() {
+    var pagoTotal = 0
 
-    const mostrarErrorModal = (mensaje) => {
-        textErrorModal.textContent = mensaje;
-        modal.classList.add('active');
-        closeModal.onclick = tryAgain.onclick = () => modal.classList.remove('active');
-        window.onclick = (e) => { if (e.target == modal) modal.classList.remove('active'); };
-    };
+    productosAgregados.forEach((doc) => {
+        pagoTotal += (parseInt(doc.price) * parseInt(doc.quaintity))
+    })
 
-    const calcularTotalPago = () => {
-        total = productosAgregados.reduce((acc, prod) => acc + prod.Cantidad * prod.Precio, 0);
-        totalPago.textContent = `$${total.toLocaleString('de-DE')}`;
-    };
+    return pagoTotal
+}
 
-    const renderProductosAgregados = () => {
+function renderizarProducts() {
+    if (productosAgregados != "") {
+        montoTotal.textContent = `$${calcularPrecio().toLocaleString('de-DE')}`
+
         conRightModalAdd.innerHTML = '';
 
-        productosAgregados.forEach((prod, index) => {
+        productosAgregados.forEach((prod) => {
             const divProduct = document.createElement('div');
             const iconTrash = document.createElement('i');
             const leftProduct = document.createElement('div');
@@ -426,7 +527,7 @@ if (resProductJson.status == "Data Products") {
             const input = document.createElement('input');
             const iconMinus = document.createElement('i');
 
-            input.type = 'number'
+            input.type = 'number';
 
             divProduct.className = "productPedido";
             leftProduct.className = "leftProductPedido";
@@ -436,10 +537,10 @@ if (resProductJson.status == "Data Products") {
             iconPlus.className = "fa-solid fa-plus";
             iconMinus.className = "fa-solid fa-minus";
 
-            imgProduct.src = prod.Imagen;
-            nombre.textContent = prod.Nombre;
-            price.textContent = `$${parseInt(prod.Precio).toLocaleString('de-DE')}`;
-            input.value = prod.Cantidad;
+            imgProduct.src = prod.foto;
+            nombre.textContent = prod.name;
+            price.textContent = `$${parseInt(prod.price).toLocaleString('de-DE')}`;
+            input.value = prod.quaintity;
 
             divProduct.appendChild(leftProduct);
             divProduct.appendChild(iconTrash);
@@ -453,45 +554,92 @@ if (resProductJson.status == "Data Products") {
             plusMinus.appendChild(iconMinus);
             conRightModalAdd.appendChild(divProduct);
 
-            // Sumar
             iconPlus.addEventListener('click', () => {
-                prod.Cantidad += 1;
-                input.value = prod.Cantidad;
-                calcularTotalPago();
-            });
+                let product = productosAgregados.find(p => p.name == prod.name)
+                let productBase = productosAgregadosBase.find(p => p.name == (prod.name).toLowerCase())
 
-            // Restar
+                if (product && productBase) {
+                    product.quaintity += 1
+                    productBase.quaintity += 1
+
+                    input.value = prod.quaintity
+
+                    montoTotal.textContent = `$${calcularPrecio().toLocaleString('de-DE')}`
+                }
+            })
+
             iconMinus.addEventListener('click', () => {
-                if (prod.Cantidad > 1) {
-                    prod.Cantidad -= 1;
-                    input.value = prod.Cantidad;
-                    calcularTotalPago();
-                } else {
-                    mostrarErrorModal("No puedes pedir menos de 1 producto");
-                }
-            });
+                let product = productosAgregados.find(p => p.name == prod.name)
+                let productBase = productosAgregadosBase.find(p => p.name == (prod.name).toLowerCase())
 
-            // Cambiar input manualmente
+                if (product && productBase) {
+                    if (product.quaintity > 1) {
+                        product.quaintity -= 1
+                        productBase.quaintity -= 1
+
+                        input.value = prod.quaintity
+
+                        montoTotal.textContent = `$${calcularPrecio().toLocaleString('de-DE')}`
+                    } else {
+                        textErrorModal.textContent = "No puedes pedir menos de 1 producto";
+                        modal.classList.add('active');
+                        closeModal.addEventListener('click', () => {
+                            modal.classList.remove('active');
+                        });
+                        tryAgain.addEventListener('click', () => {
+                            modal.classList.remove('active');
+                        });
+                        window.addEventListener('click', event => {
+                            if (event.target == modal) {
+                                modal.classList.remove('active');
+                            }
+                        });
+                    }
+                }
+            })
+
             input.addEventListener('input', () => {
-                let val = parseInt(input.value);
-                if (!isNaN(val) && val >= 1) {
-                    prod.Cantidad = val;
-                    calcularTotalPago();
-                } else {
-                    input.value = prod.Cantidad;
+                let product = productosAgregados.find(p => p.name == prod.name)
+                let productBase = productosAgregadosBase.find(p => p.name == (prod.name).toLowerCase())
+
+                if (product && productBase) {
+                    if (input.value < 1 || input.value == "") {
+                        input.value = 1
+                    }
+
+                    product.quaintity = input.value
+                    productBase.quaintity = input.value
+
+                    input.value = prod.quaintity
+
+                    console.log(productosAgregadosBase)
+
+                    montoTotal.textContent = `$${calcularPrecio().toLocaleString('de-DE')}`
                 }
-            });
+            })
 
-            // Eliminar
             iconTrash.addEventListener('click', () => {
-                productosAgregados.splice(index, 1);
-                renderProductosAgregados();
-                calcularTotalPago();
-            });
-        });
+                let index = productosAgregados.findIndex(p => p.name == prod.name)
+                let indexBase = productosAgregadosBase.findIndex(p => p.name == (prod.name).toLowerCase())
 
-        calcularTotalPago();
-    };
+                if (index !== -1 && indexBase !== -1) {
+                    productosAgregados.splice(index, 1);
+                    productosAgregadosBase.splice(index, 1);
+                }
+
+                renderizarProducts()
+                montoTotal.textContent = `$${calcularPrecio().toLocaleString('de-DE')}`
+            })
+        });
+    } else {
+        containerResumen.classList.remove('active')
+    }
+}
+
+const resProductJson = await resProduct.json();
+
+if (resProductJson.status == "Data Products") {
+    const productData = resProductJson.data;
 
     productData.forEach((doc) => {
         const divProduct = document.createElement('div');
@@ -506,7 +654,14 @@ if (resProductJson.status == "Data Products") {
         img.src = doc.Foto;
         name.textContent = nombreCapitalizado;
         category.textContent = categoriaCapitalizada;
-        price.textContent = `$${parseInt(doc.Precio).toLocaleString('de-DE')}`;
+        var precioDescuento = 0
+        if (doc.Descuento != "") {
+            precioDescuento = (parseInt(doc.Precio) - ((doc.Descuento / 100) * parseInt(doc.Precio)))
+            price.textContent = `$${(parseInt(doc.Precio) - ((doc.Descuento / 100) * parseInt(doc.Precio))).toLocaleString('de-DE')}`
+        } else {
+            price.textContent = `$${parseInt(doc.Precio).toLocaleString('de-DE')}`
+            precioDescuento = parseInt(doc.Precio)
+        }
 
         divProduct.className = "product";
         divProduct.appendChild(img);
@@ -516,32 +671,59 @@ if (resProductJson.status == "Data Products") {
         leftModalAdd.appendChild(divProduct);
 
         divProduct.addEventListener('click', () => {
-            const existe = productosAgregados.find(p => p.Nombre === nombreCapitalizado);
+            const existe = productosAgregados.find(prodcut => (prodcut.name).toLowerCase() == doc.Nombre)
 
-            if (existe) {
-                mostrarErrorModal("Este producto ya está agregado, revísalo");
-            } else {
+            if (!existe) {
                 productosAgregados.push({
-                    Imagen: doc.Foto,
-                    Nombre: nombreCapitalizado,
-                    Categoria: categoriaCapitalizada,
-                    Precio: doc.Precio,
-                    Cantidad: 1
-                });
+                    name: nombreCapitalizado,
+                    price: precioDescuento,
+                    quaintity: 1,
+                    foto: doc.Foto
+                })
 
-                renderProductosAgregados();
-                containerResumen.classList.add('active');
+                productosAgregadosBase.push({
+                    name: doc.Nombre,
+                    price: precioDescuento,
+                    quaintity: 1,
+                })
+
+                renderizarProducts()
+
+            } else {
+                textErrorModal.textContent = "Este producto ya esta agregado, revisalo";
+                modal.classList.add('active');
+                closeModal.addEventListener('click', () => {
+                    modal.classList.remove('active');
+                });
+                tryAgain.addEventListener('click', () => {
+                    modal.classList.remove('active');
+                });
+                window.addEventListener('click', event => {
+                    if (event.target == modal) {
+                        modal.classList.remove('active');
+                    }
+                });
             }
-        });
+
+            containerResumen.classList.add('active')
+        })
     });
 
 } else {
     textErrorModal.textContent = resProductJson.message;
     modal.classList.add('active');
-    closeModal.onclick = tryAgain.onclick = () => modal.classList.remove('active');
-    window.onclick = (e) => { if (e.target == modal) modal.classList.remove('active'); };
+    closeModal.addEventListener('click', () => {
+        modal.classList.remove('active');
+    });
+    tryAgain.addEventListener('click', () => {
+        modal.classList.remove('active');
+    });
+    window.addEventListener('click', event => {
+        if (event.target == modal) {
+            modal.classList.remove('active');
+        }
+    });
 }
-
 
 // Search
 
@@ -556,7 +738,21 @@ search.addEventListener("input", e => {
             ? documento.classList.remove("filtro")
             : documento.classList.add("filtro");
 
-        console.log(originalString)
+    });
+});
+
+// Search2
+
+var search2 = document.getElementById('search2')
+
+search2.addEventListener("input", e => {
+    document.querySelectorAll('.tbody tr').forEach(documento => {
+
+        let originalString = documento.textContent;
+
+        originalString.toLowerCase().includes(e.target.value.toLowerCase())
+            ? documento.classList.remove("filtro")
+            : documento.classList.add("filtro");
 
     });
 });
@@ -569,6 +765,8 @@ const resOrder = await fetch("http://localhost:4000/api/ordersDataAdmin", {
 })
 
 const resJsonOrder = await resOrder.json()
+
+var band = false
 
 if (resJsonOrder.status == "Data Orders") {
     const orderData = resJsonOrder.data;
@@ -600,94 +798,100 @@ if (resJsonOrder.status == "Data Orders") {
 
         let fechaActual = `${dia} / ${mes} / ${anio}`;
 
-        var band
-
         var tbody = document.querySelector('.tbody')
 
         orderData.forEach(async (doc) => {
-            if (fechaActual == doc.Fecha) {
+            if (fechaActual == doc.Fecha && doc.Correo == "benditaburger54@gmail.com") {
+
                 band = true
 
-                if (doc.Correo == "benditaburger54@gmail.com") {
+                var tr = document.createElement('tr')
+                var th = document.createElement('th')
+                var divClient = document.createElement('div')
+                var img = document.createElement('img')
+                var name = document.createElement('p')
+                var direccion = document.createElement('th')
+                var fecha = document.createElement('th')
+                var hora = document.createElement('th')
+                var metodoPago = document.createElement('th')
+                var precio = document.createElement('th')
+                var thButton = document.createElement('th')
+                var divButton = document.createElement('div')
+                var openModalDetails = document.createElement('button')
+                var btnPagar = document.createElement('button')
+                var btnFactura = document.createElement('button')
 
-                    var tr = document.createElement('tr')
-                    var th = document.createElement('th')
-                    var divClient = document.createElement('div')
-                    var img = document.createElement('img')
-                    var name = document.createElement('p')
-                    var direccion = document.createElement('th')
-                    var fecha = document.createElement('th')
-                    var hora = document.createElement('th')
-                    var metodoPago = document.createElement('th')
-                    var precio = document.createElement('th')
-                    var thButton = document.createElement('th')
-                    var divButton = document.createElement('div')
-                    var openModalDetails = document.createElement('button')
-                    var btnPagar = document.createElement('button')
-                    var btnFactura = document.createElement('button')
+                img.src = '/assets/logoAmarillo.png'
+                name.textContent = doc.Nombre
+                direccion.textContent = doc.Direccion + ' ' + doc.Barrio
+                fecha.textContent = doc.Fecha
+                hora.textContent = doc.Hora
+                if (doc.Pago == "No pago") {
+                    metodoPago.textContent = "Sin Pagar"
+                } else {
+                    metodoPago.textContent = doc.MetodoPago
+                }
+                precio.textContent = `$${parseInt(doc.Total).toLocaleString('de-DE')}`
+                openModalDetails.textContent = "Detalles"
+                btnPagar.textContent = "Pagar"
+                btnFactura.textContent = "Ver Factura"
 
-                    img.src = '/assets/logoAmarillo.png'
-                    if (doc.Nombre == "1" || doc.Nombre == "2" || doc.Nombre == "3" || doc.Nombre == "4" || doc.Nombre == "5" || doc.Nombre == "6" || doc.Nombre == "7" || doc.Nombre == "8" || doc.Nombre == "9") {
-                        name.textContent = `Mesa ${doc.Nombre}`
-                    } else {
-                        name.textContent = doc.Nombre
-                    }
-                    direccion.textContent = doc.Direccion
-                    fecha.textContent = doc.Fecha
-                    hora.textContent = doc.Hora
-                    if (doc.Pago == "No pago") {
-                        metodoPago.textContent = "Sin Pagar"
-                    } else {
-                        metodoPago.textContent = doc.MetodoPago
-                    }
-                    precio.textContent = `$${parseInt(doc.Total).toLocaleString('de-DE')}`
-                    openModalDetails.textContent = "Detalles"
-                    btnPagar.textContent = "Pagar"
-                    btnFactura.textContent = "Ver Factura"
+                divClient.className = "divClient"
+                openModalDetails.className = "openModal"
+                divButton.className = "buttons"
+                btnPagar.className = "pago"
+                btnFactura.className = "openModalFactura factura"
 
-                    divClient.className = "divClient"
-                    openModalDetails.className = "openModal"
-                    divButton.className = "buttons"
-                    btnPagar.className = "pago"
-                    btnFactura.className = "openModalFactura factura"
+                tbody.appendChild(tr)
+                tr.appendChild(th)
+                th.appendChild(divClient)
+                divClient.appendChild(img)
+                divClient.appendChild(name)
+                tr.appendChild(direccion)
+                tr.appendChild(fecha)
+                tr.appendChild(hora)
+                tr.appendChild(metodoPago)
+                tr.appendChild(precio)
+                tr.appendChild(thButton)
+                thButton.appendChild(divButton)
+                divButton.appendChild(openModalDetails)
+                if (doc.Pago == "No pago") {
+                    divButton.appendChild(btnPagar)
+                } else {
+                    divButton.appendChild(btnFactura)
+                }
 
-                    tbody.appendChild(tr)
-                    tr.appendChild(th)
-                    th.appendChild(divClient)
-                    divClient.appendChild(img)
-                    divClient.appendChild(name)
-                    tr.appendChild(direccion)
-                    tr.appendChild(fecha)
-                    tr.appendChild(hora)
-                    tr.appendChild(metodoPago)
-                    tr.appendChild(precio)
-                    tr.appendChild(thButton)
-                    thButton.appendChild(divButton)
-                    divButton.appendChild(openModalDetails)
-                    if (doc.Pago == "No pago") {
-                        divButton.appendChild(btnPagar)
-                    } else {
-                        divButton.appendChild(btnFactura)
-                    }
+                openModalDetails.addEventListener('click', () => {
+                    const modalDetails = document.querySelector('.modalDetalis');
+                    const modalContentDetails = document.querySelector('.conModalDetails');
+                    const closeModalDetails = document.getElementById('closeModalDetails')
 
-                    openModalDetails.addEventListener('click', () => {
-                        const modalDetails = document.querySelector('.modalDetalis');
-                        const modalContentDetails = document.querySelector('.conModalDetails');
-                        const closeModalDetails = document.getElementById('closeModalDetails')
+                    modalDetails.style.display = 'flex'
 
-                        modalDetails.style.display = 'flex'
-
-                        gsap.fromTo(modalContentDetails,
-                            { scale: 0, opacity: 0, filter: 'blur(10px)', x: 0 },
-                            {
-                                scale: 1,
-                                opacity: 1,
-                                filter: 'blur(0px)',
-                                duration: .5,
-                                ease: 'power1.out',
+                    gsap.fromTo(modalContentDetails,
+                        { scale: 0, opacity: 0, filter: 'blur(10px)', x: 0 },
+                        {
+                            scale: 1,
+                            opacity: 1,
+                            filter: 'blur(0px)',
+                            duration: .5,
+                            ease: 'power1.out',
+                        }
+                    )
+                    closeModalDetails.addEventListener('click', () => {
+                        gsap.to(modalContentDetails, {
+                            filter: 'blur(10px)',
+                            opacity: 0,
+                            x: 1000,
+                            ease: 'power1.in',
+                            onComplete: () => {
+                                modalDetails.style.display = 'none';
+                                infoPedidio.innerHTML = ''
                             }
-                        )
-                        closeModalDetails.addEventListener('click', () => {
+                        });
+                    })
+                    window.addEventListener('click', event => {
+                        if (event.target == modalDetails) {
                             gsap.to(modalContentDetails, {
                                 filter: 'blur(10px)',
                                 opacity: 0,
@@ -695,53 +899,149 @@ if (resJsonOrder.status == "Data Orders") {
                                 ease: 'power1.in',
                                 onComplete: () => {
                                     modalDetails.style.display = 'none';
+                                    infoPedidio.innerHTML = ''
                                 }
                             });
-                        })
-                        window.addEventListener('click', event => {
-                            if (event.target == modalDetails) {
-                                gsap.to(modalContentDetails, {
-                                    filter: 'blur(10px)',
-                                    opacity: 0,
-                                    x: 1000,
-                                    ease: 'power1.in',
-                                    onComplete: () => {
-                                        modalDetails.style.display = 'none';
-                                    }
-                                });
-                            }
-                        })
+                        }
                     })
 
-                    btnFactura.addEventListener('click', () => {
+                    var imgDetails = document.querySelector('.imgDetails')
+                    var nameDetails = document.querySelector('.nameDetails')
+                    var phoneDetails = document.querySelector('.phoneDetails')
+                    var methodDetails = document.querySelector('.methodDetails')
+                    var gmailDetails = document.querySelector('.gmailDetails')
+                    var directionDetails = document.querySelector('.directionDetails')
+                    var descriptionDetails = document.querySelector('.descriptionDetails')
+                    var dateDetails = document.querySelector('.dateDetails')
+                    var hourDetails = document.querySelector('.hourDetails')
+                    var statusDetails = document.querySelector('.statusDetails')
 
-                        modalFactura.style.display = 'flex'
+                    var nameMesa = ''
 
-                        gsap.fromTo(conModalFactura,
-                            { backdropFilter: 'blur(0px)', height: 0, opacity: 0 },
-                            {
-                                padding: '2rem 1rem 1rem 2rem',
-                                height: '100%',
-                                opacity: 1,
-                                backdropFilter: 'blur(90px)',
-                                duration: .7,
-                                ease: 'expo.out',
-                            }
-                        )
-                        window.addEventListener('click', event => {
-                            if (event.target == modalFactura) {
-                                gsap.to(conModalFactura, {
-                                    height: '0px',
-                                    padding: '0rem',
-                                    duration: .2,
-                                    ease: 'power1.in',
-                                    onComplete: () => {
-                                        modalFactura.style.display = 'none';
+                    if (doc.Nombre == '1' || doc.Nombre == '2' || doc.Nombre == '3' || doc.Nombre == '4' || doc.Nombre == '5' || doc.Nombre == '6' || doc.Nombre == '7' || doc.Nombre == '8' || doc.Nombre == '9') {
+                        nameMesa = `Mesa ${doc.Nombre}`
+                    } else {
+                        nameMesa = doc.Nombre
+                    }
+
+                    imgDetails.src = "/assets/logoAmarillo.png";
+                    nameDetails.textContent = nameMesa
+                    phoneDetails.textContent = doc.Telefono
+                    methodDetails.textContent = doc.MetodoPago == '' ? "Sin Pagar" : doc.MetodoPago
+                    gmailDetails.textContent = doc.Correo
+                    directionDetails.textContent = doc.Direccion + ' ' + doc.Barrio
+                    descriptionDetails.textContent = doc.Descripcion
+                    dateDetails.textContent = doc.Fecha
+                    hourDetails.textContent = doc.Hora
+                    statusDetails.textContent = doc.Estado
+
+                    var dataProducts = doc.Productos
+
+                    var infoPedidio = document.querySelector('.infoPedido')
+
+                    dataProducts.forEach(async (product) => {
+                        if (product.name != "Manejo, Logistica y Envio") {
+                            const resProduct = await fetch("http://localhost:4000/api/productData", {
+                                method: "GET",
+                                headers: {
+                                    "Content-Type": "application/json"
+                                }
+                            })
+
+                            const resProductJson = await resProduct.json()
+
+                            if (resProductJson.status == "Data Products") {
+                                const productData = resProductJson.data;
+
+                                if (product.quantity > 1) {
+                                    for (var i = 0; i < product.quantity; i++) {
+                                        productData.forEach((docCar) => {
+                                            if ((docCar.Nombre).toLowerCase() == (product.name).toLowerCase()) {
+                                                var campoPedido = document.createElement('div')
+                                                var imgCampoPedido = document.createElement('div')
+                                                var img = document.createElement('img')
+                                                var name = document.createElement('p')
+                                                var price = document.createElement('p')
+
+                                                img.src = docCar.Foto
+                                                name.textContent = product.name
+                                                price.textContent = `$${parseInt(product.price).toLocaleString('de-DE')}`
+                                                campoPedido.className = "campoPedido"
+                                                imgCampoPedido.className = "imgCampoPedido"
+
+                                                infoPedido.appendChild(campoPedido)
+                                                campoPedido.appendChild(imgCampoPedido)
+                                                imgCampoPedido.appendChild(img)
+                                                imgCampoPedido.appendChild(name)
+                                                campoPedido.appendChild(price)
+                                            }
+                                        })
                                     }
-                                });
+                                } else {
+                                    productData.forEach((docCar) => {
+                                        if ((docCar.Nombre).toLowerCase() == (product.name).toLowerCase()) {
+                                            var campoPedido = document.createElement('div')
+                                            var imgCampoPedido = document.createElement('div')
+                                            var img = document.createElement('img')
+                                            var name = document.createElement('p')
+                                            var price = document.createElement('p')
+
+                                            img.src = docCar.Foto
+                                            name.textContent = product.name
+                                            price.textContent = `$${parseInt(product.price).toLocaleString('de-DE')}`
+                                            campoPedido.className = "campoPedido"
+                                            imgCampoPedido.className = "imgCampoPedido"
+
+                                            infoPedidio.appendChild(campoPedido)
+                                            campoPedido.appendChild(imgCampoPedido)
+                                            imgCampoPedido.appendChild(img)
+                                            imgCampoPedido.appendChild(name)
+                                            campoPedido.appendChild(price)
+                                        }
+                                    })
+                                }
                             }
-                        })
-                        closeModalFactura.addEventListener('click', () => {
+                        } else {
+                            var campoPedido = document.createElement('div')
+                            var imgCampoPedido = document.createElement('div')
+                            var img = document.createElement('img')
+                            var name = document.createElement('p')
+                            var price = document.createElement('p')
+
+                            img.src = "/assets/logo.png"
+                            name.textContent = "Envio y Logistica"
+                            price.textContent = `$${parseInt(product.price).toLocaleString('de-DE')}`
+
+                            campoPedido.className = "campoPedido"
+                            imgCampoPedido.className = "imgCampoPedido"
+
+                            infoPedidio.appendChild(campoPedido)
+                            campoPedido.appendChild(imgCampoPedido)
+                            imgCampoPedido.appendChild(img)
+                            imgCampoPedido.appendChild(name)
+                            campoPedido.appendChild(price)
+                        }
+                    })
+
+                })
+
+                btnFactura.addEventListener('click', () => {
+
+                    modalFactura.style.display = 'flex'
+
+                    gsap.fromTo(conModalFactura,
+                        { backdropFilter: 'blur(0px)', height: 0, opacity: 0 },
+                        {
+                            padding: '2rem 1rem 1rem 2rem',
+                            height: '100%',
+                            opacity: 1,
+                            backdropFilter: 'blur(90px)',
+                            duration: .7,
+                            ease: 'expo.out',
+                        }
+                    )
+                    window.addEventListener('click', event => {
+                        if (event.target == modalFactura) {
                             gsap.to(conModalFactura, {
                                 height: '0px',
                                 padding: '0rem',
@@ -751,15 +1051,22 @@ if (resJsonOrder.status == "Data Orders") {
                                     modalFactura.style.display = 'none';
                                 }
                             });
-                        })
+                        }
                     })
+                    closeModalFactura.addEventListener('click', () => {
+                        gsap.to(conModalFactura, {
+                            height: '0px',
+                            padding: '0rem',
+                            duration: .2,
+                            ease: 'power1.in',
+                            onComplete: () => {
+                                modalFactura.style.display = 'none';
+                            }
+                        });
+                    })
+                })
 
 
-                } else {
-                    band = false
-                }
-            } else {
-                band = false
             }
 
         })
@@ -777,7 +1084,3 @@ if (resJsonOrder.status == "Data Orders") {
         main.style.display = 'none'
     }
 }
-
-
-
-

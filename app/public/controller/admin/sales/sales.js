@@ -240,6 +240,8 @@ if (resJsonOrder.status == "Data Orders") {
             hora.textContent = doc.Hora
             if (doc.MetodoPago == "card") {
                 metodoPago.textContent = "Tarjeta"
+            } else if (doc.MetodoPago == "") {
+                metodoPago.textContent = "Sin Pagar"
             } else {
                 metodoPago.textContent = doc.MetodoPago
             }
@@ -272,107 +274,8 @@ if (resJsonOrder.status == "Data Orders") {
             tr.appendChild(thDetails)
             thDetails.appendChild(btnDetails)
 
-            estadoEnviado.addEventListener('click', async () => {
-                loader.classList.remove('active')
-
-                const resUpdateEstado = await fetch("http://localhost:4000/api/updateEstado", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        Correo: doc.Correo,
-                        Direccion: doc.Direccion,
-                        Barrio: doc.Barrio,
-                        Estado: doc.Estado,
-                        Total: doc.Total,
-                        MetodoPago: doc.MetodoPago,
-                        Productos: doc.Productos,
-                        Fecha: doc.Fecha,
-                        Hora: doc.Hora,
-                        NuevoEstado: "Enviado"
-                    })
-                })
-
-                const resUpdateEstadoJson = await resUpdateEstado.json()
-
-                if (resUpdateEstadoJson.status == "Update correct") {
-                    location.reload()
-                } else {
-                    loader.classList.add('active');
-                    textErrorModal.textContent = resJson.message;
-                    modal.classList.add('active');
-                    closeModal.addEventListener('click', () => {
-                        modal.classList.remove('active');
-                    });
-                    tryAgain.addEventListener('click', () => {
-                        modal.classList.remove('active');
-                    });
-                    window.addEventListener('click', event => {
-                        if (event.target == modal) {
-                            modal.classList.remove('active');
-                        }
-                    });
-                }
-            })
-
-            estadoCancelado.addEventListener('click', () => {
-                const modalUpdate = document.querySelector('.modalUpdate');
-                const modalContentUpdate = document.querySelector('.conModalUpdate');
-                const closeModalUpdate = document.getElementById('closeModalUpdate')
-
-                modalUpdate.style.display = 'flex';
-
-                gsap.fromTo(modalContentUpdate,
-                    { backdropFilter: 'blur(0px)', height: 0, opacity: 0 },
-                    {
-                        height: 'auto',
-                        opacity: 1,
-                        backdropFilter: 'blur(90px)',
-                        duration: .7,
-                        ease: 'expo.out',
-                    }
-                );
-
-                window.addEventListener('click', event => {
-                    if (event.target === modalUpdate) {
-                        gsap.to(modalContentUpdate, {
-                            height: '0px',
-                            duration: .2,
-                            ease: 'power1.in',
-                            onComplete: () => {
-                                modalUpdate.style.display = 'none';
-                            }
-                        });
-                    }
-                });
-
-                closeModalUpdate.addEventListener('click', () => {
-                    gsap.to(modalContentUpdate, {
-                        height: '0px',
-                        duration: .2,
-                        ease: 'power1.in',
-                        onComplete: () => {
-                            modalUpdate.style.display = 'none';
-                        }
-                    });
-                });
-
-                var inputNameUpdate = document.querySelector('.inputNameUpdate')
-
-                var btnUpdate = document.querySelector('.btnUpdate')
-
-                inputNameUpdate.addEventListener('input', () => {
-                    if (inputNameUpdate.value.length != 0) {
-                        btnUpdate.classList.add('active')
-                        btnUpdate.disabled = false
-                    } else {
-                        btnUpdate.classList.remove('active')
-                        btnUpdate.disabled = true
-                    }
-                })
-
-                btnUpdate.addEventListener('click', async () => {
+            if (!doc.Pago) {
+                estadoEnviado.addEventListener('click', async () => {
                     loader.classList.remove('active')
 
                     const resUpdateEstado = await fetch("http://localhost:4000/api/updateEstado", {
@@ -390,8 +293,7 @@ if (resJsonOrder.status == "Data Orders") {
                             Productos: doc.Productos,
                             Fecha: doc.Fecha,
                             Hora: doc.Hora,
-                            NuevoEstado: "Cancelado",
-                            Motivo: inputNameUpdate.value
+                            NuevoEstado: "Enviado"
                         })
                     })
 
@@ -416,139 +318,273 @@ if (resJsonOrder.status == "Data Orders") {
                         });
                     }
                 })
-            })
 
-            estadoPreparacion.addEventListener('click', async () => {
-                loader.classList.remove('active')
+                estadoCancelado.addEventListener('click', () => {
+                    const modalUpdate = document.querySelector('.modalUpdate');
+                    const modalContentUpdate = document.querySelector('.conModalUpdate');
+                    const closeModalUpdate = document.getElementById('closeModalUpdate')
 
-                const resUpdateEstado = await fetch("http://localhost:4000/api/updateEstado", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        Correo: doc.Correo,
-                        Direccion: doc.Direccion,
-                        Barrio: doc.Barrio,
-                        Estado: doc.Estado,
-                        Total: doc.Total,
-                        MetodoPago: doc.MetodoPago,
-                        Productos: doc.Productos,
-                        Fecha: doc.Fecha,
-                        Hora: doc.Hora,
-                        NuevoEstado: "Preparacion"
+                    modalUpdate.style.display = 'flex';
+
+                    gsap.fromTo(modalContentUpdate,
+                        { backdropFilter: 'blur(0px)', height: 0, opacity: 0 },
+                        {
+                            height: 'auto',
+                            opacity: 1,
+                            backdropFilter: 'blur(90px)',
+                            duration: .7,
+                            ease: 'expo.out',
+                        }
+                    );
+
+                    window.addEventListener('click', event => {
+                        if (event.target === modalUpdate) {
+                            gsap.to(modalContentUpdate, {
+                                height: '0px',
+                                duration: .2,
+                                ease: 'power1.in',
+                                onComplete: () => {
+                                    modalUpdate.style.display = 'none';
+                                }
+                            });
+                        }
+                    });
+
+                    closeModalUpdate.addEventListener('click', () => {
+                        gsap.to(modalContentUpdate, {
+                            height: '0px',
+                            duration: .2,
+                            ease: 'power1.in',
+                            onComplete: () => {
+                                modalUpdate.style.display = 'none';
+                            }
+                        });
+                    });
+
+                    var inputNameUpdate = document.querySelector('.inputNameUpdate')
+
+                    var btnUpdate = document.querySelector('.btnUpdate')
+
+                    inputNameUpdate.addEventListener('input', () => {
+                        if (inputNameUpdate.value.length != 0) {
+                            btnUpdate.classList.add('active')
+                            btnUpdate.disabled = false
+                        } else {
+                            btnUpdate.classList.remove('active')
+                            btnUpdate.disabled = true
+                        }
+                    })
+
+                    btnUpdate.addEventListener('click', async () => {
+                        loader.classList.remove('active')
+
+                        const resUpdateEstado = await fetch("http://localhost:4000/api/updateEstado", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json"
+                            },
+                            body: JSON.stringify({
+                                Correo: doc.Correo,
+                                Direccion: doc.Direccion,
+                                Barrio: doc.Barrio,
+                                Estado: doc.Estado,
+                                Total: doc.Total,
+                                MetodoPago: doc.MetodoPago,
+                                Productos: doc.Productos,
+                                Fecha: doc.Fecha,
+                                Hora: doc.Hora,
+                                NuevoEstado: "Cancelado",
+                                Motivo: inputNameUpdate.value
+                            })
+                        })
+
+                        const resUpdateEstadoJson = await resUpdateEstado.json()
+
+                        if (resUpdateEstadoJson.status == "Update correct") {
+                            location.reload()
+                        } else {
+                            loader.classList.add('active');
+                            textErrorModal.textContent = resJson.message;
+                            modal.classList.add('active');
+                            closeModal.addEventListener('click', () => {
+                                modal.classList.remove('active');
+                            });
+                            tryAgain.addEventListener('click', () => {
+                                modal.classList.remove('active');
+                            });
+                            window.addEventListener('click', event => {
+                                if (event.target == modal) {
+                                    modal.classList.remove('active');
+                                }
+                            });
+                        }
                     })
                 })
 
-                const resUpdateEstadoJson = await resUpdateEstado.json()
+                estadoPreparacion.addEventListener('click', async () => {
+                    loader.classList.remove('active')
 
-                if (resUpdateEstadoJson.status == "Update correct") {
-                    location.reload()
-                } else {
-                    loader.classList.add('active');
-                    textErrorModal.textContent = resJson.message;
-                    modal.classList.add('active');
-                    closeModal.addEventListener('click', () => {
-                        modal.classList.remove('active');
-                    });
-                    tryAgain.addEventListener('click', () => {
-                        modal.classList.remove('active');
-                    });
-                    window.addEventListener('click', event => {
-                        if (event.target == modal) {
-                            modal.classList.remove('active');
-                        }
-                    });
-                }
-            })
-
-            estadoEntregado.addEventListener('click', async () => {
-                loader.classList.remove('active')
-
-                const resUpdateEstado = await fetch("http://localhost:4000/api/updateEstado", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        Correo: doc.Correo,
-                        Direccion: doc.Direccion,
-                        Barrio: doc.Barrio,
-                        Estado: doc.Estado,
-                        Total: doc.Total,
-                        MetodoPago: doc.MetodoPago,
-                        Productos: doc.Productos,
-                        Fecha: doc.Fecha,
-                        Hora: doc.Hora,
-                        NuevoEstado: "Entregado"
+                    const resUpdateEstado = await fetch("http://localhost:4000/api/updateEstado", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            Correo: doc.Correo,
+                            Direccion: doc.Direccion,
+                            Barrio: doc.Barrio,
+                            Estado: doc.Estado,
+                            Total: doc.Total,
+                            MetodoPago: doc.MetodoPago,
+                            Productos: doc.Productos,
+                            Fecha: doc.Fecha,
+                            Hora: doc.Hora,
+                            NuevoEstado: "Preparacion"
+                        })
                     })
+
+                    const resUpdateEstadoJson = await resUpdateEstado.json()
+
+                    if (resUpdateEstadoJson.status == "Update correct") {
+                        location.reload()
+                    } else {
+                        loader.classList.add('active');
+                        textErrorModal.textContent = resJson.message;
+                        modal.classList.add('active');
+                        closeModal.addEventListener('click', () => {
+                            modal.classList.remove('active');
+                        });
+                        tryAgain.addEventListener('click', () => {
+                            modal.classList.remove('active');
+                        });
+                        window.addEventListener('click', event => {
+                            if (event.target == modal) {
+                                modal.classList.remove('active');
+                            }
+                        });
+                    }
                 })
 
-                const resUpdateEstadoJson = await resUpdateEstado.json()
+                estadoEntregado.addEventListener('click', async () => {
+                    loader.classList.remove('active')
 
-                if (resUpdateEstadoJson.status == "Update correct") {
-                    location.reload()
-                } else {
-                    loader.classList.add('active');
-                    textErrorModal.textContent = resJson.message;
-                    modal.classList.add('active');
-                    closeModal.addEventListener('click', () => {
-                        modal.classList.remove('active');
-                    });
-                    tryAgain.addEventListener('click', () => {
-                        modal.classList.remove('active');
-                    });
-                    window.addEventListener('click', event => {
-                        if (event.target == modal) {
-                            modal.classList.remove('active');
-                        }
-                    });
-                }
-            })
-
-            estadoCerca.addEventListener('click', async () => {
-                loader.classList.remove('active')
-
-                const resUpdateEstado = await fetch("http://localhost:4000/api/updateEstado", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        Correo: doc.Correo,
-                        Direccion: doc.Direccion,
-                        Barrio: doc.Barrio,
-                        Estado: doc.Estado,
-                        Total: doc.Total,
-                        MetodoPago: doc.MetodoPago,
-                        Productos: doc.Productos,
-                        Fecha: doc.Fecha,
-                        Hora: doc.Hora,
-                        NuevoEstado: "Cerca"
+                    const resUpdateEstado = await fetch("http://localhost:4000/api/updateEstado", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            Correo: doc.Correo,
+                            Direccion: doc.Direccion,
+                            Barrio: doc.Barrio,
+                            Estado: doc.Estado,
+                            Total: doc.Total,
+                            MetodoPago: doc.MetodoPago,
+                            Productos: doc.Productos,
+                            Fecha: doc.Fecha,
+                            Hora: doc.Hora,
+                            NuevoEstado: "Entregado"
+                        })
                     })
+
+                    const resUpdateEstadoJson = await resUpdateEstado.json()
+
+                    if (resUpdateEstadoJson.status == "Update correct") {
+                        location.reload()
+                    } else {
+                        loader.classList.add('active');
+                        textErrorModal.textContent = resJson.message;
+                        modal.classList.add('active');
+                        closeModal.addEventListener('click', () => {
+                            modal.classList.remove('active');
+                        });
+                        tryAgain.addEventListener('click', () => {
+                            modal.classList.remove('active');
+                        });
+                        window.addEventListener('click', event => {
+                            if (event.target == modal) {
+                                modal.classList.remove('active');
+                            }
+                        });
+                    }
                 })
 
-                const resUpdateEstadoJson = await resUpdateEstado.json()
+                estadoCerca.addEventListener('click', async () => {
+                    loader.classList.remove('active')
 
-                if (resUpdateEstadoJson.status == "Update correct") {
-                    location.reload()
-                } else {
-                    loader.classList.add('active');
-                    textErrorModal.textContent = resJson.message;
-                    modal.classList.add('active');
-                    closeModal.addEventListener('click', () => {
-                        modal.classList.remove('active');
-                    });
-                    tryAgain.addEventListener('click', () => {
-                        modal.classList.remove('active');
-                    });
-                    window.addEventListener('click', event => {
-                        if (event.target == modal) {
+                    const resUpdateEstado = await fetch("http://localhost:4000/api/updateEstado", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            Correo: doc.Correo,
+                            Direccion: doc.Direccion,
+                            Barrio: doc.Barrio,
+                            Estado: doc.Estado,
+                            Total: doc.Total,
+                            MetodoPago: doc.MetodoPago,
+                            Productos: doc.Productos,
+                            Fecha: doc.Fecha,
+                            Hora: doc.Hora,
+                            NuevoEstado: "Cerca"
+                        })
+                    })
+
+                    const resUpdateEstadoJson = await resUpdateEstado.json()
+
+                    if (resUpdateEstadoJson.status == "Update correct") {
+                        location.reload()
+                    } else {
+                        loader.classList.add('active');
+                        textErrorModal.textContent = resJson.message;
+                        modal.classList.add('active');
+                        closeModal.addEventListener('click', () => {
                             modal.classList.remove('active');
-                        }
-                    });
-                }
-            })
+                        });
+                        tryAgain.addEventListener('click', () => {
+                            modal.classList.remove('active');
+                        });
+                        window.addEventListener('click', event => {
+                            if (event.target == modal) {
+                                modal.classList.remove('active');
+                            }
+                        });
+                    }
+                })
+
+                btnEstado.addEventListener('click', () => {
+                    var isCollapsed = selectEstado.style.height === '' || selectEstado.style.height === '2px' || selectEstado.style.height === '0px';
+
+                    if (isCollapsed == true) {
+                        gsap.fromTo(selectEstado,
+                            { height: 0, width: 0, opacity: 0, padding: 0 },
+                            {
+                                height: '190px',
+                                width: '250px',
+                                opacity: 1,
+                                padding: '1rem',
+                                duration: .5,
+                                ease: 'elastic.out',
+                            }
+                        )
+                    } else {
+                        gsap.to(selectEstado, {
+                            height: 0,
+                            width: 0,
+                            filter: 'blur(20px)',
+                            opacity: 0,
+                            padding: 0,
+                            duration: .2,
+                            ease: 'power1',
+                            onComplete: () => {
+                                gsap.set(selectEstado, { clearProps: "all" });
+                                isCollapsed = true
+                            }
+                        });
+                    }
+                })
+            }
 
             const modalDetails = document.querySelector('.modalDetalis');
             const modalContentDetails = document.querySelector('.conModalDetails');
@@ -714,38 +750,6 @@ if (resJsonOrder.status == "Data Orders") {
                         campoPedido.appendChild(price)
                     }
                 })
-            })
-
-            btnEstado.addEventListener('click', () => {
-                var isCollapsed = selectEstado.style.height === '' || selectEstado.style.height === '2px' || selectEstado.style.height === '0px';
-
-                if (isCollapsed == true) {
-                    gsap.fromTo(selectEstado,
-                        { height: 0, width: 0, opacity: 0, padding: 0 },
-                        {
-                            height: '190px',
-                            width: '250px',
-                            opacity: 1,
-                            padding: '1rem',
-                            duration: .5,
-                            ease: 'elastic.out',
-                        }
-                    )
-                } else {
-                    gsap.to(selectEstado, {
-                        height: 0,
-                        width: 0,
-                        filter: 'blur(20px)',
-                        opacity: 0,
-                        padding: 0,
-                        duration: .2,
-                        ease: 'power1',
-                        onComplete: () => {
-                            gsap.set(selectEstado, { clearProps: "all" });
-                            isCollapsed = true
-                        }
-                    });
-                }
             })
 
         })

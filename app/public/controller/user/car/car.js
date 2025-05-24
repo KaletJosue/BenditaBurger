@@ -419,199 +419,243 @@ btnPay.addEventListener('click', async () => {
     if (resJson.data.Barrio != "") {
         if (resJson.data.Direccion != "") {
             if (resJson.data.Telefono != "") {
-                modalSelectModo.style.display = 'flex'
+                const now = new Date();
+                const formatNumber = (n) => String(n).padStart(2, '0');
+                const fecha = `${formatNumber(now.getDate())} / ${formatNumber(now.getMonth() + 1)} / ${String(now.getFullYear()).slice(-2)}`;
+                const hora = `${formatNumber(now.getHours())} : ${formatNumber(now.getMinutes())}`;
 
-                gsap.fromTo(modalContentSelectModo,
-                    { backdropFilter: 'blur(0px)', height: 0, opacity: 0 },
-                    {
-                        padding: '1rem',
-                        height: '200px',
-                        opacity: 1,
-                        backdropFilter: 'blur(90px)',
-                        duration: .2,
-                        ease: 'expo.out',
-                    }
-                )
+                var band = false
 
-                window.addEventListener('click', event => {
-                    if (event.target == modalSelectModo) {
-                        gsap.to(modalContentSelectModo, {
-                            height: '0px',
-                            padding: '0rem',
-                            duration: .2,
-                            ease: 'power1.in',
-                            onComplete: () => {
-                                modalSelectModo.style.display = 'none';
-                            }
-                        });
-                    }
-                })
-
-                var product = []
-                var productNoTarget = []
-
-                const resCar = await fetch("http://localhost:4000/api/carData", {
+                const resOrder = await fetch("http://localhost:4000/api/ordersData", {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json"
                     }
                 })
 
-                const resJsonCar = await resCar.json()
-                const carData = resJsonCar.data
+                const resJsonOrder = await resOrder.json()
 
-                var montoTotal = 5000
+                if (resJsonOrder.status == "Data Orders") {
+                    const orderData = resJsonOrder.data;
 
-                for (const doc of carData) {
-                    var nombreCar = doc.Nombre
-                    var cant = parseInt(doc.Cantidad)
+                    if (orderData != '') {
+                        orderData.forEach(async (doc) => {
+                            if (doc.Fecha == fecha && doc.Hora == hora) {
+                                band = true
+                            }
+                        })
 
-                    const resProduct = await fetch("http://localhost:4000/api/productData", {
-                        method: "GET",
-                        headers: {
-                            "Content-Type": "application/json"
-                        }
-                    })
-                    const resProductJson = await resProduct.json()
+                        if (band == false) {
+                            modalSelectModo.style.display = 'flex'
 
-                    if (resProductJson.status === "Data Products") {
-                        const productData = resProductJson.data;
+                            gsap.fromTo(modalContentSelectModo,
+                                { backdropFilter: 'blur(0px)', height: 0, opacity: 0 },
+                                {
+                                    padding: '1rem',
+                                    height: '200px',
+                                    opacity: 1,
+                                    backdropFilter: 'blur(90px)',
+                                    duration: .2,
+                                    ease: 'expo.out',
+                                }
+                            )
 
-                        var precio
+                            window.addEventListener('click', event => {
+                                if (event.target == modalSelectModo) {
+                                    gsap.to(modalContentSelectModo, {
+                                        height: '0px',
+                                        padding: '0rem',
+                                        duration: .2,
+                                        ease: 'power1.in',
+                                        onComplete: () => {
+                                            modalSelectModo.style.display = 'none';
+                                        }
+                                    });
+                                }
+                            })
 
-                        productData.forEach((doc) => {
-                            if (doc.Estado == true) {
-                                if (doc.Descuento != "") {
-                                    precio = parseInt(doc.Precio) - (parseInt(doc.Precio) * (doc.Descuento / 100))
-                                } else {
-                                    precio = parseInt(doc.Precio)
+                            var product = []
+                            var productNoTarget = []
+
+                            const resCar = await fetch("http://localhost:4000/api/carData", {
+                                method: "GET",
+                                headers: {
+                                    "Content-Type": "application/json"
+                                }
+                            })
+
+                            const resJsonCar = await resCar.json()
+                            const carData = resJsonCar.data
+
+                            var montoTotal = 5000
+
+                            for (const doc of carData) {
+                                var nombreCar = doc.Nombre
+                                var cant = parseInt(doc.Cantidad)
+
+                                const resProduct = await fetch("http://localhost:4000/api/productData", {
+                                    method: "GET",
+                                    headers: {
+                                        "Content-Type": "application/json"
+                                    }
+                                })
+                                const resProductJson = await resProduct.json()
+
+                                if (resProductJson.status === "Data Products") {
+                                    const productData = resProductJson.data;
+
+                                    var precio
+
+                                    productData.forEach((doc) => {
+                                        if (doc.Estado == true) {
+                                            if (doc.Descuento != "") {
+                                                precio = parseInt(doc.Precio) - (parseInt(doc.Precio) * (doc.Descuento / 100))
+                                            } else {
+                                                precio = parseInt(doc.Precio)
+                                            }
+
+                                            if (nombreCar.toLowerCase() === doc.Nombre.toLowerCase()) {
+                                                product.push({
+                                                    nombre: doc.Nombre,
+                                                    descripcion: doc.Descripcion,
+                                                    foto: doc.Foto,
+                                                    precio: precio,
+                                                    cantidad: cant
+                                                })
+
+                                                productNoTarget.push({
+                                                    name: doc.Nombre,
+                                                    quantity: cant,
+                                                    price: precio,
+                                                })
+
+                                                montoTotal += (parseInt(precio) * parseInt(cant))
+                                            }
+                                        }
+                                    })
+                                }
+                            }
+
+                            var carry = document.querySelector('.carry')
+                            var noTarget = document.querySelectorAll('.noTarget')
+
+                            carry.addEventListener('click', async () => {
+                                loader.classList.remove('active')
+
+                                const resPay = await fetch('/api/payment', {
+                                    method: "POST",
+                                    headers: {
+                                        "Content-Type": "application/json"
+                                    },
+                                    body: JSON.stringify({
+                                        products: product
+                                    })
+                                })
+                                const dataPay = await resPay.json()
+
+                                if (dataPay?.url) {
+                                    window.location.href = dataPay.url;
+                                } else if (dataPay?.error) {
+                                    loader.classList.add('active')
+
+                                    gsap.to(modalContentSelectModo, {
+                                        height: '0px',
+                                        padding: '0rem',
+                                        duration: .2,
+                                        ease: 'power1.in',
+                                        onComplete: () => {
+                                            modalSelectModo.style.display = 'none';
+                                        }
+                                    });
+
+                                    textErrorModal.textContent = dataPay.error
+                                    modal.classList.add('active')
+                                    closeModal.addEventListener('click', () => {
+                                        modal.classList.remove('active')
+                                    })
+                                    tryAgain.addEventListener('click', () => {
+                                        modal.classList.remove('active')
+                                    })
+                                    window.addEventListener('click', event => {
+                                        if (event.target == modal) {
+                                            modal.classList.remove('active')
+                                        }
+                                    })
                                 }
 
-                                if (nombreCar.toLowerCase() === doc.Nombre.toLowerCase()) {
-                                    product.push({
-                                        nombre: doc.Nombre,
-                                        descripcion: doc.Descripcion,
-                                        foto: doc.Foto,
-                                        precio: precio,
-                                        cantidad: cant
-                                    })
+                            })
+
+                            var metodoDePago = ''
+
+                            noTarget.forEach((noTarget) => {
+
+                                var pNoTarget = noTarget.querySelector('p')
+
+                                noTarget.addEventListener('click', async () => {
+                                    loader.classList.remove('active')
 
                                     productNoTarget.push({
-                                        name: doc.Nombre,
-                                        quantity: cant,
-                                        price: (precio * cant),
+                                        name: "Manejo, Logistica y Envio",
+                                        quantity: 1,
+                                        price: 5000,
                                     })
 
-                                    montoTotal += (parseInt(precio) * parseInt(cant))
-                                }
-                            }
-                        })
-                    }
-                }
+                                    if (pNoTarget.textContent == "Pago con Nequi") {
+                                        metodoDePago = "Nequi"
+                                    } else if (pNoTarget.textContent == "Pago con Daviplata") {
+                                        metodoDePago = "Daviplata"
+                                    } else if (pNoTarget.textContent == "Pago en Efectivo") {
+                                        metodoDePago = "Efectivo"
+                                    }
 
-                var carry = document.querySelector('.carry')
-                var noTarget = document.querySelectorAll('.noTarget')
+                                    const resPay = await fetch('/api/paymentNoTarget', {
+                                        method: "POST",
+                                        headers: {
+                                            "Content-Type": "application/json"
+                                        },
+                                        body: JSON.stringify({
+                                            products: productNoTarget,
+                                            metodoPago: metodoDePago,
+                                            Correo: correoElectronico,
+                                            Monto: montoTotal
+                                        })
+                                    })
 
-                carry.addEventListener('click', async () => {
-                    loader.classList.remove('active')
+                                    const dataPay = await resPay.json()
 
-                    const resPay = await fetch('/api/payment', {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json"
-                        },
-                        body: JSON.stringify({
-                            products: product
-                        })
-                    })
-                    const dataPay = await resPay.json()
+                                    if (dataPay.status == "New Order correct") {
+                                        window.location.href = "/user/delivery"
+                                    } else {
+                                        loader.classList.add('active')
 
-                    if (dataPay?.url) {
-                        window.location.href = dataPay.url;
-                    } else if (dataPay?.error) {
-                        loader.classList.add('active')
+                                        gsap.to(modalContentSelectModo, {
+                                            height: '0px',
+                                            padding: '0rem',
+                                            duration: .2,
+                                            ease: 'power1.in',
+                                            onComplete: () => {
+                                                modalSelectModo.style.display = 'none';
+                                            }
+                                        });
 
-                        gsap.to(modalContentSelectModo, {
-                            height: '0px',
-                            padding: '0rem',
-                            duration: .2,
-                            ease: 'power1.in',
-                            onComplete: () => {
-                                modalSelectModo.style.display = 'none';
-                            }
-                        });
-
-                        textErrorModal.textContent = dataPay.error
-                        modal.classList.add('active')
-                        closeModal.addEventListener('click', () => {
-                            modal.classList.remove('active')
-                        })
-                        tryAgain.addEventListener('click', () => {
-                            modal.classList.remove('active')
-                        })
-                        window.addEventListener('click', event => {
-                            if (event.target == modal) {
-                                modal.classList.remove('active')
-                            }
-                        })
-                    }
-
-                })
-
-                var metodoDePago = ''
-
-                noTarget.forEach((noTarget) => {
-
-                    var pNoTarget = noTarget.querySelector('p')
-
-                    noTarget.addEventListener('click', async () => {
-                        loader.classList.remove('active')
-
-                        productNoTarget.push({
-                            name: "Manejo, Logistica y Envio",
-                            quantity: 1,
-                            price: 5000,
-                        })
-
-                        if (pNoTarget.textContent == "Pago con Nequi") {
-                            metodoDePago = "Nequi"
-                        } else if (pNoTarget.textContent == "Pago con Daviplata") {
-                            metodoDePago = "Daviplata"
-                        } else if (pNoTarget.textContent == "Pago en Efectivo") {
-                            metodoDePago = "Efectivo"
-                        }
-
-                        const resPay = await fetch('/api/paymentNoTarget', {
-                            method: "POST",
-                            headers: {
-                                "Content-Type": "application/json"
-                            },
-                            body: JSON.stringify({
-                                products: productNoTarget,
-                                metodoPago: metodoDePago,
-                                Correo: correoElectronico,
-                                Monto: montoTotal
+                                        textErrorModal.textContent = dataPay.message
+                                        modal.classList.add('active')
+                                        closeModal.addEventListener('click', () => {
+                                            modal.classList.remove('active')
+                                        })
+                                        tryAgain.addEventListener('click', () => {
+                                            modal.classList.remove('active')
+                                        })
+                                        window.addEventListener('click', event => {
+                                            if (event.target == modal) {
+                                                modal.classList.remove('active')
+                                            }
+                                        })
+                                    }
+                                })
                             })
-                        })
-
-                        const dataPay = await resPay.json()
-
-                        if (dataPay.status == "New Order correct") {
-                            window.location.href = "/user/delivery"
                         } else {
-                            loader.classList.add('active')
-
-                            gsap.to(modalContentSelectModo, {
-                                height: '0px',
-                                padding: '0rem',
-                                duration: .2,
-                                ease: 'power1.in',
-                                onComplete: () => {
-                                    modalSelectModo.style.display = 'none';
-                                }
-                            });
-
-                            textErrorModal.textContent = dataPay.message
+                            textErrorModal.textContent = "No puedes realizar mas de 1 pedido en menos de 1 minuto, espera un poco :)"
                             modal.classList.add('active')
                             closeModal.addEventListener('click', () => {
                                 modal.classList.remove('active')
@@ -625,8 +669,217 @@ btnPay.addEventListener('click', async () => {
                                 }
                             })
                         }
-                    })
-                })
+                    } else {
+                        modalSelectModo.style.display = 'flex'
+
+                        gsap.fromTo(modalContentSelectModo,
+                            { backdropFilter: 'blur(0px)', height: 0, opacity: 0 },
+                            {
+                                padding: '1rem',
+                                height: '200px',
+                                opacity: 1,
+                                backdropFilter: 'blur(90px)',
+                                duration: .2,
+                                ease: 'expo.out',
+                            }
+                        )
+
+                        window.addEventListener('click', event => {
+                            if (event.target == modalSelectModo) {
+                                gsap.to(modalContentSelectModo, {
+                                    height: '0px',
+                                    padding: '0rem',
+                                    duration: .2,
+                                    ease: 'power1.in',
+                                    onComplete: () => {
+                                        modalSelectModo.style.display = 'none';
+                                    }
+                                });
+                            }
+                        })
+
+                        var product = []
+                        var productNoTarget = []
+
+                        const resCar = await fetch("http://localhost:4000/api/carData", {
+                            method: "GET",
+                            headers: {
+                                "Content-Type": "application/json"
+                            }
+                        })
+
+                        const resJsonCar = await resCar.json()
+                        const carData = resJsonCar.data
+
+                        var montoTotal = 5000
+
+                        for (const doc of carData) {
+                            var nombreCar = doc.Nombre
+                            var cant = parseInt(doc.Cantidad)
+
+                            const resProduct = await fetch("http://localhost:4000/api/productData", {
+                                method: "GET",
+                                headers: {
+                                    "Content-Type": "application/json"
+                                }
+                            })
+                            const resProductJson = await resProduct.json()
+
+                            if (resProductJson.status === "Data Products") {
+                                const productData = resProductJson.data;
+
+                                var precio
+
+                                productData.forEach((doc) => {
+                                    if (doc.Estado == true) {
+                                        if (doc.Descuento != "") {
+                                            precio = parseInt(doc.Precio) - (parseInt(doc.Precio) * (doc.Descuento / 100))
+                                        } else {
+                                            precio = parseInt(doc.Precio)
+                                        }
+
+                                        if (nombreCar.toLowerCase() === doc.Nombre.toLowerCase()) {
+                                            product.push({
+                                                nombre: doc.Nombre,
+                                                descripcion: doc.Descripcion,
+                                                foto: doc.Foto,
+                                                precio: precio,
+                                                cantidad: cant
+                                            })
+
+                                            productNoTarget.push({
+                                                name: doc.Nombre,
+                                                quantity: cant,
+                                                price: precio,
+                                            })
+
+                                            montoTotal += (parseInt(precio) * parseInt(cant))
+                                        }
+                                    }
+                                })
+                            }
+                        }
+
+                        var carry = document.querySelector('.carry')
+                        var noTarget = document.querySelectorAll('.noTarget')
+
+                        carry.addEventListener('click', async () => {
+                            loader.classList.remove('active')
+
+                            const resPay = await fetch('/api/payment', {
+                                method: "POST",
+                                headers: {
+                                    "Content-Type": "application/json"
+                                },
+                                body: JSON.stringify({
+                                    products: product
+                                })
+                            })
+                            const dataPay = await resPay.json()
+
+                            if (dataPay?.url) {
+                                window.location.href = dataPay.url;
+                            } else if (dataPay?.error) {
+                                loader.classList.add('active')
+
+                                gsap.to(modalContentSelectModo, {
+                                    height: '0px',
+                                    padding: '0rem',
+                                    duration: .2,
+                                    ease: 'power1.in',
+                                    onComplete: () => {
+                                        modalSelectModo.style.display = 'none';
+                                    }
+                                });
+
+                                textErrorModal.textContent = dataPay.error
+                                modal.classList.add('active')
+                                closeModal.addEventListener('click', () => {
+                                    modal.classList.remove('active')
+                                })
+                                tryAgain.addEventListener('click', () => {
+                                    modal.classList.remove('active')
+                                })
+                                window.addEventListener('click', event => {
+                                    if (event.target == modal) {
+                                        modal.classList.remove('active')
+                                    }
+                                })
+                            }
+
+                        })
+
+                        var metodoDePago = ''
+
+                        noTarget.forEach((noTarget) => {
+
+                            var pNoTarget = noTarget.querySelector('p')
+
+                            noTarget.addEventListener('click', async () => {
+                                loader.classList.remove('active')
+
+                                productNoTarget.push({
+                                    name: "Manejo, Logistica y Envio",
+                                    quantity: 1,
+                                    price: 5000,
+                                })
+
+                                if (pNoTarget.textContent == "Pago con Nequi") {
+                                    metodoDePago = "Nequi"
+                                } else if (pNoTarget.textContent == "Pago con Daviplata") {
+                                    metodoDePago = "Daviplata"
+                                } else if (pNoTarget.textContent == "Pago en Efectivo") {
+                                    metodoDePago = "Efectivo"
+                                }
+
+                                const resPay = await fetch('/api/paymentNoTarget', {
+                                    method: "POST",
+                                    headers: {
+                                        "Content-Type": "application/json"
+                                    },
+                                    body: JSON.stringify({
+                                        products: productNoTarget,
+                                        metodoPago: metodoDePago,
+                                        Correo: correoElectronico,
+                                        Monto: montoTotal
+                                    })
+                                })
+
+                                const dataPay = await resPay.json()
+
+                                if (dataPay.status == "New Order correct") {
+                                    window.location.href = "/user/delivery"
+                                } else {
+                                    loader.classList.add('active')
+
+                                    gsap.to(modalContentSelectModo, {
+                                        height: '0px',
+                                        padding: '0rem',
+                                        duration: .2,
+                                        ease: 'power1.in',
+                                        onComplete: () => {
+                                            modalSelectModo.style.display = 'none';
+                                        }
+                                    });
+
+                                    textErrorModal.textContent = dataPay.message
+                                    modal.classList.add('active')
+                                    closeModal.addEventListener('click', () => {
+                                        modal.classList.remove('active')
+                                    })
+                                    tryAgain.addEventListener('click', () => {
+                                        modal.classList.remove('active')
+                                    })
+                                    window.addEventListener('click', event => {
+                                        if (event.target == modal) {
+                                            modal.classList.remove('active')
+                                        }
+                                    })
+                                }
+                            })
+                        })
+                    }
+                }
 
             } else {
                 textErrorModal.textContent = "Para poder enviar tu pedido, necesitamos saber tu numero de telefono, actualiza la informacion en tu perfil"

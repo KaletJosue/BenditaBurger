@@ -37,7 +37,7 @@ const handleStripeWebhook = async (req, res) => {
         const products = lineItems.data.map(item => ({
             name: item.description,
             quantity: item.quantity,
-            price: item.amount_total / 100
+            price: (item.amount_total / 100) / item.quantity
         }));
 
         const now = new Date();
@@ -57,11 +57,6 @@ const handleStripeWebhook = async (req, res) => {
         var foto = revisarUsuario.Foto ? revisarUsuario.Foto : '';
         var numero = revisarUsuario.Telefono
         var descripcion = revisarUsuario.Descripcion
-
-        const revisarHora = await ordersCollection.findOne({
-            Fecha: fecha,
-            Hora: hora
-        })
 
         const newOrder = {
             Correo: customerEmail,
