@@ -252,7 +252,7 @@ btnCarry.addEventListener('click', async () => {
             Direccion: 'Cll 10 # 6 - 33',
             Barrio: 'Madrid',
             Telefono: '3229645600',
-            Estado: 'En preparacion',
+            Estado: 'Preparacion',
             Total: calcularPrecio(),
             MetodoPago: '',
             Productos: productosAgregadosBase,
@@ -307,7 +307,7 @@ mesas.forEach(mesa => {
                 Direccion: 'Cll 10 # 6 - 33',
                 Barrio: 'Madrid',
                 Telefono: '3229645600',
-                Estado: 'En preparacion',
+                Estado: 'Preparacion',
                 Total: calcularPrecio(),
                 MetodoPago: '',
                 Productos: productosAgregadosBase,
@@ -775,6 +775,8 @@ if (resJsonOrder.status == "Data Orders") {
     const main = document.querySelector('.main')
     const search = document.querySelector('.search')
 
+    var numberFactura = 1
+
     if (orderData != '') {
         main2.style.display = 'none'
 
@@ -801,6 +803,10 @@ if (resJsonOrder.status == "Data Orders") {
         var tbody = document.querySelector('.tbody')
 
         orderData.forEach(async (doc) => {
+            if (doc.Correo == "benditaburger54@gmail.com") {
+                numberFactura++
+            }
+
             if (fechaActual == doc.Fecha && doc.Correo == "benditaburger54@gmail.com") {
 
                 band = true
@@ -828,9 +834,12 @@ if (resJsonOrder.status == "Data Orders") {
                 hora.textContent = doc.Hora
                 if (doc.Pago == "No pago") {
                     metodoPago.textContent = "Sin Pagar"
-                } else {
+                } else if (doc.MetodoPago == "Nequi" || doc.MetodoPago == "Daviplata" || doc.MetodoPago == "Targetas" || doc.MetodoPago == "Efectivo") {
                     metodoPago.textContent = doc.MetodoPago
+                } else {
+                    metodoPago.textContent = "Dividido"
                 }
+
                 precio.textContent = `$${parseInt(doc.Total).toLocaleString('de-DE')}`
                 openModalDetails.textContent = "Detalles"
                 btnPagar.textContent = "Pagar"
@@ -860,6 +869,8 @@ if (resJsonOrder.status == "Data Orders") {
                 } else {
                     divButton.appendChild(btnFactura)
                 }
+
+                tr.dataset.factura = numberFactura
 
                 openModalDetails.addEventListener('click', () => {
                     const modalDetails = document.querySelector('.modalDetalis');
@@ -1025,8 +1036,242 @@ if (resJsonOrder.status == "Data Orders") {
 
                 })
 
-                btnFactura.addEventListener('click', () => {
+                btnPagar.addEventListener('click', () => {
+                    let modalUpdate = document.querySelector('.modalUpdate2');
+                    let modalContentUpdate = document.querySelector('.conModalUpdate2');
+                    let closeModalUpdate = document.getElementById('closeModalUpdate2')
 
+                    modalUpdate.style.display = 'flex';
+
+                    gsap.fromTo(modalContentUpdate,
+                        { backdropFilter: 'blur(0px)', height: 0, opacity: 0 },
+                        {
+                            height: 'auto',
+                            opacity: 1,
+                            backdropFilter: 'blur(90px)',
+                            duration: .7,
+                            ease: 'expo.out',
+                        }
+                    );
+
+                    window.addEventListener('click', event => {
+                        if (event.target === modalUpdate) {
+                            gsap.to(modalContentUpdate, {
+                                height: '0px',
+                                duration: .2,
+                                ease: 'power1.in',
+                                onComplete: () => {
+                                    modalUpdate.style.display = 'none';
+                                    modalContentUpdate.classList.remove('active')
+
+                                    btnUpdate.classList.remove('active')
+                                    btnUpdate.disabled = "true"
+
+                                    inputNequi.value = '0'
+                                    inputDaviplata.value = '0'
+                                    inputEfectivo.value = '0'
+                                    inputTargeta.value = '0'
+
+                                    modalContentUpdate.classList.remove('active')
+                                }
+                            });
+                        }
+                    });
+
+                    closeModalUpdate.addEventListener('click', () => {
+                        gsap.to(modalContentUpdate, {
+                            height: '0px',
+                            duration: .2,
+                            ease: 'power1.in',
+                            onComplete: () => {
+                                modalUpdate.style.display = 'none';
+                                modalContentUpdate.classList.remove('active')
+
+                                btnUpdate.classList.remove('active')
+                                btnUpdate.disabled = "true"
+
+                                inputNequi.value = '0'
+                                inputDaviplata.value = '0'
+                                inputEfectivo.value = '0'
+                                inputTargeta.value = '0'
+
+                                modalContentUpdate.classList.remove('active')
+                            }
+                        });
+                    });
+
+                    let btnUpdate = document.querySelector('.btnUpdate2')
+
+                    var montoUpdate = document.querySelector('.montoUpdate')
+                    montoUpdate.textContent = `$${parseInt(doc.Total).toLocaleString('de-DE')}`
+                    var dividirPago = document.querySelector('.dividirPago')
+                    dividirPago.addEventListener('click', () => {
+                        modalContentUpdate.classList.add('active')
+                        buttons2.style.display = 'flex'
+                    })
+
+                    var buttons2 = document.querySelector('.buttons2')
+                    buttons2.style.display = 'none'
+
+                    var metodoPago = document.querySelectorAll('.conInputs2 h1.conInput2h1')
+                    var metodoPagoLimpio = ''
+
+                    metodoPago.forEach((doc2) => {
+                        doc2.addEventListener('click', async () => {
+
+                            if (doc2.textContent == "Pago en Efectivo") {
+                                metodoPagoLimpio = "Efectivo"
+                            } else if (doc2.textContent == "Pago por Nequi") {
+                                metodoPagoLimpio = "Nequi"
+                            } else if (doc2.textContent == "Pago por Daviplata") {
+                                metodoPagoLimpio = "Daviplata"
+                            } else if (doc2.textContent == "Pago con Targetas") {
+                                metodoPagoLimpio = "Targetas"
+                            }
+
+                            loader.classList.remove('active')
+
+                            const resNewOrder = await fetch("http://localhost:4000/api/updateOrderChecker", {
+                                method: "POST",
+                                headers: {
+                                    "Content-Type": "application/json"
+                                },
+                                body: JSON.stringify({
+                                    Correo: doc.Correo,
+                                    Direccion: doc.Direccion,
+                                    Barrio: doc.Barrio,
+                                    Total: doc.Total,
+                                    MetodoPago: doc.MetodoPago,
+                                    Productos: doc.Productos,
+                                    Fecha: doc.Fecha,
+                                    Hora: doc.Hora,
+                                    NuevoMetodoPago: metodoPagoLimpio
+                                })
+                            })
+
+                            const resJsonNewOrder = await resNewOrder.json()
+
+                            if (resJsonNewOrder.status == "Update correct") {
+                                location.reload()
+                            }
+
+                        })
+                    })
+
+                    btnUpdate.addEventListener('click', async () => {
+                        var montoEscrito = parseInt(inputNequi.value) + parseInt(inputDaviplata.value) + parseInt(inputEfectivo.value) + parseInt(inputTargeta.value)
+
+                        if (parseInt(montoEscrito) == parseInt(doc.Total)) {
+                            var porcentajeNequi = `${parseInt((parseInt(inputNequi.value) * 100) / doc.Total)}% por Nequi`
+                            var porcentajeDaviplata = `${parseInt((parseInt(inputDaviplata.value) * 100) / doc.Total)}% por Daviplata`
+                            var porcentajeTargeta = `${parseInt((parseInt(inputEfectivo.value) * 100) / doc.Total)}% por Targetas`
+                            var porcentajeEfectivo = `${parseInt((parseInt(inputTargeta.value) * 100) / doc.Total)}% en Efectivo`
+
+                            var montoPorcentaje = `${porcentajeNequi != "0% por Nequi" ? porcentajeNequi : ''} ${porcentajeDaviplata != "0% por Daviplata" ? porcentajeDaviplata : ''} ${porcentajeTargeta != "0% por Targetas" ? porcentajeTargeta : ''} ${porcentajeEfectivo != "0% en Efectivo" ? porcentajeEfectivo : ''}`
+
+                            loader.classList.remove('active')
+
+                            const resNewOrder = await fetch("http://localhost:4000/api/updateOrderChecker", {
+                                method: "POST",
+                                headers: {
+                                    "Content-Type": "application/json"
+                                },
+                                body: JSON.stringify({
+                                    Correo: doc.Correo,
+                                    Direccion: doc.Direccion,
+                                    Barrio: doc.Barrio,
+                                    Total: doc.Total,
+                                    MetodoPago: doc.MetodoPago,
+                                    Productos: doc.Productos,
+                                    Fecha: doc.Fecha,
+                                    Hora: doc.Hora,
+                                    NuevoMetodoPago: montoPorcentaje
+
+                                })
+                            })
+
+                            const resJsonNewOrder = await resNewOrder.json()
+
+                            if (resJsonNewOrder.status == "Update correct") {
+                                location.reload()
+                            }
+                        } else {
+                            if (isNaN(montoEscrito)) {
+                                btnUpdate.classList.remove('active')
+                                btnUpdate.disabled = "true"
+
+                                inputNequi.value = '0'
+                                inputDaviplata.value = '0'
+                                inputEfectivo.value = '0'
+                                inputTargeta.value = '0'
+
+                                faltaPorPago.textContent = `$${(parseInt(doc.Total) - (parseInt(inputNequi.value) + parseInt(inputDaviplata.value) + parseInt(inputTargeta.value) + parseInt(inputEfectivo.value))).toLocaleString('de-DE')}`
+                            } else {
+                                textErrorModal.textContent = `La suma de los datos ingresados no es igual al monto total a pagar, revisalo, monto ingresado: "$${montoEscrito.toLocaleString('de-DE')}", monto a pagar: "$${parseInt(doc.Total).toLocaleString('de-DE')}"`;
+                                modal.classList.add('active');
+                                closeModal.addEventListener('click', () => {
+                                    modal.classList.remove('active');
+                                });
+                                tryAgain.addEventListener('click', () => {
+                                    modal.classList.remove('active');
+                                });
+                                window.addEventListener('click', event => {
+                                    if (event.target == modal) {
+                                        modal.classList.remove('active');
+                                    }
+                                });
+                            }
+                        }
+                    })
+
+                    var inputNequi = document.querySelector('.inputNequi')
+                    var inputDaviplata = document.querySelector('.inputDaviplata')
+                    var inputEfectivo = document.querySelector('.inputEfectivo')
+                    var inputTargeta = document.querySelector('.inputTargeta')
+
+                    var faltaPorPago = document.querySelector('.faltaPorPago')
+
+                    faltaPorPago.textContent = `$${parseInt(doc.Total).toLocaleString('de-DE')}`
+
+                    inputNequi.addEventListener('input', () => {
+                        if (inputNequi.value.length != 0) {
+                            btnUpdate.classList.add('active')
+                            btnUpdate.disabled = false
+                        }
+
+                        faltaPorPago.textContent = `$${(parseInt(doc.Total) - (parseInt(inputNequi.value) + parseInt(inputDaviplata.value) + parseInt(inputTargeta.value) + parseInt(inputEfectivo.value))).toLocaleString('de-DE')}`
+                    })
+
+                    inputDaviplata.addEventListener('input', () => {
+                        if (inputDaviplata.value.length != 0) {
+                            btnUpdate.classList.add('active')
+                            btnUpdate.disabled = false
+                        }
+
+                        faltaPorPago.textContent = `$${(parseInt(doc.Total) - (parseInt(inputNequi.value) + parseInt(inputDaviplata.value) + parseInt(inputTargeta.value) + parseInt(inputEfectivo.value))).toLocaleString('de-DE')}`
+                    })
+
+                    inputEfectivo.addEventListener('input', () => {
+                        if (inputEfectivo.value.length != 0) {
+                            btnUpdate.classList.add('active')
+                            btnUpdate.disabled = false
+                        }
+
+                        faltaPorPago.textContent = `$${(parseInt(doc.Total) - (parseInt(inputNequi.value) + parseInt(inputDaviplata.value) + parseInt(inputTargeta.value) + parseInt(inputEfectivo.value))).toLocaleString('de-DE')}`
+                    })
+
+                    inputTargeta.addEventListener('input', () => {
+                        if (inputTargeta.value.length != 0) {
+                            btnUpdate.classList.add('active')
+                            btnUpdate.disabled = false
+                        }
+
+                        faltaPorPago.textContent = `$${(parseInt(doc.Total) - (parseInt(inputNequi.value) + parseInt(inputDaviplata.value) + parseInt(inputTargeta.value) + parseInt(inputEfectivo.value))).toLocaleString('de-DE')}`
+                    })
+
+                })
+
+                btnFactura.addEventListener('click', () => {
                     modalFactura.style.display = 'flex'
 
                     gsap.fromTo(conModalFactura,
@@ -1064,9 +1309,53 @@ if (resJsonOrder.status == "Data Orders") {
                             }
                         });
                     })
+
+                    var numberFacturaText = document.querySelector('.numberFacturaText')
+                    var fechaFacturaText = document.querySelector('.fechaFacturaText')
+                    var horaFacturaText = document.querySelector('.horaFacturaText')
+                    var nameFactura = document.querySelector('.nameFactura')
+
+                    numberFacturaText.textContent = `Factura N° ${tr.dataset.factura}`
+                    fechaFacturaText.textContent = `Fecha: ${doc.Fecha}`
+                    horaFacturaText.textContent = `Hora: ${doc.Hora}`
+                    nameFactura.textContent = `${doc.Nombre}`
+
+                    var dataProduct = doc.Productos
+
+                    var tbodyFactura = document.querySelector('.tbodyFactura')
+                    tbodyFactura.innerHTML = ''
+
+                    var valorTotalFactura = 0
+
+                    dataProduct.forEach((product) => {
+                        var tr = document.createElement('tr')
+                        var name = document.createElement('th')
+                        var cant = document.createElement('th')
+                        var price = document.createElement('th')
+                        var total = document.createElement('th')
+
+                        name.textContent = product.name
+                        cant.textContent = product.quaintity
+                        price.textContent = `$${parseInt(product.price).toLocaleString('de-DE')}`
+                        total.textContent = `$${(parseInt(product.price) * parseInt(product.quaintity)).toLocaleString('de-DE')}`
+
+                        tbodyFactura.appendChild(tr)
+                        tr.appendChild(name)
+                        tr.appendChild(cant)
+                        tr.appendChild(price)
+                        tr.appendChild(total)
+
+                        valorTotalFactura += parseInt(product.price) * parseInt(product.quaintity)
+                    })
+
+                    var subtotalFactura = document.querySelectorAll('.subtotalFactura')
+                    subtotalFactura.forEach((subTotal) => {
+                        subTotal.textContent = `$${valorTotalFactura.toLocaleString('de-DE')}`
+                    })
+
+                    var metodoPagoFactura = document.querySelector('.metodoPagoFactura')
+                    metodoPagoFactura.textContent = doc.MetodoPago
                 })
-
-
             }
 
         })

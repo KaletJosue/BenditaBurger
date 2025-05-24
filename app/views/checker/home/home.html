@@ -179,16 +179,16 @@
                 <p>bendita-burger.web.app</p>
                 <hr>
                 <div class="numberFactura">
-                    <p>Factura: 0012345</p>
+                    <p class="numberFacturaText"></p>
                     <div class="textFecha">
-                        <p>Fecha: 05 / 02 / 2025</p>
-                        <p>Hora: 14 : 35</p>
+                        <p class="fechaFacturaText"></p>
+                        <p class="horaFacturaText"></p>
                     </div>
                 </div>
                 <hr>
                 <div class="client">
                     <p>Cliente:</p>
-                    <p>Mesa 1</p>
+                    <p class="nameFactura"></p>
                 </div>
                 <hr>
                 <table>
@@ -200,49 +200,26 @@
                             <th>Total</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <th>Hamburguesa</th>
-                            <th>2</th>
-                            <th>5.000</th>
-                            <th>10.000</th>
-                        </tr>
-                        <tr>
-                            <th>Bebida Mediana</th>
-                            <th>1</th>
-                            <th>2.000</th>
-                            <th>2.000</th>
-                        </tr>
-                        <tr>
-                            <th>Papas Grandes</th>
-                            <th>1</th>
-                            <th>3.000</th>
-                            <th>3.000</th>
-                        </tr>
+                    <tbody class="tbodyFactura">
+                        
                     </tbody>
                 </table>
                 <hr>
                 <div class="subTotal">
                     <p>Subtotal: </p>
-                    <p>15.000</p>
-                    <p>Descuento:</p>
-                    <p>0</p>
+                    <p class="subtotalFactura"></p>
                     <p>IVA (0%):</p>
                     <p>0</p>
                 </div>
                 <hr>
                 <div class="total">
                     <p>TOTAL A PAGAR:</p>
-                    <p>15.000</p>
+                    <p class="subtotalFactura"></p>
                 </div>
                 <hr>
                 <div class="metodo">
                     <p>Metodo de Pago:</p>
-                    <p>Efectivo</p>
-                    <p>Recibido:</p>
-                    <p>20.000</p>
-                    <p>Cambio:</p>
-                    <p>5.000</p>
+                    <p class="metodoPagoFactura"></p>
                 </div>
                 <hr>
                 <p>Gracias por tu compra, Vuelve pronto</p>
@@ -375,6 +352,52 @@
             <div class="buttons">
                 <button class="btnUpdate" disabled>Guardar</button>
                 <button id="closeModalUpdate">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modalUpdate2">
+        <div class="conModalUpdate2">
+            <div class="conInputs2">
+                <h3>Falta: <p class="faltaPorPago"></p></h3>
+                <h1 class="h1Monto">Monto total a pagar: <p class="montoUpdate"></p>
+                </h1>
+            </div>
+            <p class="selectMetodo">Selecciona un metodo de pago:</p>
+            <div class="inputsModalUpdate2">
+                <div class="conInputs2">
+                    <h1 class="conInput2h1">Pago por Nequi</h1>
+                    <div class="input2">
+                        <p>Valor pagado por Nequi</p>
+                        <input type="number" class="inputNequi" value="0">
+                    </div>
+                </div>
+                <div class="conInputs2">
+                    <h1 class="conInput2h1">Pago por Daviplata</h1>
+                    <div class="input2">
+                        <p>Valor pagado por Daviplata</p>
+                        <input type="number" class="inputDaviplata" value="0">
+                    </div>
+                </div>
+                <div class="conInputs2">
+                    <h1 class="conInput2h1">Pago en Efectivo</h1>
+                    <div class="input2">
+                        <p>Valor pagado en Efectivo</p>
+                        <input type="number" class="inputEfectivo" value="0">
+                    </div>
+                </div>
+                <div class="conInputs2">
+                    <h1 class="conInput2h1">Pago con Targetas</h1>
+                    <div class="input2">
+                        <p>Valor pagado con Targetas</p>
+                        <input type="number" class="inputTargeta" value="0">
+                    </div>
+                </div>
+            </div>
+            <p class="dividirPago">Dividir Pago</p>
+            <div class="buttons2">
+                <button class="btnUpdate2" disabled>Guardar</button>
+                <button id="closeModalUpdate2">Cancelar</button>
             </div>
         </div>
     </div>

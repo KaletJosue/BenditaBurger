@@ -242,6 +242,8 @@ if (resJsonOrder.status == "Data Orders") {
                 metodoPago.textContent = "Tarjeta"
             } else if (doc.MetodoPago == "") {
                 metodoPago.textContent = "Sin Pagar"
+            } else if (doc.MetodoPago.length > 10) {
+                metodoPago.textContent = "Dividido"
             } else {
                 metodoPago.textContent = doc.MetodoPago
             }

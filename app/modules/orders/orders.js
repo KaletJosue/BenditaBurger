@@ -45,6 +45,7 @@ async function orderDataAdmin(req, res) {
 
 async function newOrderChecker(req, res) {
     if (req.headers.cookie) {
+        const io = getSocket();
 
         const correo = req.body.Correo;
         const nombre = req.body.Nombre;
@@ -80,6 +81,24 @@ async function newOrderChecker(req, res) {
             Descripcion: descripcion,
             Pago: pago
         };
+
+        io.to("administradores").emit("notificacion-nuevo-pedido", {
+            correo,
+            nombre,
+            total
+        });
+
+        io.to("cajeros").emit("notificacion-nuevo-pedido", {
+            correo,
+            nombre,
+            total
+        });
+
+        io.to("superadministradores").emit("notificacion-nuevo-pedido", {
+            correo,
+            nombre,
+            total
+        });
 
         await ordersCollection.insertOne(newOrder);
         return res.status(200).send({ status: "New Order correct", message: "Se ha agregado el nuevo pedido" });
@@ -154,8 +173,6 @@ Esta pendiente a las actualizaciones en la aplicacion de Bendita Burger`;
                 });
             })
 
-            await ordersCollection.insertOne(newOrder);
-
             io.to("administradores").emit("notificacion-nuevo-pedido", {
                 correo,
                 nombre,
@@ -174,6 +191,7 @@ Esta pendiente a las actualizaciones en la aplicacion de Bendita Burger`;
                 monto
             });
 
+            await ordersCollection.insertOne(newOrder);
             await sendWhatsAppMessage(numeroCliente, mensaje);
 
             return res.status(200).send({ status: "New Order correct", message: "Se ha agregado el nuevo pedido" });
@@ -322,10 +340,58 @@ Esperamos que sea de tu agrado y muy pronto vuelvas a realizar un pedido, *¡Dis
     }
 }
 
+async function updateOrderChecker(req, res) {
+    if (req.headers.cookie) {
+        const io = getSocket();
+
+        const correo = req.body.Correo;
+        const direccion = req.body.Direccion;
+        const barrio = req.body.Barrio;
+        const estado = "Preparacion";
+        const nuevoEstado = "Entregado";
+        const total = req.body.Total;
+        const metodoPago = req.body.MetodoPago;
+        const productos = req.body.Productos;
+        const fecha = req.body.Fecha;
+        const hora = req.body.Hora;
+        const nuevoMetodoPago = req.body.NuevoMetodoPago;
+        const pago = 'Pago';
+
+        const db = await conectarConMongoDB();
+        const orderCollection = db.collection('ventas');
+
+        const filtro = {
+            Correo: correo,
+            Direccion: direccion,
+            Barrio: barrio,
+            Estado: estado,
+            Total: total,
+            MetodoPago: metodoPago,
+            Productos: productos,
+            Fecha: fecha,
+            Hora: hora,
+        };
+        const nuevosDatos = {
+            $set: {
+                Estado: nuevoEstado,
+                MetodoPago: nuevoMetodoPago,
+                Pago: pago
+            }
+        };
+
+        const resultado = await orderCollection.updateOne(filtro, nuevosDatos);
+
+        return res.status(200).send({ status: "Update correct", message: "Tus datos ya han sido actualizados" });
+    } else {
+        return res.status(400).send({ status: "Error Login", message: "No has iniciado sesión correctamente" });
+    }
+}
+
 export const method = {
     orderData,
     orderDataAdmin,
     updateStatus,
     newOrder,
-    newOrderChecker
+    newOrderChecker,
+    updateOrderChecker
 }

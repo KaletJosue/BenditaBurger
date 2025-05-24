@@ -168,5 +168,6 @@ router.post('/api/updateEstado', orders.updateStatus)
 router.post('/api/paymentNoTarget', orders.newOrder)
 
 router.post('/api/newOrderChecker', orders.newOrderChecker)
+router.post('/api/updateOrderChecker', orders.updateOrderChecker)
 
 export default router;
