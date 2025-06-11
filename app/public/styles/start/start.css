@@ -588,7 +588,7 @@ html::-webkit-scrollbar {
 }
 
 .our .videoCon video {
-    width: 300px;
+    height: 90dvh;
     border: solid 10px black;
     outline: solid 3px #cccccc;
     border-radius: 50px;

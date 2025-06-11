@@ -1067,7 +1067,8 @@ body {
     }
 
     .modal,
-    .modal2 {
+    .modal2,
+    .modal3 {
         padding: 1rem;
     }
 }
@@ -1148,12 +1149,14 @@ body {
     }
 
     .modal .modalContent,
-    .modal2 .modalContent2 {
+    .modal2 .modalContent2,
+    .modal3 .modalContent3 {
         flex-direction: column;
     }
 
     .modal .modalContent .centerModal,
-    .modal2 .modalContent2 .centerModal2 {
+    .modal2 .modalContent2 .centerModal2,
+    .modal3 .modalContent3 .centerModal3 {
         padding: 0;
         flex-direction: column;
         text-align: center;

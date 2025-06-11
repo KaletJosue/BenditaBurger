@@ -59,6 +59,7 @@ async function newOrderChecker(req, res) {
         const productos = req.body.Productos;
         const fecha = req.body.Fecha;
         const hora = req.body.Hora;
+        const segundo = req.body.Segundo;
         const descripcion = req.body.Descripcion;
         const pago = req.body.Pago
 
@@ -78,6 +79,7 @@ async function newOrderChecker(req, res) {
             Productos: productos,
             Fecha: fecha,
             Hora: hora,
+            Segundo: segundo,
             Descripcion: descripcion,
             Pago: pago
         };
@@ -354,6 +356,7 @@ async function updateOrderChecker(req, res) {
         const productos = req.body.Productos;
         const fecha = req.body.Fecha;
         const hora = req.body.Hora;
+        const segundo = req.body.Segundo;
         const nuevoMetodoPago = req.body.NuevoMetodoPago;
         const pago = 'Pago';
 
@@ -370,6 +373,7 @@ async function updateOrderChecker(req, res) {
             Productos: productos,
             Fecha: fecha,
             Hora: hora,
+            Segundo: segundo,
         };
         const nuevosDatos = {
             $set: {
@@ -387,11 +391,45 @@ async function updateOrderChecker(req, res) {
     }
 }
 
+async function updateOrderProductsChecker(req, res) {
+    if (req.headers.cookie) {
+        const fecha = req.body.Fecha;
+        const hora = req.body.Hora;
+        const segundo = req.body.Segundo;
+        const productos = req.body.Productos;
+        const nuevosProductos = req.body.ProductosActualizados;
+        const monto = req.body.Monto;
+
+        const db = await conectarConMongoDB();
+        const orderCollection = db.collection('ventas');
+
+        const filtro = {
+            Productos: productos,
+            Fecha: fecha,
+            Hora: hora,
+            Segundo: segundo,
+        };
+        const nuevosDatos = {
+            $set: {
+                Productos: nuevosProductos,
+                Total: parseInt(monto)
+            }
+        };
+
+        const resultado = await orderCollection.updateOne(filtro, nuevosDatos);
+
+        return res.status(200).send({ status: "Update correct", message: "Tus datos ya han sido actualizados" });
+    } else {
+        return res.status(400).send({ status: "Error Login", message: "No has iniciado sesión correctamente" });
+    }
+}
+
 export const method = {
     orderData,
     orderDataAdmin,
     updateStatus,
     newOrder,
     newOrderChecker,
-    updateOrderChecker
+    updateOrderChecker,
+    updateOrderProductsChecker
 }

@@ -27,6 +27,7 @@ const cancelModalAdd = document.querySelector('.cancelModalAdd')
 var openResumen = document.querySelectorAll('.product')
 var containerResumen = document.querySelector('.conModalAdd')
 var leftModalAdd = document.querySelector('.leftModalAdd')
+var leftModalAdd2 = document.querySelector('.leftModalAdd2')
 
 var cancelPedido = document.querySelector('.cancel')
 
@@ -67,6 +68,7 @@ const now = new Date();
 const formatNumber = (n) => String(n).padStart(2, '0');
 const fecha = `${formatNumber(now.getDate())} / ${formatNumber(now.getMonth() + 1)} / ${String(now.getFullYear()).slice(-2)}`;
 const hora = `${formatNumber(now.getHours())} : ${formatNumber(now.getMinutes())}`;
+const segundo = `${formatNumber(now.getHours())} : ${formatNumber(now.getMinutes())} : ${formatNumber(now.getSeconds())}`;
 
 btnOrder.addEventListener('click', async () => {
     gsap.to(modalContentSelectModo, {
@@ -207,6 +209,7 @@ btnOrder.addEventListener('click', async () => {
                 Productos: productosAgregadosBase,
                 Fecha: fecha,
                 Hora: hora,
+                segundo: segundo,
                 Descripcion: inputDescriptionUpdate.value,
                 Pago: "No pago"
             })
@@ -258,6 +261,7 @@ btnCarry.addEventListener('click', async () => {
             Productos: productosAgregadosBase,
             Fecha: fecha,
             Hora: hora,
+            Segundo: segundo,
             Descripcion: "Restaurante con las mejores hamburguesas de Madrid",
             Pago: "No pago"
         })
@@ -313,6 +317,7 @@ mesas.forEach(mesa => {
                 Productos: productosAgregadosBase,
                 Fecha: fecha,
                 Hora: hora,
+                Segundo: segundo,
                 Descripcion: "Restaurante con las mejores hamburguesas de Madrid",
                 Pago: "No pago"
             })
@@ -502,7 +507,7 @@ function calcularPrecio() {
     var pagoTotal = 0
 
     productosAgregados.forEach((doc) => {
-        pagoTotal += (parseInt(doc.price) * parseInt(doc.quaintity))
+        pagoTotal += (parseInt(doc.price) * parseInt(doc.quantity))
     })
 
     return pagoTotal
@@ -540,7 +545,7 @@ function renderizarProducts() {
             imgProduct.src = prod.foto;
             nombre.textContent = prod.name;
             price.textContent = `$${parseInt(prod.price).toLocaleString('de-DE')}`;
-            input.value = prod.quaintity;
+            input.value = prod.quantity;
 
             divProduct.appendChild(leftProduct);
             divProduct.appendChild(iconTrash);
@@ -559,10 +564,10 @@ function renderizarProducts() {
                 let productBase = productosAgregadosBase.find(p => p.name == (prod.name).toLowerCase())
 
                 if (product && productBase) {
-                    product.quaintity += 1
-                    productBase.quaintity += 1
+                    product.quantity += 1
+                    productBase.quantity += 1
 
-                    input.value = prod.quaintity
+                    input.value = prod.quantity
 
                     montoTotal.textContent = `$${calcularPrecio().toLocaleString('de-DE')}`
                 }
@@ -573,11 +578,11 @@ function renderizarProducts() {
                 let productBase = productosAgregadosBase.find(p => p.name == (prod.name).toLowerCase())
 
                 if (product && productBase) {
-                    if (product.quaintity > 1) {
-                        product.quaintity -= 1
-                        productBase.quaintity -= 1
+                    if (product.quantity > 1) {
+                        product.quantity -= 1
+                        productBase.quantity -= 1
 
-                        input.value = prod.quaintity
+                        input.value = prod.quantity
 
                         montoTotal.textContent = `$${calcularPrecio().toLocaleString('de-DE')}`
                     } else {
@@ -607,10 +612,10 @@ function renderizarProducts() {
                         input.value = 1
                     }
 
-                    product.quaintity = input.value
-                    productBase.quaintity = input.value
+                    product.quantity = input.value
+                    productBase.quantity = input.value
 
-                    input.value = prod.quaintity
+                    input.value = prod.quantity
 
                     console.log(productosAgregadosBase)
 
@@ -648,27 +653,44 @@ if (resProductJson.status == "Data Products") {
         const category = document.createElement('p');
         const price = document.createElement('h3');
 
+        const divProduct2 = document.createElement('div');
+        const img2 = document.createElement('img');
+        const name2 = document.createElement('h1');
+        const category2 = document.createElement('p');
+        const price2 = document.createElement('h3');
+
         const nombreCapitalizado = doc.Nombre.charAt(0).toUpperCase() + doc.Nombre.slice(1);
         const categoriaCapitalizada = doc.Categoria.charAt(0).toUpperCase() + doc.Categoria.slice(1);
 
         img.src = doc.Foto;
+        img2.src = doc.Foto;
         name.textContent = nombreCapitalizado;
+        name2.textContent = nombreCapitalizado;
         category.textContent = categoriaCapitalizada;
+        category2.textContent = categoriaCapitalizada;
         var precioDescuento = 0
         if (doc.Descuento != "") {
             precioDescuento = (parseInt(doc.Precio) - ((doc.Descuento / 100) * parseInt(doc.Precio)))
             price.textContent = `$${(parseInt(doc.Precio) - ((doc.Descuento / 100) * parseInt(doc.Precio))).toLocaleString('de-DE')}`
+            price2.textContent = `$${(parseInt(doc.Precio) - ((doc.Descuento / 100) * parseInt(doc.Precio))).toLocaleString('de-DE')}`
         } else {
             price.textContent = `$${parseInt(doc.Precio).toLocaleString('de-DE')}`
+            price2.textContent = `$${parseInt(doc.Precio).toLocaleString('de-DE')}`
             precioDescuento = parseInt(doc.Precio)
         }
 
         divProduct.className = "product";
+        divProduct2.className = "product2";
         divProduct.appendChild(img);
+        divProduct2.appendChild(img2);
         divProduct.appendChild(name);
+        divProduct2.appendChild(name2);
         divProduct.appendChild(category);
+        divProduct2.appendChild(category2);
         divProduct.appendChild(price);
+        divProduct2.appendChild(price2);
         leftModalAdd.appendChild(divProduct);
+        leftModalAdd2.appendChild(divProduct2);
 
         divProduct.addEventListener('click', () => {
             const existe = productosAgregados.find(prodcut => (prodcut.name).toLowerCase() == doc.Nombre)
@@ -677,14 +699,14 @@ if (resProductJson.status == "Data Products") {
                 productosAgregados.push({
                     name: nombreCapitalizado,
                     price: precioDescuento,
-                    quaintity: 1,
+                    quantity: 1,
                     foto: doc.Foto
                 })
 
                 productosAgregadosBase.push({
                     name: doc.Nombre,
                     price: precioDescuento,
-                    quaintity: 1,
+                    quantity: 1,
                 })
 
                 renderizarProducts()
@@ -747,6 +769,22 @@ var search2 = document.getElementById('search2')
 
 search2.addEventListener("input", e => {
     document.querySelectorAll('.tbody tr').forEach(documento => {
+
+        let originalString = documento.textContent;
+
+        originalString.toLowerCase().includes(e.target.value.toLowerCase())
+            ? documento.classList.remove("filtro")
+            : documento.classList.add("filtro");
+
+    });
+});
+
+// Search3
+
+var search3 = document.getElementById('search3')
+
+search3.addEventListener("input", e => {
+    document.querySelectorAll('.product2').forEach(documento => {
 
         let originalString = documento.textContent;
 
@@ -826,6 +864,7 @@ if (resJsonOrder.status == "Data Orders") {
                 var openModalDetails = document.createElement('button')
                 var btnPagar = document.createElement('button')
                 var btnFactura = document.createElement('button')
+                var btnUpdateProduct = document.createElement('button')
 
                 img.src = '/assets/logoAmarillo.png'
                 name.textContent = doc.Nombre
@@ -834,7 +873,7 @@ if (resJsonOrder.status == "Data Orders") {
                 hora.textContent = doc.Hora
                 if (doc.Pago == "No pago") {
                     metodoPago.textContent = "Sin Pagar"
-                } else if (doc.MetodoPago == "Nequi" || doc.MetodoPago == "Daviplata" || doc.MetodoPago == "Targetas" || doc.MetodoPago == "Efectivo") {
+                } else if (doc.MetodoPago == "Nequi" || doc.MetodoPago == "Daviplata" || doc.MetodoPago == "Tarjetas" || doc.MetodoPago == "Efectivo") {
                     metodoPago.textContent = doc.MetodoPago
                 } else {
                     metodoPago.textContent = "Dividido"
@@ -844,6 +883,7 @@ if (resJsonOrder.status == "Data Orders") {
                 openModalDetails.textContent = "Detalles"
                 btnPagar.textContent = "Pagar"
                 btnFactura.textContent = "Ver Factura"
+                btnUpdateProduct.textContent = "Editar"
 
                 divClient.className = "divClient"
                 openModalDetails.className = "openModal"
@@ -865,12 +905,257 @@ if (resJsonOrder.status == "Data Orders") {
                 thButton.appendChild(divButton)
                 divButton.appendChild(openModalDetails)
                 if (doc.Pago == "No pago") {
+                    divButton.appendChild(btnUpdateProduct)
                     divButton.appendChild(btnPagar)
                 } else {
                     divButton.appendChild(btnFactura)
                 }
 
                 tr.dataset.factura = numberFactura
+
+                btnUpdateProduct.addEventListener('click', async () => {
+                    var arrayProducts = JSON.parse(JSON.stringify(doc.Productos));
+
+                    const modalAdd2 = document.querySelector('.modalAdd2');
+                    const closeModalAdd2 = document.querySelector('#closeModalAdd2')
+                    var conModalAdd2 = document.querySelector('.conModalAdd2')
+
+                    conModalAdd2.classList.add('active')
+
+                    gsap.fromTo(modalAdd2,
+                        { height: 0, opacity: 0 },
+                        {
+                            padding: '0.5rem',
+                            height: '100dvh',
+                            opacity: 1,
+                            duration: .2,
+                            ease: 'expo.out',
+                        }
+                    )
+                    closeModalAdd2.addEventListener('click', () => {
+                        gsap.to(modalAdd2, {
+                            height: '0px',
+                            padding: '0rem 1rem',
+                            duration: .2,
+                            ease: 'power1.in',
+                        });
+                        arrayProducts = JSON.parse(JSON.stringify(doc.Productos));
+                    })
+
+                    if (resProductJson.status == "Data Products") {
+                        const productData = resProductJson.data;
+
+                        var conRightModalAdd2 = document.querySelector('.conRightModalAdd2')
+
+                        leftModalAdd2.innerHTML = ''
+                        conRightModalAdd2.innerHTML = ''
+
+                        productData.forEach((doc2) => {
+                            const divProduct2 = document.createElement('div');
+                            const img2 = document.createElement('img');
+                            const name2 = document.createElement('h1');
+                            const category2 = document.createElement('p');
+                            const price2 = document.createElement('h3');
+
+                            const nombreCapitalizado = doc2.Nombre.charAt(0).toUpperCase() + doc2.Nombre.slice(1);
+                            const categoriaCapitalizada = doc2.Categoria.charAt(0).toUpperCase() + doc2.Categoria.slice(1);
+
+                            img2.src = doc2.Foto;
+                            name2.textContent = nombreCapitalizado;
+                            category2.textContent = categoriaCapitalizada;
+                            var precioDescuento = 0
+                            if (doc2.Descuento != "") {
+                                precioDescuento = (parseInt(doc2.Precio) - ((doc2.Descuento / 100) * parseInt(doc2.Precio)))
+                                price2.textContent = `$${(parseInt(doc2.Precio) - ((doc2.Descuento / 100) * parseInt(doc2.Precio))).toLocaleString('de-DE')}`
+                            } else {
+                                price2.textContent = `$${parseInt(doc2.Precio).toLocaleString('de-DE')}`
+                                precioDescuento = parseInt(doc2.Precio)
+                            }
+
+                            divProduct2.className = "product2";
+                            divProduct2.appendChild(img2);
+                            divProduct2.appendChild(name2);
+                            divProduct2.appendChild(category2);
+                            divProduct2.appendChild(price2);
+                            leftModalAdd2.appendChild(divProduct2);
+
+                            divProduct2.addEventListener('click', () => {
+                                const existe = arrayProducts.find(prodcut => (prodcut.name).toLowerCase() == doc2.Nombre)
+
+                                if (!existe) {
+                                    arrayProducts.push({
+                                        name: doc2.Nombre,
+                                        price: precioDescuento,
+                                        quantity: 1,
+                                    })
+
+                                    arrayProducts.forEach((doc3) => {
+                                        if (doc3.name == doc2.Nombre) {
+                                            var productPedido = document.createElement('div')
+                                            var leftProduct = document.createElement('div')
+                                            var img = document.createElement('img')
+                                            var textLeftProduct2 = document.createElement('div')
+                                            var name = document.createElement('h3')
+                                            var price = document.createElement('p')
+                                            var plusMinus = document.createElement('div')
+                                            var plus = document.createElement('i')
+                                            var input2 = document.createElement('input')
+
+                                            const nombreCapitalizado = doc2.Nombre.charAt(0).toUpperCase() + doc2.Nombre.slice(1);
+
+                                            name.textContent = nombreCapitalizado
+                                            img.src = doc2.Foto
+                                            if (doc2.Descuento != "") {
+                                                price.textContent = `$${(parseInt(doc2.Precio) - ((doc2.Descuento / 100) * parseInt(doc2.Precio))).toLocaleString('de-DE')}`
+                                                price2.textContent = `$${(parseInt(doc2.Precio) - ((doc2.Descuento / 100) * parseInt(doc2.Precio))).toLocaleString('de-DE')}`
+                                            } else {
+                                                price.textContent = `$${parseInt(doc2.Precio).toLocaleString('de-DE')}`
+                                                price2.textContent = `$${parseInt(doc2.Precio).toLocaleString('de-DE')}`
+                                            }
+
+                                            productPedido.className = 'productPedido2'
+                                            leftProduct.className = 'leftProductPedido2'
+                                            textLeftProduct2.className = 'textLeftProductPedido2'
+                                            plusMinus.className = 'plusMinus2'
+                                            plus.className = 'fa-solid fa-plus'
+
+                                            input2.value = doc3.quantity
+                                            input2.disabled = true
+
+                                            plus.addEventListener('click', () => {
+                                                let product = arrayProducts.find(p => p.name == doc2.Nombre)
+
+                                                if (product) {
+                                                    product.quantity = parseInt(input2.value) + 1
+
+                                                    input2.value = product.quantity
+
+                                                    console.log(arrayProducts)
+                                                }
+                                            })
+
+                                            conRightModalAdd2.appendChild(productPedido)
+                                            productPedido.appendChild(leftProduct)
+                                            leftProduct.appendChild(img)
+                                            leftProduct.appendChild(textLeftProduct2)
+                                            textLeftProduct2.appendChild(name)
+                                            textLeftProduct2.appendChild(price)
+                                            textLeftProduct2.appendChild(plusMinus)
+                                            plusMinus.appendChild(plus)
+                                            plusMinus.appendChild(input2)
+                                        }
+                                    })
+                                }
+                            })
+
+                            arrayProducts.forEach((doc3) => {
+                                if (doc3.name == doc2.Nombre) {
+                                    var productPedido = document.createElement('div')
+                                    var leftProduct = document.createElement('div')
+                                    var img = document.createElement('img')
+                                    var textLeftProduct2 = document.createElement('div')
+                                    var name = document.createElement('h3')
+                                    var price = document.createElement('p')
+                                    var plusMinus = document.createElement('div')
+                                    var plus = document.createElement('i')
+                                    var input2 = document.createElement('input')
+
+                                    const nombreCapitalizado = doc2.Nombre.charAt(0).toUpperCase() + doc2.Nombre.slice(1);
+
+                                    name.textContent = nombreCapitalizado
+                                    img.src = doc2.Foto
+                                    if (doc2.Descuento != "") {
+                                        price.textContent = `$${(parseInt(doc2.Precio) - ((doc2.Descuento / 100) * parseInt(doc2.Precio))).toLocaleString('de-DE')}`
+                                        price2.textContent = `$${(parseInt(doc2.Precio) - ((doc2.Descuento / 100) * parseInt(doc2.Precio))).toLocaleString('de-DE')}`
+                                    } else {
+                                        price.textContent = `$${parseInt(doc2.Precio).toLocaleString('de-DE')}`
+                                        price2.textContent = `$${parseInt(doc2.Precio).toLocaleString('de-DE')}`
+                                    }
+
+                                    productPedido.className = 'productPedido2'
+                                    leftProduct.className = 'leftProductPedido2'
+                                    textLeftProduct2.className = 'textLeftProductPedido2'
+                                    plusMinus.className = 'plusMinus2'
+                                    plus.className = 'fa-solid fa-plus'
+
+                                    input2.value = doc3.quantity
+                                    input2.disabled = true
+
+                                    plus.addEventListener('click', () => {
+                                        let product = arrayProducts.find(p => p.name == doc2.Nombre)
+
+                                        if (product) {
+                                            product.quantity = parseInt(input2.value) + 1
+
+                                            input2.value = product.quantity
+
+                                            console.log(arrayProducts)
+                                        }
+                                    })
+
+                                    conRightModalAdd2.appendChild(productPedido)
+                                    productPedido.appendChild(leftProduct)
+                                    leftProduct.appendChild(img)
+                                    leftProduct.appendChild(textLeftProduct2)
+                                    textLeftProduct2.appendChild(name)
+                                    textLeftProduct2.appendChild(price)
+                                    textLeftProduct2.appendChild(plusMinus)
+                                    plusMinus.appendChild(plus)
+                                    plusMinus.appendChild(input2)
+                                }
+                            })
+                        });
+
+                    } else {
+                        textErrorModal.textContent = resProductJson.message;
+                        modal.classList.add('active');
+                        closeModal.addEventListener('click', () => {
+                            modal.classList.remove('active');
+                        });
+                        tryAgain.addEventListener('click', () => {
+                            modal.classList.remove('active');
+                        });
+                        window.addEventListener('click', event => {
+                            if (event.target == modal) {
+                                modal.classList.remove('active');
+                            }
+                        });
+                    }
+
+                    var confir2 = document.querySelector('.confir2')
+
+                    confir2.addEventListener('click', async () => {
+                        var montoPagoUpdate = 0
+
+                        arrayProducts.forEach((doc5) => {
+                            montoPagoUpdate += doc5.price * doc5.quantity
+                        })
+
+                        loader.classList.remove('active')
+
+                        const resNewOrder = await fetch("http://localhost:4000/api/updateOrderProductChecker", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json"
+                            },
+                            body: JSON.stringify({
+                                Fecha: doc.Fecha,
+                                Hora: doc.Hora,
+                                Segundo: doc.Segundo,
+                                Productos: doc.Productos,
+                                ProductosActualizados: arrayProducts,
+                                Monto: montoPagoUpdate,
+                            })
+                        })
+
+                        const resJsonNewOrder = await resNewOrder.json()
+
+                        if (resJsonNewOrder.status == "Update correct") {
+                            location.reload()
+                        }
+                    })
+
+                })
 
                 openModalDetails.addEventListener('click', () => {
                     const modalDetails = document.querySelector('.modalDetalis');
@@ -980,7 +1265,7 @@ if (resJsonOrder.status == "Data Orders") {
                                                 campoPedido.className = "campoPedido"
                                                 imgCampoPedido.className = "imgCampoPedido"
 
-                                                infoPedido.appendChild(campoPedido)
+                                                infoPedidio.appendChild(campoPedido)
                                                 campoPedido.appendChild(imgCampoPedido)
                                                 imgCampoPedido.appendChild(img)
                                                 imgCampoPedido.appendChild(name)
@@ -1125,8 +1410,8 @@ if (resJsonOrder.status == "Data Orders") {
                                 metodoPagoLimpio = "Nequi"
                             } else if (doc2.textContent == "Pago por Daviplata") {
                                 metodoPagoLimpio = "Daviplata"
-                            } else if (doc2.textContent == "Pago con Targetas") {
-                                metodoPagoLimpio = "Targetas"
+                            } else if (doc2.textContent == "Pago con Tarjetas") {
+                                metodoPagoLimpio = "Tarjetas"
                             }
 
                             loader.classList.remove('active')
@@ -1145,6 +1430,7 @@ if (resJsonOrder.status == "Data Orders") {
                                     Productos: doc.Productos,
                                     Fecha: doc.Fecha,
                                     Hora: doc.Hora,
+                                    Segundo: doc.Segundo,
                                     NuevoMetodoPago: metodoPagoLimpio
                                 })
                             })
@@ -1164,10 +1450,10 @@ if (resJsonOrder.status == "Data Orders") {
                         if (parseInt(montoEscrito) == parseInt(doc.Total)) {
                             var porcentajeNequi = `${parseInt((parseInt(inputNequi.value) * 100) / doc.Total)}% por Nequi`
                             var porcentajeDaviplata = `${parseInt((parseInt(inputDaviplata.value) * 100) / doc.Total)}% por Daviplata`
-                            var porcentajeTargeta = `${parseInt((parseInt(inputEfectivo.value) * 100) / doc.Total)}% por Targetas`
-                            var porcentajeEfectivo = `${parseInt((parseInt(inputTargeta.value) * 100) / doc.Total)}% en Efectivo`
+                            var porcentajeTargeta = `${parseInt((parseInt(inputTargeta.value) * 100) / doc.Total)}% por Tarjetas`
+                            var porcentajeEfectivo = `${parseInt((parseInt(inputEfectivo.value) * 100) / doc.Total)}% en Efectivo`
 
-                            var montoPorcentaje = `${porcentajeNequi != "0% por Nequi" ? porcentajeNequi : ''} ${porcentajeDaviplata != "0% por Daviplata" ? porcentajeDaviplata : ''} ${porcentajeTargeta != "0% por Targetas" ? porcentajeTargeta : ''} ${porcentajeEfectivo != "0% en Efectivo" ? porcentajeEfectivo : ''}`
+                            var montoPorcentaje = `${porcentajeNequi != "0% por Nequi" ? porcentajeNequi : ''} ${porcentajeDaviplata != "0% por Daviplata" ? porcentajeDaviplata : ''} ${porcentajeTargeta != "0% por Tarjetas" ? porcentajeTargeta : ''} ${porcentajeEfectivo != "0% en Efectivo" ? porcentajeEfectivo : ''}`
 
                             loader.classList.remove('active')
 
@@ -1185,6 +1471,7 @@ if (resJsonOrder.status == "Data Orders") {
                                     Productos: doc.Productos,
                                     Fecha: doc.Fecha,
                                     Hora: doc.Hora,
+                                    Segundo: doc.Segundo,
                                     NuevoMetodoPago: montoPorcentaje
 
                                 })
@@ -1335,9 +1622,9 @@ if (resJsonOrder.status == "Data Orders") {
                         var total = document.createElement('th')
 
                         name.textContent = product.name
-                        cant.textContent = product.quaintity
+                        cant.textContent = product.quantity
                         price.textContent = `$${parseInt(product.price).toLocaleString('de-DE')}`
-                        total.textContent = `$${(parseInt(product.price) * parseInt(product.quaintity)).toLocaleString('de-DE')}`
+                        total.textContent = `$${(parseInt(product.price) * parseInt(product.quantity)).toLocaleString('de-DE')}`
 
                         tbodyFactura.appendChild(tr)
                         tr.appendChild(name)
@@ -1345,7 +1632,7 @@ if (resJsonOrder.status == "Data Orders") {
                         tr.appendChild(price)
                         tr.appendChild(total)
 
-                        valorTotalFactura += parseInt(product.price) * parseInt(product.quaintity)
+                        valorTotalFactura += parseInt(product.price) * parseInt(product.quantity)
                     })
 
                     var subtotalFactura = document.querySelectorAll('.subtotalFactura')
